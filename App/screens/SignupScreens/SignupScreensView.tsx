@@ -6,7 +6,6 @@ const SignupScreensView: FC = (props) => {
     return(
         <View>
             <Text>Hello world</Text>
-            <Text>Hello world</Text>
         </View>
     )
 };
