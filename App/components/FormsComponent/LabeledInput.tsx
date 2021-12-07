@@ -17,7 +17,7 @@ const LabeledInput: FC<LabelProps> = (props): JSX.Element => {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        paddingTop: 10
+        paddingTop: 10,
     },
     label: {
         fontWeight: '600',

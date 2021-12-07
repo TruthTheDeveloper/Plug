@@ -8,7 +8,7 @@ const SignupScreensView: FC = (props) => {
 
     return(
         <View>
-            <Emoji name='slightly_smiling_face:' style={{fontSize: 40}} />
+            <Emoji name='gemini:' style={{fontSize: 40}} />
         </View>
     )
 };
