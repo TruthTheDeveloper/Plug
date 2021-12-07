@@ -1,11 +1,14 @@
-import React, { FC } from 'react';
-import { View, Text } from 'react-native';
+import React, { FC, useState } from 'react';
+import { View, Text, Animated, Button, Dimensions } from 'react-native';
+import Emoji from 'react-native-emoji';
 
+const {width} = Dimensions.get('window');
 
 const SignupScreensView: FC = (props) => {
+
     return(
         <View>
-            <Text>Hello world</Text>
+            <Emoji name='slightly_smiling_face:' style={{fontSize: 40}} />
         </View>
     )
 };
