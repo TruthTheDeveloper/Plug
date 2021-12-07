@@ -5,7 +5,8 @@ import { View, Text } from 'react-native';
 const SignupScreensView: FC = (props) => {
     return(
         <View>
-            <Text>Hello monse</Text>
+            <Text>Hello world</Text>
+            <Text>Hello world</Text>
         </View>
     )
 };
