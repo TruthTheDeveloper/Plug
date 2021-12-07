@@ -1,3 +1,4 @@
 import LabeledInput from "./FormsComponent/LabeledInput";
+import SubmitButton from "./FormsComponent/SubmitButton";
 
-export {LabeledInput}
+export {LabeledInput, SubmitButton}

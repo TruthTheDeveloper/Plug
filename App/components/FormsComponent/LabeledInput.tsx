@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     },
     label: {
         fontWeight: '600',
-        fontSize: 20,
+        fontSize: 18,
         color: '#000',
         opacity: 0.7,
         paddingBottom: 5
