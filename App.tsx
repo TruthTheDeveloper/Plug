@@ -1,9 +1,14 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, View, StatusBar } from 'react-native';
 
-const App : React.FC = (props) => {
+import {WelcomeScreenContainer} from './App/screens/welcomeScreen';
+
+const App = () => {
   return (
-    <Text>Hello world</Text>
+    <View>
+        <StatusBar backgroundColor='#fff' barStyle='dark-content' />
+        <WelcomeScreenContainer />
+    </View>
   );
 }
 
