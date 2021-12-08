@@ -1,4 +1,6 @@
-import LabeledInput from "./FormsComponent/LabeledInput";
-import SubmitButton from "./FormsComponent/SubmitButton";
+/* eslint-disable prettier/prettier */
+import LabeledInput from './FormsComponent/LabeledInput';
+import SubmitButton from './FormsComponent/SubmitButton';
 
-export {LabeledInput, SubmitButton}
+
+export {LabeledInput, SubmitButton};
