@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   label: {
-    fontWeight: '400',
+    fontWeight: '300',
     fontSize: 18,
     color: '#000',
     opacity: 0.7,
