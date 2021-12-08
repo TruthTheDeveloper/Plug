@@ -1,17 +1,26 @@
 /* eslint-disable prettier/prettier */
 
-import React, {FC} from 'react';
+import React, {FC, useState, useEffect} from 'react';
 import {View, Text, TextInput, StyleSheet} from 'react-native';
 
 interface LabelProps {
   label: string;
 }
 
+
+
 const LabeledInput: FC<LabelProps> = (props): JSX.Element => {
+
+  const [username, setUsername]:any = useState('');
+
+  useEffect(() => {
+    console.log(username);
+  },[username]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{props.label}</Text>
-      <TextInput style={styles.input} />
+      <TextInput style={styles.input} onChangeText={(value:string) => setUsername(value)}/>
     </View>
   );
 };
@@ -37,7 +46,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     opacity: 0.8,
     color: '#000',
-    fontWeight: 'bold',
+    fontWeight: 'normal',
     fontSize: 17,
   },
 });

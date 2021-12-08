@@ -85,15 +85,15 @@ export const auth = (username, email, password, isSignup) => {
                 password: password,
             };
 
-            url = 'https://querybackendapi.herokuapp.com/api/account/register/';
+            url = 'https://findplug.herokuapp.com/signup';
 
         } else {
             authData = {
-                username:username,
+                username:email,
                 password: password,
             };
 
-            url = 'https://querybackendapi.herokuapp.com/api/account/';
+            url = 'https://findplug.herokuapp.com/login';
 
         }
 

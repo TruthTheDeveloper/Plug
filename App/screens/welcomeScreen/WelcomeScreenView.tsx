@@ -23,7 +23,7 @@ const WelcomeScreenView = () => {
       </View>
       <View style={styles.description}>
         <Text style={styles.descriptionText}>
-          Find roomates that matches you presonality
+          Find roomates easily with roomate sure Plug
         </Text>
       </View>
       <Form />
