@@ -1,15 +1,14 @@
 import React, { FC, useState } from 'react';
 import { View, Text, Animated, Button, Dimensions, StyleSheet } from 'react-native';
-import EmojiHeader from './components/EmojiHeader';
-import StatusBar from './components/StatusBar';
+
+import SignupScreen1 from './components/SignupScreen1';
 
 const SignupScreensView: FC = (props) => {
 
     return(
-        <View>
-            <EmojiHeader />
-            <StatusBar />
-        </View>
+        <>
+            <SignupScreen1 />
+        </>
     )
 };
 
