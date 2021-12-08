@@ -7,7 +7,7 @@ const App = () => {
   return (
     <View>
         <StatusBar backgroundColor='#fff' barStyle='dark-content' />
-        <SignupScreensContainer />
+        <WelcomeScreenContainer />
     </View>
   );
 }
