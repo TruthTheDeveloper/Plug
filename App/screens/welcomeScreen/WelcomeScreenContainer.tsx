@@ -1,10 +1,9 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
-import WelcomeScreenView from "./WelcomeScreenView";
+import WelcomeScreenView from './WelcomeScreenView';
 
 const WelcomeScreenContainer = () => {
-    return(
-        <WelcomeScreenView />
-    )
-}
+  return <WelcomeScreenView />;
+};
 
 export default WelcomeScreenContainer;
