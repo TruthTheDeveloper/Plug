@@ -2,12 +2,16 @@
 import React, {useEffect, useState} from 'react';
 import {Text, StyleSheet, Dimensions, Animated} from 'react-native';
 
-import {LabeledInput, SubmitButton, PasswordInput} from '../../../components/index';
+import {LabeledInput, SubmitButton} from '../../../components/index';
 
 const {width} = Dimensions.get('window');
 
 const SignupView = () => {
   const value = useState(new Animated.ValueXY({x: -width, y: 0}))[0];
+
+  const [username, setUsername]:any = useState();
+  const [email, setEmail]:any = useState();
+  const [password, setPassword]:any  = useState();
 
   useEffect(() => {
     Animated.timing(value, {
@@ -21,11 +25,10 @@ const SignupView = () => {
   return (
     <Animated.View style={value.getLayout()}>
       <Text style={styles.header}>Create an account</Text>
-      <LabeledInput label="Username" />
-      <LabeledInput label="Email" />
-      <PasswordInput label="Password"/>
-      {/* <passwordInput label="Password" /> */}
-      <SubmitButton label="Create account" />
+      <LabeledInput label="Username" type={false} setValue={(e) => setUsername(e)}/>
+      <LabeledInput label="Email" type={false} setValue={(e) => setEmail(e)}/>
+      <LabeledInput label="Password" type={true} setValue={(e) => setPassword(e)}/>
+      <SubmitButton label="Create account" username={username} email={email} password={password} signUp={true}/>
     </Animated.View>
   );
 };
