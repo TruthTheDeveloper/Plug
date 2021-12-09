@@ -1,20 +1,19 @@
-import React, { FC, useState } from 'react';
-import { View, Text, Animated, Button, Dimensions, StyleSheet } from 'react-native';
+/* eslint-disable prettier/prettier */
+import React, {FC} from 'react';
+import {
+  View,
+} from 'react-native';
+import EmojiHeader from './components/EmojiHeader';
+import StatusBar from './components/StatusBar';
 
-import SignupScreen1 from './components/SignupScreen1';
-import SignupScreen2 from './components/SignupScreen2';
-
-const SignupScreensView: FC = (props) => {
-
-    return(
-        <>
-            <SignupScreen2 />
-        </>
-    )
+const SignupScreensView: FC = () => {
+  return (
+    <View>
+      <EmojiHeader />
+      <StatusBar />
+    </View>
+  );
 };
 
-const styles = StyleSheet.create({
-    
-})
 
-export default SignupScreensView
+export default SignupScreensView;
