@@ -1,20 +1,42 @@
-import React from 'react';
-import { View, StyleSheet, Text, Dimensions } from 'react-native';
-
+import React, { FC } from 'react';
+import { View, StyleSheet, Text, Dimensions, TouchableWithoutFeedback } from 'react-native';
+import {university, college, polythecnic} from '../constants';
 const {width} = Dimensions.get('window');
 
-const InstitutionChecker = () => {
-    return (
-        <View style={styles.container}>
+interface institutionPorps {
+    active: string,
+    onChange: (e: string) => void
+}
+
+const InstitutionChecker: FC<institutionPorps> = (props): JSX.Element => {
+    const University = (
+        <TouchableWithoutFeedback onPress={() => props.onChange(university)}>
             <View style={styles.active}>
                 <Text style={styles.activeText}>University</Text>
             </View>
+        </TouchableWithoutFeedback>
+    );
+
+    const College = (
+        <TouchableWithoutFeedback onPress={() => props.onChange(college)}>
             <View style={styles.item}>
                 <Text style={styles.text}>College</Text>
             </View>
+        </TouchableWithoutFeedback>
+    );
+
+    const Polythecnic = (
+        <TouchableWithoutFeedback onPress={() => props.onChange(university)}>
             <View style={styles.item}>
                 <Text style={styles.text}>Polythecnic</Text>
             </View>
+        </TouchableWithoutFeedback>
+    )
+    return (
+        <View style={styles.container}>
+            {University}
+            {College}
+            {Polythecnic}
         </View>
     )
 }

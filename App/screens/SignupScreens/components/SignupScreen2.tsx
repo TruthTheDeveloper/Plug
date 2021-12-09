@@ -1,5 +1,6 @@
 import React, {FC} from 'react';
 import { View, Text, StyleSheet, Dimensions, Switch } from 'react-native';
+import Icons from 'react-native-vector-icons/Feather';
 
 import {SubmitButton, DropDownSelector} from '../../../components';
 
@@ -12,12 +13,18 @@ const {height, width} = Dimensions.get('window');
 const SignupScreen2 = () => {
     return(
         <View style={styles.container}>
-            <EmojiHeader />
+            <View style={styles.headerFlexer}>
+                <Icons name='chevron-left' color='#000' size={25} />
+                <EmojiHeader />
+            </View>
             <StatusBar />
             <Text style={styles.header}>Institution</Text>
-            <InstitutionChecker />
+            <InstitutionChecker active='null' />
             <View style={styles.formContainer}>
-                <DropDownSelector />
+                <DropDownSelector label='Select University' label2='Imo State University' />
+                <DropDownSelector label='Department' label2='Computer Science' />
+                <DropDownSelector label='Level' label2='400l' />
+                <SubmitButton label='Continue' />
             </View>
         </View>
     )
@@ -30,6 +37,12 @@ const styles = StyleSheet.create({
         height: height,
         width: '100%',
     },
+    headerFlexer: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginLeft: 15
+    },
     header: {
         fontWeight: 'bold',
         color: '#000',
@@ -40,6 +53,6 @@ const styles = StyleSheet.create({
     formContainer: {
         width: width - 30,
         marginLeft: 15,
-        paddingTop: 25
+        paddingTop: 15
     }
 })

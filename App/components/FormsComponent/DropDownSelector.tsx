@@ -1,20 +1,25 @@
-import React from 'react';
+import React, {FC} from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
-
-const Icon = require('react-native-vector-icons/AntDesign');
+import Icons from 'react-native-vector-icons/Feather';
 
 const {height, width} = Dimensions.get('window');
 
-const DropDownSelector = () => {
+interface modalProps {
+    label: string,
+    label2: string
+}
+
+
+const DropDownSelector: FC<modalProps> = (props): JSX.Element => {
     return (
         <View style={styles.container}>
-            <Text style={styles.label}>Select university</Text>
+            <Text style={styles.label}>{props.label}</Text>
             <View style={styles.dropDownSelector}>
                 <View style={styles.dropDownSeclectorF1}>
-                    <Text style={styles.text}>Imo state university</Text>
+                    <Text style={styles.text}>{props.label2}</Text>
                 </View>
                 <View style={styles.dropDownSeclectorF2}>
-                    <Icon name='down' />
+                    <Icons name='chevron-down' color='#000' size={25} />
                 </View>
             </View>
         </View>
@@ -24,6 +29,7 @@ const DropDownSelector = () => {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
+        paddingTop: 15
     },
     label: {
         fontWeight: '600',
@@ -51,6 +57,9 @@ const styles = StyleSheet.create({
     dropDownSeclectorF2: {
         height: '100%',
         width: 50,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent:'center'
     },
     text: {
         fontSize: 18,
