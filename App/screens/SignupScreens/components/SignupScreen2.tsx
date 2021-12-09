@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import { View, Text, StyleSheet, Dimensions, Switch } from 'react-native';
 
-import {LargeLabeledInput, AvailabilitySwitch, SexCheckbox, SubmitButton} from '../../../components';
+import {SubmitButton, DropDownSelector} from '../../../components';
 
 import EmojiHeader from './EmojiHeader';
 import StatusBar from './StatusBar';
@@ -16,6 +16,9 @@ const SignupScreen2 = () => {
             <StatusBar />
             <Text style={styles.header}>Institution</Text>
             <InstitutionChecker />
+            <View style={styles.formContainer}>
+                <DropDownSelector />
+            </View>
         </View>
     )
 };
@@ -33,5 +36,10 @@ const styles = StyleSheet.create({
         fontSize: 22,
         paddingTop: 15,
         paddingLeft: 15
+    },
+    formContainer: {
+        width: width - 30,
+        marginLeft: 15,
+        paddingTop: 25
     }
 })

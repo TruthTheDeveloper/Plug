@@ -3,11 +3,13 @@ import SubmitButton from "./FormsComponent/SubmitButton";
 import LargeLabeledInput from "./FormsComponent/LargeLabeledInput";
 import AvailabilitySwitch from "./FormsComponent/AvailabilitySwitch";
 import SexCheckbox from "./FormsComponent/SexCheckbox";
+import DropDownSelector from "./FormsComponent/DropDownSelector";
 
 export {
     LabeledInput, 
     SubmitButton, 
     LargeLabeledInput, 
     AvailabilitySwitch,
-    SexCheckbox
+    SexCheckbox,
+    DropDownSelector
 }
