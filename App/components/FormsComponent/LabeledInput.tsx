@@ -7,12 +7,13 @@ interface LabelProps {
   label: string;
   type:boolean,
   setValue:(e:string)=>void,
-  value:string
+  value:string,
+  validationError:string
 }
 
 
 
-const LabeledInput: FC<LabelProps> = ({label, type, setValue, value}): JSX.Element => {
+const LabeledInput: FC<LabelProps> = ({label, type, setValue, value, validationError}): JSX.Element => {
 
   const inputHandler = (e:string) => {
     setValue(e);
@@ -23,7 +24,8 @@ const LabeledInput: FC<LabelProps> = ({label, type, setValue, value}): JSX.Eleme
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
-      <TextInput value={value}  style={styles.input} secureTextEntry={type}  onChangeText={(e:string) => inputHandler(e)}/>
+      {/* <Text style={{color:'#FE1135'}}>{validationError}</Text> */}
+      <TextInput value={value} placeholder={validationError} placeholderTextColor={'#FE1135'}  style={styles.input} secureTextEntry={type}  onChangeText={(e:string) => inputHandler(e)}/>
     </View>
   );
 };

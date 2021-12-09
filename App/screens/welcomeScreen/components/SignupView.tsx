@@ -1,8 +1,12 @@
 /* eslint-disable prettier/prettier */
 import React, {useEffect, useState} from 'react';
 import {Text, StyleSheet, Dimensions, Animated} from 'react-native';
-
 import {LabeledInput, SubmitButton} from '../../../components/index';
+
+// Redux packages
+
+import { useSelector } from 'react-redux';
+
 
 const {width} = Dimensions.get('window');
 
@@ -28,12 +32,15 @@ const SignupView = () => {
     setPassword('');
   };
 
+  const authError = useSelector((state:any) => state.authReducer.error);
+  console.log(authError);
+
   return (
     <Animated.View style={value.getLayout()}>
       <Text style={styles.header}>Create an account</Text>
-      <LabeledInput label="Username" type={false} setValue={(e) => setUsername(e)} value={username}/>
-      <LabeledInput label="Email" type={false} setValue={(e) => setEmail(e)} value={email}/>
-      <LabeledInput label="Password" type={true} setValue={(e) => setPassword(e)} value={password}/>
+      <LabeledInput label="Username" type={false} setValue={(e) => setUsername(e)} value={username} validationError={authError === null ? '' : authError.username}/>
+      <LabeledInput label="Email" type={false} setValue={(e) => setEmail(e)} value={email} validationError={authError === null ? '' : authError.email}/>
+      <LabeledInput label="Password" type={true} setValue={(e) => setPassword(e)} value={password} validationError={authError === null ? '' : authError.password}/>
       <SubmitButton label="Create account" username={username} email={email} password={password} signUp={true} resetInput={setInputToEmpty}/>
     </Animated.View>
   );
