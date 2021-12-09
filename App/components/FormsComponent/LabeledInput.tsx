@@ -6,12 +6,13 @@ import {View, Text, TextInput, StyleSheet} from 'react-native';
 interface LabelProps {
   label: string;
   type:boolean,
-  setValue:(e:string)=>void
+  setValue:(e:string)=>void,
+  value:string
 }
 
 
 
-const LabeledInput: FC<LabelProps> = ({label, type, setValue}): JSX.Element => {
+const LabeledInput: FC<LabelProps> = ({label, type, setValue, value}): JSX.Element => {
 
   const inputHandler = (e:string) => {
     setValue(e);
@@ -22,7 +23,7 @@ const LabeledInput: FC<LabelProps> = ({label, type, setValue}): JSX.Element => {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
-      <TextInput style={styles.input} secureTextEntry={type}  onChangeText={(e:string) => inputHandler(e)}/>
+      <TextInput value={value}  style={styles.input} secureTextEntry={type}  onChangeText={(e:string) => inputHandler(e)}/>
     </View>
   );
 };

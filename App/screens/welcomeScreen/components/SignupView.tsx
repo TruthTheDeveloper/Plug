@@ -22,13 +22,19 @@ const SignupView = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const setInputToEmpty = () => {
+    setUsername('');
+    setEmail('');
+    setPassword('');
+  };
+
   return (
     <Animated.View style={value.getLayout()}>
       <Text style={styles.header}>Create an account</Text>
-      <LabeledInput label="Username" type={false} setValue={(e) => setUsername(e)}/>
-      <LabeledInput label="Email" type={false} setValue={(e) => setEmail(e)}/>
-      <LabeledInput label="Password" type={true} setValue={(e) => setPassword(e)}/>
-      <SubmitButton label="Create account" username={username} email={email} password={password} signUp={true}/>
+      <LabeledInput label="Username" type={false} setValue={(e) => setUsername(e)} value={username}/>
+      <LabeledInput label="Email" type={false} setValue={(e) => setEmail(e)} value={email}/>
+      <LabeledInput label="Password" type={true} setValue={(e) => setPassword(e)} value={password}/>
+      <SubmitButton label="Create account" username={username} email={email} password={password} signUp={true} resetInput={setInputToEmpty}/>
     </Animated.View>
   );
 };
