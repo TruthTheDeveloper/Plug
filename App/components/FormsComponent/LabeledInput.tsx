@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import {View, Text, TextInput, StyleSheet} from 'react-native';
 
 interface LabelProps {
@@ -14,18 +14,19 @@ interface LabelProps {
 
 
 const LabeledInput: FC<LabelProps> = ({label, type, setValue, value, validationError}): JSX.Element => {
+  const [border, setBorder] = useState('')
 
   const inputHandler = (e:string) => {
     setValue(e);
 
   };
 
-
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
-      {/* <Text style={{color:'#FE1135'}}>{validationError}</Text> */}
-      <TextInput value={value} placeholder={validationError} placeholderTextColor={'#FE1135'}  style={styles.input} secureTextEntry={type}  onChangeText={(e:string) => inputHandler(e)}/>
+      <Text style={{color:'#FE1135'}}>{validationError}</Text>
+      {validationError !== '' ? setBorder('#FE1135') : setBorder('')}
+      <TextInput value={value} style={[styles.input, {borderColor:border}]} secureTextEntry={type}  onChangeText={(e:string) => inputHandler(e)}/>
     </View>
   );
 };
