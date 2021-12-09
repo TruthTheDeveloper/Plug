@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 
+const Icon = require('react-native-vector-icons/AntDesign');
+
 const {height, width} = Dimensions.get('window');
 
 const DropDownSelector = () => {
@@ -11,7 +13,9 @@ const DropDownSelector = () => {
                 <View style={styles.dropDownSeclectorF1}>
                     <Text style={styles.text}>Imo state university</Text>
                 </View>
-                <View style={styles.dropDownSeclectorF2}></View>
+                <View style={styles.dropDownSeclectorF2}>
+                    <Icon name='down' />
+                </View>
             </View>
         </View>
     )
