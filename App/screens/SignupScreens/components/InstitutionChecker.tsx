@@ -1,7 +1,9 @@
 import React, { FC } from 'react';
 import { View, StyleSheet, Text, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import {university, college, polythecnic} from '../constants';
+
 const {width} = Dimensions.get('window');
+const innerWidth = (width - 30)/3;
 
 interface institutionPorps {
     active: string,
@@ -11,24 +13,24 @@ interface institutionPorps {
 const InstitutionChecker: FC<institutionPorps> = (props): JSX.Element => {
     const University = (
         <TouchableWithoutFeedback onPress={() => props.onChange(university)}>
-            <View style={styles.active}>
-                <Text style={styles.activeText}>University</Text>
+            <View style={ props.active === university ? styles.active : styles.item }>
+                <Text style={props.active === university ? styles.activeText : styles.text}>University</Text>
             </View>
         </TouchableWithoutFeedback>
     );
 
     const College = (
         <TouchableWithoutFeedback onPress={() => props.onChange(college)}>
-            <View style={styles.item}>
-                <Text style={styles.text}>College</Text>
+            <View style={props.active === college ? styles.active : styles.item}>
+                <Text style={props.active === college ? styles.activeText : styles.text}>College</Text>
             </View>
         </TouchableWithoutFeedback>
     );
 
     const Polythecnic = (
-        <TouchableWithoutFeedback onPress={() => props.onChange(university)}>
-            <View style={styles.item}>
-                <Text style={styles.text}>Polythecnic</Text>
+        <TouchableWithoutFeedback onPress={() => props.onChange(polythecnic)}>
+            <View style={props.active === polythecnic ? styles.active : styles.item}>
+                <Text style={props.active === polythecnic ? styles.activeText : styles.text}>Polythecnic</Text>
             </View>
         </TouchableWithoutFeedback>
     )
@@ -58,7 +60,7 @@ const styles = StyleSheet.create({
     },
     item: {
         height: '100%',
-        width: '33%',
+        width: innerWidth,
         backgroundColor: '#fff',
         display: 'flex',
         alignItems: 'center',
@@ -66,7 +68,7 @@ const styles = StyleSheet.create({
     },
     active: {
         height: '100%',
-        width: '33%',
+        width: innerWidth,
         backgroundColor: '#000',
         display: 'flex',
         alignItems: 'center',

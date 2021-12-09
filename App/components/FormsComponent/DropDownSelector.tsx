@@ -9,7 +9,6 @@ interface modalProps {
     label2: string
 }
 
-
 const DropDownSelector: FC<modalProps> = (props): JSX.Element => {
     return (
         <View style={styles.container}>

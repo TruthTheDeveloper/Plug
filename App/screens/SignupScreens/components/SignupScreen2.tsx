@@ -1,8 +1,9 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import { View, Text, StyleSheet, Dimensions, Switch } from 'react-native';
 import Icons from 'react-native-vector-icons/Feather';
+import {university, college, polythecnic} from '../constants';
 
-import {SubmitButton, DropDownSelector} from '../../../components';
+import {SubmitButton, Form1, Form2, Form3} from '../../../components';
 
 import EmojiHeader from './EmojiHeader';
 import StatusBar from './StatusBar';
@@ -11,6 +12,19 @@ import InstitutionChecker from './InstitutionChecker';
 const {height, width} = Dimensions.get('window');
 
 const SignupScreen2 = () => {
+    const [Institution, setInstitution] = useState(university);
+
+    const [details, setDetails] = useState();
+
+    let forms;
+    if(Institution === university){
+        forms = <Form1 />
+    }else if(Institution === college){
+        forms = <Form2 />
+    }else{
+        forms = <Form3 />
+    }
+
     return(
         <View style={styles.container}>
             <View style={styles.headerFlexer}>
@@ -19,11 +33,9 @@ const SignupScreen2 = () => {
             </View>
             <StatusBar />
             <Text style={styles.header}>Institution</Text>
-            <InstitutionChecker active='null' />
+            <InstitutionChecker active={Institution} onChange={(e) => setInstitution(e) } />
             <View style={styles.formContainer}>
-                <DropDownSelector label='Select University' label2='Imo State University' />
-                <DropDownSelector label='Department' label2='Computer Science' />
-                <DropDownSelector label='Level' label2='400l' />
+                {forms}
                 <SubmitButton label='Continue' />
             </View>
         </View>
