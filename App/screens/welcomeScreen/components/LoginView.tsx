@@ -2,11 +2,11 @@
 import React, {useEffect, useState} from 'react';
 import {Text, StyleSheet, Dimensions, Animated} from 'react-native';
 
-import {LabeledInput, SubmitButton} from '../../../components/index';
+import {LabeledInput, SubmitButton, PasswordInput} from '../../../components/index';
 
 const {width} = Dimensions.get('window');
 
-const LoginContainer = () => {
+const LoginView = () => {
   const value = useState(new Animated.ValueXY({x: width, y: 0}))[0];
 
   useEffect(() => {
@@ -21,13 +21,13 @@ const LoginContainer = () => {
     <Animated.View style={[value.getLayout(), styles.loginScreen]}>
       <Text style={styles.header}>Log in</Text>
       <LabeledInput label="Email" />
-      <LabeledInput label="Password" />
+      <PasswordInput label="Password" />
       <SubmitButton label="Log in" />
     </Animated.View>
   );
 };
 
-export default LoginContainer;
+export default LoginView;
 
 const styles = StyleSheet.create({
   header: {

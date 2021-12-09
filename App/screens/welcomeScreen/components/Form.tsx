@@ -3,8 +3,8 @@ import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, Dimensions, Animated} from 'react-native';
 
 import Link from './Link';
-import LoginContainer from './LoginContainer';
-import SignupContainer from './SignupContainer';
+import LoginView from './LoginView';
+import SignupView from './SignupView';
 
 const {width} = Dimensions.get('window');
 
@@ -32,7 +32,7 @@ const Form = () => {
 
   return (
     <View style={styles.container}>
-      {isSignup ? <SignupContainer /> : <LoginContainer />}
+      {isSignup ? <SignupView /> : <LoginView />}
       <Link toggle={toggle} label="don't have an account?" label2="Signup" />
     </View>
   );
