@@ -5,6 +5,7 @@ import {LargeLabeledInput, AvailabilitySwitch, SexCheckbox, SubmitButton} from '
 
 import EmojiHeader from './EmojiHeader';
 import StatusBar from './StatusBar';
+import InstitutionChecker from './InstitutionChecker';
 
 const {height, width} = Dimensions.get('window');
 
@@ -14,6 +15,7 @@ const SignupScreen2 = () => {
             <EmojiHeader />
             <StatusBar />
             <Text style={styles.header}>Institution</Text>
+            <InstitutionChecker />
         </View>
     )
 };
