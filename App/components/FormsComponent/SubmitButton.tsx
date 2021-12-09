@@ -10,14 +10,19 @@ interface ButtonProps {
   email:string;
   password:string;
   signUp:boolean;
+  resetInput:() => void;
 }
 
-const SubmitButton: FC<ButtonProps> = ({label, username, email, password, signUp}): JSX.Element => {
+const SubmitButton: FC<ButtonProps> = ({label, username, email, password, signUp, resetInput}): JSX.Element => {
   const dispath = useDispatch();
 
   const submitHandler = () => {
+    console.log('clicked')
     dispath(actions.auth(username, email, password, signUp));
+    resetInput();
   };
+
+
   return (
     <TouchableOpacity onPress={submitHandler}>
     <View style={styles.Container}>

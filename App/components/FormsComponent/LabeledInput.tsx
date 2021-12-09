@@ -1,31 +1,49 @@
 /* eslint-disable prettier/prettier */
-
 import React, {FC} from 'react';
 import {View, Text, TextInput, StyleSheet} from 'react-native';
 
 interface LabelProps {
   label: string;
   type:boolean,
-  setValue:(e:string)=>void
+  setValue:(e:string)=>void,
+  value:string,
+  validationError:string
+  borderC:(e:string) => void
+  border:string
 }
 
 
 
-const LabeledInput: FC<LabelProps> = ({label, type, setValue}): JSX.Element => {
+const LabeledInput: FC<LabelProps> = ({label, type, setValue, value, validationError, borderC, border}): JSX.Element => {
+  // const [border, setBorder] = useState('');
+
+  if (validationError !== ''){
+    borderC('#Fe1135');
+  } else {
+    borderC('');
+  }
 
   const inputHandler = (e:string) => {
     setValue(e);
 
   };
 
-
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
-      <TextInput style={styles.input} secureTextEntry={type}  onChangeText={(e:string) => inputHandler(e)}/>
+      {/* <Text style={validationStyle.validationColor}>{validationError}</Text> */}
+      {validationError !== '' ? <Text style={validationStyle.validationColor}>{validationError}</Text> : null}
+      {/* {validationError !== '' ? borderC = '#FE1135' : borderC=''} */}
+      <TextInput value={value} style={[styles.input, {borderColor:border}]} secureTextEntry={type}  onChangeText={(e:string) => inputHandler(e)}/>
     </View>
   );
 };
+
+const validationStyle = StyleSheet.create({
+  validationColor:{
+    color:'#FE1135',
+  },
+});
 
 const styles = StyleSheet.create({
   container: {
