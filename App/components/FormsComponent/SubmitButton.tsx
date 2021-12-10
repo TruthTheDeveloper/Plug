@@ -17,9 +17,11 @@ const SubmitButton: FC<ButtonProps> = ({label, username, email, password, signUp
   const dispath = useDispatch();
 
   const submitHandler = () => {
-    console.log('clicked')
+    console.log('clicked');
     dispath(actions.auth(username, email, password, signUp));
-    resetInput();
+    setTimeout(() => {
+      resetInput();
+    },1500);
   };
 
 
