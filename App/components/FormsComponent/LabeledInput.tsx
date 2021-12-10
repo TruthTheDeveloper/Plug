@@ -20,7 +20,7 @@ const LabeledInput: FC<LabelProps> = ({label, type, setValue, value, validationE
   if (validationError !== ''){
     borderC('#Fe1135');
   } else {
-    borderC('');
+    borderC('#000');
   }
 
   const inputHandler = (e:string) => {
@@ -61,7 +61,6 @@ const styles = StyleSheet.create({
     height: 37,
     width: '100%',
     borderWidth: 1,
-    borderColor: '#000',
     borderRadius: 5,
     paddingLeft: 10,
     opacity: 0.8,
