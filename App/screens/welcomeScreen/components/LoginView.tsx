@@ -12,6 +12,7 @@ const LoginView = () => {
 
   const [email, setEmail]:any = useState();
   const [password, setPassword]:any  = useState();
+   const [borderColor, setBorderColor]:any = useState();
 
 
   useEffect(() => {
@@ -32,8 +33,8 @@ const LoginView = () => {
   return (
     <Animated.View style={[value.getLayout(), styles.loginScreen]}>
       <Text style={styles.header}>Log in</Text>
-      <LabeledInput label="Email" type={false} setValue={(e) => setEmail(e)} value={email} validationError={authError.email}/>
-      <LabeledInput label="Password" type={true} setValue={(e) => setPassword(e)} value={password} validationError={authError.password}/>
+      <LabeledInput label="Email" type={false} setValue={(e) => setEmail(e)} value={email} validationError={authError === null ? '' : authError.email} borderC={(e:string) => setBorderColor(e)} border={borderColor}/>
+      <LabeledInput label="Password" type={true} setValue={(e) => setPassword(e)} value={password} validationError={authError === null ? '' : authError.password} borderC={(e:string) => setBorderColor(e)} border={borderColor}/>
       <SubmitButton label="Log in" email={email} password={password} signUp={false} resetInput={setInputToEmpty} username={''}/>
     </Animated.View>
   );
