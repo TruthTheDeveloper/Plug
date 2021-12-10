@@ -19,7 +19,7 @@ const SignupScreen1 = () => {
                 <LargeLabeledInput label='Description (optional)'/>
                 <AvailabilitySwitch />
                 <SexCheckbox />
-                <SubmitButton label='Continue' />
+                <SubmitButton label='Continue' username='' password='' email='' resetInput={() => null} signUp={false} />
             </View>
         </View>
     )
