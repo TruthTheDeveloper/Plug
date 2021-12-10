@@ -8,20 +8,19 @@ interface LabelProps {
   setValue:(e:string)=>void,
   value:string,
   validationError:string
-  borderC:(e:string) => void
   border:string
 }
 
 
 
-const LabeledInput: FC<LabelProps> = ({label, type, setValue, value, validationError, borderC, border}): JSX.Element => {
+const LabeledInput: FC<LabelProps> = ({label, type, setValue, value, validationError, border}): JSX.Element => {
   // const [border, setBorder] = useState('');
 
-  if (validationError !== ''){
-    borderC('#Fe1135');
-  } else {
-    borderC('#000');
-  }
+  // if (validationError !== ''){
+  //   borderC('#Fe1135');
+  // } else {
+  //   borderC('#000');
+  // }
 
   const inputHandler = (e:string) => {
     setValue(e);
@@ -61,6 +60,7 @@ const styles = StyleSheet.create({
     height: 37,
     width: '100%',
     borderWidth: 1,
+    // borderColor: '#000',
     borderRadius: 5,
     paddingLeft: 10,
     opacity: 0.8,

@@ -12,7 +12,7 @@ const LoginView = () => {
 
   const [email, setEmail]:any = useState();
   const [password, setPassword]:any  = useState();
-   const [borderColor, setBorderColor]:any = useState();
+  const [border, setBorder]:any = useState('#000');
 
 
   useEffect(() => {
@@ -30,11 +30,17 @@ const LoginView = () => {
 
   const authError = useSelector((state:any) => state.authReducer.error);
 
+  useEffect(() => {
+    if (authError !== null){
+      setBorder('#Fe1135');
+    }
+  },[authError]);
+
   return (
     <Animated.View style={[value.getLayout(), styles.loginScreen]}>
       <Text style={styles.header}>Log in</Text>
-      <LabeledInput label="Email" type={false} setValue={(e) => setEmail(e)} value={email} validationError={authError === null ? '' : authError.email} borderC={(e:string) => setBorderColor(e)} border={borderColor}/>
-      <LabeledInput label="Password" type={true} setValue={(e) => setPassword(e)} value={password} validationError={authError === null ? '' : authError.password} borderC={(e:string) => setBorderColor(e)} border={borderColor}/>
+      <LabeledInput label="Email" type={false} setValue={(e) => setEmail(e)} value={email} validationError={authError === null ? '' : authError.email}  border={border}/>
+      <LabeledInput label="Password" type={true} setValue={(e) => setPassword(e)} value={password} validationError={authError === null ? '' : authError.password}  border={border}/>
       <SubmitButton label="Log in" email={email} password={password} signUp={false} resetInput={setInputToEmpty} username={''}/>
     </Animated.View>
   );
