@@ -36,7 +36,7 @@ const SignupScreen2 = () => {
             <InstitutionChecker active={Institution} onChange={(e) => setInstitution(e) } />
             <View style={styles.formContainer}>
                 {forms}
-                <SubmitButton label='Continue' />
+                <SubmitButton label='Continue' username='' password='' email='' resetInput={() => null} signUp={false} />
             </View>
         </View>
     )
