@@ -3,14 +3,16 @@ import React, {FC} from 'react';
 import {
   View,
 } from 'react-native';
+
+
 import EmojiHeader from './components/EmojiHeader';
-import SignupScreen2 from './components/SignupScreen2';
+import SignupScreen3 from './components/SignupScreen3';
 import StatusBar from './components/StatusBar';
 
 const SignupScreensView: FC = () => {
   return (
     <View>
-      <SignupScreen2 />
+      <SignupScreen3 />
     </View>
   );
 };
