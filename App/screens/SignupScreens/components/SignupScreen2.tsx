@@ -1,9 +1,10 @@
 import React, {FC, useState} from 'react';
 import { View, Text, StyleSheet, Dimensions, Switch } from 'react-native';
 import Icons from 'react-native-vector-icons/Feather';
-import {university, college, polythecnic} from '../constants';
 
-import {SubmitButton, Form1, Form2, Form3} from '../../../components';
+import {university, college, polythecnic} from '../constants';
+import {SubmitButton, Form1, Form2, Form3, Modal} from '../../../components';
+import {CollegeList, uniList} from '../../../components/InstitutionComponents/ListOfInstitutions';
 
 import EmojiHeader from './EmojiHeader';
 import StatusBar from './StatusBar';
@@ -15,13 +16,20 @@ const {height, width} = Dimensions.get('window');
 const SignupScreen2 = () => {
     const [Institution, setInstitution] = useState(university);
 
-    const [details, setDetails] = useState();
+    const [List, setList] = useState <any | null> (null);
+
+    const Unisetter = (e: string) => {
+        if(e === 'CollgeList'){
+            setList(CollegeList);
+            console.log(List)
+        }
+    }
 
     let forms;
     if(Institution === university){
         forms = <Form1 />
     }else if(Institution === college){
-        forms = <Form2 />
+        forms = <Form2 onSelect={Unisetter} />
     }else{
         forms = <Form3 />
     }
@@ -39,6 +47,7 @@ const SignupScreen2 = () => {
                 {forms}
                 <ContinueButton label='Continue' />
             </View>
+            <Modal packages={CollegeList} />
         </View>
     )
 };
