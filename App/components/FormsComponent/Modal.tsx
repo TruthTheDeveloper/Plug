@@ -3,12 +3,12 @@ import { View, Text, StyleSheet, Dimensions } from 'react-native';
 
 const Modal = () => {
     return(
-        <View></View>
+        <View style={styles.container}></View>
     )
 };
 
 const styles = StyleSheet.create({
     container: {
-        
+
     }
 })
