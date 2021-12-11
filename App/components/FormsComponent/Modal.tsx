@@ -29,7 +29,7 @@ const Modal: FC<PackageData> = ({packages}): JSX.Element => {
         <View style={styles.container}>
             <View style={styles.mainModal}>
                 <ScrollView>
-                    {mapPackages}
+                    
                 </ScrollView>
             </View>
         </View>
