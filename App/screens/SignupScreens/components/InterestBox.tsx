@@ -13,9 +13,8 @@ const InterestBox: FC <InterestProps> = ({small, name,postInterest}): JSX.Elemen
     const [selected, setSelected] = useState(false);
 
     const addInterest = () => {
-        // setSelected(true);
-        // postInterest(name);
-        console.log('hEOOLO')
+        setSelected(true);
+        postInterest(name);
     }
 
     const removeInterest = () => {

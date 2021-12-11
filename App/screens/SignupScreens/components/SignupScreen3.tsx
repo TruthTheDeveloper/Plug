@@ -18,7 +18,7 @@ const SignupScreen3 = () => {
         const result:any[] = interests;
         const newResult = result.push(e);
         setInterests(newResult);
-        console.log(interests);
+        console.log(newResult + ' hello')
     }
 
     //Interest Containers
