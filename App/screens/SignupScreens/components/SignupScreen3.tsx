@@ -12,10 +12,13 @@ const {height, width} = Dimensions.get('window');
 
 const SignupScreen3 = () => {
 
-    const [interests, setInterests] = useState({});
+    const [interests, setInterests] =  useState <any | null> ([]);
 
     const addInterest = (e: string) => {
-        setInterests({...interests, e})
+        const result:any[] = interests;
+        const newResult = result.push(e);
+        setInterests(newResult);
+        console.log(interests);
     }
 
     //Interest Containers
@@ -23,28 +26,28 @@ const SignupScreen3 = () => {
         <View style={styles.interestFlex}>
             <InterestBox interests={interests} small={false} name='Politics' postInterest={addInterest} />
             <View style={styles.gap}/>
-            <InterestBox interests={interests} small name='Books' />
+            <InterestBox interests={interests} small name='Books' postInterest={addInterest} />
         </View>
     )
     const div2 = (
         <View style={styles.interestFlex}>
-            <InterestBox interests={interests} small={true} name='Sports' />
+            <InterestBox interests={interests} small={true} name='Sports' postInterest={addInterest} />
             <View  style={styles.gap}/>
-            <InterestBox interests={interests} small={false} name='Fashion' />
+            <InterestBox interests={interests} small={false} name='Fashion' postInterest={addInterest} />
         </View>
     )
     const div3 = (
         <View style={styles.interestFlex}>
-            <InterestBox interests={interests} small={false} name='Parties' />
+            <InterestBox interests={interests} small={false} name='Parties' postInterest={addInterest} />
             <View  style={styles.gap}/>
-            <InterestBox interests={interests} small name='Movies' />
+            <InterestBox interests={interests} small name='Movies' postInterest={addInterest} />
         </View>
     )
     const div4 = (
         <View style={styles.interestFlex}>
-            <InterestBox interests={interests} small={true} name='Music' />
+            <InterestBox interests={interests} small={true} name='Music' postInterest={addInterest} />
             <View  style={styles.gap}/>
-            <InterestBox interests={interests} small={false} name='Religion' />
+            <InterestBox interests={interests} small={false} name='Religion' postInterest={addInterest} />
         </View>
     )
     

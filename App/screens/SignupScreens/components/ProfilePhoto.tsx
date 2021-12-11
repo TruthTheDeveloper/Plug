@@ -1,13 +1,15 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 
 import Icons from 'react-native-vector-icons/Feather';
 
 const ProfilePhoto = () => {
     return(
-        <View style={styles.container}>
-            <Icons name='camera' color='#000' size={22} style={styles.icon} />
-        </View>
+        <TouchableWithoutFeedback onPress={() => console.log('Hello panda')}>
+            <View style={styles.container}>
+                <Icons name='camera' color='#000' size={22} style={styles.icon} />
+            </View>
+        </TouchableWithoutFeedback>
     )
 };
 

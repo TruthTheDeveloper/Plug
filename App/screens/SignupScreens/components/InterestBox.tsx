@@ -13,8 +13,9 @@ const InterestBox: FC <InterestProps> = ({small, name,postInterest}): JSX.Elemen
     const [selected, setSelected] = useState(false);
 
     const addInterest = () => {
-        setSelected(true);
-        postInterest(name);
+        // setSelected(true);
+        // postInterest(name);
+        console.log('hEOOLO')
     }
 
     const removeInterest = () => {
@@ -67,7 +68,8 @@ const styles = StyleSheet.create({
         opacity: 0.7
     },
     whiteText: {
-        color: '#fff'
+        color: '#fff',
+        opacity: 1
     }
 })
 
