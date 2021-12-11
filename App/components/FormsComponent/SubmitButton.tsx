@@ -25,9 +25,9 @@ const SubmitButton: FC<ButtonProps> = ({label, username, email, password, signUp
 
   return (
     <TouchableOpacity onPress={submitHandler}>
-    <View style={styles.Container}>
-      <Text style={styles.text}>{label}</Text>
-    </View>
+      <View style={styles.Container}>
+        <Text style={styles.text}>{label}</Text>
+      </View>
     </TouchableOpacity>
   );
 };

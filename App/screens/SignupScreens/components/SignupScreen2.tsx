@@ -8,6 +8,7 @@ import {SubmitButton, Form1, Form2, Form3} from '../../../components';
 import EmojiHeader from './EmojiHeader';
 import StatusBar from './StatusBar';
 import InstitutionChecker from './InstitutionChecker';
+import ContinueButton from './ContinueButton';
 
 const {height, width} = Dimensions.get('window');
 
@@ -36,7 +37,7 @@ const SignupScreen2 = () => {
             <InstitutionChecker active={Institution} onChange={(e) => setInstitution(e) } />
             <View style={styles.formContainer}>
                 {forms}
-                <SubmitButton label='Continue' username='' password='' email='' resetInput={() => null} signUp={false} />
+                <ContinueButton label='Continue' />
             </View>
         </View>
     )

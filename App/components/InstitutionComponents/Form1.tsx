@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import { Animated, Dimensions } from 'react-native';
 
-import {DropDownSelector} from '../index';
+import {DropDownSelector, LabeledInput} from '../index';
+import {CollegeList} from './ListOfInstitutions';
 
 const {width} = Dimensions.get('window');
 
@@ -14,14 +15,20 @@ const Form1 = () => {
             duration: 300,
             useNativeDriver: false
         }).start()
-    },[])
+    },[]);
+
+    // const modal = (
+
+    // )
 
     return(
-        <Animated.View style={value.getLayout()}>
-                <DropDownSelector label='Select University' label2='Imo State University' />
-                <DropDownSelector label='Department' label2='Computer Science' />
-                <DropDownSelector label='Level' label2='400l' />
-        </Animated.View>
+        <>
+            <Animated.View style={value.getLayout()}>
+                    <DropDownSelector label='Select University' label2='Imo State University' />
+                    <LabeledInput label='Department' type={false} validationError='' value='' border='' borderC={(e: string) => console.log(e) } setValue={(e: string) => console.log(e)}  />
+                    <LabeledInput label='Level' type={false} validationError='' value='' border='' borderC={(e: string) => console.log(e) } setValue={(e: string) => console.log(e)}  />
+            </Animated.View>
+        </>
     )
 };
 

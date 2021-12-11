@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { Animated, Dimensions } from 'react-native';
 
-import {DropDownSelector} from '../index';
+import {DropDownSelector, LabeledInput} from '../index';
 
 const {width} = Dimensions.get('window');
 
@@ -19,8 +19,8 @@ const Form2 = () => {
     return(
         <Animated.View style={value.getLayout()}>
                 <DropDownSelector label='Select College' label2='Alvan Ikoku College' />
-                <DropDownSelector label='Department' label2='Computer Science' />
-                <DropDownSelector label='Level' label2='400l' />
+                <LabeledInput label='Department' type={false} validationError='' value='' border='' borderC={(e: string) => console.log(e) } setValue={(e: string) => console.log(e)}  />
+                <LabeledInput label='Level' type={false} validationError='' value='' border='' borderC={(e: string) => console.log(e) } setValue={(e: string) => console.log(e)}  />
         </Animated.View>
     )
 };
