@@ -17,10 +17,6 @@ const Form1 = () => {
         }).start()
     },[]);
 
-    // const modal = (
-
-    // )
-
     return(
         <>
             <Animated.View style={value.getLayout()}>
