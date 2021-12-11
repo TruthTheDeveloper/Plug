@@ -7,11 +7,22 @@ const {width} = Dimensions.get('window');
 
 interface ModalProps {
     onSelect: () => void,
-    name: any
+    onChangeDept: (e: string) => void,
+    onChangeLev: (e: string) => void,
+    name: any,
+    department: any,
+    level: any
 }
 
-const Form2:FC<ModalProps> = ({onSelect, name}):JSX.Element => {
-    const value = useState(new Animated.ValueXY({x: width/2, y: 0}))[0]
+const Form2:FC<ModalProps> = ({onSelect, name, department, level, onChangeDept, onChangeLev}):JSX.Element => {
+    const value = useState(new Animated.ValueXY({x: width/2, y: 0}))[0];
+
+    let newName = name
+    if(name){
+        if(name.length > 30){
+            newName = name.substring(0, 28) + '...'
+        }
+    }
 
     useEffect(() => {
         Animated.timing(value, {
@@ -21,13 +32,11 @@ const Form2:FC<ModalProps> = ({onSelect, name}):JSX.Element => {
         }).start()
     },[]);
 
-    console.log(name)
-
     return(
         <Animated.View style={value.getLayout()}>
-                <DropDownSelector label='Select College' label2={name} onClick={onSelect} />
-                <LabeledInput label='Department' type={false} validationError='' value='' border='' borderC={(e: string) => console.log(e) } setValue={(e: string) => console.log(e)}  />
-                <LabeledInput label='Level' type={false} validationError='' value='' border='' borderC={(e: string) => console.log(e) } setValue={(e: string) => console.log(e)}  />
+                <DropDownSelector label='Select College' label2={name ? newName : 'Alvan Ikoku University' } onClick={onSelect} />
+                <LabeledInput label='Department' type={false} validationError='' value={department} border='' borderC={(e: string) => console.log(e) } setValue={(e: string) => onChangeDept(e)}  />
+                    <LabeledInput label='Level' type={false} validationError='' value={level} border='' borderC={(e: string) => console.log(e) } setValue={(e: string) => onChangeLev(e)}  />
         </Animated.View>
     )
 };

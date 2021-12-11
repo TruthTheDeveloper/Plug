@@ -17,23 +17,44 @@ const SignupScreen2 = () => {
     const [Institution, setInstitution] = useState(university);
 
     const [universityName, setUniversity] = useState();
-    const [collegeName, setCollege] = useState();
-    const [polythecnicName, setPolythecnic] = useState();
+    const [department, setDepartment] = useState();
+    const [level, setLevel] = useState();
 
     const [List, setList] = useState <any | null> (null);
 
     let forms;
     if(Institution === university){
-        forms = <Form1 onSelect={() => setList(CollegeList)} />
+        forms = <Form1 
+                    onSelect={() => setList(CollegeList)} 
+                    name={universityName} 
+                    department={department}
+                    level={level}
+                    onChangeDept={(e: any) => setDepartment(e)}
+                    onChangeLev={(e: any) => setLevel(e)}
+                />
     }else if(Institution === college){
-        forms = <Form2 onSelect={() => setList(CollegeList)} name={collegeName} />
+        forms = <Form2 onSelect={() => setList(CollegeList)} 
+                    name={universityName} 
+                    department={department}
+                    level={level}
+                    onChangeDept={(e: any) => setDepartment(e)}
+                    onChangeLev={(e: any) => setLevel(e)}
+                />
     }else{
-        forms = <Form3 onSelect={() => setList(PolyList)} />
+        forms = <Form3 onSelect={() => setList(PolyList)} 
+                    name={universityName} 
+                    department={department}
+                    level={level}
+                    onChangeDept={(e: any) => setDepartment(e)}
+                    onChangeLev={(e: any) => setLevel(e)}
+                />
     };
 
     const onSelect = (e: any) => {
         setList(null);
-        console.log(e)
+        setTimeout(() => {
+            setUniversity(e)
+        }, 100)
     }
 
     return(

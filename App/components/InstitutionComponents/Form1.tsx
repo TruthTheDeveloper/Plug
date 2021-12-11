@@ -6,11 +6,23 @@ import {DropDownSelector, LabeledInput} from '../index';
 const {width} = Dimensions.get('window');
 
 interface ModalProps {
-    onSelect: () => void
+    onSelect: () => void,
+    onChangeDept: (e: string) => void,
+    onChangeLev: (e: string) => void,
+    name: any,
+    department: any,
+    level: any
 }
 
-const Form1:FC<ModalProps> = ({onSelect}):JSX.Element => {
-    const value = useState(new Animated.ValueXY({x: width/2, y: 0}))[0]
+const Form1:FC<ModalProps> = ({onSelect, name, department, level, onChangeDept, onChangeLev}):JSX.Element => {
+    const value = useState(new Animated.ValueXY({x: width/2, y: 0}))[0];
+
+    let newName = name
+    if(name){
+        if(name.length > 30){
+            newName = name.substring(0, 28) + '...'
+        }
+    }
 
     useEffect(() => {
         Animated.timing(value, {
@@ -23,9 +35,9 @@ const Form1:FC<ModalProps> = ({onSelect}):JSX.Element => {
     return(
         <>
             <Animated.View style={value.getLayout()}>
-                    <DropDownSelector label='Select University' label2='Imo State University' onClick={onSelect}/>
-                    <LabeledInput label='Department' type={false} validationError='' value='' border='' borderC={(e: string) => console.log(e) } setValue={(e: string) => console.log(e)}  />
-                    <LabeledInput label='Level' type={false} validationError='' value='' border='' borderC={(e: string) => console.log(e) } setValue={(e: string) => console.log(e)}  />
+                    <DropDownSelector label='Select University' label2={name ? newName : 'Imo state university' } onClick={onSelect}/>
+                    <LabeledInput label='Department' type={false} validationError='' value={department} border='' borderC={(e: string) => console.log(e) } setValue={(e: string) => onChangeDept(e)}  />
+                    <LabeledInput label='Level' type={false} validationError='' value={level} border='' borderC={(e: string) => console.log(e) } setValue={(e: string) => onChangeLev(e)}  />
             </Animated.View>
         </>
     )
