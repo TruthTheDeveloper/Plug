@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { Animated, Dimensions } from 'react-native';
 
-import {DropDownSelector, LabeledInput} from '../index';
+import {DropDownSelector, LabeledInput, Modal} from '../index';
 import {CollegeList} from './ListOfInstitutions';
 
 const {width} = Dimensions.get('window');
