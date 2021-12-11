@@ -1,19 +1,35 @@
-import React from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import React, { FC, useState } from 'react';
+import { View, Text, StyleSheet, Dimensions, TouchableWithoutFeedback } from 'react-native';
+
+import {red} from '../../config/colors';
 
 const {width} = Dimensions.get('window');
 const newWidth = width - 60;
 
-const ModalItem = () => {
+interface ModalProps {
+    name: string,
+    onSelect: (e: any) => void
+}
+
+const ModalItem: FC<ModalProps> = ({name, onSelect}):JSX.Element => {
+    const [selelcted, setSelected] = useState(false);
+
+    const onClick = () => {
+        setSelected(true);
+        onSelect(name)
+    }
+
     return(
-        <View style={styles.container}>
-            <View style={styles.textContainer}>
-                <Text style={styles.text}>Imo state university, Owerri</Text>
+        <TouchableWithoutFeedback onPress={onClick} >
+            <View style={styles.container}>
+                <View style={styles.textContainer}>
+                    <Text style={styles.text}>{name}</Text>
+                </View>
+                <View style={styles.CheckContainer}>
+                    <View style={selelcted ? styles.redCircle : styles.circle}></View>
+                </View>
             </View>
-            <View style={styles.CheckContainer}>
-                <View style={styles.circle}></View>
-            </View>
-        </View>
+        </TouchableWithoutFeedback>
     )
 };
 
@@ -46,6 +62,12 @@ const styles = StyleSheet.create({
         width: 20,
         borderWidth: 1,
         borderColor: '#a0a0a0',
+        borderRadius: 20
+    },
+    redCircle: {
+        height: 20,
+        width: 20,
+        backgroundColor: red,
         borderRadius: 20
     }
 });

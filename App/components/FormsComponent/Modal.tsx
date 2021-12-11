@@ -6,30 +6,19 @@ import {ModalItem} from '../index'
 const {height, width} = Dimensions.get('window');
 
 interface PackageData {
-    packages: {[index: string]:any}
+    packages: {[index: string]:any},
+    onSelect: (e: any) => void
  }
 
-const Modal: FC<PackageData> = ({packages}): JSX.Element => {
-
-    useEffect(() => {
-        mapPackages();
-    }, []);
-
-    const mapPackages = (pkg = packages) => {
-        for(const i in pkg){
-            const obj = pkg[i]
-            const name = obj[Object.keys(obj)[0]];
-            return(
-                <ModalItem />
-            )
-        }
-    }
+const Modal: FC<PackageData> = ({packages, onSelect}): JSX.Element => {
 
     return(
         <View style={styles.container}>
             <View style={styles.mainModal}>
                 <ScrollView>
-                    
+                    {packages.map((i: any, num: any) => (
+                        <ModalItem name={i[Object.keys(i)[0]]} key={num} onSelect={onSelect} />
+                    ))}
                 </ScrollView>
             </View>
         </View>

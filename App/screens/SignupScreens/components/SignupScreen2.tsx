@@ -4,7 +4,7 @@ import Icons from 'react-native-vector-icons/Feather';
 
 import {university, college, polythecnic} from '../constants';
 import {SubmitButton, Form1, Form2, Form3, Modal} from '../../../components';
-import {CollegeList, uniList} from '../../../components/InstitutionComponents/ListOfInstitutions';
+import {CollegeList, uniList, PolyList} from '../../../components/InstitutionComponents/ListOfInstitutions';
 
 import EmojiHeader from './EmojiHeader';
 import StatusBar from './StatusBar';
@@ -16,22 +16,24 @@ const {height, width} = Dimensions.get('window');
 const SignupScreen2 = () => {
     const [Institution, setInstitution] = useState(university);
 
-    const [List, setList] = useState <any | null> (null);
+    const [universityName, setUniversity] = useState();
+    const [collegeName, setCollege] = useState();
+    const [polythecnicName, setPolythecnic] = useState();
 
-    const Unisetter = (e: string) => {
-        if(e === 'CollgeList'){
-            setList(CollegeList);
-            console.log(List)
-        }
-    }
+    const [List, setList] = useState <any | null> (null);
 
     let forms;
     if(Institution === university){
-        forms = <Form1 />
+        forms = <Form1 onSelect={() => setList(CollegeList)} />
     }else if(Institution === college){
-        forms = <Form2 onSelect={Unisetter} />
+        forms = <Form2 onSelect={() => setList(CollegeList)} name={collegeName} />
     }else{
-        forms = <Form3 />
+        forms = <Form3 onSelect={() => setList(PolyList)} />
+    };
+
+    const onSelect = (e: any) => {
+        setList(null);
+        console.log(e)
     }
 
     return(
@@ -47,7 +49,7 @@ const SignupScreen2 = () => {
                 {forms}
                 <ContinueButton label='Continue' />
             </View>
-            <Modal packages={CollegeList} />
+            {List && <Modal packages={List} onSelect={onSelect} /> }
         </View>
     )
 };
