@@ -1,43 +1,95 @@
 import React, {FC, useState} from 'react';
-import { View, Text, StyleSheet, Dimensions, Switch } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, Switch, TouchableWithoutFeedback } from 'react-native';
 import Icons from 'react-native-vector-icons/Feather';
-import {university, college, polythecnic} from '../constants';
+import * as actionTypes from '../../../redux/actions/actionTypes';
+import { useSelector, useDispatch } from 'react-redux';
 
-import {SubmitButton, Form1, Form2, Form3} from '../../../components';
+import {university, college, polythecnic} from '../constants';
+import {SubmitButton, Form1, Form2, Form3, Modal} from '../../../components';
+import {CollegeList, uniList, PolyList} from '../../../components/InstitutionComponents/ListOfInstitutions';
 
 import EmojiHeader from './EmojiHeader';
 import StatusBar from './StatusBar';
 import InstitutionChecker from './InstitutionChecker';
+import ContinueButton from './ContinueButton';
 
 const {height, width} = Dimensions.get('window');
 
 const SignupScreen2 = () => {
     const [Institution, setInstitution] = useState(university);
 
-    const [details, setDetails] = useState();
+    const [universityName, setUniversity] = useState();
+    const [department, setDepartment] = useState();
+    const [level, setLevel] = useState();
+
+    const [List, setList] = useState <any | null> (null);
+
+    const [loading, setLoading] = useState(false)
 
     let forms;
     if(Institution === university){
-        forms = <Form1 />
+        forms = <Form1 
+                    onSelect={() => setList(CollegeList)} 
+                    name={universityName} 
+                    department={department}
+                    level={level}
+                    onChangeDept={(e: any) => setDepartment(e)}
+                    onChangeLev={(e: any) => setLevel(e)}
+                />
     }else if(Institution === college){
-        forms = <Form2 />
+        forms = <Form2 onSelect={() => setList(CollegeList)} 
+                    name={universityName} 
+                    department={department}
+                    level={level}
+                    onChangeDept={(e: any) => setDepartment(e)}
+                    onChangeLev={(e: any) => setLevel(e)}
+                />
     }else{
-        forms = <Form3 />
+        forms = <Form3 onSelect={() => setList(PolyList)} 
+                    name={universityName} 
+                    department={department}
+                    level={level}
+                    onChangeDept={(e: any) => setDepartment(e)}
+                    onChangeLev={(e: any) => setLevel(e)}
+                />
+    };
+
+    const onSelect = (e: any) => {
+        setList(null);
+        setTimeout(() => {
+            setUniversity(e)
+        }, 100)
+    }
+
+    const dispatch = useDispatch()
+
+    const next = () => {
+        setLoading(true)
+        dispatch({type: actionTypes.SCREEN3})
+    }
+
+    const back = () => {
+        dispatch({type: actionTypes.SCREEN1})
     }
 
     return(
         <View style={styles.container}>
             <View style={styles.headerFlexer}>
-                <Icons name='chevron-left' color='#000' size={25} />
-                <EmojiHeader />
+                <TouchableWithoutFeedback onPress={back}>
+                    <View style={{paddingRight: 20}}>
+                        <Icons name='chevron-left' color='#000' size={25} />
+                    </View>
+                </TouchableWithoutFeedback>
+                <EmojiHeader page={2} />
             </View>
-            <StatusBar />
+            <StatusBar page={2} />
             <Text style={styles.header}>Institution</Text>
             <InstitutionChecker active={Institution} onChange={(e) => setInstitution(e) } />
             <View style={styles.formContainer}>
                 {forms}
-                <SubmitButton label='Continue' />
+                <ContinueButton label='Continue' continue={next} loading={loading}/>
             </View>
+            {List && <Modal packages={List} onSelect={onSelect} /> }
         </View>
     )
 };

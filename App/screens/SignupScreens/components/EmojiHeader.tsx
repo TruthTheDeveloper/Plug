@@ -2,15 +2,27 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 
-import React from 'react';
+import React, {FC} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import Emoji from 'react-native-emoji';
 
-const EmojiHeader = () => {
+interface statusBarProps{
+  page: number
+}
+
+const EmojiHeader:FC<statusBarProps>  = ({page}):JSX.Element => {
+
+  let text = 'Get started';
+  if(page === 2){
+    text = 'Almost there'
+  }else if(page === 3){
+    text = 'Finish up'
+  }
+
   return (
     <View style={styles.header}>
       <Emoji name="slightly_smiling_face" style={{fontSize: 27}} />
-      <Text style={styles.text}>Get started</Text>
+      <Text style={styles.text}>{text}</Text>
     </View>
   );
 };
@@ -21,7 +33,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    paddingLeft: 15,
   },
   text: {
     fontWeight: 'bold',
