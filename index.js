@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /**
  * @format
  */
@@ -15,7 +16,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export const rootReducer = combineReducers({
   authReducer: authReducer,
-  navReducer: navReducer
+  navReducer: navReducer,
 });
 
 console.log(typeof authReducer, 'its type');

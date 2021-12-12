@@ -13,10 +13,10 @@ interface statusBarProps{
 const EmojiHeader:FC<statusBarProps>  = ({page}):JSX.Element => {
 
   let text = 'Get started';
-  if(page === 2){
-    text = 'Almost there'
-  }else if(page === 3){
-    text = 'Finish up'
+  if (page === 2){
+    text = 'Almost there';
+  } else if (page === 3){
+    text = 'Finish up';
   }
 
   return (

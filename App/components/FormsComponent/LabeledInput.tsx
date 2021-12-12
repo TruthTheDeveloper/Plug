@@ -14,13 +14,6 @@ interface LabelProps {
 
 
 const LabeledInput: FC<LabelProps> = ({label, type, setValue, value, validationError, border}): JSX.Element => {
-  // const [border, setBorder] = useState('');
-
-  // if (validationError !== ''){
-  //   borderC('#Fe1135');
-  // } else {
-  //   borderC('#000');
-  // }
 
   const inputHandler = (e:string) => {
     setValue(e);
@@ -30,9 +23,7 @@ const LabeledInput: FC<LabelProps> = ({label, type, setValue, value, validationE
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
-      {/* <Text style={validationStyle.validationColor}>{validationError}</Text> */}
       {validationError !== '' ? <Text style={validationStyle.validationColor}>{validationError}</Text> : null}
-      {/* {validationError !== '' ? borderC = '#FE1135' : borderC=''} */}
       <TextInput value={value} style={[styles.input, {borderColor:border}]} secureTextEntry={type}  onChangeText={(e:string) => inputHandler(e)}/>
     </View>
   );

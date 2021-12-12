@@ -9,6 +9,6 @@ export const SET_AUTH_REDIRECT_PATH = 'SET_AUTH_REDIRECT_PATH';
 
 
 // Signupscreens navigation
-export const SCREEN1 = 'SCREEN1'
-export const SCREEN2 = 'SCREEN2'
-export const SCREEN3 = 'SCREEN3'
+export const SCREEN1 = 'SCREEN1';
+export const SCREEN2 = 'SCREEN2';
+export const SCREEN3 = 'SCREEN3';

@@ -14,7 +14,7 @@ import Form from './components/Form';
 const {height} = Dimensions.get('window');
 const bgImage = require('../../assets/images/background.png');
 
-const WelcomeScreenView = () => {
+const AuthScreenView = () => {
   return (
     // eslint-disable-next-line react-native/no-inline-styles
     <ImageBackground source={bgImage} style={{height: height, width: '100%'}}>
@@ -54,4 +54,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default WelcomeScreenView;
+export default AuthScreenView;

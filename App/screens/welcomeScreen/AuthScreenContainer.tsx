@@ -1,15 +1,15 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import WelcomeScreenView from './WelcomeScreenView';
+import AuthScreenView from './AuthScreenView';
 // import { useSelector } from 'react-redux';
 
 
 
-const WelcomeScreenContainer = (): JSX.Element => {
+const AuthScreenContainer = (): JSX.Element => {
 
   // const authToProps = useSelector((state:any) => state.authReducer);
 
-  return <WelcomeScreenView />;
+  return <AuthScreenView />;
 };
 
-export default WelcomeScreenContainer;
+export default AuthScreenContainer;

@@ -19,23 +19,23 @@ const StatusBar:FC<statusBarProps> = ({page}):JSX.Element => {
       {greyBox}
       {greyBox}
     </>
-  )
-  if(page === 2){
+  );
+  if (page === 2){
     box = (
       <>
         {greyBox}
         {redBox}
         {greyBox}
       </>
-    )
-  }else if(page === 3){
+    );
+  } else if (page === 3){
     box = (
       <>
         {greyBox}
         {greyBox}
         {redBox}
       </>
-    )
+    );
   }
 
   return (
