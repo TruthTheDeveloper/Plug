@@ -13,10 +13,10 @@ const {width} = Dimensions.get('window');
 const SignupView = () => {
   const value = useState(new Animated.ValueXY({x: -width, y: 0}))[0];
 
-  const [username, setUsername]:any = useState();
-  const [email, setEmail]:any = useState();
-  const [password, setPassword]:any  = useState();
-  const [border, setBorder]:any = useState();
+  const [username, setUsername]:any = useState('');
+  const [email, setEmail]:any = useState('');
+  const [password, setPassword]:any  = useState('');
+  const [border, setBorder]:any = useState('#000');
 
   useEffect(() => {
     Animated.timing(value, {
@@ -34,14 +34,22 @@ const SignupView = () => {
   };
 
   const authError = useSelector((state:any) => state.authReducer.error);
-  // console.log(authError);
+
+  useEffect(() => {
+    if (authError !== null){
+      setBorder('#Fe1135');
+    } else if (authError === null) {
+      setBorder('#000');
+    }
+  },[authError, username]);
+
 
   return (
     <Animated.View style={value.getLayout()}>
       <Text style={styles.header}>Create an account</Text>
-      <LabeledInput label="Username" type={false} setValue={(e) => setUsername(e)} value={username} validationError={authError === null ? '' : authError.username} borderC={(e) => setBorder(e)} border={border}/>
-      <LabeledInput label="Email" type={false} setValue={(e) => setEmail(e)} value={email} validationError={authError === null ? '' : authError.email} borderC={(e) => setBorder(e)} border={border}/>
-      <LabeledInput label="Password" type={true} setValue={(e) => setPassword(e)} value={password} validationError={authError === null ? '' : authError.password} borderC={(e) => setBorder(e)} border={border}/>
+      <LabeledInput label="Username" type={false} setValue={(e) => setUsername(e)} value={username} validationError={authError === null ? '' : authError.username} border={border}/>
+      <LabeledInput label="Email" type={false} setValue={(e) => setEmail(e)} value={email} validationError={authError === null ? '' : authError.email} border={border}/>
+      <LabeledInput label="Password" type={true} setValue={(e) => setPassword(e)} value={password} validationError={authError === null ? '' : authError.password}  border={border}/>
       <SubmitButton label="Create account" username={username} email={email} password={password} signUp={true} resetInput={setInputToEmpty}/>
     </Animated.View>
   );
