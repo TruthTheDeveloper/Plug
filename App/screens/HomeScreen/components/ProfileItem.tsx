@@ -1,21 +1,29 @@
-import React from 'react';
+import React, {FC} from 'react';
 import { View, Text, StyleSheet, ImageBackground, Image } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 
 const image = require('../../../assets/images/girl.jpg');
 const verifiedIcon = require('../../../assets/images/verified.png');
 
-const ProfileItem = () => {
+interface profileProps {
+    username: string,
+    level: number,
+    department: string,
+    image: any
+}
+
+const ProfileItem:FC<profileProps> = ({username, level, department, image}):JSX.Element => {
     return(
         <View style={styles.container}>
             <View style={styles.main}>
                 <ImageBackground source={image} style={styles.backgroundImage}>
-                    <View style={styles.details}>
+                    <LinearGradient colors={['rgba(0, 0, 0, 0)','rgba(0, 0, 0, 0.4)', 'rgba(0, 0, 0, 0.5)', 'rgba(0, 0, 0, 0.7)']} style={styles.details}>
                         <View style={styles.usernameContainer}>
                             <Text style={styles.username}>kendallJenner</Text>
                             <Image source={verifiedIcon} />
                         </View>
                         <Text style={styles.department}>400l,Computer scie..</Text>
-                    </View>
+                    </LinearGradient>
                 </ImageBackground>
             </View>
         </View>
@@ -42,7 +50,7 @@ const styles = StyleSheet.create({
     },
     details: {
         width: '100%',
-        backgroundColor: 'rgba(0,0,0,0.5)',
+        backgroundColor: 'transparent',
         position: 'absolute',
         bottom: 0,
         paddingBottom: 15,
