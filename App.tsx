@@ -2,13 +2,13 @@
 import React from 'react';
 import {View, StatusBar} from 'react-native';
 
-import SignUpScreensContainer from './App/screens/SignupScreens/index';
+import { HomeScreenContainer } from './App/index';
 
 const App = () => {
   return (
     <View>
         <StatusBar backgroundColor="#fff" barStyle="dark-content" />
-        <SignUpScreensContainer />
+        <HomeScreenContainer />
     </View>
   );
 };

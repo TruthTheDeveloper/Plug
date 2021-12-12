@@ -1,3 +1,3 @@
-import SignUpScreensContainer from "../SignupScreens";
+import HomeScreenContainer from './HomeScreenContainer'
 
-export default SignUpScreensContainer;
+export default HomeScreenContainer;

@@ -12,6 +12,8 @@ import Form1 from './InstitutionComponents/Form1';
 import Form2 from './InstitutionComponents/Form2';
 import Form3 from './InstitutionComponents/Form3';
 
+import Header from './MainComponents/Header';
+
 export {
     LabeledInput,
     SubmitButton,
@@ -25,4 +27,6 @@ export {
     Form1,
     Form2,
     Form3,
+
+    Header
 };
