@@ -21,6 +21,7 @@ const {height, width} = Dimensions.get('window');
 const SignupScreen1 = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const [description, setdescription] = useState('');
 
   const next = () => {
     setLoading(true);
@@ -35,7 +36,7 @@ const SignupScreen1 = () => {
       <StatusBar page={1} />
       <Text style={styles.header}>Basic details</Text>
       <View style={styles.formContainer}>
-        <LargeLabeledInput label="Roomate Description" />
+        <LargeLabeledInput label="Roomate Description" setValue={(e) => setdescription(e)} value={description}/>
         <AvailabilitySwitch />
         <SexCheckbox />
         <ContinueButton label="Continue" continue={next} loading={loading} />
