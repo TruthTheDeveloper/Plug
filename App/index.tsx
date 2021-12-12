@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import WelcomeScreenContainer from './screens/welcomeScreen/index';
+import AuthScreenContainer from './screens/welcomeScreen/index';
 import SignupScreensContainer from './screens/SignupScreens';
 
-export {WelcomeScreenContainer, SignupScreensContainer};
+export {AuthScreenContainer, SignupScreensContainer};

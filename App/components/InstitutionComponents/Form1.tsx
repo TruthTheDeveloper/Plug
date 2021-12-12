@@ -56,7 +56,7 @@ const Form1: FC<ModalProps> = ({
           type={false}
           validationError=""
           value={department}
-          border=""
+          border="#000"
           setValue={(e: string) => onChangeDept(e)}
         />
         <LabeledInput
@@ -64,7 +64,7 @@ const Form1: FC<ModalProps> = ({
           type={false}
           validationError=""
           value={level}
-          border=""
+          border="#000"
           setValue={(e: string) => onChangeLev(e)}
         />
       </Animated.View>

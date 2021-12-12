@@ -1,4 +1,4 @@
 /* eslint-disable prettier/prettier */
-import WelcomeScreenContainer from './WelcomeScreenContainer';
+import AuthScreenContainer from './AuthScreenContainer';
 
-export default WelcomeScreenContainer;
+export default AuthScreenContainer;
