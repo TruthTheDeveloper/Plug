@@ -1,6 +1,8 @@
 import React, {FC, useState} from 'react';
-import { View, Text, StyleSheet, Dimensions, Switch } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, Switch, TouchableWithoutFeedback } from 'react-native';
 import Icons from 'react-native-vector-icons/Feather';
+import * as actionTypes from '../../../redux/actions/actionTypes';
+import { useSelector, useDispatch } from 'react-redux';
 
 import {university, college, polythecnic} from '../constants';
 import {SubmitButton, Form1, Form2, Form3, Modal} from '../../../components';
@@ -21,6 +23,8 @@ const SignupScreen2 = () => {
     const [level, setLevel] = useState();
 
     const [List, setList] = useState <any | null> (null);
+
+    const [loading, setLoading] = useState(false)
 
     let forms;
     if(Institution === university){
@@ -57,10 +61,25 @@ const SignupScreen2 = () => {
         }, 100)
     }
 
+    const dispatch = useDispatch()
+
+    const next = () => {
+        setLoading(true)
+        dispatch({type: actionTypes.SCREEN3})
+    }
+
+    const back = () => {
+        dispatch({type: actionTypes.SCREEN1})
+    }
+
     return(
         <View style={styles.container}>
             <View style={styles.headerFlexer}>
-                <Icons name='chevron-left' color='#000' size={25} />
+                <TouchableWithoutFeedback onPress={back}>
+                    <View style={{paddingRight: 20}}>
+                        <Icons name='chevron-left' color='#000' size={25} />
+                    </View>
+                </TouchableWithoutFeedback>
                 <EmojiHeader page={2} />
             </View>
             <StatusBar page={2} />
@@ -68,7 +87,7 @@ const SignupScreen2 = () => {
             <InstitutionChecker active={Institution} onChange={(e) => setInstitution(e) } />
             <View style={styles.formContainer}>
                 {forms}
-                <ContinueButton label='Continue' />
+                <ContinueButton label='Continue' continue={next} loading={loading}/>
             </View>
             {List && <Modal packages={List} onSelect={onSelect} /> }
         </View>

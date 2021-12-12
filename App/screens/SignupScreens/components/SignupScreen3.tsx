@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import Icons from 'react-native-vector-icons/Feather';
+import * as actionTypes from '../../../redux/actions/actionTypes';
+import { useSelector, useDispatch } from 'react-redux';
 
 import EmojiHeader from './EmojiHeader';
 import StatusBar from './StatusBar';
@@ -14,6 +16,8 @@ const SignupScreen3 = () => {
 
     const [interests, setInterests] =  useState <any | null> ([]);
     const [profilePic, setProfilePic] = useState();
+
+    const [loading, setLoading] = useState(false)
 
     const setImage = (img: any) => {
         setProfilePic(img)
@@ -60,12 +64,27 @@ const SignupScreen3 = () => {
             <InterestBox interests={interests} small={false} name='Religion' postInterest={addInterest} deleteInterest={removeInterest} />
         </View>
     )
+
+    const dispatch = useDispatch()
+
+    const next = () => {
+        setLoading(true)
+        dispatch({type: actionTypes.SCREEN3})
+    }
+
+    const back = () => {
+        dispatch({type: actionTypes.SCREEN2})
+    }
     
 
     return(
         <View style={styles.container}>
             <View style={styles.headerFlexer}>
-                <Icons name='chevron-left' color='#000' size={25} />
+                <TouchableWithoutFeedback onPress={back}>
+                    <View style={{paddingRight: 20}}>
+                        <Icons name='chevron-left' color='#000' size={25} />
+                    </View>
+                </TouchableWithoutFeedback>
                 <EmojiHeader page={3} />
             </View>
             <StatusBar page={3} />
@@ -81,7 +100,7 @@ const SignupScreen3 = () => {
                     {div3}
                     {div4}
                 </View>
-                <ContinueButton label='Finish' />
+                <ContinueButton label='Finish' continue={next} loading={loading} />
             </View>
         </View>
     )

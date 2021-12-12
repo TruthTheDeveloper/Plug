@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    paddingLeft: 15,
   },
   text: {
     fontWeight: 'bold',

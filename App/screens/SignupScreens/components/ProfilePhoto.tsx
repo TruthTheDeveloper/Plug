@@ -15,10 +15,11 @@ const ProfilePhoto:FC<ImageProps> = ({setImage}):JSX.Element => {
 
     const selectPhoto = () => {
         launchImageLibrary({mediaType: 'photo'}, (response) => {
-            const data = response.assets[0].uri;
-            postPhoto(data);
-            setImage(data)
-            console.log(data)
+            if(response.assets){
+                const data = response.assets[0].uri;
+                postPhoto(data);
+                setImage(data)
+            }
         })
     };
 

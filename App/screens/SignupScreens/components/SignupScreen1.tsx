@@ -1,25 +1,37 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import { View, Text, StyleSheet, Dimensions, Switch } from 'react-native';
+import * as actionTypes from '../../../redux/actions/actionTypes';
 
 import {LargeLabeledInput, AvailabilitySwitch, SexCheckbox, SubmitButton} from '../../../components';
 
 import EmojiHeader from './EmojiHeader';
 import StatusBar from './StatusBar';
+import ContinueButton from './ContinueButton';
+import { useDispatch } from 'react-redux';
 
 const {height, width} = Dimensions.get('window');
 
 const SignupScreen1 = () => {
+    const dispatch = useDispatch();
+    const [loading, setLoading] = useState(false)
+
+    const next = () => {
+        setLoading(true)
+        dispatch({type: actionTypes.SCREEN2})
+    }
 
     return(
         <View style={styles.container}>
-            <EmojiHeader page={1} />
+            <View style={{paddingLeft: 15}}>
+                <EmojiHeader page={1} />
+            </View>
             <StatusBar page={1} />
             <Text style={styles.header}>Basic details</Text>
             <View style={styles.formContainer}>
-                <LargeLabeledInput label='Description (optional)'/>
+                <LargeLabeledInput label='Roomate Description'/>
                 <AvailabilitySwitch />
                 <SexCheckbox />
-                <SubmitButton label='Continue' username='' password='' email='' resetInput={() => null} signUp={false} />
+                <ContinueButton label='Continue' continue={next} loading={loading} />
             </View>
         </View>
     )

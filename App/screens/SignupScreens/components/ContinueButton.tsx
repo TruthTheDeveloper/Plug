@@ -1,15 +1,25 @@
 import React, {FC} from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 
 interface ButtonProps {
     label: string;
+    loading:  boolean;
+    continue: () => void
 }
 
 const ContinueButton: FC<ButtonProps> = (props):JSX.Element => {
     return(
-        <View style={styles.Container}>
-            <Text style={styles.text}>{props.label}</Text>
-        </View>
+        <TouchableWithoutFeedback onPress={props.continue}>
+            {!props.loading ? 
+                <View style={styles.Container}>
+                    <Text style={styles.text}>{props.label}</Text>
+                </View>
+                :
+                <View style={styles.Container}>
+                    <Text style={styles.text}>Loading ...</Text>
+                </View>
+            }
+        </TouchableWithoutFeedback>
     )
 };
 
