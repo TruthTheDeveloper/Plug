@@ -1,41 +1,66 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 
+//Icon
+import Icons from 'react-native-vector-icons/Feather';
+
 const {width} = Dimensions.get('window');
 
 const Header  = () => {
     return(
         <View style={styles.container}>
-            <View style={styles.flex1}></View>
-            <View style={styles.flex2}></View>
-            <View style={styles.flex3}></View>
+            <View style={styles.flex1}>
+                <Icons name="chevron-left" color="#000" size={27} style={styles.arrow} />
+            </View>
+            <View style={styles.flex2}>
+                <Text style={styles.title}>Gallery</Text>
+            </View>
+            <View style={styles.flex3}>
+                <Icons name="bell" color="#000" size={25} />
+            </View>
         </View>
     )
 };
 
 const styles = StyleSheet.create({
     container: {
-        height: 50,
+        height: 30,
         width: '100%',
-        borderColor: '#000',
-        borderWidth: 1,
         display: 'flex',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        backgroundColor: '#fff',
+        paddingBottom: 40
     },
     flex1: {
-        height: 50,
-        width: 50,
-        backgroundColor: 'red'
+        height: 30,
+        width: 66,
+        backgroundColor: '',
+        display: 'flex',
+        justifyContent: 'center'
     },
     flex2: {
-        height: 50,
-        width: width - 100,
-        backgroundColor: 'blue'
+        height: 30,
+        width: width - 130,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     flex3: {
-        height: 50,
-        width: 50,
-        backgroundColor: 'red'
+        height: 30,
+        width: 66,
+        backgroundColor: '',
+        display: 'flex',
+        flexDirection: 'row-reverse',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    arrow: {
+        marginLeft: 15
+    },
+    title: {
+        fontSize: 22,
+        fontWeight: '600',
+        color: '#000'
     }
 })
 
