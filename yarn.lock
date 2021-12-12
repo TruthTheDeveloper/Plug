@@ -5450,6 +5450,11 @@ react-native-image-picker@^4.6.0:
   resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-4.6.0.tgz#9df927baa20835fd7adba76185359241e6204e00"
   integrity sha512-Kb0GbPlHm0zAjJpI0vJ/41WSS0mHfbn851cwvn61myse+eMJCku1nixqPlCp4SbpM0lMZIGJgXqZBkqalZnWjg==
 
+react-native-linear-gradient@^2.5.6:
+  version "2.5.6"
+  resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.5.6.tgz#96215cbc5ec7a01247a20890888aa75b834d44a0"
+  integrity sha512-HDwEaXcQIuXXCV70O+bK1rizFong3wj+5Q/jSyifKFLg0VWF95xh8XQgfzXwtq0NggL9vNjPKXa016KuFu+VFg==
+
 react-native-network-info@^5.2.1:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/react-native-network-info/-/react-native-network-info-5.2.1.tgz#b701f10d4ed1aeadcfe77b197328d1ae846f6d3a"
