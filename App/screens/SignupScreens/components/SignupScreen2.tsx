@@ -61,9 +61,9 @@ const SignupScreen2 = () => {
         <View style={styles.container}>
             <View style={styles.headerFlexer}>
                 <Icons name='chevron-left' color='#000' size={25} />
-                <EmojiHeader />
+                <EmojiHeader page={2} />
             </View>
-            <StatusBar />
+            <StatusBar page={2} />
             <Text style={styles.header}>Institution</Text>
             <InstitutionChecker active={Institution} onChange={(e) => setInstitution(e) } />
             <View style={styles.formContainer}>

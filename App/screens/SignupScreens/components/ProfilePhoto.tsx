@@ -1,14 +1,44 @@
-import React from 'react';
-import { View, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import React, { FC, useState } from 'react';
+import { View, StyleSheet, TouchableWithoutFeedback, ImageBackground } from 'react-native';
+import {launchImageLibrary} from 'react-native-image-picker';
 
 import Icons from 'react-native-vector-icons/Feather';
 
-const ProfilePhoto = () => {
+const bgImage = require('../../../assets/images/background.png');
+
+interface ImageProps {
+    setImage: (e: any) => void
+}
+
+const ProfilePhoto:FC<ImageProps> = ({setImage}):JSX.Element => {
+    const [photo, postPhoto] = useState();
+
+    const selectPhoto = () => {
+        launchImageLibrary({mediaType: 'photo'}, (response) => {
+            const data = response.assets[0].uri;
+            postPhoto(data);
+            setImage(data)
+            console.log(data)
+        })
+    };
+
+    const imageLink = {}
+
+    const emptyImg = (
+        <View style={styles.container}>
+            <Icons name='camera' color='#000' size={22} style={styles.icon} />
+        </View>
+    );
+
+    const image = (
+        <View style={styles.container}>
+            <ImageBackground source={{uri: `${photo}`}} style={styles.container} />
+        </View>
+    )
+
     return(
-        <TouchableWithoutFeedback onPress={() => console.log('Hello panda')}>
-            <View style={styles.container}>
-                <Icons name='camera' color='#000' size={22} style={styles.icon} />
-            </View>
+        <TouchableWithoutFeedback onPress={selectPhoto}>
+            {photo ? image : emptyImg}
         </TouchableWithoutFeedback>
     )
 };
@@ -24,7 +54,8 @@ const styles = StyleSheet.create({
         marginTop: 5,
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        overflow: 'hidden'
     },
     icon: {
         opacity: 0.5

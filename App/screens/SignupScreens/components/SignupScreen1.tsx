@@ -12,8 +12,8 @@ const SignupScreen1 = () => {
 
     return(
         <View style={styles.container}>
-            <EmojiHeader />
-            <StatusBar />
+            <EmojiHeader page={1} />
+            <StatusBar page={1} />
             <Text style={styles.header}>Basic details</Text>
             <View style={styles.formContainer}>
                 <LargeLabeledInput label='Description (optional)'/>

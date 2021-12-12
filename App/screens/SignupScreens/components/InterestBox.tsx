@@ -1,24 +1,37 @@
 import React, {FC, useState} from 'react';
-import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, StyleSheet, TouchableWithoutFeedback, Alert } from 'react-native';
 import { red } from '../../../config/colors';
 
 interface InterestProps {
     small: boolean,
     name: string,
     interests: {[index: string]:any},
-    postInterest: (e: string) => void
+    postInterest: (e: string) => void,
+    deleteInterest: (e: string) => void
 }
 
-const InterestBox: FC <InterestProps> = ({small, name,postInterest}): JSX.Element => {
+const InterestBox: FC <InterestProps> = ({small, name,postInterest, deleteInterest, interests}): JSX.Element => {
     const [selected, setSelected] = useState(false);
 
     const addInterest = () => {
-        setSelected(true);
-        postInterest(name);
+        if(interests.length < 5){
+            setSelected(true);
+            postInterest(name);
+        }else{
+            Alert.alert(
+                "Sorry",
+                "You can't have more than five interest",
+                [
+                  { text: "OK" }
+                ]
+              );
+        }
+        
     }
 
     const removeInterest = () => {
-        setSelected(false)
+        setSelected(false);
+        deleteInterest(name)
     }
 
     const box1 = (

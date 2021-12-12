@@ -13,41 +13,51 @@ const {height, width} = Dimensions.get('window');
 const SignupScreen3 = () => {
 
     const [interests, setInterests] =  useState <any | null> ([]);
+    const [profilePic, setProfilePic] = useState();
+
+    const setImage = (img: any) => {
+        setProfilePic(img)
+    }
 
     const addInterest = (e: string) => {
-        const result:any[] = interests;
-        const newResult = result.push(e);
-        // setInterests(newResult);
-        console.log(newResult + " type of " + typeof(newResult))
+        setInterests((prev: any) => [...prev, e]);
+        console.log(interests)
+    };
+
+    const removeInterest = (e: string) => {
+        const idx = interests.indexOf(e);
+        let item = interests;
+        item.splice(idx, 1);
+        setInterests(item);
     }
 
     //Interest Containers
     const div1 = (
         <View style={styles.interestFlex}>
-            <InterestBox interests={interests} small={false} name='Politics' postInterest={addInterest} />
+            <InterestBox interests={interests} small={false} name='Politics' postInterest={addInterest} deleteInterest={removeInterest} />
             <View style={styles.gap}/>
-            <InterestBox interests={interests} small name='Books' postInterest={addInterest} />
+            <InterestBox interests={interests} small name='Books' postInterest={addInterest} deleteInterest={removeInterest} />
         </View>
     )
     const div2 = (
         <View style={styles.interestFlex}>
-            <InterestBox interests={interests} small={true} name='Sports' postInterest={addInterest} />
+            <InterestBox interests={interests} small={true} name='Sports' postInterest={addInterest} deleteInterest={removeInterest} />
             <View  style={styles.gap}/>
-            <InterestBox interests={interests} small={false} name='Fashion' postInterest={addInterest} />
+            <InterestBox interests={interests} small={false} name='Fashion' postInterest={addInterest} deleteInterest={removeInterest} />
         </View>
     )
     const div3 = (
         <View style={styles.interestFlex}>
-            <InterestBox interests={interests} small={false} name='Parties' postInterest={addInterest} />
+            <InterestBox interests={interests} small={false} name='Parties' postInterest={addInterest} deleteInterest={removeInterest} />
             <View  style={styles.gap}/>
-            <InterestBox interests={interests} small name='Movies' postInterest={addInterest} />
+            <InterestBox interests={interests} small name='Movies' postInterest={addInterest} deleteInterest={removeInterest} />
         </View>
     )
     const div4 = (
         <View style={styles.interestFlex}>
-            <InterestBox interests={interests} small={true} name='Music' postInterest={addInterest} />
+            <InterestBox interests={interests} small={true} name='Music' postInterest={addInterest} deleteInterest={removeInterest} />
             <View  style={styles.gap}/>
-            <InterestBox interests={interests} small={false} name='Religion' postInterest={addInterest} />
+            <InterestBox interests={interests} small={false} name='Religion' postInterest={addInterest} deleteInterest={removeInterest} />
         </View>
     )
     
@@ -56,12 +66,12 @@ const SignupScreen3 = () => {
         <View style={styles.container}>
             <View style={styles.headerFlexer}>
                 <Icons name='chevron-left' color='#000' size={25} />
-                <EmojiHeader />
+                <EmojiHeader page={3} />
             </View>
-            <StatusBar />
+            <StatusBar page={3} />
             <View style={styles.profileContainer}>
                 <Text style={styles.header}>Profile</Text>
-                <ProfilePhoto />
+                <ProfilePhoto setImage={setImage} />
             </View>
             <View style={styles.interestContainer}>
                 <Text style={styles.title}>Interest</Text>
