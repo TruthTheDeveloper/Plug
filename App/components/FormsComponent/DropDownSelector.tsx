@@ -1,29 +1,33 @@
 /* eslint-disable prettier/prettier */
 import React, {FC} from 'react';
-import {View, Text, StyleSheet, Dimensions} from 'react-native';
+import { View, Text, StyleSheet, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import Icons from 'react-native-vector-icons/Feather';
 
 const {width} = Dimensions.get('window');
 
 interface modalProps {
-  label: string;
-  label2: string;
+    label: string,
+    label2: string,
+    onClick: () => void
 }
 
 const DropDownSelector: FC<modalProps> = (props): JSX.Element => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.label}>{props.label}</Text>
-      <View style={styles.dropDownSelector}>
-        <View style={styles.dropDownSeclectorF1}>
-          <Text style={styles.text}>{props.label2}</Text>
-        </View>
-        <View style={styles.dropDownSeclectorF2}>
-          <Icons name="chevron-down" color="#000" size={25} />
-        </View>
-      </View>
-    </View>
-  );
+    return (
+        <TouchableWithoutFeedback onPress={props.onClick}>
+            <View style={styles.container}>
+                <Text style={styles.label}>{props.label}</Text>
+                <View style={styles.dropDownSelector}>
+                    <View style={styles.dropDownSeclectorF1}>
+                        <Text style={styles.text}>{props.label2}</Text>
+                    </View>
+                    <View style={styles.dropDownSeclectorF2}>
+                        <Icons name="chevron-down" color="#000" size={25} />
+                    </View>
+                </View>
+            </View>
+        </TouchableWithoutFeedback>
+    // eslint-disable-next-line semi
+    )
 };
 
 const styles = StyleSheet.create({

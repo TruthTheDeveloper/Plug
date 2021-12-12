@@ -1,29 +1,70 @@
 /* eslint-disable prettier/prettier */
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, FC} from 'react';
 import {Animated, Dimensions} from 'react-native';
 
-import {DropDownSelector} from '../index';
+import {DropDownSelector, LabeledInput} from '../index';
 
 const {width} = Dimensions.get('window');
 
-const Form2 = () => {
+interface ModalProps {
+  onSelect: () => void;
+  onChangeDept: (e: string) => void;
+  onChangeLev: (e: string) => void;
+  name: any;
+  department: any;
+  level: any;
+}
+
+const Form2: FC<ModalProps> = ({
+  onSelect,
+  name,
+  department,
+  level,
+  onChangeDept,
+  onChangeLev,
+}): JSX.Element => {
   const value = useState(new Animated.ValueXY({x: width / 2, y: 0}))[0];
 
-    useEffect(() => {
-        Animated.timing(value, {
-            toValue: {x: 0, y: 0},
-            duration: 300,
-            useNativeDriver: false,
-        }).start();
-    },[value]);
+  let newName = name;
+  if (name) {
+    if (name.length > 30) {
+      newName = name.substring(0, 28) + '...';
+    }
+  }
 
-    return (
-        <Animated.View style={value.getLayout()}>
-                <DropDownSelector label="Select College" label2="Alvan Ikoku College" />
-                <DropDownSelector label="Department" label2="Computer Science" />
-                <DropDownSelector label="Level" label2="400l" />
-        </Animated.View>
-    );
+  useEffect(() => {
+    Animated.timing(value, {
+      toValue: {x: 0, y: 0},
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+  }, [value]);
+
+  return (
+    <Animated.View style={value.getLayout()}>
+      <DropDownSelector
+        label="Select College"
+        label2={name ? newName : 'Alvan Ikoku University'}
+        onClick={onSelect}
+      />
+      <LabeledInput
+        label="Department"
+        type={false}
+        validationError=""
+        value={department}
+        border=""
+        setValue={(e: string) => onChangeDept(e)}
+      />
+      <LabeledInput
+        label="Level"
+        type={false}
+        validationError=""
+        value={level}
+        border=""
+        setValue={(e: string) => onChangeLev(e)}
+      />
+    </Animated.View>
+  );
 };
 
 export default Form2;

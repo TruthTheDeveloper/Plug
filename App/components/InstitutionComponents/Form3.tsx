@@ -1,13 +1,36 @@
 /* eslint-disable prettier/prettier */
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, FC} from 'react';
 import {Animated, Dimensions} from 'react-native';
 
-import {DropDownSelector} from '../index';
+import {DropDownSelector, LabeledInput} from '../index';
 
 const {width} = Dimensions.get('window');
 
-const Form3 = () => {
+interface ModalProps {
+  onSelect: () => void;
+  onChangeDept: (e: string) => void;
+  onChangeLev: (e: string) => void;
+  name: any;
+  department: any;
+  level: any;
+}
+
+const Form3: FC<ModalProps> = ({
+  onSelect,
+  name,
+  department,
+  level,
+  onChangeDept,
+  onChangeLev,
+}): JSX.Element => {
   const value = useState(new Animated.ValueXY({x: width / 5, y: 0}))[0];
+
+  let newName = name;
+  if (name) {
+    if (name.length > 30) {
+      newName = name.substring(0, 28) + '...';
+    }
+  }
 
   useEffect(() => {
     Animated.timing(value, {
@@ -21,10 +44,25 @@ const Form3 = () => {
     <Animated.View style={value.getLayout()}>
       <DropDownSelector
         label="Select Polythecnic"
-        label2="Federal Polythecnic Nekede"
+        label2={name ? newName : 'Federal Polythecnic Nekede'}
+        onClick={onSelect}
       />
-      <DropDownSelector label="Department" label2="Libary Science" />
-      <DropDownSelector label="Level" label2="Nd1" />
+      <LabeledInput
+        label="Department"
+        type={false}
+        validationError=""
+        value={department}
+        border=""
+        setValue={(e: string) => onChangeDept(e)}
+      />
+      <LabeledInput
+        label="Level"
+        type={false}
+        validationError=""
+        value={level}
+        border=""
+        setValue={(e: string) => onChangeLev(e)}
+      />
     </Animated.View>
   );
 };

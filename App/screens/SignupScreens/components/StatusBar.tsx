@@ -1,19 +1,46 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
+import React, { FC } from 'react';
 import {View, StyleSheet, Dimensions} from 'react-native';
 import * as colors from '../../../config/colors';
 
 const {width} = Dimensions.get('window');
 
-const StatusBar = () => {
+interface statusBarProps{
+  page: number
+}
+
+const StatusBar:FC<statusBarProps> = ({page}):JSX.Element => {
   const greyBox = <View style={styles.grey} />;
   const redBox = <View style={[styles.grey, {backgroundColor: colors.red}]} />;
 
-  return (
-    <View style={styles.container}>
+  let box = (
+    <>
       {redBox}
       {greyBox}
       {greyBox}
+    </>
+  );
+  if (page === 2){
+    box = (
+      <>
+        {greyBox}
+        {redBox}
+        {greyBox}
+      </>
+    );
+  } else if (page === 3){
+    box = (
+      <>
+        {greyBox}
+        {greyBox}
+        {redBox}
+      </>
+    );
+  }
+
+  return (
+    <View style={styles.container}>
+      {box}
     </View>
   );
 };
