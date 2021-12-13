@@ -27,7 +27,7 @@ const LargeLabeledInput: FC<LabelProps> = ({setValue, label, value, validationEr
         placeholder="I need aroomate that is ..."
         onChangeText={(e:string) => inputHandler(e)}
         value={value}
-        maxLength={12}
+        maxLength={60}
       />
     </View>
   );

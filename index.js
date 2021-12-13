@@ -23,7 +23,6 @@ export const rootReducer = combineReducers({
   navReducer: navReducer,
 });
 
-console.log(typeof authReducer, 'its type');
 
 const store = createStore(
   rootReducer,

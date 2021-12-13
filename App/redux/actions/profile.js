@@ -4,8 +4,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const postProfile = async () => {
 
-
-
   const data = {
     userId:await AsyncStorage.getItem('userId'),
     sex:await AsyncStorage.getItem('sex'),
