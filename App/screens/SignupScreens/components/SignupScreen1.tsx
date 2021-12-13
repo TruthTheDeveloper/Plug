@@ -25,6 +25,7 @@ const SignupScreen1 = () => {
   const [description, setdescription] = useState('');
   const [available, setAvailable] = useState(true);
   const [gender, setGender] = useState('');
+  const [validation, setValidation] = useState('');
 
   const setAvailableState = (e:boolean) => {
     setAvailable(e);
@@ -34,12 +35,26 @@ const SignupScreen1 = () => {
     setGender(e);
   };
 
+  const checkDescription = () => {
+    if (description === ''){
+      setValidation('This filed cannot be empty');
+    } else {
+      AsyncStorage.setItem('description',  description);
+    }
+  };
+
   const next = () => {
     setLoading(true);
     dispatch({type: actionTypes.SCREEN2});
-    AsyncStorage.setItem('description',  description);
+    checkDescription();
+    // remove old items form localStorage
+    AsyncStorage.removeItem('available');
+    AsyncStorage.removeItem('sex');
+
+    // set new item in localStorage
     AsyncStorage.setItem('available',  JSON.stringify(available));
     AsyncStorage.setItem('sex', gender);
+
   };
 
   return (
@@ -50,7 +65,7 @@ const SignupScreen1 = () => {
       <StatusBar page={1} />
       <Text style={styles.header}>Basic details</Text>
       <View style={styles.formContainer}>
-        <LargeLabeledInput label="Roomate Description" setValue={(e) => setdescription(e)} value={description} />
+        <LargeLabeledInput label="Roomate Description" setValue={(e) => setdescription(e)} value={description} validationError={validation}/>
         <AvailabilitySwitch availableState={setAvailableState}/>
         <SexCheckbox genderState={setGenderState}/>
         <ContinueButton label="Continue" continue={next} loading={loading}/>

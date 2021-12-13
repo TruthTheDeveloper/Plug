@@ -49,6 +49,7 @@ const SignupScreen3 = () => {
     <View style={styles.personalityFlex}>
       <PersonalityBox
         personality={personality}
+        attribute="attribute_1"
         small={false}
         name="Passionate"
         postPersonality={addPersonality}
@@ -57,6 +58,7 @@ const SignupScreen3 = () => {
       <View style={styles.gap} />
       <PersonalityBox
         personality={personality}
+        attribute="attribute_2"
         small
         name="Smart"
         postPersonality={addPersonality}
@@ -68,6 +70,7 @@ const SignupScreen3 = () => {
     <View style={styles.personalityFlex}>
       <PersonalityBox
         personality={personality}
+        attribute="attribute_3"
         small={true}
         name="Creative"
         postPersonality={addPersonality}
@@ -76,6 +79,7 @@ const SignupScreen3 = () => {
       <View style={styles.gap} />
       <PersonalityBox
         personality={personality}
+        attribute="attribute_4"
         small={false}
         name="Ambitious"
         postPersonality={addPersonality}
@@ -87,6 +91,7 @@ const SignupScreen3 = () => {
     <View style={styles.personalityFlex}>
       <PersonalityBox
         personality={personality}
+        attribute="attribute_5"
         small={false}
         name="Honest"
         postPersonality={addPersonality}
@@ -95,6 +100,7 @@ const SignupScreen3 = () => {
       <View style={styles.gap} />
       <PersonalityBox
         personality={personality}
+        attribute="attribute_6"
         small
         name="Humble"
         postPersonality={addPersonality}
@@ -106,6 +112,7 @@ const SignupScreen3 = () => {
     <View style={styles.personalityFlex}>
       <PersonalityBox
         personality={personality}
+        attribute="attribute_7"
         small={true}
         name="Responsible"
         postPersonality={addPersonality}
@@ -114,6 +121,7 @@ const SignupScreen3 = () => {
       <View style={styles.gap} />
       <PersonalityBox
         personality={personality}
+        attribute="attribute_8"
         small={false}
         name="Hardworking"
         postPersonality={addPersonality}

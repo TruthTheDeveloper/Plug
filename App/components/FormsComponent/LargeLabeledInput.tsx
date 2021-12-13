@@ -6,9 +6,10 @@ interface LabelProps {
   label: string;
   setValue:(e:string)=>void,
   value:string,
+  validationError:string
 }
 
-const LargeLabeledInput: FC<LabelProps> = ({setValue, label, value}): JSX.Element => {
+const LargeLabeledInput: FC<LabelProps> = ({setValue, label, value, validationError}): JSX.Element => {
 
   const inputHandler = (e:string) => {
     setValue(e);
@@ -16,7 +17,7 @@ const LargeLabeledInput: FC<LabelProps> = ({setValue, label, value}): JSX.Elemen
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
-      {/* {validationError !== '' ? <Text>{validationError}</Text> : null } */}
+      {validationError !== '' ? <Text>{validationError}</Text> : null }
       <TextInput
         style={styles.input}
         numberOfLines={4}

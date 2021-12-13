@@ -16,6 +16,7 @@ interface PersonalityProps {
   small: boolean;
   name: string;
   personality: {[index: string]: any};
+  attribute:string,
   postPersonality: (e: string) => void;
   deletePersonality: (e: string) => void;
 }
@@ -26,6 +27,7 @@ const PersonalityBox: FC<PersonalityProps> = ({
   postPersonality,
   deletePersonality,
   personality,
+  attribute,
 }): JSX.Element => {
   const [selected, setSelected] = useState(false);
 
@@ -33,7 +35,7 @@ const PersonalityBox: FC<PersonalityProps> = ({
     if (personality.length < 5) {
       setSelected(true);
       postPersonality(name);
-      AsyncStorage.setItem(`${name}`, name);
+      AsyncStorage.setItem(attribute, name);
     } else {
       Alert.alert('Sorry', "You can't have more than five personality", [
         {text: 'OK'},
