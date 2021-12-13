@@ -34,7 +34,6 @@ const SignupScreen3 = () => {
 
   const addPersonality = (e: string) => {
     setPersonality((prev: any) => [...prev, e]);
-    
     console.log(personality);
   };
 
