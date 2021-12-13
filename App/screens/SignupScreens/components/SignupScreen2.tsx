@@ -84,53 +84,32 @@ const SignupScreen2 = () => {
 
   const dispatch = useDispatch();
 
-  const next = async () => {
+  const next = () => {
     setLoading(true);
     dispatch({type: actionTypes.SCREEN3});
 
     // institution
-    switch (await AsyncStorage.getItem('institution')){
-      case await AsyncStorage.getItem('institution'):
-        AsyncStorage.removeItem('institution');
-        AsyncStorage.setItem('institution', Institution);
-      break;
-      default:
-        AsyncStorage.setItem('institution', Institution);
+    // switch (await AsyncStorage.getItem('institution')){
+    //   case await AsyncStorage.getItem('institution'):
+    //     AsyncStorage.removeItem('institution');
+    //     AsyncStorage.setItem('institution', Institution);
+    //   break;
+    //   default:
+    //     AsyncStorage.setItem('institution', Institution);
 
-    }
+    // }
 
+    // intitustion
+        AsyncStorage.setItem('institution', Institution);
     // university
-    switch (await AsyncStorage.getItem('university')){
-      case await AsyncStorage.getItem('university'):
-        AsyncStorage.removeItem('university');
         AsyncStorage.setItem('university', JSON.stringify(universityName));
-      break;
-      default:
-        AsyncStorage.setItem('university', JSON.stringify(universityName));
-
-    }
 
     // department
-    switch (await AsyncStorage.getItem('department')){
-      case await AsyncStorage.getItem('department'):
-        AsyncStorage.removeItem('department');
         AsyncStorage.setItem('department', JSON.stringify(department));
-      break;
-      default:
-        AsyncStorage.setItem('department', JSON.stringify(department));
-
-    }
-
     // level
-    switch (await AsyncStorage.getItem('level')){
-      case await AsyncStorage.getItem('level'):
-        AsyncStorage.removeItem('level');
-        AsyncStorage.setItem('level', JSON.stringify(level));
-      break;
-      default:
         AsyncStorage.setItem('level', JSON.stringify(level));
 
-    }
+
 
   };
 

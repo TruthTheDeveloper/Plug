@@ -99,9 +99,10 @@ export const auth = (username, email, password, isSignup) => {
 
         axios.post(url, authData)
             .then(response => {
-                console.log(response.data, 'firts response');
+                console.log(response.data);
                 // const expirationDate = new Date(new Date().getTime() + response.data.expires * 1000);
-                // AsyncStorage.setItem('token',  `JWT ${response.data.token}`);
+                AsyncStorage.setItem('userId', response.data.id);
+                AsyncStorage.setItem('token',  `Bearer ${response.data.token}`);
                 // AsyncStorage.setItem('tokenRefresh', response.data.token);
                 // AsyncStorage.setItem('expirationDate', expirationDate);
                 // AsyncStorage.setItem('username', response.data.username);

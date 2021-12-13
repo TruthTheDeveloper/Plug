@@ -43,10 +43,9 @@ const PersonalityBox: FC<PersonalityProps> = ({
     }
   };
 
-  const removePersonality = () => {
+  const removePersonality = async () => {
     setSelected(false);
     deletePersonality(name);
-    AsyncStorage.removeItem(`${attribute}`);
   };
 
   const box1 = (

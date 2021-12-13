@@ -43,32 +43,17 @@ const SignupScreen1 = () => {
     }
   };
 
-  const next = async () => {
+  const next = () => {
     setLoading(true);
     dispatch({type: actionTypes.SCREEN2});
     checkDescription();
 
     // available
-    switch (await AsyncStorage.getItem('available')){
-      case await AsyncStorage.getItem('available'):
-        AsyncStorage.removeItem('available');
-        AsyncStorage.setItem('available', JSON.stringify(available));
-      break;
-      default:
-        AsyncStorage.setItem('level', JSON.stringify(available));
-
-    }
+    AsyncStorage.setItem('level', JSON.stringify(available));
 
     // gender
-    switch (await AsyncStorage.getItem('sex')){
-      case await AsyncStorage.getItem('sex'):
-        AsyncStorage.removeItem('sex');
-        AsyncStorage.setItem('sex', gender);
-      break;
-      default:
-        AsyncStorage.setItem('level', gender);
+    AsyncStorage.setItem('level', gender);
 
-    }
 
   };
 

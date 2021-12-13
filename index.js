@@ -11,6 +11,10 @@ import App from './App';
 import {name as appName} from './app.json';
 import authReducer from './App/redux/reducer/auth';
 import navReducer from './App/redux/reducer/navigation';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+axios.defaults.headers.common.Authorization =  AsyncStorage.getItem('token');
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

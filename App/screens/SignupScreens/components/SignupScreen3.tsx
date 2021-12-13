@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import Icons from 'react-native-vector-icons/Feather';
 import * as actionTypes from '../../../redux/actions/actionTypes';
+import * as actions from '../../../redux/actions/index';
 import {useDispatch} from 'react-redux';
 
 import EmojiHeader from './EmojiHeader';
@@ -135,6 +136,7 @@ const SignupScreen3 = () => {
   const next = () => {
     setLoading(true);
     dispatch({type: actionTypes.SCREEN3});
+    dispatch(actions.postProfile());
 
   };
 

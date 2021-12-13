@@ -29,7 +29,6 @@ const ProfilePhoto: FC<ImageProps> = ({setImage}): JSX.Element => {
         const data = response.assets[0].uri;
         postPhoto(data);
         setImage(data);
-        AsyncStorage.removeItem('profilePic');
         AsyncStorage.setItem('profilePic', JSON.stringify(photo));
       }
     });
