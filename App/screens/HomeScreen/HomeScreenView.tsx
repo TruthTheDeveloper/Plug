@@ -26,12 +26,12 @@ const HomeScreenView = () => {
     ]);
 
     return(
-        <View>
-            <Header />
+        <View style={{backgroundColor: '#fff'}}>
+            <Header label='Gallery' />
             <FlatList
                 data={posts}
                 numColumns={2}
-                style={{height: height - 50}}
+                style={{height: height - 110}}
                 renderItem={({item,index}) => <ProfileItem 
                         username={item.username} 
                         department={item.department}

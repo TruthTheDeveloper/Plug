@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 
 //Icon
@@ -6,17 +6,21 @@ import Icons from 'react-native-vector-icons/Feather';
 
 const {width} = Dimensions.get('window');
 
-const Header  = () => {
+interface headerProps {
+    label: string
+}
+
+const Header:FC<headerProps>  = ({label}):JSX.Element => {
     return(
         <View style={styles.container}>
             <View style={styles.flex1}>
-                <Icons name="chevron-left" color="#000" size={27} style={styles.arrow} />
+                {/* <Icons name="chevron-left" color="#000" size={27} style={styles.arrow} /> */}
             </View>
             <View style={styles.flex2}>
-                <Text style={styles.title}>Gallery</Text>
+                <Text style={styles.title}>{label}</Text>
             </View>
             <View style={styles.flex3}>
-                <Icons name="bell" color="#000" size={25} />
+                <Icons name="search" color="#000" size={22} />
             </View>
         </View>
     )
