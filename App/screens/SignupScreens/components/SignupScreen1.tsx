@@ -24,15 +24,25 @@ const SignupScreen1 = () => {
   const [loading, setLoading] = useState(false);
   const [description, setdescription] = useState('');
   const [available, setAvailable] = useState(true);
+  const [gender, setGender] = useState('');
 
   const setAvailableState = (e:boolean) => {
     setAvailable(e);
   };
+
+  const setGenderState = (e:string) => {
+    setGender(e);
+  };
+
+  const setDescriptionState = (e:string) => {
+    setdescription(e)
+  }
   const next = () => {
     setLoading(true);
     dispatch({type: actionTypes.SCREEN2});
     AsyncStorage.setItem('description',  description);
     AsyncStorage.setItem('available',  JSON.stringify(available));
+    AsyncStorage.setItem('sex', gender);
   };
 
   return (
@@ -43,10 +53,10 @@ const SignupScreen1 = () => {
       <StatusBar page={1} />
       <Text style={styles.header}>Basic details</Text>
       <View style={styles.formContainer}>
-        <LargeLabeledInput label="Roomate Description" setValue={(e) => setdescription(e)} value={description}/>
+        <LargeLabeledInput label="Roomate Description" setValue={setDescriptionState} value={description}/>
         <AvailabilitySwitch availableState={setAvailableState}/>
-        <SexCheckbox />
-        <ContinueButton label="Continue" continue={next} loading={loading} />
+        <SexCheckbox genderState={setGenderState}/>
+        <ContinueButton label="Continue" continue={next} loading={loading}/>
       </View>
     </View>
   );

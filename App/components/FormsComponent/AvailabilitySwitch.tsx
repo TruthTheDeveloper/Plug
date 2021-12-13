@@ -6,7 +6,7 @@ interface AvailableProps {
   availableState:(e:boolean)=>void,
 }
 
-const AvailabilitySwitch:FC<AvailableProps> = ({availableState}) => {
+const AvailabilitySwitch:FC<AvailableProps> = ({availableState}): JSX.Element => {
   const [isEnabled, setIsEnabled] = useState(true);
   // const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   const toggleSwitch = () => {
