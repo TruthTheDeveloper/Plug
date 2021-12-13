@@ -10,42 +10,45 @@ import {
   Alert,
 } from 'react-native';
 import {red} from '../../../config/colors';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-interface InterestProps {
+interface PersonalityProps {
   small: boolean;
   name: string;
-  interests: {[index: string]: any};
-  postInterest: (e: string) => void;
-  deleteInterest: (e: string) => void;
+  personality: {[index: string]: any};
+  postPersonality: (e: string) => void;
+  deletePersonality: (e: string) => void;
 }
 
-const InterestBox: FC<InterestProps> = ({
+const PersonalityBox: FC<PersonalityProps> = ({
   small,
   name,
-  postInterest,
-  deleteInterest,
-  interests,
+  postPersonality,
+  deletePersonality,
+  personality,
 }): JSX.Element => {
   const [selected, setSelected] = useState(false);
 
-  const addInterest = () => {
-    if (interests.length < 5) {
+  const addPersonality = () => {
+    if (personality.length < 5) {
       setSelected(true);
-      postInterest(name);
+      postPersonality(name);
+      AsyncStorage.setItem(`${name}`, name);
     } else {
-      Alert.alert('Sorry', "You can't have more than five interest", [
+      Alert.alert('Sorry', "You can't have more than five personality", [
         {text: 'OK'},
       ]);
     }
   };
 
-  const removeInterest = () => {
+  const removePersonality = () => {
     setSelected(false);
-    deleteInterest(name);
+    deletePersonality(name);
+    AsyncStorage.removeItem(`${name}`);
   };
 
   const box1 = (
-    <TouchableWithoutFeedback onPress={addInterest}>
+    <TouchableWithoutFeedback onPress={addPersonality}>
       <View style={[styles.container, small && {width: '40%'}]}>
         <Text style={styles.text}>{name}</Text>
       </View>
@@ -53,7 +56,7 @@ const InterestBox: FC<InterestProps> = ({
   );
 
   const box2 = (
-    <TouchableWithoutFeedback onPress={removeInterest}>
+    <TouchableWithoutFeedback onPress={removePersonality}>
       <View
         style={[
           styles.container,
@@ -96,4 +99,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default InterestBox;
+export default PersonalityBox;
