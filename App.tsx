@@ -4,6 +4,8 @@ import {View, StatusBar} from 'react-native';
 
 import Navigator from './App/navigation/navigation/Navigators';
 
+import { HomeScreenContainer } from './App/index';
+
 const App = () => {
   return (
     <View>
