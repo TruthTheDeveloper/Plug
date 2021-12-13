@@ -32,16 +32,16 @@ const ProfileItem:FC<profileProps> = ({username, level, department, image}):JSX.
 
 const styles = StyleSheet.create({
     container: {
-        height: 270,
+        height: 260,
         width: '50%',
     },
     main: {
         height: 250,
-        width: '90%',
+        width: '94%',
         backgroundColor: 'red',
-        marginTop: 10,
-        marginLeft: '5%',
-        borderRadius: 15,
+        marginTop: 5,
+        marginLeft: '3%',
+        borderRadius: 11,
         overflow: 'hidden'
     },
     backgroundImage: {
