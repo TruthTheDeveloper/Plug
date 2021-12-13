@@ -4,6 +4,7 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, Dimensions} from 'react-native';
 import * as actionTypes from '../../../redux/actions/actionTypes';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {
   LargeLabeledInput,
@@ -22,10 +23,16 @@ const SignupScreen1 = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [description, setdescription] = useState('');
+  const [available, setAvailable] = useState(true);
 
+  const setAvailableState = (e:boolean) => {
+    setAvailable(e);
+  };
   const next = () => {
     setLoading(true);
     dispatch({type: actionTypes.SCREEN2});
+    AsyncStorage.setItem('description',  description);
+    AsyncStorage.setItem('available',  JSON.stringify(available));
   };
 
   return (
@@ -37,7 +44,7 @@ const SignupScreen1 = () => {
       <Text style={styles.header}>Basic details</Text>
       <View style={styles.formContainer}>
         <LargeLabeledInput label="Roomate Description" setValue={(e) => setdescription(e)} value={description}/>
-        <AvailabilitySwitch />
+        <AvailabilitySwitch availableState={setAvailableState}/>
         <SexCheckbox />
         <ContinueButton label="Continue" continue={next} loading={loading} />
       </View>

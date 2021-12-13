@@ -1,16 +1,24 @@
 /* eslint-disable prettier/prettier */
-import React, {useState} from 'react';
+import React, {useState, FC} from 'react';
 import {View, Switch, Text, StyleSheet} from 'react-native';
 
-const AvailabilitySwitch = () => {
+interface AvailableProps {
+  availableState:(e:boolean)=>void,
+}
+
+const AvailabilitySwitch:FC<AvailableProps> = ({availableState}) => {
   const [isEnabled, setIsEnabled] = useState(true);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  // const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  const toggleSwitch = () => {
+    setIsEnabled(prevState => !prevState);
+    availableState(isEnabled);
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>Avaliability</Text>
+      <Text style={styles.label}>Availability</Text>
       <Switch
-        trackColor={{false: '#767577', true: '#ff0000'}}
+        trackColor={{false: '#767577', true: '#60A40B'}}
         thumbColor={isEnabled ? '#fff' : '#f4f3f4'}
         ios_backgroundColor="#3e3e3e"
         onValueChange={toggleSwitch}
