@@ -50,7 +50,7 @@ const SignupScreen1 = () => {
       <StatusBar page={1} />
       <Text style={styles.header}>Basic details</Text>
       <View style={styles.formContainer}>
-        <LargeLabeledInput label="Roomate Description" setValue={(e) => setdescription(e)} value={description}/>
+        <LargeLabeledInput label="Roomate Description" setValue={(e) => setdescription(e)} value={description} />
         <AvailabilitySwitch availableState={setAvailableState}/>
         <SexCheckbox genderState={setGenderState}/>
         <ContinueButton label="Continue" continue={next} loading={loading}/>
