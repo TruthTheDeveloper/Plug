@@ -5,25 +5,37 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 //components
 import HomeScreenContainer from '../../screens/HomeScreen/index';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
-const Home = () => {
-    return(
-        <View style={{backgroundColor: 'red', flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-            <Text>Hello world</Text>
-        </View>
-    )
-}
+// const Home = () => {
+//     return(
+//         <View style={{backgroundColor: 'red', flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+//             <Text>Home</Text>
+//         </View>
+//     )
+// }
 
-const Stack = createNativeStackNavigator();
+// const Profile = () => {
+//     return(
+//         <View style={{backgroundColor: 'red', flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+//             <Text>Profile</Text>
+//         </View>
+//     )
+// }
+
+// const Stack = createNativeStackNavigator();
 
 const Navigator = () => {
     return(
-        <NavigationContainer>
-            <Stack.Navigator>
-                <Stack.Screen name='Home' component={Home} />
-            </Stack.Navigator>
-        </NavigationContainer>
+        <SafeAreaView style={{flex: 1, backgroundColor: 'red'}}>
+            {/* <NavigationContainer>
+                <Stack.Navigator initialRouteName="Home">
+                    <Stack.Screen name="Home" component={Home} />
+                    <Stack.Screen name="Profile" component={Profile} />
+                </Stack.Navigator>
+            </NavigationContainer> */}
+        </SafeAreaView>
     )
 };
 
