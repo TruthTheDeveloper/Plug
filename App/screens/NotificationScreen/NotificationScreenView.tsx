@@ -29,6 +29,7 @@ const NotificationScreenView = () => {
                         level={item.level}
                         department={item.department}
                         image={item.image}
+                        renderRightActions={() => <View style={{backgroundColor: 'red', height: 30, width: 50}}></View>  }
                     /> 
                 } />
         </View>
