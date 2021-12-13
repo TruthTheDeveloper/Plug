@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import { View, Text, StyleSheet, ImageBackground, Image } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-const image = require('../../../assets/images/girl.jpg');
+// const image = require('../../../assets/images/girl.jpg');
 const verifiedIcon = require('../../../assets/images/verified.png');
 
 interface profileProps {
@@ -19,10 +19,10 @@ const ProfileItem:FC<profileProps> = ({username, level, department, image}):JSX.
                 <ImageBackground source={image} style={styles.backgroundImage}>
                     <LinearGradient colors={['rgba(0, 0, 0, 0)','rgba(0, 0, 0, 0.4)', 'rgba(0, 0, 0, 0.5)', 'rgba(0, 0, 0, 0.7)']} style={styles.details}>
                         <View style={styles.usernameContainer}>
-                            <Text style={styles.username}>kendallJenner</Text>
+                            <Text style={styles.username}>{username}</Text>
                             <Image source={verifiedIcon} />
                         </View>
-                        <Text style={styles.department}>400l,Computer scie..</Text>
+                        <Text style={styles.department}>{level}l, {department}</Text>
                     </LinearGradient>
                 </ImageBackground>
             </View>
