@@ -2,13 +2,13 @@
 import React from 'react';
 import {View, StatusBar} from 'react-native';
 
-import { HomeScreenContainer } from './App/index';
+import Navigator from './App/navigation/navigation/Navigators';
 
 const App = () => {
   return (
     <View>
         <StatusBar backgroundColor="#fff" barStyle="dark-content" />
-        <HomeScreenContainer />
+        <Navigator />
     </View>
   );
 };
