@@ -4,6 +4,7 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, Dimensions} from 'react-native';
 import * as actionTypes from '../../../redux/actions/actionTypes';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {
   LargeLabeledInput,
@@ -21,10 +22,39 @@ const {height, width} = Dimensions.get('window');
 const SignupScreen1 = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const [description, setdescription] = useState('');
+  const [available, setAvailable] = useState(true);
+  const [gender, setGender] = useState('');
+  const [validation, setValidation] = useState('');
+
+  const setAvailableState = (e:boolean) => {
+    setAvailable(e);
+  };
+
+  const setGenderState = (e:string) => {
+    setGender(e);
+  };
+
+  const checkDescription = () => {
+    if (description === ''){
+      setValidation('This filed cannot be empty');
+    } else {
+      AsyncStorage.setItem('description',  description);
+    }
+  };
 
   const next = () => {
     setLoading(true);
     dispatch({type: actionTypes.SCREEN2});
+    checkDescription();
+    // remove old items form localStorage
+    AsyncStorage.removeItem('available');
+    AsyncStorage.removeItem('sex');
+
+    // set new item in localStorage
+    AsyncStorage.setItem('available',  JSON.stringify(available));
+    AsyncStorage.setItem('sex', gender);
+
   };
 
   return (
@@ -35,10 +65,10 @@ const SignupScreen1 = () => {
       <StatusBar page={1} />
       <Text style={styles.header}>Basic details</Text>
       <View style={styles.formContainer}>
-        <LargeLabeledInput label="Roomate Description" />
-        <AvailabilitySwitch />
-        <SexCheckbox />
-        <ContinueButton label="Continue" continue={next} loading={loading} />
+        <LargeLabeledInput label="Roomate Description" setValue={(e) => setdescription(e)} value={description} validationError={validation}/>
+        <AvailabilitySwitch availableState={setAvailableState}/>
+        <SexCheckbox genderState={setGenderState}/>
+        <ContinueButton label="Continue" continue={next} loading={loading}/>
       </View>
     </View>
   );

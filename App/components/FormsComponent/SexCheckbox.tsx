@@ -1,11 +1,29 @@
 /* eslint-disable prettier/prettier */
-import React, {useState} from 'react';
+import React, {useState, useEffect, FC} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 
-const SexCheckbox = () => {
+interface genderProps {
+  genderState:(e:string)=>void,
+}
+
+const SexCheckbox: FC<genderProps> = ({genderState}): JSX.Element =>{
   const [male, setMale] = useState(true);
   const [female, setFemale] = useState(false);
+
+
+
+  useEffect(() => {
+    const changeGender = (gender: string) => {
+      genderState(gender);
+    };
+    if (male){
+      changeGender('male');
+    } else {
+      changeGender('female');
+    }
+  }, [genderState, male]);
+
 
   const box1 = (
     <View style={styles.box}>

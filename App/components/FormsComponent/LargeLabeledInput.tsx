@@ -4,18 +4,28 @@ import {View, Text, TextInput, StyleSheet} from 'react-native';
 
 interface LabelProps {
   label: string;
+  setValue:(e:string)=>void,
+  value:string,
+  validationError:string
 }
 
-const LargeLabeledInput: FC<LabelProps> = (props): JSX.Element => {
+const LargeLabeledInput: FC<LabelProps> = ({setValue, label, value, validationError}): JSX.Element => {
+
+  const inputHandler = (e:string) => {
+    setValue(e);
+  };
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>{props.label}</Text>
+      <Text style={styles.label}>{label}</Text>
+      {validationError !== '' ? <Text>{validationError}</Text> : null }
       <TextInput
         style={styles.input}
         numberOfLines={4}
         textAlignVertical="top"
         multiline
         placeholder="I need aroomate that is ..."
+        onChangeText={(e:string) => inputHandler(e)}
+        value={value}
       />
     </View>
   );

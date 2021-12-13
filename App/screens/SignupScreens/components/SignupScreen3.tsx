@@ -16,13 +16,14 @@ import {useDispatch} from 'react-redux';
 import EmojiHeader from './EmojiHeader';
 import StatusBar from './StatusBar';
 import ProfilePhoto from './ProfilePhoto';
-import InterestBox from './InterestBox';
+import PersonalityBox from './personalityBox';
 import ContinueButton from './ContinueButton';
+
 
 const {height, width} = Dimensions.get('window');
 
 const SignupScreen3 = () => {
-  const [interests, setInterests] = useState<any | null>([]);
+  const [personality, setPersonality] = useState<any | null>([]);
   const [, setProfilePic] = useState();
 
   const [loading, setLoading] = useState(false);
@@ -31,92 +32,100 @@ const SignupScreen3 = () => {
     setProfilePic(img);
   };
 
-  const addInterest = (e: string) => {
-    setInterests((prev: any) => [...prev, e]);
-    console.log(interests);
+  const addPersonality = (e: string) => {
+    setPersonality((prev: any) => [...prev, e]);
+    console.log(personality);
   };
 
-  const removeInterest = (e: string) => {
-    const idx = interests.indexOf(e);
-    let item = interests;
+  const removePersonality = (e: string) => {
+    const idx = personality.indexOf(e);
+    let item = personality;
     item.splice(idx, 1);
-    setInterests(item);
+    setPersonality(item);
   };
 
-  //Interest Containers
+  //personality Containers
   const div1 = (
-    <View style={styles.interestFlex}>
-      <InterestBox
-        interests={interests}
+    <View style={styles.personalityFlex}>
+      <PersonalityBox
+        personality={personality}
+        attribute="attribute_1"
         small={false}
-        name="Politics"
-        postInterest={addInterest}
-        deleteInterest={removeInterest}
+        name="Passionate"
+        postPersonality={addPersonality}
+        deletePersonality={removePersonality}
       />
       <View style={styles.gap} />
-      <InterestBox
-        interests={interests}
+      <PersonalityBox
+        personality={personality}
+        attribute="attribute_2"
         small
-        name="Books"
-        postInterest={addInterest}
-        deleteInterest={removeInterest}
+        name="Smart"
+        postPersonality={addPersonality}
+        deletePersonality={removePersonality}
       />
     </View>
   );
   const div2 = (
-    <View style={styles.interestFlex}>
-      <InterestBox
-        interests={interests}
+    <View style={styles.personalityFlex}>
+      <PersonalityBox
+        personality={personality}
+        attribute="attribute_3"
         small={true}
-        name="Sports"
-        postInterest={addInterest}
-        deleteInterest={removeInterest}
+        name="Creative"
+        postPersonality={addPersonality}
+        deletePersonality={removePersonality}
       />
       <View style={styles.gap} />
-      <InterestBox
-        interests={interests}
+      <PersonalityBox
+        personality={personality}
+        attribute="attribute_4"
         small={false}
-        name="Fashion"
-        postInterest={addInterest}
-        deleteInterest={removeInterest}
+        name="Ambitious"
+        postPersonality={addPersonality}
+        deletePersonality={removePersonality}
       />
     </View>
   );
   const div3 = (
-    <View style={styles.interestFlex}>
-      <InterestBox
-        interests={interests}
+    <View style={styles.personalityFlex}>
+      <PersonalityBox
+        personality={personality}
+        attribute="attribute_5"
         small={false}
-        name="Parties"
-        postInterest={addInterest}
-        deleteInterest={removeInterest}
+        name="Honest"
+        postPersonality={addPersonality}
+        deletePersonality={removePersonality}
       />
       <View style={styles.gap} />
-      <InterestBox
-        interests={interests}
+      <PersonalityBox
+        personality={personality}
+        attribute="attribute_6"
         small
-        name="Movies"
-        postInterest={addInterest}
-        deleteInterest={removeInterest}
+        name="Humble"
+        postPersonality={addPersonality}
+        deletePersonality={removePersonality}
       />
     </View>
   );
   const div4 = (
-    <View style={styles.interestFlex}>
-      <InterestBox
-        interests={interests}
+    <View style={styles.personalityFlex}>
+      <PersonalityBox
+        personality={personality}
+        attribute="attribute_7"
         small={true}
-        name="Music"
-        postInterest={addInterest}
-        deleteInterest={removeInterest}
+        name="Responsible"
+        postPersonality={addPersonality}
+        deletePersonality={removePersonality}
       />
       <View style={styles.gap} />
-      <InterestBox
-        interests={interests}
+      <PersonalityBox
+        personality={personality}
+        attribute="attribute_8"
         small={false}
-        name="Religion"
-        postInterest={addInterest}
-        deleteInterest={removeInterest}
+        name="Hardworking"
+        postPersonality={addPersonality}
+        deletePersonality={removePersonality}
       />
     </View>
   );
@@ -126,6 +135,7 @@ const SignupScreen3 = () => {
   const next = () => {
     setLoading(true);
     dispatch({type: actionTypes.SCREEN3});
+
   };
 
   const back = () => {
@@ -147,9 +157,9 @@ const SignupScreen3 = () => {
         <Text style={styles.header}>Profile</Text>
         <ProfilePhoto setImage={setImage} />
       </View>
-      <View style={styles.interestContainer}>
-        <Text style={styles.title}>Interest</Text>
-        <View style={styles.interests}>
+      <View style={styles.personalityContainer}>
+        <Text style={styles.title}>What best describe you</Text>
+        <View style={styles.personalitys}>
           {div1}
           {div2}
           {div3}
@@ -182,7 +192,7 @@ const styles = StyleSheet.create({
     color: '#000',
     fontSize: 22,
   },
-  interestContainer: {
+  personalityContainer: {
     width: width - 30,
     marginLeft: 15,
     marginTop: 5,
@@ -193,11 +203,11 @@ const styles = StyleSheet.create({
     opacity: 0.6,
     color: '#000',
   },
-  interests: {
+  personalitys: {
     width: '100%',
     marginTop: 15,
   },
-  interestFlex: {
+  personalityFlex: {
     display: 'flex',
     flexDirection: 'row',
     paddingBottom: 10,

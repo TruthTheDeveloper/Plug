@@ -13,6 +13,8 @@ import {launchImageLibrary} from 'react-native-image-picker';
 
 import Icons from 'react-native-vector-icons/Feather';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 interface ImageProps {
   setImage: (e: any) => void;
@@ -27,6 +29,8 @@ const ProfilePhoto: FC<ImageProps> = ({setImage}): JSX.Element => {
         const data = response.assets[0].uri;
         postPhoto(data);
         setImage(data);
+        AsyncStorage.removeItem('profilePic');
+        AsyncStorage.setItem('profilePic', JSON.stringify(photo));
       }
     });
   };

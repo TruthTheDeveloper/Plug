@@ -24,6 +24,7 @@ import EmojiHeader from './EmojiHeader';
 import StatusBar from './StatusBar';
 import InstitutionChecker from './InstitutionChecker';
 import ContinueButton from './ContinueButton';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const {height, width} = Dimensions.get('window');
 
@@ -86,6 +87,16 @@ const SignupScreen2 = () => {
   const next = () => {
     setLoading(true);
     dispatch({type: actionTypes.SCREEN3});
+    // remove old item from localStorage
+    AsyncStorage.removeItem('institution');
+    AsyncStorage.removeItem('university');
+    AsyncStorage.removeItem('department');
+    AsyncStorage.removeItem('level');
+    // set new item in localstorage
+    AsyncStorage.setItem('institution', Institution);
+    AsyncStorage.setItem('university', JSON.stringify(universityName));
+    AsyncStorage.setItem('department', JSON.stringify(department));
+    AsyncStorage.setItem('level', JSON.stringify(level));
   };
 
   const back = () => {
