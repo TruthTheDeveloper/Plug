@@ -51,10 +51,7 @@ const Navigator = () => {
             <NavigationContainer>
                 <Tab.Navigator screenOptions={{
                     headerShown: false,
-                    tabBarShowLabel: false,
-                    tabBarStyle: {
-                        height: 200
-                    }
+                    tabBarShowLabel: false
                 }}>
 
                     <Tab.Screen name={HOME} component={Home} options={{
