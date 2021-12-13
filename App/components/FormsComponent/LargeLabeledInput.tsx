@@ -6,10 +6,11 @@ interface LabelProps {
   label: string;
   setValue:(e:string)=>void,
   value:string,
-  validationError:string
+  validationError:string,
+  border:string
 }
 
-const LargeLabeledInput: FC<LabelProps> = ({setValue, label, value, validationError}): JSX.Element => {
+const LargeLabeledInput: FC<LabelProps> = ({setValue, label, value, validationError, border}): JSX.Element => {
 
   const inputHandler = (e:string) => {
     setValue(e);
@@ -17,19 +18,27 @@ const LargeLabeledInput: FC<LabelProps> = ({setValue, label, value, validationEr
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
-      {validationError !== '' ? <Text>{validationError}</Text> : null }
+      {validationError !== '' ? <Text style={validationStyle.validationColor}>{validationError}</Text> : null }
       <TextInput
-        style={styles.input}
+        style={[styles.input, {borderColor:border}]}
         numberOfLines={4}
         textAlignVertical="top"
         multiline
         placeholder="I need aroomate that is ..."
         onChangeText={(e:string) => inputHandler(e)}
         value={value}
+        maxLength={12}
       />
     </View>
   );
 };
+
+
+const validationStyle = StyleSheet.create({
+  validationColor:{
+    color:'#FE1135',
+  },
+});
 
 const styles = StyleSheet.create({
   container: {

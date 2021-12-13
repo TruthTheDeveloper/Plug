@@ -1,4 +1,6 @@
 /* eslint-disable prettier/prettier */
+
+// authentication
 export {
   auth,
   logout,
@@ -6,3 +8,9 @@ export {
   authCheckState,
   checkRefreshTimeout,
 } from './auth';
+
+// profile
+
+export {
+  postProfile,
+} from './profile';
