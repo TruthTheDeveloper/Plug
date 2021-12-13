@@ -13,6 +13,7 @@ import Form2 from './InstitutionComponents/Form2';
 import Form3 from './InstitutionComponents/Form3';
 
 import Header from './MainComponents/Header';
+import Username from './MainComponents/Username';
 
 export {
     LabeledInput,
@@ -28,5 +29,6 @@ export {
     Form2,
     Form3,
 
-    Header
+    Header,
+    Username
 };
