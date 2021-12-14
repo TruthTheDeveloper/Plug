@@ -15,6 +15,8 @@ import Form3 from './InstitutionComponents/Form3';
 import Header from './MainComponents/Header';
 import Username from './MainComponents/Username';
 
+import ChatView from './Chat/ChatView';
+
 export {
     LabeledInput,
     SubmitButton,
@@ -30,5 +32,7 @@ export {
     Form3,
 
     Header,
-    Username
+    Username,
+
+    ChatView
 };

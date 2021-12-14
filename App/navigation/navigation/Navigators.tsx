@@ -9,6 +9,7 @@ import Icons2 from 'react-native-vector-icons/Ionicons';
 
 //components
 import {HomeScreenContainer, NotificationScreenContainer, ChatSceenContainer} from '../../index';
+import { ChatView } from '../../components';
 
 //ROUTES
 import { HOME, CHATS, NOTIFICATIONS, PROFILE } from '../ROUTE';
@@ -43,7 +44,7 @@ const Notifications = () => {
 
 const Tab = createBottomTabNavigator();
 
-const Navigator = () => {
+const Container = () => {
     return(
         <View style={{height: height }}>
             <NavigationContainer>
@@ -81,5 +82,9 @@ const Navigator = () => {
         </View>
     )
 };
+
+const Navigator = () => {
+    return <ChatView />
+}
 
 export default Navigator
