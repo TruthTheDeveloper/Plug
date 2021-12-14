@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import { View, Dimensions, Text, StyleSheet, ImageBackground } from 'react-native';
-import Animated, { useAnimatedGestureHandler, useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
+// import Animated, { useAnimatedGestureHandler, useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
 
 import { Username } from '../../../components/index';
@@ -17,25 +17,25 @@ interface NotificationProps {
 
 const NotificationItem:FC<NotificationProps> = ({username, department, level, active, image}):JSX.Element => {
 
-    const translateX = useSharedValue(0)
+    // const translateX = useSharedValue(0)
 
-    const panGestureEvent = useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
-        onStart: (event) => {},
-        onActive: (event) => {
-            translateX.value = event.translationX
-        },
-        onEnd: (event) => {}
-    });
+    // const panGestureEvent = useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
+    //     onStart: (event) => {},
+    //     onActive: (event) => {
+    //         translateX.value = event.translationX
+    //     },
+    //     onEnd: (event) => {}
+    // });
 
-    const rStyle = useAnimatedStyle(() => {
-        return{
-            transform: [
-                {
-                    translateX: translateX.value
-                }
-            ]
-        }
-    })
+    // const rStyle = useAnimatedStyle(() => {
+    //     return{
+    //         transform: [
+    //             {
+    //                 translateX: translateX.value
+    //             }
+    //         ]
+    //     }
+    // })
 
     return(
         <View>
