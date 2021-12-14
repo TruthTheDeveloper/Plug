@@ -6,6 +6,7 @@ export {
   logout,
   setAuthRedirectPath,
   authCheckState,
+  authSuccess,
   checkRefreshTimeout,
 } from './auth';
 
