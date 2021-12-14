@@ -26,7 +26,7 @@ export const postProfile = (data) => {
       axios
         .post('https://findplug.herokuapp.com/profile', post)
         .then(response => {
-          console.log(response);
+          console.log(response, 'the response');
         })
         .then((err) => console.log(err));
     };
