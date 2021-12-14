@@ -1,18 +1,32 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
+import React, { useState } from 'react';
 import {View, StatusBar} from 'react-native';
-import { AuthScreenContainer } from './App/index';
-import { SignupScreensContainer } from './App/index';
-import {useSelector} from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import MainScreen from './App/screens/MainScreen';
 
+let authenticated : any = null;
 const App = () => {
+  const [auth, setAuth]:any = useState(false);
 
-  const authToken = useSelector((state:any) => state.authReducer.token);
+  const getToken = async () => {
+    console.log('called');
+      authenticated = await AsyncStorage.getItem('token');
+      console.log(authenticated);
+      if (authenticated !== null){
+        console.log('tryed here');
+        setAuth(true);
+      } else {
+        console.log('it got here');
+      setAuth(false);
+      }
+
+    };
+  getToken();
   return (
     <View>
         <StatusBar backgroundColor="#fff" barStyle="dark-content" />
-        {authToken !== null ? <SignupScreensContainer/> : <AuthScreenContainer/>}
+        <MainScreen authenticate={auth}/>
     </View>
   );
 };

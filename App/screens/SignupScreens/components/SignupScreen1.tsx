@@ -53,7 +53,7 @@ const SignupScreen1 = () => {
   };
 
   const next = () => {
-    if (validation !== ''){
+    if (validation === ''){
       dispatch({type: actionTypes.SCREEN2});
       setLoading(true);
       // available
