@@ -1,5 +1,7 @@
 import React, {FC} from 'react';
 import { View, Dimensions, Text, StyleSheet, ImageBackground } from 'react-native';
+import Animated, { useAnimatedGestureHandler, useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
+import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
 
 import { Username } from '../../../components/index';
 
@@ -14,15 +16,40 @@ interface NotificationProps {
 }
 
 const NotificationItem:FC<NotificationProps> = ({username, department, level, active, image}):JSX.Element => {
+
+    const translateX = useSharedValue(0)
+
+    const panGestureEvent = useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
+        onStart: (event) => {},
+        onActive: (event) => {
+            translateX.value = event.translationX
+        },
+        onEnd: (event) => {}
+    });
+
+    const rStyle = useAnimatedStyle(() => {
+        return{
+            transform: [
+                {
+                    translateX: translateX.value
+                }
+            ]
+        }
+    })
+
     return(
-        <View style={styles.container}>
-            <View style={styles.container1}>
-                <ImageBackground source={image} style={styles.image} />
-            </View>
-            <View style={styles.container2}>
-                <Username username={username} active={active} />
-                <Text style={styles.text}>{level} {department}</Text>
-            </View>
+        <View>
+            {/* <PanGestureHandler onGestureEvent={panGestureEvent}>
+                <Animated.View style={[styles.container, rStyle]}>
+                    <View style={styles.container1}>
+                        <ImageBackground source={image} style={styles.image} />
+                    </View>
+                    <View style={styles.container2}>
+                        <Username username={username} active={active} />
+                        <Text style={styles.text}>{level} {department}</Text>
+                    </View>
+                </Animated.View>
+            </PanGestureHandler> */}
         </View>
     )
 };
