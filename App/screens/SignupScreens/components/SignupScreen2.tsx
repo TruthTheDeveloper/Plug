@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import Icons from 'react-native-vector-icons/Feather';
 import * as actionTypes from '../../../redux/actions/actionTypes';
+import * as actions from '../../../redux/actions/index';
 import {useDispatch} from 'react-redux';
 
 import {university, college} from '../constants';
@@ -24,11 +25,11 @@ import EmojiHeader from './EmojiHeader';
 import StatusBar from './StatusBar';
 import InstitutionChecker from './InstitutionChecker';
 import ContinueButton from './ContinueButton';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const {height, width} = Dimensions.get('window');
 
 const SignupScreen2 = () => {
+  const dispatch = useDispatch();
   const [Institution, setInstitution] = useState(university);
 
   const [universityName, setUniversity] = useState();
@@ -82,33 +83,18 @@ const SignupScreen2 = () => {
     }, 100);
   };
 
-  const dispatch = useDispatch();
 
   const next = () => {
+    const data = {
+      institution:Institution,
+      universityName:universityName,
+      department:department,
+      level:level,
+    };
     setLoading(true);
     dispatch({type: actionTypes.SCREEN3});
 
-    // institution
-    // switch (await AsyncStorage.getItem('institution')){
-    //   case await AsyncStorage.getItem('institution'):
-    //     AsyncStorage.removeItem('institution');
-    //     AsyncStorage.setItem('institution', Institution);
-    //   break;
-    //   default:
-    //     AsyncStorage.setItem('institution', Institution);
-
-    // }
-
-    // intitustion
-        AsyncStorage.setItem('institution', Institution);
-    // university
-        AsyncStorage.setItem('university', JSON.stringify(universityName));
-
-    // department
-        AsyncStorage.setItem('department', JSON.stringify(department));
-    // level
-        AsyncStorage.setItem('level', JSON.stringify(level));
-
+    dispatch(actions.getSecondDetailsToState(data));
 
 
   };

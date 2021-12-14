@@ -25,6 +25,7 @@ const {height, width} = Dimensions.get('window');
 
 const SignupScreen3 = () => {
   const [personality, setPersonality] = useState<any | null>([]);
+
   const [, setProfilePic] = useState();
 
   const [loading, setLoading] = useState(false);
@@ -35,7 +36,6 @@ const SignupScreen3 = () => {
 
   const addPersonality = (e: string) => {
     setPersonality((prev: any) => [...prev, e]);
-    console.log(personality);
   };
 
   const removePersonality = (e: string) => {
@@ -50,7 +50,7 @@ const SignupScreen3 = () => {
     <View style={styles.personalityFlex}>
       <PersonalityBox
         personality={personality}
-        attribute="attribute_1"
+        attribute="attributeOne"
         small={false}
         name="Passionate"
         postPersonality={addPersonality}
@@ -59,7 +59,7 @@ const SignupScreen3 = () => {
       <View style={styles.gap} />
       <PersonalityBox
         personality={personality}
-        attribute="attribute_2"
+        attribute="attributeTwo"
         small
         name="Smart"
         postPersonality={addPersonality}
@@ -71,7 +71,7 @@ const SignupScreen3 = () => {
     <View style={styles.personalityFlex}>
       <PersonalityBox
         personality={personality}
-        attribute="attribute_3"
+        attribute="attributeThree"
         small={true}
         name="Creative"
         postPersonality={addPersonality}
@@ -80,7 +80,7 @@ const SignupScreen3 = () => {
       <View style={styles.gap} />
       <PersonalityBox
         personality={personality}
-        attribute="attribute_4"
+        attribute="attributeFour"
         small={false}
         name="Ambitious"
         postPersonality={addPersonality}
@@ -92,7 +92,7 @@ const SignupScreen3 = () => {
     <View style={styles.personalityFlex}>
       <PersonalityBox
         personality={personality}
-        attribute="attribute_5"
+        attribute="attributeFive"
         small={false}
         name="Honest"
         postPersonality={addPersonality}
@@ -101,7 +101,7 @@ const SignupScreen3 = () => {
       <View style={styles.gap} />
       <PersonalityBox
         personality={personality}
-        attribute="attribute_6"
+        attribute="attributeSix"
         small
         name="Humble"
         postPersonality={addPersonality}
@@ -113,7 +113,7 @@ const SignupScreen3 = () => {
     <View style={styles.personalityFlex}>
       <PersonalityBox
         personality={personality}
-        attribute="attribute_7"
+        attribute="attributeSeven"
         small={true}
         name="Responsible"
         postPersonality={addPersonality}
@@ -122,7 +122,7 @@ const SignupScreen3 = () => {
       <View style={styles.gap} />
       <PersonalityBox
         personality={personality}
-        attribute="attribute_8"
+        attribute="attributeEight"
         small={false}
         name="Hardworking"
         postPersonality={addPersonality}

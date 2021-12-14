@@ -4,7 +4,7 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, Dimensions} from 'react-native';
 import * as actionTypes from '../../../redux/actions/actionTypes';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as actions from '../../../redux/actions/index';
 
 import {
   LargeLabeledInput,
@@ -36,6 +36,8 @@ const SignupScreen1 = () => {
     }
   },[validation]);
 
+
+
   const setAvailableState = (e:boolean) => {
     setAvailable(e);
   };
@@ -47,20 +49,20 @@ const SignupScreen1 = () => {
   const checkDescription = () => {
     if (description === ''){
       setValidation('This field cannot be empty');
-    } else {
-      AsyncStorage.setItem('description',  description);
     }
   };
 
   const next = () => {
+    const data = {
+      description:description,
+      available:available,
+      gender:gender,
+    };
+
     if (validation === ''){
       dispatch({type: actionTypes.SCREEN2});
       setLoading(true);
-      // available
-      AsyncStorage.setItem('available', JSON.stringify(available));
-
-      // gender
-      AsyncStorage.setItem('sex', gender);
+      dispatch(actions.getFirstDetailsToState(data));
     }
 
     checkDescription();

@@ -10,7 +10,6 @@ import {
   Alert,
 } from 'react-native';
 import {red} from '../../../config/colors';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface PersonalityProps {
   small: boolean;
@@ -27,15 +26,13 @@ const PersonalityBox: FC<PersonalityProps> = ({
   postPersonality,
   deletePersonality,
   personality,
-  attribute,
 }): JSX.Element => {
   const [selected, setSelected] = useState(false);
-
   const addPersonality = () => {
     if (personality.length < 5) {
       setSelected(true);
       postPersonality(name);
-      AsyncStorage.setItem(attribute, name);
+
     } else {
       Alert.alert('Sorry', "You can't have more than five personality", [
         {text: 'OK'},
