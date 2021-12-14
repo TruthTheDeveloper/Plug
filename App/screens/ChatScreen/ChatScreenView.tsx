@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Dimensions } from 'react-native';
 
 //components
 import {Header} from '../../components/index';
+import ChatItem from './components/ChatItems';
 
 const {height} = Dimensions.get('window');
 
@@ -18,7 +19,7 @@ const ChatScreenView  = () => {
     return(
         <View style={styles.container}>
             <Header label='Chats' />
-            <Text>Chat Screen</Text>
+            <ChatItem />
         </View>
     )
 };
