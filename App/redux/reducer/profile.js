@@ -105,21 +105,21 @@ const reducer = (state = initialState, action) => {
       return setSecondScreenDetail(state, action);
     case actionTypes.SET_PROFILE_PIC:
       return setProfilePic(state, action);
-    case actionTypes.SET_ATTRIBUTE_ONE(state, action):
+    case actionTypes.SET_ATTRIBUTE_ONE:
         return setAttributeOne(state, action);
-    case actionTypes.SET_ATTRIBUTE_TWO(state, action):
+    case actionTypes.SET_ATTRIBUTE_TWO:
         return setAttributeTwo(state, action);
-    case actionTypes.SET_ATTRIBUTE_THREE(state, action):
+    case actionTypes.SET_ATTRIBUTE_THREE:
         return setAttributeThree(state, action);
-    case actionTypes.SET_ATTRIBUTE_FOUR(state, action):
+    case actionTypes.SET_ATTRIBUTE_FOUR:
         return setAttributeFour(state, action);
-    case actionTypes.SET_ATTRIBUTE_FIVE(state, action):
+    case actionTypes.SET_ATTRIBUTE_FIVE:
         return setAttributeFive(state, action);
-    case actionTypes.SET_ATTRIBUTE_SIX(state, action):
+    case actionTypes.SET_ATTRIBUTE_SIX:
         return setAttributeSix(state,action);
-    case actionTypes.SET_ATTRIBUTE_SEVEN(state, action):
+    case actionTypes.SET_ATTRIBUTE_SEVEN:
         return setAttributeSeven(state, action);
-    case actionTypes.SET_ATTRIBUTE_EIGHT(state, action):
+    case actionTypes.SET_ATTRIBUTE_EIGHT:
         return setAttributeEight(state,action);
     default:
         return state;
