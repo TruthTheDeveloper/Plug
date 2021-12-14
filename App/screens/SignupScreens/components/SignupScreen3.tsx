@@ -13,6 +13,7 @@ import Icons from 'react-native-vector-icons/Feather';
 import * as actionTypes from '../../../redux/actions/actionTypes';
 import * as actions from '../../../redux/actions/index';
 import {useDispatch} from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import EmojiHeader from './EmojiHeader';
 import StatusBar from './StatusBar';
@@ -133,10 +134,43 @@ const SignupScreen3 = () => {
 
   const dispatch = useDispatch();
 
+  const userId = useSelector((state:any) => state.authReducer.userId);
+  const sex = useSelector((state:any) => state.profileReducer.sex);
+  const department = useSelector((state:any) => state.profileReducer.department);
+  const level = useSelector((state:any) => state.profileReducer.level);
+  const institution = useSelector((state:any) => state.profileReducer.institution);
+  const description = useSelector((state:any) => state.profileReducer.description);
+  const attributeOne = useSelector((state:any) => state.profileReducer.attributeOne);
+  const attributeTwo = useSelector((state:any) => state.profileReducer.attributeTwo);
+  const attributeThree = useSelector((state:any) => state.profileReducer.attributeThree);
+  const attributeFour = useSelector((state:any) => state.profileReducer.attributeFour);
+  const attributeFive = useSelector((state:any) => state.profileReducer.attributeFive);
+  const attributeSix = useSelector((state:any) => state.profileReducer.attributeSix);
+  const attributeSeven = useSelector((state:any) => state.profileReducer.attributeSeven);
+  const attributeEight = useSelector((state:any) => state.profileReducer.attributeEight);
+
+  const data = {
+    userId:userId,
+    department:department,
+    sex:sex,
+    level:level,
+    institution:institution,
+    description:description,
+    attributeOne:attributeOne,
+    attributeTwo:attributeTwo,
+    attributeThree:attributeThree,
+    attributeFour:attributeFour,
+    attributeFive:attributeFive,
+    attributeSix:attributeSix,
+    attributeSeven:attributeSeven,
+    attributeEight:attributeEight,
+
+  };
+
   const next = () => {
     setLoading(true);
     dispatch({type: actionTypes.SCREEN3});
-    dispatch(actions.postProfile());
+    dispatch(actions.postProfile(data));
 
   };
 

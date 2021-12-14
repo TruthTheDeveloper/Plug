@@ -2,30 +2,29 @@
 import axios from 'axios';
 import * as actionTypes from './actionTypes';
 
-export const postProfile = () => {
+export const postProfile = (data) => {
 
-  // if (data !== null){
-  //   let post = {
-  //     userId: data.userId,
-  //     sex:data.sex,
-  //     department:data.department,
-  //     level:data.level,
-  //     institution:data.institution,
-  //     description:data.description,
-  //     attributeOne:data.attributeOne,
-  //     attributeTwo:data.attributeTwo,
-  //     attributeThree:data.attributeThree,
-  //     attributeFour:data.attributeFour,
-  //     atttibuteFive:data.attributeFive,
-  //     attributteSix:data.attributeSix,
-  //     attributeSeven:data.attributeSeven,
-  //     attributeEight:data.attributeEight,
-  //     profilePic:data.profilePic,
-  //   };
+    let post = {
+      userId: data.id,
+      sex:data.sex,
+      department:data.department,
+      level:data.level,
+      institution:data.institution,
+      description:data.description,
+      attributeOne:data.attributeOne,
+      attributeTwo:data.attributeTwo,
+      attributeThree:data.attributeThree,
+      attributeFour:data.attributeFour,
+      atttibuteFive:data.attributeFive,
+      attributteSix:data.attributeSix,
+      attributeSeven:data.attributeSeven,
+      attributeEight:data.attributeEight,
+      profilePic:data.profilePic,
+    };
 
     return dispatch => {
       axios
-        .post('https://findplug.herokuapp.com/profile')
+        .post('https://findplug.herokuapp.com/profile', post)
         .then(response => {
           console.log(response);
         })
@@ -54,66 +53,66 @@ export const getSecondDetailsToState = (data) => {
   };
 };
 
-export const getProfilePic = (data) => {
+export const getProfilePic = (pic) => {
   return {
     type:actionTypes.SET_THIRD_SCREEN_DETAIL,
-    profilePic:data.profilePic,
+    profilePic:pic,
   };
 };
 
-export const getattributeOne = (data) => {
+export const getattributeOne = (attribute) => {
   return {
     type:actionTypes.SET_ATTRIBUTE_ONE,
-    attributeOne:data.attributeOne || '',
+    attributeOne:attribute || '',
   };
 };
 
-export const getattributeTwo = (data) => {
+export const getattributeTwo = (attribute) => {
   return {
     type:actionTypes.SET_ATTRIBUTE_TWO,
-    attributeOne:data.attributeTwo || '',
+    attributeOne:attribute || '',
   };
 };
 
 
-export const getattributeThree = (data) => {
+export const getattributeThree = (attribute) => {
   return {
     type:actionTypes.SET_ATTRIBUTE_THREE,
-    attributeOne:data.attributeThree || '',
+    attributeOne:attribute || '',
   };
 };
 
-export const getattributeFour = (data) => {
+export const getattributeFour = (attribute) => {
   return {
     type:actionTypes.SET_ATTRIBUTE_FOUR,
-    attributeOne:data.attributeFour || '',
+    attributeOne:attribute || '',
   };
 };
 
-export const getattributeFive = (data) => {
+export const getattributeFive = (attribute) => {
   return {
     type:actionTypes.SET_ATTRIBUTE_FOUR,
-    attributeOne:data.attributeFour || '',
+    attributeOne:attribute || '',
   };
 };
 
-export const getattributeSix = (data) => {
+export const getattributeSix = (attribute) => {
   return {
     type:actionTypes.SET_ATTRIBUTE_SIX,
-    attributeOne:data.attributeSix || '',
+    attributeOne:attribute || '',
   };
 };
 
-export const getattributeSeven = (data) => {
+export const getattributeSeven = (attribute) => {
   return {
     type:actionTypes.SET_ATTRIBUTE_SEVEN,
-    attributeOne:data.attributeSix || '',
+    attributeOne:attribute || '',
   };
 };
 
-export const getattributeEight = (data) => {
+export const getattributeEight = (attribute) => {
   return {
     type:actionTypes.SET_ATTRIBUTE_SEVEN,
-    attributeOne:data.attributeSix || '',
+    attributeOne:attribute || '',
   };
 };

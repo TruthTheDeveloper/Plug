@@ -3,7 +3,7 @@ import React, {FC} from 'react';
 import {View} from 'react-native';
 import AuthScreenContainer from './welcomeScreen/index';
 import SignUpScreensContainer from './SignupScreens/index';
-import {useSelector} from 'react-redux'
+import {useSelector} from 'react-redux';
 
 
 interface MainProps {
@@ -15,7 +15,7 @@ const MainScreen: FC<MainProps> = ({authenticate}) => {
     const authToken = useSelector((state:any)=> state.authReducer.token);
   return (
     <View>
-        {authenticate === true || authToken !== null? <SignUpScreensContainer/> : <AuthScreenContainer/>}
+        {authenticate === true || authToken !== null ? <SignUpScreensContainer/> : <AuthScreenContainer/>}
     </View>
   );
 };

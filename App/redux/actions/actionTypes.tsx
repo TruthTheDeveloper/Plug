@@ -30,7 +30,9 @@ export const SET_ATTRIBUTE_SEVEN = 'SET_ATTRIBUTE_SEVEN';
 export const SET_ATTRIBUTE_EIGHT = 'SET_ATTRIBUTE_EIGHT';
 
 //Profile Pic
-
 export const SET_PROFILE_PIC = 'SET_PROFILE_PIC';
+
+//set user Id
+export const GET_USER_ID = 'GET_USER_ID';
 
 

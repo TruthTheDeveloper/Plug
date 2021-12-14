@@ -70,6 +70,12 @@ export const checkRefreshTimeout = (expirationTime) => {
     };
 };
 
+const getUserId = (id) => {
+    return {
+        type:actionTypes.GET_USER_ID,
+        userId:id,
+    };
+};
 
 export const auth = (username, email, password, isSignup) => {
     return dispatch => {
@@ -101,12 +107,12 @@ export const auth = (username, email, password, isSignup) => {
             .then(response => {
                 console.log(response.data);
                 // const expirationDate = new Date(new Date().getTime() + response.data.expires * 1000);
-                AsyncStorage.setItem('userId', response.data.id);
                 AsyncStorage.setItem('token',  `Bearer ${response.data.token}`);
                 // AsyncStorage.setItem('tokenRefresh', response.data.token);
                 // AsyncStorage.setItem('expirationDate', expirationDate);
                 // AsyncStorage.setItem('username', response.data.username);
                 // AsyncStorage.setItem('refreshTokenLimit', refreshLimit)
+                dispatch(getUserId(response.data.id));
                 dispatch(authSuccess(response.data.token, response.data.username));
                 dispatch(checkAuthTimeout(300));
             })
