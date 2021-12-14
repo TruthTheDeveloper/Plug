@@ -1,6 +1,5 @@
 import React, {FC} from 'react';
 import { View, Dimensions, Text, StyleSheet, ImageBackground } from 'react-native';
-import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 import { Username } from '../../../components/index';
 
@@ -11,30 +10,20 @@ interface NotificationProps {
     department: string,
     level: any,
     active: boolean,
-    image: any,
-    renderRightActions: any
+    image: any
 }
 
-const swipeLeft:FC<NotificationProps> = ({username}):JSX.Element => {
-    console.log(username)
-    return (
-        <View style={{backgroundColor: 'red', height: 50, width : 50}}></View>
-    )
-}
-
-const NotificationItem:FC<NotificationProps> = ({username, department, level, active, image, renderRightActions}):JSX.Element => {
+const NotificationItem:FC<NotificationProps> = ({username, department, level, active, image}):JSX.Element => {
     return(
-        <Swipeable renderRightActions={() => alert('Hello world') }>
-            <View style={styles.container}>
-                <View style={styles.container1}>
-                    <ImageBackground source={image} style={styles.image} />
-                </View>
-                <View style={styles.container2}>
-                    <Username username={username} active={active} />
-                    <Text style={styles.text}>{level} {department}</Text>
-                </View>
+        <View style={styles.container}>
+            <View style={styles.container1}>
+                <ImageBackground source={image} style={styles.image} />
             </View>
-        </Swipeable>
+            <View style={styles.container2}>
+                <Username username={username} active={active} />
+                <Text style={styles.text}>{level} {department}</Text>
+            </View>
+        </View>
     )
 };
 
