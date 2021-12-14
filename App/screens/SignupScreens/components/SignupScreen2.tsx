@@ -86,8 +86,7 @@ const SignupScreen2 = () => {
 
   const next = () => {
     const data = {
-      institution:Institution,
-      universityName:universityName,
+      institution:universityName,
       department:department,
       level:level,
     };

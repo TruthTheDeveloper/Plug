@@ -40,6 +40,7 @@ const PersonalityBox: FC<PersonalityProps> = ({
       setSelected(true);
       postPersonality(name);
 
+      console.log(attribute);
       switch (attribute){
         case 'attributeOne':
           dispatch(actions.getattributeOne(name));

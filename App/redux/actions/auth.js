@@ -108,6 +108,7 @@ export const auth = (username, email, password, isSignup) => {
                 console.log(response.data);
                 // const expirationDate = new Date(new Date().getTime() + response.data.expires * 1000);
                 AsyncStorage.setItem('token',  `Bearer ${response.data.token}`);
+                AsyncStorage.setItem('userId', response.data.id);
                 // AsyncStorage.setItem('tokenRefresh', response.data.token);
                 // AsyncStorage.setItem('expirationDate', expirationDate);
                 // AsyncStorage.setItem('username', response.data.username);

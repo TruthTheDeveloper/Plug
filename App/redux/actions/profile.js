@@ -3,32 +3,39 @@ import axios from 'axios';
 import * as actionTypes from './actionTypes';
 
 export const postProfile = (data) => {
-
-    let post = {
-      userId: data.id,
-      sex:data.sex,
-      department:data.department,
-      level:data.level,
-      institution:data.institution,
-      description:data.description,
-      attributeOne:data.attributeOne,
-      attributeTwo:data.attributeTwo,
-      attributeThree:data.attributeThree,
-      attributeFour:data.attributeFour,
-      atttibuteFive:data.attributeFive,
-      attributteSix:data.attributeSix,
-      attributeSeven:data.attributeSeven,
-      attributeEight:data.attributeEight,
-      profilePic:data.profilePic,
-    };
-
     return dispatch => {
+      console.log(data);
+      const formdata = new FormData();
+      formdata.append('profilePic', {uri:data.profilePic, name: 'image.jpg', type: 'image/jpg'});
+
+      let post = {
+        userId: data.id,
+        sex:data.sex,
+        department:data.department,
+        level:data.level,
+        institution:data.institution,
+        description:data.description,
+        attributeOne:data.attributeOne,
+        attributeTwo:data.attributeTwo,
+        attributeThree:data.attributeThree,
+        attributeFour:data.attributeFour,
+        atttibuteFive:data.attributeFive,
+        attributteSix:data.attributeSix,
+        attributeSeven:data.attributeSeven,
+        attributeEight:data.attributeEight,
+        availability:data.availability,
+      };
       axios
-        .post('https://findplug.herokuapp.com/profile', post)
+        .post('https://findplug.herokuapp.com/profile',formdata, post,{
+          headers: {
+              'Authorization': 'Bearer ' + data.token,
+              redirect: 'follow',
+          },
+      })
         .then(response => {
           console.log(response, 'the response');
         })
-        .then((err) => console.log(err));
+        .catch((err) => console.log(err, 'its  err err err err'));
     };
   };
 
@@ -36,10 +43,10 @@ export const postProfile = (data) => {
 
 export const getFirstDetailsToState = (data) => {
   return {
-    type: actionTypes.SET_AUTH_REDIRECT_PATH,
+    type: actionTypes.SET_FIRST_SCREEN_DETAIL,
     description:data.description,
-    availabilty:data.availability,
-    sex:data.sex,
+    availabilty:data.available,
+    sex:data.gender,
   };
 };
 
@@ -55,7 +62,7 @@ export const getSecondDetailsToState = (data) => {
 
 export const getProfilePic = (pic) => {
   return {
-    type:actionTypes.SET_THIRD_SCREEN_DETAIL,
+    type:actionTypes.SET_PROFILE_PIC,
     profilePic:pic,
   };
 };
@@ -70,7 +77,7 @@ export const getattributeOne = (attribute) => {
 export const getattributeTwo = (attribute) => {
   return {
     type:actionTypes.SET_ATTRIBUTE_TWO,
-    attributeOne:attribute || '',
+    attributeTwo:attribute || '',
   };
 };
 
@@ -78,41 +85,41 @@ export const getattributeTwo = (attribute) => {
 export const getattributeThree = (attribute) => {
   return {
     type:actionTypes.SET_ATTRIBUTE_THREE,
-    attributeOne:attribute || '',
+    attributeThree:attribute || '',
   };
 };
 
 export const getattributeFour = (attribute) => {
   return {
     type:actionTypes.SET_ATTRIBUTE_FOUR,
-    attributeOne:attribute || '',
+    attributeFour:attribute || '',
   };
 };
 
 export const getattributeFive = (attribute) => {
   return {
-    type:actionTypes.SET_ATTRIBUTE_FOUR,
-    attributeOne:attribute || '',
+    type:actionTypes.SET_ATTRIBUTE_FIVE,
+    attributeFive:attribute || '',
   };
 };
 
 export const getattributeSix = (attribute) => {
   return {
     type:actionTypes.SET_ATTRIBUTE_SIX,
-    attributeOne:attribute || '',
+    attributeSix:attribute || '',
   };
 };
 
 export const getattributeSeven = (attribute) => {
   return {
     type:actionTypes.SET_ATTRIBUTE_SEVEN,
-    attributeOne:attribute || '',
+    attributeSeven:attribute || '',
   };
 };
 
 export const getattributeEight = (attribute) => {
   return {
-    type:actionTypes.SET_ATTRIBUTE_SEVEN,
-    attributeOne:attribute || '',
+    type:actionTypes.SET_ATTRIBUTE_EIGHT,
+    attributeEight:attribute || '',
   };
 };

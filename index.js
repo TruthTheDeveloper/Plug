@@ -12,10 +12,15 @@ import {name as appName} from './app.json';
 import authReducer from './App/redux/reducer/auth';
 import navReducer from './App/redux/reducer/navigation';
 import profileReducer from './App/redux/reducer/profile';
-import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 
-axios.defaults.headers.common.Authorization =  AsyncStorage.getItem('token');
+// const getAsyncStorage = async () => {
+//   axios.defaults.headers.common.Authorization =  await AsyncStorage.getItem('token');
+// };
+
+// getAsyncStorage();
+
+
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

@@ -20,6 +20,7 @@ import StatusBar from './StatusBar';
 import ProfilePhoto from './ProfilePhoto';
 import PersonalityBox from './personalityBox';
 import ContinueButton from './ContinueButton';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const {height, width} = Dimensions.get('window');
@@ -134,7 +135,7 @@ const SignupScreen3 = () => {
 
   const dispatch = useDispatch();
 
-  const userId = useSelector((state:any) => state.authReducer.userId);
+  // const userId = useSelector((state:any) => state.authReducer.userId);
   const sex = useSelector((state:any) => state.profileReducer.sex);
   const department = useSelector((state:any) => state.profileReducer.department);
   const level = useSelector((state:any) => state.profileReducer.level);
@@ -148,26 +149,35 @@ const SignupScreen3 = () => {
   const attributeSix = useSelector((state:any) => state.profileReducer.attributeSix);
   const attributeSeven = useSelector((state:any) => state.profileReducer.attributeSeven);
   const attributeEight = useSelector((state:any) => state.profileReducer.attributeEight);
+  const availabilty = useSelector((state:any) => state.profileReducer.availabilty);
+  const profilePic = useSelector((state:any) => state.profileReducer.profilePic);
 
-  const data = {
-    userId:userId,
-    department:department,
-    sex:sex,
-    level:level,
-    institution:institution,
-    description:description,
-    attributeOne:attributeOne,
-    attributeTwo:attributeTwo,
-    attributeThree:attributeThree,
-    attributeFour:attributeFour,
-    attributeFive:attributeFive,
-    attributeSix:attributeSix,
-    attributeSeven:attributeSeven,
-    attributeEight:attributeEight,
 
-  };
 
-  const next = () => {
+  const next = async () => {
+    const id = await AsyncStorage.getItem('userId');
+    const token = await AsyncStorage.getItem('token');
+    const data = {
+      userId:id,
+      department:department,
+      sex:sex,
+      level:level,
+      institution:institution,
+      description:description,
+      attributeOne:attributeOne,
+      attributeTwo:attributeTwo,
+      attributeThree:attributeThree,
+      attributeFour:attributeFour,
+      attributeFive:attributeFive,
+      attributeSix:attributeSix,
+      attributeSeven:attributeSeven,
+      attributeEight:attributeEight,
+      availabilty:availabilty,
+      profilePic:profilePic,
+      token:token,
+
+    };
+
     setLoading(true);
     dispatch({type: actionTypes.SCREEN3});
     dispatch(actions.postProfile(data));
