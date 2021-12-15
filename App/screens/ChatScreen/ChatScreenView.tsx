@@ -16,12 +16,11 @@ const girl = require('../../assets/images/girl1.jpg');
 const gir2 = require('../../assets/images/girl2.jpg');
 
 const ChatScreenView  = () => {
+    const dispatch = useDispatch();
     const [users, setUsers] = useState([
         {username: 'Mina_Okabe', active: true, lastText: 'Hello there, wanna hangout today?', image: girl },
         {username: 'krisetin', active: true, lastText: "I'm currently working on an app ", image: gir2 },
     ]);
-
-    const dispatch = useDispatch();
 
     const openChat = (e:string) => {
         dispatch({type: actionTypes.OPEN_CHAT, value: e});
