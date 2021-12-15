@@ -13,6 +13,10 @@ import {launchImageLibrary} from 'react-native-image-picker';
 
 import Icons from 'react-native-vector-icons/Feather';
 
+import * as actions from '../../../redux/actions/index';
+import * as actionTypes from '../../../redux/actions/actionTypes';
+import {useDispatch} from 'react-redux';
+
 
 interface ImageProps {
   setImage: (e: any) => void;
@@ -20,13 +24,15 @@ interface ImageProps {
 
 const ProfilePhoto: FC<ImageProps> = ({setImage}): JSX.Element => {
   const [photo, postPhoto] = useState();
-
+  const dispatch = useDispatch();
   const selectPhoto = () => {
     launchImageLibrary({mediaType: 'photo'}, (response: { assets: { uri: any; }[]; }) => {
       if (response.assets) {
         const data = response.assets[0].uri;
         postPhoto(data);
         setImage(data);
+        dispatch({type: actionTypes.SET_PROFILE_PIC, profilePic:data});
+        // dispatch(actions.getProfilePic(data));
       }
     });
   };

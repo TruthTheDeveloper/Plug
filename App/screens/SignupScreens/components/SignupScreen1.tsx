@@ -1,9 +1,10 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, Dimensions} from 'react-native';
 import * as actionTypes from '../../../redux/actions/actionTypes';
+
 
 import {
   LargeLabeledInput,
@@ -21,10 +22,66 @@ const {height, width} = Dimensions.get('window');
 const SignupScreen1 = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const [description, setdescription] = useState('');
+  const [available, setAvailable] = useState(true);
+  const [gender, setGender] = useState('');
+  const [validation, setValidation] = useState('');
+  const [border, setBorder]:any = useState('#000');
+
+  useEffect(() => {
+    if (validation !== ''){
+      setBorder('#Fe1135');
+    } else if (validation === '') {
+      setBorder('#000');
+    }
+  },[validation]);
+
+
+
+  const setAvailableState = (e:boolean) => {
+    setAvailable(e);
+  };
+
+  const setGenderState = (e:string) => {
+    setGender(e);
+  };
+
+  const checkDescription = () => {
+    if (description === ''){
+      setValidation('This field cannot be empty');
+    }
+  };
 
   const next = () => {
-    setLoading(true);
-    dispatch({type: actionTypes.SCREEN2});
+    // const data = {
+    //   description:description,
+    //   available:available,
+    //   gender:gender,
+    // };
+
+    if (validation === ''){
+      dispatch({type:actionTypes.SET_FIRST_SCREEN_DETAIL, data:{
+        description:description,
+        available:available,
+        gender:gender,
+      }});
+      dispatch({type: actionTypes.SCREEN2});
+      setLoading(true);
+      // dispatch(actions.getFirstDetailsToState(data));
+    }
+
+    checkDescription();
+
+  };
+
+  const inputHandler = (e:string) => {
+    setdescription(e);
+    if (description.length >= 250){
+      setValidation('cannot exceed more than 60 words');
+      // setdescription('')
+    } else if (description.length <= 250){
+      setValidation('');
+    }
   };
 
   return (
@@ -35,10 +92,10 @@ const SignupScreen1 = () => {
       <StatusBar page={1} />
       <Text style={styles.header}>Basic details</Text>
       <View style={styles.formContainer}>
-        <LargeLabeledInput label="Roomate Description" />
-        <AvailabilitySwitch />
-        <SexCheckbox />
-        <ContinueButton label="Continue" continue={next} loading={loading} />
+        <LargeLabeledInput label="Roomate Description" setValue={inputHandler} value={description} validationError={validation} border={border}/>
+        <AvailabilitySwitch availableState={setAvailableState}/>
+        <SexCheckbox genderState={setGenderState}/>
+        <ContinueButton label="Continue" continue={next} loading={loading}/>
       </View>
     </View>
   );

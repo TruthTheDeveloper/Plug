@@ -7,6 +7,7 @@ const initialState = {
 const reducer = (state = initialState, action) => {
     switch(action.types){
         case actionTypes.OPEN_CHAT: 
+            console.log("it got here")
             return {...state, user: 'Hello'};
         default: return state
     }

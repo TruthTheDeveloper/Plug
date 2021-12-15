@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import Icons from 'react-native-vector-icons/Feather';
 import * as actionTypes from '../../../redux/actions/actionTypes';
+// import * as actions from '../../../redux/actions/index';
 import {useDispatch} from 'react-redux';
 
 import {university, college} from '../constants';
@@ -28,6 +29,7 @@ import ContinueButton from './ContinueButton';
 const {height, width} = Dimensions.get('window');
 
 const SignupScreen2 = () => {
+  const dispatch = useDispatch();
   const [Institution, setInstitution] = useState(university);
 
   const [universityName, setUniversity] = useState();
@@ -81,11 +83,24 @@ const SignupScreen2 = () => {
     }, 100);
   };
 
-  const dispatch = useDispatch();
 
   const next = () => {
+    // const data = {
+    //   institution:universityName,
+    //   department:department,
+    //   level:level,
+    // };
     setLoading(true);
+    dispatch({type: actionTypes.SET_SECOND_SCREEN_DETAIL, data:{
+      institution:universityName,
+      department:department,
+      level:level,
+    }});
     dispatch({type: actionTypes.SCREEN3});
+
+    // dispatch(actions.getSecondDetailsToState(data));
+
+
   };
 
   const back = () => {
