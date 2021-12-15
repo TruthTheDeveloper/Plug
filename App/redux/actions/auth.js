@@ -95,9 +95,10 @@ export const auth = (username, email, password, isSignup) => {
 
         } else {
             authData = {
-                username:email,
+                email:email,
                 password: password,
             };
+
 
             url = 'https://findplug.herokuapp.com/login';
 
