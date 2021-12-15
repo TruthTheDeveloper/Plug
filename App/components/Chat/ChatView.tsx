@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, FC } from 'react';
 import { View, Text, StyleSheet, Dimensions, FlatList } from 'react-native';
+import { useDispatch } from 'react-redux';
+
+import * as actionTypes from '../../redux/actions/actionTypes';
 
 import ChatHeader from './ChatHeader';
 import ChatInputBar from './ChatInputBar';
@@ -7,16 +10,25 @@ import ChatItem from './ChatItem';
 
 const {height} = Dimensions.get('window');
 
-const ChatView = () => {
+interface ChatViewProps {
+    user: any
+}
+
+const ChatView:FC<ChatViewProps> = ({user}):JSX.Element => {
+    const dispatch = useDispatch();
     const [text, setText] = useState<any>();
     const [chats, setChats] = useState([
-        {id: 0, sender: 'Anna_kendrick', message: "Hello world Anna, I think we've met somewhere in school" },
+        {id: 0, sender: 'Anna_kendrick', message: "Hello there I'm " + user +  ", I think we've met somewhere in school" },
         {id: 1, sender: 'maria', message: "I don't think I remember seeing you. Mind sending me another of your pic?" },
-    ])
+    ]);
+
+    const goBack = () => {
+        dispatch({type: actionTypes.OPEN_CHAT, value: null })
+    }
 
     return(
         <View style={styles.container}>
-            <ChatHeader username='Anna_kendrick' active back={() => console.log('bACK')} />
+            <ChatHeader username={user} active back={goBack} />
             <View style={styles.chatSection}>
                 <FlatList 
                     data={chats}

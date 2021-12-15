@@ -23,8 +23,9 @@ const ChatScreenView  = () => {
     ]);
 
     const openChat = (e:string) => {
-        dispatch({type: actionTypes.OPEN_CHAT, value: e});
-        console.log(e)
+        dispatch({type: actionTypes.OPEN_CHAT, value: e})
+        dispatch({type: actionTypes.SET_DEFAULT_ROUTE})
+        // console.log(e)
     }
 
     return(

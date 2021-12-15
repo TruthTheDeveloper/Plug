@@ -51,13 +51,14 @@ const Notifications = () => {
 const Tab = createBottomTabNavigator();
 
 const Container = () => {
+    const RouteName = useSelector((state: any) => state.chatReducer.DefaultRoute);
     return(
         <View style={{height: height }}>
             <NavigationContainer>
                 <Tab.Navigator screenOptions={{
                     headerShown: false,
                     tabBarShowLabel: false
-                }}>
+                }} initialRouteName={RouteName}>
 
                     <Tab.Screen name={HOME} component={Home} options={{
                         tabBarIcon:({focused}) => (
@@ -90,11 +91,10 @@ const Container = () => {
 };
 
 const Navigator = () => {
-    const openChat = useSelector((state: any) => state.chatReducer.user);
-    console.log(openChat)
+    const openChat = useSelector((state: any) => state.chatReducer.user)
     return (
         <>
-            {openChat ? <ChatView /> : <Container /> }
+            {openChat ? <ChatView user={openChat} /> : <Container /> }
         </>
     )
 }

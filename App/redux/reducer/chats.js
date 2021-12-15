@@ -1,14 +1,16 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-  user: null
+  user: null,
+  DefaultRoute: 'HOME'
 };
 
 const reducer = (state = initialState, action) => {
-    switch(action.types){
-        case actionTypes.OPEN_CHAT: 
-            console.log("it got here")
-            return {...state, user: 'Hello'};
+    switch(action.type){
+        case actionTypes.OPEN_CHAT:
+            return {...state, user: action.value};
+        case actionTypes.SET_DEFAULT_ROUTE: 
+            return {...state, DefaultRoute: 'CHATS'}
         default: return state
     }
 };
