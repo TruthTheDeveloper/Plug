@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, FlatList, Dimensions } from 'react-native';
 
 //Components
 import {Header} from '../../components/index'
+import Caoursel from './components/Caoursel';
 import ProfileItem from './components/ProfileItem';
 
 //Imported Images
@@ -28,7 +29,7 @@ const HomeScreenView = () => {
     return(
         <View style={{backgroundColor: '#fff'}}>
             <Header label='Gallery' />
-            <FlatList
+            {/* <FlatList
                 data={posts}
                 numColumns={2}
                 style={{height: height - 110}}
@@ -38,7 +39,8 @@ const HomeScreenView = () => {
                         level={item.level} 
                         image={item.image} /> 
                     }
-            />
+            /> */}
+            <Caoursel />
         </View>
     )
 };
