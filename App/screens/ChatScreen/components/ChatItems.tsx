@@ -9,16 +9,17 @@ interface ChatProps {
     username: string,
     active: boolean,
     lastText: string,
-    image: any
+    image: any,
+    openChat: (e: string) => void
 }
 
-const ChatItem:FC<ChatProps> = ({username, active, lastText, image}):JSX.Element => {
+const ChatItem:FC<ChatProps> = ({username, active, lastText, image, openChat}):JSX.Element => {
     let newText = lastText;
     if(lastText.length > 20){
         newText = lastText.substring(0, 20) + '...';
     }
     return(
-        <TouchableHighlight underlayColor={'#e4e4e4'} onPress={() => console.log(username)}>
+        <TouchableHighlight underlayColor={'#e4e4e4'} onPress={() => openChat(username)}>
             <View style={styles.container}>
                 <View style={styles.UserImage}>
                     <ImageBackground source={image} style={styles.image} />

@@ -3,6 +3,9 @@ import { View, Text, Dimensions } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
+//Redux imports
+import { useSelector } from 'react-redux';
+
 //Icons
 import Icons from 'react-native-vector-icons/Feather';
 import Icons2 from 'react-native-vector-icons/Ionicons';
@@ -14,7 +17,10 @@ import { ChatView } from '../../components';
 //ROUTES
 import { HOME, CHATS, NOTIFICATIONS, PROFILE } from '../ROUTE';
 
+
 const { height } = Dimensions.get('window');
+
+
 
 const Home = () => {
     return(
@@ -84,7 +90,13 @@ const Container = () => {
 };
 
 const Navigator = () => {
-    return <ChatView />
+    const openChat = useSelector((state: any) => state.chatReducer.user);
+    console.log(openChat)
+    return (
+        <>
+            {openChat ? <ChatView /> : <Container /> }
+        </>
+    )
 }
 
 export default Navigator
