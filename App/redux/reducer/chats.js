@@ -10,7 +10,6 @@ const reducer = (state = initialState, action) => {
             return {...state, user: 'Hello'};
         default: return state
     }
-    return state
 };
 
 export default reducer;

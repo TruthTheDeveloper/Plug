@@ -24,7 +24,8 @@ const ChatScreenView  = () => {
     const dispatch = useDispatch();
 
     const openChat = (e:string) => {
-        dispatch({type: actionTypes.OPEN_CHAT, value: e})
+        dispatch({type: actionTypes.OPEN_CHAT, value: e});
+        console.log(e)
     }
 
     return(
