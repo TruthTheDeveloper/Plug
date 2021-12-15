@@ -8,12 +8,14 @@ import * as actionTypes from './actionTypes';
 //   },
 // }
 export const postProfile = (data) => {
+  console.log(data.token);
     return dispatch => {
       const formdata = new FormData();
       formdata.append('profilePic', {uri:data.profilePic, name: 'image.jpg', type: 'image/jpg'});
       formdata.append('userId', data.userId);
       formdata.append('sex', data.sex);
       formdata.append('level', data.level);
+      formdata.append('department',data.department);
       formdata.append('institution', data.institution);
       formdata.append('description',data.description);
       formdata.append('attributeOne',data.attributeOne);
@@ -25,31 +27,14 @@ export const postProfile = (data) => {
       formdata.append('attributeSeven', data.attributeSeven);
       formdata.append('attributeEight', data.attributeEight);
       console.log(formdata);
-
-      // let post = {
-      //   userId: data.id,
-      //   sex:data.sex,
-      //   department:data.department,
-      //   level:data.level,
-      //   institution:data.institution,
-      //   description:data.description,
-      //   attributeOne:data.attributeOne,
-      //   attributeTwo:data.attributeTwo,
-      //   attributeThree:data.attributeThree,
-      //   attributeFour:data.attributeFour,
-      //   atttibuteFive:data.attributeFive,
-      //   attributteSix:data.attributeSix,
-      //   attributeSeven:data.attributeSeven,
-      //   attributeEight:data.attributeEight,
-      //   availability:data.availability,
-      // };
       axios
         .post('https://findplug.herokuapp.com/profile',formdata,{headers:{
           Accept: 'application/json',
           'Content-Type': 'multipart/form-data; charset=utf-8',
+          'Authorization': data.token,
           }},)
         .then(response => {
-          console.log(response, 'the response');
+          console.log(response.data, 'the response');
         })
         .catch((err) => console.log(err, 'its  err err err err'));
     };

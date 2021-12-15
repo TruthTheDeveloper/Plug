@@ -18,9 +18,9 @@ const SexCheckbox: FC<genderProps> = ({genderState}): JSX.Element =>{
       genderState(gender);
     };
     if (male){
-      changeGender('male');
+      changeGender('Male');
     } else {
-      changeGender('female');
+      changeGender('Female');
     }
   }, [genderState, male]);
 
