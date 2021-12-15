@@ -9,29 +9,45 @@ import * as actionTypes from './actionTypes';
 // }
 export const postProfile = (data) => {
     return dispatch => {
-      console.log(data);
       const formdata = new FormData();
       formdata.append('profilePic', {uri:data.profilePic, name: 'image.jpg', type: 'image/jpg'});
+      formdata.append('userId', data.userId);
+      formdata.append('sex', data.sex);
+      formdata.append('level', data.level);
+      formdata.append('institution', data.institution);
+      formdata.append('description',data.description);
+      formdata.append('attributeOne',data.attributeOne);
+      formdata.append('attributeTwo',data.attributeTwo);
+      formdata.append('attributeThree',data.attributeThree);
+      formdata.append('attributeFour', data.attributeFour);
+      formdata.append('attributeFive', data.attributeFive);
+      formdata.append('attributeSix', data.attributeSix);
+      formdata.append('attributeSeven', data.attributeSeven);
+      formdata.append('attributeEight', data.attributeEight);
+      console.log(formdata);
 
-      let post = {
-        userId: data.id,
-        sex:data.sex,
-        department:data.department,
-        level:data.level,
-        institution:data.institution,
-        description:data.description,
-        attributeOne:data.attributeOne,
-        attributeTwo:data.attributeTwo,
-        attributeThree:data.attributeThree,
-        attributeFour:data.attributeFour,
-        atttibuteFive:data.attributeFive,
-        attributteSix:data.attributeSix,
-        attributeSeven:data.attributeSeven,
-        attributeEight:data.attributeEight,
-        availability:data.availability,
-      };
+      // let post = {
+      //   userId: data.id,
+      //   sex:data.sex,
+      //   department:data.department,
+      //   level:data.level,
+      //   institution:data.institution,
+      //   description:data.description,
+      //   attributeOne:data.attributeOne,
+      //   attributeTwo:data.attributeTwo,
+      //   attributeThree:data.attributeThree,
+      //   attributeFour:data.attributeFour,
+      //   atttibuteFive:data.attributeFive,
+      //   attributteSix:data.attributeSix,
+      //   attributeSeven:data.attributeSeven,
+      //   attributeEight:data.attributeEight,
+      //   availability:data.availability,
+      // };
       axios
-        .post('https://findplug.herokuapp.com/profile',formdata, post)
+        .post('https://findplug.herokuapp.com/profile',formdata,{headers:{
+          Accept: 'application/json',
+          'Content-Type': 'multipart/form-data; charset=utf-8',
+          }},)
         .then(response => {
           console.log(response, 'the response');
         })
