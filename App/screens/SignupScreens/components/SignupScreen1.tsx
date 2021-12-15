@@ -4,7 +4,7 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, Dimensions} from 'react-native';
 import * as actionTypes from '../../../redux/actions/actionTypes';
-import * as actions from '../../../redux/actions/index';
+// import * as actions from '../../../redux/actions/index';
 
 import {
   LargeLabeledInput,
@@ -53,16 +53,21 @@ const SignupScreen1 = () => {
   };
 
   const next = () => {
-    const data = {
-      description:description,
-      available:available,
-      gender:gender,
-    };
+    // const data = {
+    //   description:description,
+    //   available:available,
+    //   gender:gender,
+    // };
 
     if (validation === ''){
+      dispatch({type:actionTypes.SET_FIRST_SCREEN_DETAIL, data:{
+        description:description,
+        available:available,
+        gender:gender,
+      }});
       dispatch({type: actionTypes.SCREEN2});
       setLoading(true);
-      dispatch(actions.getFirstDetailsToState(data));
+      // dispatch(actions.getFirstDetailsToState(data));
     }
 
     checkDescription();

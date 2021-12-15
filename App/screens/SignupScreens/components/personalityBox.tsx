@@ -14,6 +14,7 @@ import {
 import {red} from '../../../config/colors';
 
 import * as actions from '../../../redux/actions/index';
+import * as actionTypes from '../../../redux/actions/actionTypes';
 import {useDispatch} from 'react-redux';
 
 interface PersonalityProps {
@@ -39,25 +40,25 @@ const PersonalityBox: FC<PersonalityProps> = ({
     if (personality.length < 5) {
       setSelected(true);
       postPersonality(name);
-
+      actions.getattributeOne(name);
       console.log(attribute);
       switch (attribute){
         case 'attributeOne':
-          dispatch(actions.getattributeOne(name));
+          dispatch({type: actionTypes.SET_ATTRIBUTE_ONE, attributeOne:name});
         case 'attributeTwo':
-          dispatch(actions.getattributeTwo(name));
+          dispatch({type: actionTypes.SET_ATTRIBUTE_TWO, attributeTwo:name});
         case 'attributeThree':
-          dispatch(actions.getattributeThree(name));
+          dispatch({type: actionTypes.SET_ATTRIBUTE_THREE, attributeThree:name});
         case 'attributeFour':
-          dispatch(actions.getattributeFour(name));
+          dispatch({type: actionTypes.SET_ATTRIBUTE_FOUR, attributeFour:name});
         case 'attributeFive':
-          dispatch(actions.getattributeFive(name));
+          dispatch({type: actionTypes.SET_ATTRIBUTE_FIVE, attributeFive:name});
         case 'attributeSix':
-          dispatch(actions.getattributeSix(name));
+          dispatch({type: actionTypes.SET_ATTRIBUTE_SIX, attributeSix:name});
         case 'attributeSeven':
-          dispatch(actions.getattributeSeven(name));
+          dispatch({type: actionTypes.SET_ATTRIBUTE_SEVEN, attributeSeven:name});
         case 'attributeEight':
-          dispatch(actions.getattributeEight(name));
+          dispatch({type: actionTypes.SET_ATTRIBUTE_EIGHT, attributeEight:name});
       }
 
     } else {
