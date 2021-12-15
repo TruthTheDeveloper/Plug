@@ -26,6 +26,7 @@ export const postProfile = (data) => {
       formdata.append('attributeSix', data.attributeSix);
       formdata.append('attributeSeven', data.attributeSeven);
       formdata.append('attributeEight', data.attributeEight);
+      formdata.append('availabilty', data.availabilty);
       console.log(formdata);
       axios
         .post('https://findplug.herokuapp.com/profile',formdata,{headers:{
@@ -42,24 +43,24 @@ export const postProfile = (data) => {
 
 
 
-export const getFirstDetailsToState = (data) => {
-  return {
-    type: actionTypes.SET_FIRST_SCREEN_DETAIL,
-    description:data.description,
-    availabilty:data.available,
-    sex:data.gender,
-  };
-};
+// export const getFirstDetailsToState = (data) => {
+//   return {
+//     type: actionTypes.SET_FIRST_SCREEN_DETAIL,
+//     description:data.description,
+//     availabilty:data.available,
+//     sex:data.gender,
+//   };
+// };
 
 
-export const getSecondDetailsToState = (data) => {
-  return {
-    type:actionTypes.SET_SECOND_SCREEN_DETAIL,
-    institution:data.institution,
-    department:data.department,
-    level:data.level,
-  };
-};
+// export const getSecondDetailsToState = (data) => {
+//   return {
+//     type:actionTypes.SET_SECOND_SCREEN_DETAIL,
+//     institution:data.institution,
+//     department:data.department,
+//     level:data.level,
+//   };
+// };
 
 export const getProfilePic = (pic) => {
   return {
@@ -68,59 +69,59 @@ export const getProfilePic = (pic) => {
   };
 };
 
-export const getattributeOne = (attribute) => {
-  return {
-    type:actionTypes.SET_ATTRIBUTE_ONE,
-    attributeOne:attribute || '',
-  };
-};
+// export const getattributeOne = (attribute) => {
+//   return {
+//     type:actionTypes.SET_ATTRIBUTE_ONE,
+//     attributeOne:attribute || '',
+//   };
+// };
 
-export const getattributeTwo = (attribute) => {
-  return {
-    type:actionTypes.SET_ATTRIBUTE_TWO,
-    attributeTwo:attribute || '',
-  };
-};
+// export const getattributeTwo = (attribute) => {
+//   return {
+//     type:actionTypes.SET_ATTRIBUTE_TWO,
+//     attributeTwo:attribute || '',
+//   };
+// };
 
 
-export const getattributeThree = (attribute) => {
-  return {
-    type:actionTypes.SET_ATTRIBUTE_THREE,
-    attributeThree:attribute || '',
-  };
-};
+// export const getattributeThree = (attribute) => {
+//   return {
+//     type:actionTypes.SET_ATTRIBUTE_THREE,
+//     attributeThree:attribute || '',
+//   };
+// };
 
-export const getattributeFour = (attribute) => {
-  return {
-    type:actionTypes.SET_ATTRIBUTE_FOUR,
-    attributeFour:attribute || '',
-  };
-};
+// export const getattributeFour = (attribute) => {
+//   return {
+//     type:actionTypes.SET_ATTRIBUTE_FOUR,
+//     attributeFour:attribute || '',
+//   };
+// };
 
-export const getattributeFive = (attribute) => {
-  return {
-    type:actionTypes.SET_ATTRIBUTE_FIVE,
-    attributeFive:attribute || '',
-  };
-};
+// export const getattributeFive = (attribute) => {
+//   return {
+//     type:actionTypes.SET_ATTRIBUTE_FIVE,
+//     attributeFive:attribute || '',
+//   };
+// };
 
-export const getattributeSix = (attribute) => {
-  return {
-    type:actionTypes.SET_ATTRIBUTE_SIX,
-    attributeSix:attribute || '',
-  };
-};
+// export const getattributeSix = (attribute) => {
+//   return {
+//     type:actionTypes.SET_ATTRIBUTE_SIX,
+//     attributeSix:attribute || '',
+//   };
+// };
 
-export const getattributeSeven = (attribute) => {
-  return {
-    type:actionTypes.SET_ATTRIBUTE_SEVEN,
-    attributeSeven:attribute || '',
-  };
-};
+// export const getattributeSeven = (attribute) => {
+//   return {
+//     type:actionTypes.SET_ATTRIBUTE_SEVEN,
+//     attributeSeven:attribute || '',
+//   };
+// };
 
-export const getattributeEight = (attribute) => {
-  return {
-    type:actionTypes.SET_ATTRIBUTE_EIGHT,
-    attributeEight:attribute || '',
-  };
-};
+// export const getattributeEight = (attribute) => {
+//   return {
+//     type:actionTypes.SET_ATTRIBUTE_EIGHT,
+//     attributeEight:attribute || '',
+//   };
+// };

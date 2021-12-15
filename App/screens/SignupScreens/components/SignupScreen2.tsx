@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import Icons from 'react-native-vector-icons/Feather';
 import * as actionTypes from '../../../redux/actions/actionTypes';
-import * as actions from '../../../redux/actions/index';
+// import * as actions from '../../../redux/actions/index';
 import {useDispatch} from 'react-redux';
 
 import {university, college} from '../constants';
@@ -85,15 +85,20 @@ const SignupScreen2 = () => {
 
 
   const next = () => {
-    const data = {
+    // const data = {
+    //   institution:universityName,
+    //   department:department,
+    //   level:level,
+    // };
+    setLoading(true);
+    dispatch({type: actionTypes.SET_SECOND_SCREEN_DETAIL, data:{
       institution:universityName,
       department:department,
       level:level,
-    };
-    setLoading(true);
+    }});
     dispatch({type: actionTypes.SCREEN3});
 
-    dispatch(actions.getSecondDetailsToState(data));
+    // dispatch(actions.getSecondDetailsToState(data));
 
 
   };

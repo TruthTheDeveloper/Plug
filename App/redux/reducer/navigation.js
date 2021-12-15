@@ -8,11 +8,20 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.SCREEN1:
-      return {screen: 1};
+      return {
+        ...state,
+        screen: 1,
+      };
     case actionTypes.SCREEN2:
-      return {screen: 2};
+      return {
+        ...state,
+        screen: 2,
+      };
     case actionTypes.SCREEN3:
-      return {screen: 3};
+      return {
+        ...state,
+        screen: 3,
+      };
   }
   return state;
 };
