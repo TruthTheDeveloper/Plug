@@ -14,7 +14,7 @@ import { ChatView } from '../../components';
 //ROUTES
 import { HOME, CHATS, NOTIFICATIONS, PROFILE } from '../ROUTE';
 
-const { height } = Dimensions.get('window')
+const { height } = Dimensions.get('window');
 
 const Home = () => {
     return(

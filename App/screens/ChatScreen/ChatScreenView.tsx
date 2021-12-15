@@ -23,7 +23,11 @@ const ChatScreenView  = () => {
             <FlatList 
                 data={users}
                 keyExtractor={user => user.username}
-                renderItem={({item}) => <ChatItem username={item.username} active={item.active} image={item.image} lastText={item.lastText} /> }
+                renderItem={({item}) => <ChatItem 
+                        username={item.username} 
+                        active={item.active} 
+                        image={item.image} 
+                        lastText={item.lastText} /> }
             />
         </View>
     )

@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import { View, Text, Dimensions, StyleSheet, Image } from 'react-native';
+import { View, Text, Dimensions, StyleSheet, Image, TouchableWithoutFeedback } from 'react-native';
 
 //Icon
 import Icons from 'react-native-vector-icons/Feather';
@@ -9,15 +9,18 @@ const {width} = Dimensions.get('window');
 
 interface ChatHeaderProps {
     username: string,
-    active: any
+    active: any,
+    back: () => void
 }
 
-const ChatHeader:FC<ChatHeaderProps> = ({username, active}) => {
+const ChatHeader:FC<ChatHeaderProps> = ({username, active, back}) => {
     return(
         <View style={styles.container}>
-            <View style={styles.flex1}>
-                <Icons name="chevron-left" color="#000" size={27} style={styles.arrow} />
-            </View>
+            <TouchableWithoutFeedback onPress={back}>
+                <View style={styles.flex1}>
+                    <Icons name="chevron-left" color="#000" size={27} style={styles.arrow} />
+                </View>
+            </TouchableWithoutFeedback>
             <View style={styles.flex2}>
                 <Text style={styles.title}>{username}</Text>
                 {active && <Image source={icon} />}
