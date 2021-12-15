@@ -13,7 +13,8 @@ import {launchImageLibrary} from 'react-native-image-picker';
 
 import Icons from 'react-native-vector-icons/Feather';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as actions from '../../../redux/actions/index';
+import {useDispatch} from 'react-redux';
 
 
 interface ImageProps {
@@ -22,15 +23,14 @@ interface ImageProps {
 
 const ProfilePhoto: FC<ImageProps> = ({setImage}): JSX.Element => {
   const [photo, postPhoto] = useState();
-
+  const dispatch = useDispatch();
   const selectPhoto = () => {
     launchImageLibrary({mediaType: 'photo'}, (response: { assets: { uri: any; }[]; }) => {
       if (response.assets) {
         const data = response.assets[0].uri;
         postPhoto(data);
         setImage(data);
-        AsyncStorage.removeItem('profilePic');
-        AsyncStorage.setItem('profilePic', JSON.stringify(photo));
+        dispatch(actions.getProfilePic(data));
       }
     });
   };

@@ -11,19 +11,23 @@ import {
 } from 'react-native';
 import Icons from 'react-native-vector-icons/Feather';
 import * as actionTypes from '../../../redux/actions/actionTypes';
+import * as actions from '../../../redux/actions/index';
 import {useDispatch} from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import EmojiHeader from './EmojiHeader';
 import StatusBar from './StatusBar';
 import ProfilePhoto from './ProfilePhoto';
 import PersonalityBox from './personalityBox';
 import ContinueButton from './ContinueButton';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const {height, width} = Dimensions.get('window');
 
 const SignupScreen3 = () => {
   const [personality, setPersonality] = useState<any | null>([]);
+
   const [, setProfilePic] = useState();
 
   const [loading, setLoading] = useState(false);
@@ -34,7 +38,6 @@ const SignupScreen3 = () => {
 
   const addPersonality = (e: string) => {
     setPersonality((prev: any) => [...prev, e]);
-    console.log(personality);
   };
 
   const removePersonality = (e: string) => {
@@ -49,7 +52,7 @@ const SignupScreen3 = () => {
     <View style={styles.personalityFlex}>
       <PersonalityBox
         personality={personality}
-        attribute="attribute_1"
+        attribute="attributeOne"
         small={false}
         name="Passionate"
         postPersonality={addPersonality}
@@ -58,7 +61,7 @@ const SignupScreen3 = () => {
       <View style={styles.gap} />
       <PersonalityBox
         personality={personality}
-        attribute="attribute_2"
+        attribute="attributeTwo"
         small
         name="Smart"
         postPersonality={addPersonality}
@@ -70,7 +73,7 @@ const SignupScreen3 = () => {
     <View style={styles.personalityFlex}>
       <PersonalityBox
         personality={personality}
-        attribute="attribute_3"
+        attribute="attributeThree"
         small={true}
         name="Creative"
         postPersonality={addPersonality}
@@ -79,7 +82,7 @@ const SignupScreen3 = () => {
       <View style={styles.gap} />
       <PersonalityBox
         personality={personality}
-        attribute="attribute_4"
+        attribute="attributeFour"
         small={false}
         name="Ambitious"
         postPersonality={addPersonality}
@@ -91,7 +94,7 @@ const SignupScreen3 = () => {
     <View style={styles.personalityFlex}>
       <PersonalityBox
         personality={personality}
-        attribute="attribute_5"
+        attribute="attributeFive"
         small={false}
         name="Honest"
         postPersonality={addPersonality}
@@ -100,7 +103,7 @@ const SignupScreen3 = () => {
       <View style={styles.gap} />
       <PersonalityBox
         personality={personality}
-        attribute="attribute_6"
+        attribute="attributeSix"
         small
         name="Humble"
         postPersonality={addPersonality}
@@ -112,7 +115,7 @@ const SignupScreen3 = () => {
     <View style={styles.personalityFlex}>
       <PersonalityBox
         personality={personality}
-        attribute="attribute_7"
+        attribute="attributeSeven"
         small={true}
         name="Responsible"
         postPersonality={addPersonality}
@@ -121,7 +124,7 @@ const SignupScreen3 = () => {
       <View style={styles.gap} />
       <PersonalityBox
         personality={personality}
-        attribute="attribute_8"
+        attribute="attributeEight"
         small={false}
         name="Hardworking"
         postPersonality={addPersonality}
@@ -132,9 +135,52 @@ const SignupScreen3 = () => {
 
   const dispatch = useDispatch();
 
-  const next = () => {
+  // const userId = useSelector((state:any) => state.authReducer.userId);
+  const sex = useSelector((state:any) => state.profileReducer.sex);
+  const department = useSelector((state:any) => state.profileReducer.department);
+  const level = useSelector((state:any) => state.profileReducer.level);
+  const institution = useSelector((state:any) => state.profileReducer.institution);
+  const description = useSelector((state:any) => state.profileReducer.description);
+  const attributeOne = useSelector((state:any) => state.profileReducer.attributeOne);
+  const attributeTwo = useSelector((state:any) => state.profileReducer.attributeTwo);
+  const attributeThree = useSelector((state:any) => state.profileReducer.attributeThree);
+  const attributeFour = useSelector((state:any) => state.profileReducer.attributeFour);
+  const attributeFive = useSelector((state:any) => state.profileReducer.attributeFive);
+  const attributeSix = useSelector((state:any) => state.profileReducer.attributeSix);
+  const attributeSeven = useSelector((state:any) => state.profileReducer.attributeSeven);
+  const attributeEight = useSelector((state:any) => state.profileReducer.attributeEight);
+  const availabilty = useSelector((state:any) => state.profileReducer.availabilty);
+  const profilePic = useSelector((state:any) => state.profileReducer.profilePic);
+
+
+
+  const next = async () => {
+    const id = await AsyncStorage.getItem('userId');
+    const token = await AsyncStorage.getItem('token');
+    const data = {
+      userId:id,
+      department:department,
+      sex:sex,
+      level:level,
+      institution:institution,
+      description:description,
+      attributeOne:attributeOne,
+      attributeTwo:attributeTwo,
+      attributeThree:attributeThree,
+      attributeFour:attributeFour,
+      attributeFive:attributeFive,
+      attributeSix:attributeSix,
+      attributeSeven:attributeSeven,
+      attributeEight:attributeEight,
+      availabilty:availabilty,
+      profilePic:profilePic,
+      token:token,
+
+    };
+
     setLoading(true);
     dispatch({type: actionTypes.SCREEN3});
+    dispatch(actions.postProfile(data));
 
   };
 

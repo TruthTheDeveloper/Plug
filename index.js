@@ -11,15 +11,25 @@ import App from './App';
 import {name as appName} from './app.json';
 import authReducer from './App/redux/reducer/auth';
 import navReducer from './App/redux/reducer/navigation';
+import profileReducer from './App/redux/reducer/profile';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// const getAsyncStorage = async () => {
+//   axios.defaults.headers.common.Authorization =  await AsyncStorage.getItem('token');
+// };
+
+// getAsyncStorage();
+
+
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export const rootReducer = combineReducers({
   authReducer: authReducer,
   navReducer: navReducer,
+  profileReducer:profileReducer,
 });
 
-console.log(typeof authReducer, 'its type');
 
 const store = createStore(
   rootReducer,

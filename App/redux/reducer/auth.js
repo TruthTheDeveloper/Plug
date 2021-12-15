@@ -3,11 +3,11 @@ import * as actionTypes from '../actions/actionTypes';
 import {updateObject} from '../utility';
 
 const initialState = {
-  token: null,
+  token: false,
   username: null,
   error: null,
   loading: false,
-  authRedirectPath: '/home',
+  userId:null,
 };
 
 const authStart = (state, action) => {
@@ -34,8 +34,8 @@ const authLogout = (state, action) => {
   return updateObject(state, {token: null, username: null});
 };
 
-const setAuthRedirectPath = (state, action) => {
-  return updateObject(state, {authRedirectPath: action.path});
+const setUserId = (state, action) => {
+  return updateObject(state, {userId: action.userId});
 };
 
 const reducer = (state = initialState, action) => {
@@ -48,8 +48,8 @@ const reducer = (state = initialState, action) => {
       return authFail(state, action);
     case actionTypes.AUTH_LOGOUT:
       return authLogout(state, action);
-    case actionTypes.SET_AUTH_REDIRECT_PATH:
-      return setAuthRedirectPath(state, action);
+    case actionTypes.GET_USER_ID:
+      return setUserId(state, action);
     default:
       return state;
   }

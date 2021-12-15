@@ -1,4 +1,6 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable no-fallthrough */
+/* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import React, {FC, useState} from 'react';
@@ -10,7 +12,9 @@ import {
   Alert,
 } from 'react-native';
 import {red} from '../../../config/colors';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import * as actions from '../../../redux/actions/index';
+import {useDispatch} from 'react-redux';
 
 interface PersonalityProps {
   small: boolean;
@@ -29,13 +33,33 @@ const PersonalityBox: FC<PersonalityProps> = ({
   personality,
   attribute,
 }): JSX.Element => {
+  const dispatch = useDispatch();
   const [selected, setSelected] = useState(false);
-
   const addPersonality = () => {
     if (personality.length < 5) {
       setSelected(true);
       postPersonality(name);
-      AsyncStorage.setItem(attribute, name);
+
+      console.log(attribute);
+      switch (attribute){
+        case 'attributeOne':
+          dispatch(actions.getattributeOne(name));
+        case 'attributeTwo':
+          dispatch(actions.getattributeTwo(name));
+        case 'attributeThree':
+          dispatch(actions.getattributeThree(name));
+        case 'attributeFour':
+          dispatch(actions.getattributeFour(name));
+        case 'attributeFive':
+          dispatch(actions.getattributeFive(name));
+        case 'attributeSix':
+          dispatch(actions.getattributeSix(name));
+        case 'attributeSeven':
+          dispatch(actions.getattributeSeven(name));
+        case 'attributeEight':
+          dispatch(actions.getattributeEight(name));
+      }
+
     } else {
       Alert.alert('Sorry', "You can't have more than five personality", [
         {text: 'OK'},
@@ -43,10 +67,28 @@ const PersonalityBox: FC<PersonalityProps> = ({
     }
   };
 
-  const removePersonality = () => {
+  const removePersonality = async () => {
     setSelected(false);
     deletePersonality(name);
-    AsyncStorage.removeItem(`${attribute}`);
+
+    switch (attribute){
+      case 'attributeOne':
+        dispatch(actions.getattributeOne(''));
+      case 'attributeTwo':
+        dispatch(actions.getattributeTwo(''));
+      case 'attributeThree':
+        dispatch(actions.getattributeThree(''));
+      case 'attributeFour':
+        dispatch(actions.getattributeFour(''));
+      case 'attributeFive':
+        dispatch(actions.getattributeFive(''));
+      case 'attributeSix':
+        dispatch(actions.getattributeSix(''));
+      case 'attributeSeven':
+        dispatch(actions.getattributeSeven(''));
+      case 'attributeEight':
+        dispatch(actions.getattributeEight(''));
+    }
   };
 
   const box1 = (
