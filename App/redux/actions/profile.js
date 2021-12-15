@@ -1,7 +1,12 @@
 /* eslint-disable prettier/prettier */
 import axios from 'axios';
 import * as actionTypes from './actionTypes';
-
+// ,{
+//   headers: {
+//       'Authorization': 'Bearer ' + data.token,
+//       redirect: 'follow',
+//   },
+// }
 export const postProfile = (data) => {
     return dispatch => {
       console.log(data);
@@ -26,12 +31,7 @@ export const postProfile = (data) => {
         availability:data.availability,
       };
       axios
-        .post('https://findplug.herokuapp.com/profile',formdata, post,{
-          headers: {
-              'Authorization': 'Bearer ' + data.token,
-              redirect: 'follow',
-          },
-      })
+        .post('https://findplug.herokuapp.com/profile',formdata, post)
         .then(response => {
           console.log(response, 'the response');
         })

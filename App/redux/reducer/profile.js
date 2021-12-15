@@ -15,13 +15,13 @@ const initialState = {
   attributeSix: '',
   attributeSeven: '',
   attributeEight: '',
-  availability: true,
+  availabilty: true,
 };
 
 const setFirstScreenDetail = (state, action) => {
   return updateObject(state, {
     description: action.description,
-    availilabilty: action.availability,
+    availabilty: action.availabilty,
     sex: action.sex,
   });
 };
