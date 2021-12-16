@@ -12,8 +12,11 @@ const MainScreen = () => {
   const [auth, setAuth]:any = useState(false);
 
   const getToken = async () => {
-    const authenticate = await AsyncStorage.getItem('token');
-    setAuth(authenticate);
+    let authenticate = null;
+    authenticate = await AsyncStorage.getItem('token');
+    if (authenticate !== null){
+      setAuth(true);
+    }
   };
 
   useEffect(() => {
