@@ -21,8 +21,8 @@ const initialState = {
 const setFirstScreenDetail = (state, action) => {
   return updateObject(state, {
     description: action.data.description,
-    availabilty: action.data.availabilty,
-    sex: action.data.sex,
+    availabilty: action.data.available,
+    sex: action.data.gender,
   });
 };
 

@@ -26,6 +26,7 @@ export const postProfile = (data) => {
       formdata.append('attributeSix', data.attributeSix);
       formdata.append('attributeSeven', data.attributeSeven);
       formdata.append('attributeEight', data.attributeEight);
+      formdata.append('availabilty', data.availabilty);
       console.log(formdata);
       axios
         .post('https://findplug.herokuapp.com/profile',formdata,{headers:{
