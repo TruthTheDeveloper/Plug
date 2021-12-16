@@ -11,7 +11,7 @@ import Icons from 'react-native-vector-icons/Feather';
 import Icons2 from 'react-native-vector-icons/Ionicons';
 
 //components
-import {HomeScreenContainer, NotificationScreenContainer, ChatSceenContainer} from '../../index';
+import {HomeScreenContainer, NotificationScreenContainer, ChatSceenContainer, ProfileScreenContainer} from '../../index';
 import { ChatView } from '../../components';
 
 //ROUTES
@@ -30,9 +30,7 @@ const Home = () => {
 
 const Profile = () => {
     return(
-        <View style={{backgroundColor: '#fff', flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-            <Text>Profile</Text>
-        </View>
+        <ProfileScreenContainer />
     )
 }
 
