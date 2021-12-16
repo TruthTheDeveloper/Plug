@@ -31,8 +31,8 @@ const MyCaoursel = () => {
               renderItem={Profile}
               sliderWidth={width}
               itemWidth={width}
-              layout={'tinder'} 
-              layoutCardOffset={9}
+            //   layout={'tinder'} 
+            //   layoutCardOffset={9}
             />
         </View>
     )
