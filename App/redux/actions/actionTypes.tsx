@@ -13,6 +13,9 @@ export const SCREEN1 = 'SCREEN1';
 export const SCREEN2 = 'SCREEN2';
 export const SCREEN3 = 'SCREEN3';
 
+// Chatscreen
+export const OPEN_CHAT = 'OPEN_CHAT';
+export const SET_DEFAULT_ROUTE = 'SET_DEFAULT_ROUTE';
 
 // Profile
 export const SET_FIRST_SCREEN_DETAIL = 'SET_FIRST_SCREEN_DETAIL';
