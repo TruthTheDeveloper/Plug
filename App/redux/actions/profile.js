@@ -1,12 +1,15 @@
 /* eslint-disable prettier/prettier */
 import axios from 'axios';
 import * as actionTypes from './actionTypes';
-// ,{
-//   headers: {
-//       'Authorization': 'Bearer ' + data.token,
-//       redirect: 'follow',
-//   },
-// }
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+export const postSucess = (data) => {
+  return {
+    type:actionTypes.POST_SUCCESS,
+    success:data,
+  };
+};
+
 export const postProfile = (data) => {
   console.log(data.token);
     return dispatch => {
@@ -36,6 +39,8 @@ export const postProfile = (data) => {
           }},)
         .then(response => {
           console.log(response.data, 'the response');
+          AsyncStorage.setItem('success', true);
+          dispatch(postSucess(true));
         })
         .catch((err) => console.log(err, 'its  err err err err'));
     };

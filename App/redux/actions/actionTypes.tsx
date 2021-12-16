@@ -38,4 +38,6 @@ export const SET_PROFILE_PIC = 'SET_PROFILE_PIC';
 //set user Id
 export const GET_USER_ID = 'GET_USER_ID';
 
+export const POST_SUCCESS = 'POST_SUCCESS';
+
 

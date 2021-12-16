@@ -16,6 +16,14 @@ const initialState = {
   attributeSeven: '',
   attributeEight: '',
   availabilty: true,
+  success:false,
+};
+
+const setPostSuccess = (state, action) => {
+    console.log(action.success)
+    return updateObject(state, {
+        success: action.success,
+    });
 };
 
 const setFirstScreenDetail = (state, action) => {
@@ -121,6 +129,8 @@ const reducer = (state = initialState, action) => {
         return setAttributeSeven(state, action);
     case actionTypes.SET_ATTRIBUTE_EIGHT:
         return setAttributeEight(state,action);
+    case actionTypes.POST_SUCCESS:
+        return setPostSuccess(state,action);
     default:
         return state;
   }
