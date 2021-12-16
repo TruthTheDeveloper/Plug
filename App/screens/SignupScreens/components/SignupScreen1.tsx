@@ -53,13 +53,8 @@ const SignupScreen1 = () => {
   };
 
   const next = () => {
-    // const data = {
-    //   description:description,
-    //   available:available,
-    //   gender:gender,
-    // };
 
-    if (validation === ''){
+    if (validation === '' && description.length > 0){
       dispatch({type:actionTypes.SET_FIRST_SCREEN_DETAIL, data:{
         description:description,
         available:available,
@@ -67,7 +62,6 @@ const SignupScreen1 = () => {
       }});
       dispatch({type: actionTypes.SCREEN2});
       setLoading(true);
-      // dispatch(actions.getFirstDetailsToState(data));
     }
 
     checkDescription();

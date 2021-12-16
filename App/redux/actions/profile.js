@@ -39,7 +39,7 @@ export const postProfile = (data) => {
           }},)
         .then(response => {
           console.log(response.data, 'the response');
-          AsyncStorage.setItem('success', true);
+          AsyncStorage.setItem('success', JSON.stringify(true));
           dispatch(postSucess(true));
         })
         .catch((err) => console.log(err, 'its  err err err err'));
@@ -47,86 +47,9 @@ export const postProfile = (data) => {
   };
 
 
-
-// export const getFirstDetailsToState = (data) => {
-//   return {
-//     type: actionTypes.SET_FIRST_SCREEN_DETAIL,
-//     description:data.description,
-//     availabilty:data.available,
-//     sex:data.gender,
-//   };
-// };
-
-
-// export const getSecondDetailsToState = (data) => {
-//   return {
-//     type:actionTypes.SET_SECOND_SCREEN_DETAIL,
-//     institution:data.institution,
-//     department:data.department,
-//     level:data.level,
-//   };
-// };
-
 export const getProfilePic = (pic) => {
   return {
     type:actionTypes.SET_PROFILE_PIC,
     profilePic:pic,
   };
 };
-
-// export const getattributeOne = (attribute) => {
-//   return {
-//     type:actionTypes.SET_ATTRIBUTE_ONE,
-//     attributeOne:attribute || '',
-//   };
-// };
-
-// export const getattributeTwo = (attribute) => {
-//   return {
-//     type:actionTypes.SET_ATTRIBUTE_TWO,
-//     attributeTwo:attribute || '',
-//   };
-// };
-
-
-// export const getattributeThree = (attribute) => {
-//   return {
-//     type:actionTypes.SET_ATTRIBUTE_THREE,
-//     attributeThree:attribute || '',
-//   };
-// };
-
-// export const getattributeFour = (attribute) => {
-//   return {
-//     type:actionTypes.SET_ATTRIBUTE_FOUR,
-//     attributeFour:attribute || '',
-//   };
-// };
-
-// export const getattributeFive = (attribute) => {
-//   return {
-//     type:actionTypes.SET_ATTRIBUTE_FIVE,
-//     attributeFive:attribute || '',
-//   };
-// };
-
-// export const getattributeSix = (attribute) => {
-//   return {
-//     type:actionTypes.SET_ATTRIBUTE_SIX,
-//     attributeSix:attribute || '',
-//   };
-// };
-
-// export const getattributeSeven = (attribute) => {
-//   return {
-//     type:actionTypes.SET_ATTRIBUTE_SEVEN,
-//     attributeSeven:attribute || '',
-//   };
-// };
-
-// export const getattributeEight = (attribute) => {
-//   return {
-//     type:actionTypes.SET_ATTRIBUTE_EIGHT,
-//     attributeEight:attribute || '',
-//   };
-// };

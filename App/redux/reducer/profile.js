@@ -20,7 +20,7 @@ const initialState = {
 };
 
 const setPostSuccess = (state, action) => {
-    console.log(action.success)
+    console.log(action.success);
     return updateObject(state, {
         success: action.success,
     });
