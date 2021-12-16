@@ -57,7 +57,8 @@ const Container = () => {
             <NavigationContainer>
                 <Tab.Navigator screenOptions={{
                     headerShown: false,
-                    tabBarShowLabel: false
+                    tabBarShowLabel: false,
+                    tabBarStyle: {borderTopWidth: 0, elevation: 0}
                 }} initialRouteName={RouteName}>
 
                     <Tab.Screen name={HOME} component={Home} options={{
