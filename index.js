@@ -11,6 +11,7 @@ import App from './App';
 import {name as appName} from './app.json';
 import authReducer from './App/redux/reducer/auth';
 import navReducer from './App/redux/reducer/navigation';
+import chatReducer from './App/redux/reducer/chats';
 import profileReducer from './App/redux/reducer/profile';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -27,6 +28,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export const rootReducer = combineReducers({
   authReducer: authReducer,
   navReducer: navReducer,
+  chatReducer: chatReducer,
   profileReducer:profileReducer,
 });
 
