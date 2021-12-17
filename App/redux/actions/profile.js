@@ -55,12 +55,21 @@ export const getProfilePic = (pic) => {
 };
 
 
+export const profileData = (data) => {
+  return {
+    type:actionTypes.GET_PROFILE_DATA,
+    profileData:data,
+  };
+};
+
+
 export const getProfile = () => {
-  console.log('it got here')
+  console.log('it got here');
   return dispatch => {
     axios.get('https://findplug.herokuapp.com/profile')
     .then(response => {
       console.log(response.data, 'retriev data');
+      dispatch(profileData(response.data));
     })
     .catch((err) => console.log(err, 'ur err'));
   };

@@ -11,6 +11,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import PersonslityBoxes from '../../../components/MainComponents/PersonalityBoxes';
 
+
 const verifiedIcon = require('../../../assets/images/verified.png');
 const {height, width} = Dimensions.get('window');
 
@@ -20,9 +21,10 @@ interface ProfileProps {
 }
 
 const Profile: FC<ProfileProps> = ({item}): JSX.Element => {
+    console.log(item.department, 'profile item');
   return (
     <View style={styles.container}>
-      <ImageBackground style={styles.bgImage} source={item.image}>
+      <ImageBackground style={styles.bgImage} source={{uri:`${item.profilePic}`}}>
         <LinearGradient
           colors={[
             'rgba(0, 0, 0, 0)',
@@ -33,17 +35,20 @@ const Profile: FC<ProfileProps> = ({item}): JSX.Element => {
           style={styles.details}>
           <View style={styles.usernameContainer}>
             <Text style={styles.username}>{item.username}</Text>
-            <Image source={verifiedIcon} />
+            <Image source={item.availability ? verifiedIcon : null} />
           </View>
           <Text style={styles.department}>
             {item.level}l, {item.department}
           </Text>
           <View style={styles.personalityContainer}>
-            <PersonslityBoxes value="Funny" />
-            <PersonslityBoxes value="Cute" />
-            <PersonslityBoxes value="Shy" />
-            <PersonslityBoxes value="Outgoing" />
-            <PersonslityBoxes value="Music lover" />
+              {item.attributeOne && item.attributeOne !== '' ? <PersonslityBoxes value={item.attributeOne} /> : null}
+              {item.attributeTwo && item.attributeTwo !== '' ? <PersonslityBoxes value={item.attributeTwo} /> : null}
+              {item.attributeThree && item.attributeThree !== '' ? <PersonslityBoxes value={item.attributeThree} /> : null}
+              {item.attributeFour && item.attributeFour !== '' ? <PersonslityBoxes value={item.attributeFour} /> : null}
+              {item.attributeFive && item.attributeFive !== '' ? <PersonslityBoxes value={item.attributeFive} /> : null}
+              {item.attributeSix && item.attributeSix !== '' ? <PersonslityBoxes value={item.attributeSix} /> : null}
+              {item.attributeSeven && item.attributeSeven !== '' ? <PersonslityBoxes value={item.attributeSeven} /> : null}
+              {item.attributeEight && item.attributeEight !== '' ? <PersonslityBoxes value={item.attributeEight} /> : null}
           </View>
         </LinearGradient>
       </ImageBackground>

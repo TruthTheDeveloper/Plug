@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, Dimensions} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import Profile from './components/Profile';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../redux/actions/index';
 
 //Components
@@ -22,9 +22,9 @@ const {height, width} = Dimensions.get('window');
 
 const HomeScreenView = () => {
     const dispatch = useDispatch();
+    const profileData = useSelector((state:any) => state.profileReducer.profileData);
 
     useEffect(() => {
-        console.log('care ful')
         dispatch(actions.getProfile());
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
@@ -59,12 +59,13 @@ const HomeScreenView = () => {
       <Header label="Gallery" />
     <View style={styles.container}>
       <Carousel
-        data={data}
+        data={profileData}
         renderItem={Profile}
         sliderWidth={width}
         itemWidth={width}
         layout={'default'}
-        layoutCardOffset={9}
+        removeClippedSubviews={true}
+        // layoutCardOffset={9}
       />
     </View>
     </View>

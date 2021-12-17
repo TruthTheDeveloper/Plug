@@ -3,20 +3,27 @@ import * as actionTypes from '../actions/actionTypes';
 import {updateObject} from '../utility';
 
 const initialState = {
-  sex: null,
-  department: null,
-  level: null,
-  institution: null,
-  description: null,
-  attributeOne: '',
-  attributeTwo: '',
-  attributeFour: '',
-  attributeFive: '',
-  attributeSix: '',
-  attributeSeven: '',
-  attributeEight: '',
-  availabilty: true,
-  success:false,
+    profileData:[],
+    sex: null,
+    department: null,
+    level: null,
+    institution: null,
+    description: null,
+    attributeOne: '',
+    attributeTwo: '',
+    attributeFour: '',
+    attributeFive: '',
+    attributeSix: '',
+    attributeSeven: '',
+    attributeEight: '',
+    availabilty: true,
+    success:false,
+};
+
+const setProfileData = (state, action) => {
+    return updateObject(state,{
+        profileData:action.profileData,
+    });
 };
 
 const setPostSuccess = (state, action) => {
@@ -131,6 +138,8 @@ const reducer = (state = initialState, action) => {
         return setAttributeEight(state,action);
     case actionTypes.POST_SUCCESS:
         return setPostSuccess(state,action);
+    case actionTypes.GET_PROFILE_DATA:
+        return setProfileData(state, action);
     default:
         return state;
   }
