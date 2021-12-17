@@ -6,6 +6,9 @@ import PersonalityBoxes from '../../components/MainComponents/PersonalityBoxes';
 //Components
 import ProfilePic from './components/ProfilePic';
 
+//Image
+// import
+
 const {height, width} = Dimensions.get('window');
 
 const ProfileScreenView = () => {
@@ -27,6 +30,9 @@ const ProfileScreenView = () => {
                 <PersonalityBoxes value='Potato' />
                 <PersonalityBoxes value='Movies' />
                 <PersonalityBoxes value='Sports' />
+            </View>
+            <View style={styles.description}>
+                <Text style={styles.descriptionText}>Looking for a roomate who's smart and loves God.Also one who's not a racist, or a cultist or fraudster, or a criminal</Text>
             </View>
         </View>
     )
@@ -51,7 +57,9 @@ const styles = StyleSheet.create({
     },
     institution: {
         fontSize: 20,
-        fontWeight: '600'
+        fontWeight: '600',
+        color: '#000',
+        opacity: 0.9
     },
     personalityContainer: {
         width: width - 30,
@@ -60,6 +68,16 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         flexWrap: 'wrap'
+    },
+    description: {
+        width: width - 30,
+        marginLeft: 15,
+        marginTop: 10
+    },
+    descriptionText: {
+        color: '#000',
+        fontSize: 18,
+        opacity: 0.7
     }
 });
 
