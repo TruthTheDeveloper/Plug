@@ -1,8 +1,10 @@
 /* eslint-disable prettier/prettier */
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, Dimensions} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import Profile from './components/Profile';
+import { useDispatch } from 'react-redux';
+import * as actions from '../../redux/actions/index';
 
 //Components
 import {Header} from '../../components/index';
@@ -19,6 +21,14 @@ const {height, width} = Dimensions.get('window');
 
 
 const HomeScreenView = () => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        console.log('care ful')
+        dispatch(actions.getProfile());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[]);
+
   const [data] = useState([
     {
       username: 'kendall_jenner',

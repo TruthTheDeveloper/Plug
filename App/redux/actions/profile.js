@@ -56,6 +56,7 @@ export const getProfilePic = (pic) => {
 
 
 export const getProfile = () => {
+  console.log('it got here')
   return dispatch => {
     axios.get('https://findplug.herokuapp.com/profile')
     .then(response => {
