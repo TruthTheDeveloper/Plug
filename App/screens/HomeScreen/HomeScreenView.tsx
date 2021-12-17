@@ -1,11 +1,11 @@
 /* eslint-disable prettier/prettier */
 import React, {useState} from 'react';
-import {View} from 'react-native';
+import {View, StyleSheet, Dimensions} from 'react-native';
+import Carousel from 'react-native-snap-carousel';
+import Profile from './components/Profile';
 
 //Components
 import {Header} from '../../components/index';
-import Caoursel from './components/Caoursel';
-
 //Imported Images
 const girl1 = require('../../assets/images/girl.jpg');
 const girl2 = require('../../assets/images/girl1.jpg');
@@ -15,8 +15,11 @@ const girl5 = require('../../assets/images/girl4.jpg');
 const girl6 = require('../../assets/images/girl5.jpg');
 
 
+const {height, width} = Dimensions.get('window');
+
+
 const HomeScreenView = () => {
-  const [] = useState([
+  const [data] = useState([
     {
       username: 'kendall_jenner',
       level: 400,
@@ -44,20 +47,34 @@ const HomeScreenView = () => {
     // eslint-disable-next-line react-native/no-inline-styles
     <View style={{backgroundColor: '#fff'}}>
       <Header label="Gallery" />
-      {/* <FlatList
-                data={posts}
-                numColumns={2}
-                style={{height: height - 110}}
-                renderItem={({item,index}) => <ProfileItem
-                        username={item.username}
-                        department={item.department}
-                        level={item.level}
-                        image={item.image} />
-                    }
-            /> */}
-      <Caoursel />
+    <View style={styles.container}>
+      <Carousel
+        data={data}
+        renderItem={Profile}
+        sliderWidth={width}
+        itemWidth={width}
+        layout={'default'}
+        layoutCardOffset={9}
+      />
+    </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+    container: {
+      height: height,
+      width: width,
+      backgroundColor: '#fff',
+    },
+    box: {
+      height: height - 140,
+      marginTop: 10,
+      marginLeft: 15,
+      width: width - 30,
+      backgroundColor: 'red',
+      borderRadius: 10,
+    },
+  });
 
 export default HomeScreenView;
