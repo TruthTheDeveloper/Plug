@@ -7,7 +7,7 @@ import PersonalityBoxes from '../../components/MainComponents/PersonalityBoxes';
 import ProfilePic from './components/ProfilePic';
 
 //Image
-// import
+const image = require('../../assets/images/girl.jpg');
 
 const {height, width} = Dimensions.get('window');
 
@@ -16,7 +16,7 @@ const ProfileScreenView = () => {
         <View style={styles.container}>
             <Header label='Profile' home={false} />
             <View style={styles.ProfileHeader}>
-                <ProfilePic />
+                <ProfilePic image={image} />
                 <View style={{height: 10}} />
                 <Username username='emilie_kiritsuga' fontSize={22} active />
             </View>

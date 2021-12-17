@@ -1,9 +1,15 @@
-import React from 'react';
+import React, {FC} from 'react';
 import { View, StyleSheet, ImageBackground } from 'react-native';
 
-const ProfilePic = () => {
+interface picProps {
+    image: any
+}
+
+const ProfilePic:FC<picProps> = ({image}):JSX.Element => {
     return (
-        <View style={styles.container}></View>
+        <View style={styles.container}>
+            <ImageBackground source={image} style={styles.bgImage} />
+        </View>
     )
 }
 
@@ -12,7 +18,12 @@ const styles = StyleSheet.create({
         height: 100,
         width: 100,
         borderRadius: 50,
-        backgroundColor: 'pink'
+        backgroundColor: 'pink',
+        overflow: 'hidden'
+    },
+    bgImage: {
+        height: '100%',
+        width: '100%',
     }
 });
 
