@@ -1,10 +1,12 @@
 import React from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, ScrollView } from 'react-native';
 import { Header, Username } from '../../components';
 import PersonalityBoxes from '../../components/MainComponents/PersonalityBoxes';
+import { red } from '../../config/colors';
 
 //Components
 import ProfilePic from './components/ProfilePic';
+import Button from './components/Buttons';
 
 //Image
 const image = require('../../assets/images/girl.jpg');
@@ -15,32 +17,41 @@ const ProfileScreenView = () => {
     return(
         <View style={styles.container}>
             <Header label='Profile' home={false} />
-            <View style={styles.ProfileHeader}>
-                <ProfilePic image={image} />
-                <View style={{height: 10}} />
-                <Username username='emilie_kiritsuga' fontSize={22} active />
-            </View>
-            <View style={styles.institutionContainer}>
-                <Text style={styles.institution}>200lv Computer science</Text>
-                <Text style={styles.institution}>Imo State University</Text>
-            </View>
-            <View style={styles.personalityContainer}>
-                <PersonalityBoxes value='Fashion' />
-                <PersonalityBoxes value='Books' />
-                <PersonalityBoxes value='Potato' />
-                <PersonalityBoxes value='Movies' />
-                <PersonalityBoxes value='Sports' />
-            </View>
-            <View style={styles.description}>
-                <Text style={styles.descriptionText}>Looking for a roomate who's smart and loves God.Also one who's not a racist, or a cultist or fraudster, or a criminal</Text>
-            </View>
+            <ScrollView>
+                <View style={styles.ProfileHeader}>
+                    <ProfilePic image={image} />
+                    <View style={{height: 10}} />
+                    <Username username='emilie_kiritsuga' fontSize={22} active />
+                </View>
+                <View style={styles.institutionContainer}>
+                    <Text style={styles.institution}>200lv Computer science</Text>
+                    <Text style={styles.institution}>Imo State University</Text>
+                </View>
+                <View style={styles.personalityContainer}>
+                    <PersonalityBoxes value='Fashion' />
+                    <PersonalityBoxes value='Books' />
+                    <PersonalityBoxes value='Potato' />
+                    <PersonalityBoxes value='Movies' />
+                    <PersonalityBoxes value='Sports' />
+                </View>
+                <View style={styles.description}>
+                    <Text style={styles.descriptionText}>Looking for a roomate who's smart and loves God.Also one who's not a racist, or a cultist or fraudster, or a criminal</Text>
+                </View>
+                <View style={styles.EditButton}>
+                    <Text style={styles.EditButtonText}>Edit Profile</Text>
+                </View>
+                <View style={styles.ExtraButtonsContainer}>
+                    <Button iconLabel='bell-off' label='Avaliability' />
+                    <Button iconLabel='log-out' label='Logout' />
+                </View>
+            </ScrollView>
         </View>
     )
 };
 
 const styles = StyleSheet.create({
     container: {
-        height: height,
+        // height: height,
         width: width,
         backgroundColor: '#fff'
     },
@@ -78,6 +89,31 @@ const styles = StyleSheet.create({
         color: '#000',
         fontSize: 18,
         opacity: 0.7
+    },
+    EditButton: {
+        height: 40,
+        width: 120,
+        borderColor: red,
+        borderWidth: 1,
+        borderRadius: 7,
+        backgroundColor: '#fff',
+        marginRight: 'auto',
+        marginLeft: 'auto',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 30
+    },
+    EditButtonText: {
+        color: red,
+        fontSize: 18,
+        fontWeight: '600'
+    },
+    ExtraButtonsContainer: {
+        width: width - 30,
+        marginLeft: 15,
+        marginBottom: 50,
+        marginTop: 30
     }
 });
 
