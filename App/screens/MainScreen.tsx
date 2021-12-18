@@ -11,15 +11,22 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const MainScreen = () => {
   const [auth, setAuth]:any = useState(false);
 
-  const getToken = async () => {
-    let authenticate = null;
-    authenticate = await AsyncStorage.getItem('token');
-    if (authenticate !== null){
-      setAuth(true);
-    }
-  };
+  // const getToken = async () => {
+  //   let authenticate = null;
+  //   authenticate = await AsyncStorage.getItem('token');
+  //   if (authenticate !== null){
+  //     setAuth(true);
+  //   }
+  // };
 
   useEffect(() => {
+    const getToken = async () => {
+      let authenticate = null;
+      authenticate = await AsyncStorage.getItem('token');
+      if (authenticate){
+        setAuth(true);
+      }
+    };
     getToken();
   },[auth]);
 

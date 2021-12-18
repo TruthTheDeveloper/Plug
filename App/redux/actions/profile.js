@@ -6,12 +6,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export const postSucess = (data) => {
   return {
     type:actionTypes.POST_SUCCESS,
-    success:data,
+    profileId:data,
   };
 };
 
 export const postProfile = (data) => {
-  console.log(data.token);
+  console.log(data.username);
     return dispatch => {
       const formdata = new FormData();
       formdata.append('profilePic', {uri:data.profilePic, name: 'image.jpg', type: 'image/jpg'});
@@ -40,8 +40,8 @@ export const postProfile = (data) => {
           }},)
         .then(response => {
           console.log(response.data, 'the response');
-          AsyncStorage.setItem('success', JSON.stringify(true));
-          dispatch(postSucess(true));
+          AsyncStorage.setItem('profileId', response.data._id);
+          dispatch(postSucess(response.data._id));
         })
         .catch((err) => console.log(err, 'its  err err err err'));
     };
@@ -55,6 +55,25 @@ export const getProfilePic = (pic) => {
   };
 };
 
+
+export const retrieveProfileDetail = (id) => {
+  console.log('got here', id);
+  return dispatch => {
+    axios.get(`https://findplug.herokuapp.com/profile/${id}`)
+    .then(response => {
+      console.log(response.data, 'urs');
+      dispatch(getProfileIdData(response.data));
+    })
+    .catch((err) => console.log(err, 'its id err'));
+  };
+};
+
+export const getProfileIdData = (id) => {
+  return {
+    type:actionTypes.GET_PROFILE_ID_DATA,
+    profileIdData:id,
+  };
+};
 
 export const profileData = (data) => {
   return {

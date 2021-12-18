@@ -17,7 +17,14 @@ const initialState = {
     attributeSeven: '',
     attributeEight: '',
     availabilty: true,
-    success:false,
+    profileId:null,
+    profileIdData:null,
+};
+
+const setProfileIdData = (state,action) => {
+    return updateObject(state, {
+        profileIdData:action.profileIdData,
+    });
 };
 
 const setProfileData = (state, action) => {
@@ -29,7 +36,7 @@ const setProfileData = (state, action) => {
 const setPostSuccess = (state, action) => {
     console.log(action.success);
     return updateObject(state, {
-        success: action.success,
+        profileId: action.profileId,
     });
 };
 
@@ -140,6 +147,8 @@ const reducer = (state = initialState, action) => {
         return setPostSuccess(state,action);
     case actionTypes.GET_PROFILE_DATA:
         return setProfileData(state, action);
+    case actionTypes.GET_PROFILE_ID_DATA:
+        return setProfileIdData(state,action);
     default:
         return state;
   }
