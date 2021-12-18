@@ -32,13 +32,6 @@ const LargeLabeledInput: FC<LabelProps> = ({setValue, label, value}): JSX.Elemen
   );
 };
 
-
-const validationStyle = StyleSheet.create({
-  validationColor:{
-    color:'#FE1135',
-  },
-});
-
 const styles = StyleSheet.create({
   container: {
     width: '100%',

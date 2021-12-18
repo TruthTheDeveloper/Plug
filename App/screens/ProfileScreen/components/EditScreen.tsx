@@ -5,6 +5,8 @@ import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { Header } from '../../../components';
 import ProfilePic from './ProfilePic';
 
+import LargeLabeledInput from './LargeLabeledInpu';
+
 const {height, width} = Dimensions.get('window');
 
 interface EditScreenProps{
@@ -21,7 +23,12 @@ const EditScreen:FC<EditScreenProps> = ({image}):JSX.Element => {
             <View style={styles.ImageContainer}>
                 <ProfilePic image={image} />
             </View>
-            <View style={styles.FormContainer}></View>
+            <View style={styles.FormContainer}>
+                <LargeLabeledInput label='Description' />
+
+
+                
+            </View>
         </View>
     )
 };
