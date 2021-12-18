@@ -6,8 +6,6 @@ interface LabelProps {
   label: string;
   setValue:(e:string)=>void,
   value:string,
-  validationError:string,
-  border:string
 }
 
 const LargeLabeledInput: FC<LabelProps> = ({setValue, label, value}): JSX.Element => {

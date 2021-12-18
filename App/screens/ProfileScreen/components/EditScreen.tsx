@@ -18,6 +18,7 @@ import {
 
 import InstitutionChecker from '../../SignupScreens/components/InstitutionChecker';
 import PersonalityBox from '../../SignupScreens/components/personalityBox';
+import ExtraButtons from './ExtraButtons';
 
 const {height, width} = Dimensions.get('window');
 
@@ -190,7 +191,7 @@ const EditScreen:FC<EditScreenProps> = ({image}):JSX.Element => {
                 <ProfilePic image={image} />
             </View>
             <View style={styles.FormContainer}>
-                <LargeLabeledInput label='Description' />
+                <LargeLabeledInput label='Description' value='' setValue={(e:string) => console.log(e)} />
             </View>
             <InstitutionChecker
                 active={Institution}
@@ -208,6 +209,7 @@ const EditScreen:FC<EditScreenProps> = ({image}):JSX.Element => {
                     {div4}
                 </View>
             </View>
+            <ExtraButtons />
             </ScrollView>
             {List && <Modal packages={List} onSelect={onSelect} />}
         </View>
