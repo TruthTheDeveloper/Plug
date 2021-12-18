@@ -251,7 +251,6 @@ const styles = StyleSheet.create({
     personalitys: {
         width: '100%',
         marginTop: 15,
-        marginBottom: 100
     },
     personalityFlex: {
         display: 'flex',
