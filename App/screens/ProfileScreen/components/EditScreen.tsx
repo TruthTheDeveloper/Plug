@@ -208,8 +208,8 @@ const EditScreen:FC<EditScreenProps> = ({image}):JSX.Element => {
                     {div4}
                 </View>
             </View>
-            {List && <Modal packages={List} onSelect={onSelect} />}
             </ScrollView>
+            {List && <Modal packages={List} onSelect={onSelect} />}
         </View>
     )
 };
@@ -248,7 +248,7 @@ const styles = StyleSheet.create({
     },
     personalitys: {
         width: '100%',
-        marginLeft: 15,
+        marginTop: 15,
         marginBottom: 100
     },
     personalityFlex: {
