@@ -10,7 +10,7 @@ import Button from './components/Buttons';
 import EditScreen from './components/EditScreen';
 
 //Image
-const image = require('../../assets/images/girl.jpg');
+const image = 'http://res.cloudinary.com/ahumareze/image/upload/v1638211548/a5wrllvag4a12vrwkqmm.png'
 
 const {height, width} = Dimensions.get('window');
 

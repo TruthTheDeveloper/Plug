@@ -8,7 +8,7 @@ interface picProps {
 const ProfilePic:FC<picProps> = ({image}):JSX.Element => {
     return (
         <View style={styles.container}>
-            <ImageBackground source={image} style={styles.bgImage} />
+            <ImageBackground source={{uri: `${image}`}} style={styles.bgImage} />
         </View>
     )
 }

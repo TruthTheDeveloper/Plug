@@ -197,11 +197,11 @@ const EditScreen:FC<EditScreenProps> = ({image, cancle}):JSX.Element => {
         <View style={styles.container}>
             <ScrollView>
             <Header label='Edit' home={false} />
-            <View style={styles.ImageContainer}>
-                <TouchableWithoutFeedback onPress={selectPhoto}>
+            <TouchableWithoutFeedback onPress={selectPhoto}>
+                <View style={styles.ImageContainer}>
                     <ProfilePic image={img} />
-                </TouchableWithoutFeedback>
-            </View>
+                </View>
+            </TouchableWithoutFeedback>
             <View style={styles.FormContainer}>
                 <LargeLabeledInput label='Description' value='' setValue={(e:string) => console.log(e)} />
             </View>
