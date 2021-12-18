@@ -13,10 +13,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 //Components
 import ProfilePic from './components/ProfilePic';
 import Button from './components/Buttons';
-import EditScreen from './components/EditScreen';
 
 //Image
-const image = 'http://res.cloudinary.com/ahumareze/image/upload/v1638211548/a5wrllvag4a12vrwkqmm.png'
 
 
 const {width} = Dimensions.get('window');
