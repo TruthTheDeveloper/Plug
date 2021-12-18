@@ -15,39 +15,33 @@ import ProfilePic from './components/ProfilePic';
 import Button from './components/Buttons';
 
 //Image
-const image = require('../../assets/images/girl.jpg');
 
 
 const {width} = Dimensions.get('window');
 
 const ProfileScreenView = () => {
-    const Id = useSelector((state:any) => state.profileReducer.profileId);
+    // const Id = useSelector((state:any) => state.profileReducer.profileId);
     const profileIdData = useSelector((state:any) => state.profileReducer.profileIdData);
     const dispatch = useDispatch();
 
 
     useEffect(() => {
-        console.log(profileIdData, 'first');
-       if (profileIdData){
-        console.log(profileIdData, 'from profile data');
-       }
 
-        dispatch(actions.retrieveProfileDetail(Id));
-        // let userId : any = null;
+        let userId : any = null;
 
-        // const getToken = async() => {
-        //      userId = await AsyncStorage.getItem('userId');
-        //     if (userId){
-        //         console.log('meet');
+        const getToken = async() => {
+             userId = await AsyncStorage.getItem('profileId');
+            if (userId){
+                console.log('meet');
+                dispatch(actions.retrieveProfileDetail(userId));
+            } else {
+                console.log('no user id');
+        }
+        console.log(userId);
 
-        //     } else {
-        //         console.log('no user id');
-        // }
-        // console.log(userId);
-
-        // };
-        // getToken();
-    },[Id, dispatch, profileIdData]);
+        };
+        getToken();
+    },[dispatch]);
 
   return (
     <View>
@@ -55,9 +49,9 @@ const ProfileScreenView = () => {
       <Header label="Profile" home={false} />
       <ScrollView>
         <View style={styles.ProfileHeader}>
-          <ProfilePic image={image} />
+          <ProfilePic image={{uri:profileIdData.profilePic}} />
           <View style={{ height: 10 }} />
-          <Username username={profileIdData.user.username} fontSize={22} active />
+          <Username username={profileIdData.username} fontSize={22} active />
         </View>
         <View style={styles.institutionContainer}>
           <Text style={styles.institution}>{profileIdData.department}</Text>
