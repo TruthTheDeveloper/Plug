@@ -102,6 +102,8 @@ export const auth = (username, email, password, isSignup) => {
 
             url = 'https://findplug.herokuapp.com/login';
 
+            console.log(url);
+
         }
 
         axios.post(url, authData)

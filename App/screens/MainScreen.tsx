@@ -12,16 +12,18 @@ const MainScreen = () => {
   const [auth, setAuth]:any = useState(false);
 
   const getToken = async () => {
-    const authenticate = await AsyncStorage.getItem('token');
-    setAuth(authenticate);
+    let authenticate = null;
+    authenticate = await AsyncStorage.getItem('token');
+    if (authenticate !== null){
+      setAuth(true);
+    }
   };
 
   useEffect(() => {
     getToken();
-  },[]);
+  },[auth]);
 
   const authToken = useSelector((state:any)=> state.authReducer.token);
-  console.log(auth, authToken);
   return (
     <View>
         { auth || authToken ? <SignUpScreensContainer/> : <AuthScreenContainer/>}
@@ -29,16 +31,5 @@ const MainScreen = () => {
   );
 };
 
-// const MainScreen = () => {
-//   useEffect(() => {
-
-//   },[])
-
-//   return (
-//         <View>
-//             {authenticate === true || authToken !== null ? <SignUpScreensContainer/> : <AuthScreenContainer/>}
-//         </View>
-//       );
-// }
 
 export default MainScreen;
