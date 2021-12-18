@@ -2,16 +2,16 @@ import React, {FC} from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 
 //Components
-import { Header, LargeLabeledInput } from '../../../components';
+import { Header } from '../../../components';
 import ProfilePic from './ProfilePic';
 
 const {height, width} = Dimensions.get('window');
 
 interface EditScreenProps{
     image: string,
-    university: string,
-    depatrment: string,
-    level: any
+    // university: string,
+    // depatrment: string,
+    // level: any
 }
 
 const EditScreen:FC<EditScreenProps> = ({image}):JSX.Element => {
@@ -21,9 +21,7 @@ const EditScreen:FC<EditScreenProps> = ({image}):JSX.Element => {
             <View style={styles.ImageContainer}>
                 <ProfilePic image={image} />
             </View>
-            <View style={styles.FormContainer}>
-                <LargeLabeledInput label='Description' />
-            </View>
+            <View style={styles.FormContainer}></View>
         </View>
     )
 };
