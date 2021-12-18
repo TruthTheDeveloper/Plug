@@ -37,11 +37,10 @@ const ProfileScreenView = () => {
             } else {
                 console.log('no user id');
         }
-        console.log(userId);
 
         };
         getToken();
-    },[dispatch]);
+    },[]);
 
   return (
     <View>
@@ -49,7 +48,7 @@ const ProfileScreenView = () => {
       <Header label="Profile" home={false} />
       <ScrollView>
         <View style={styles.ProfileHeader}>
-          <ProfilePic image={{uri:profileIdData.profilePic}} />
+          <ProfilePic image={profileIdData.profilePic} />
           <View style={{ height: 10 }} />
           <Username username={profileIdData.username} fontSize={22} active />
         </View>
