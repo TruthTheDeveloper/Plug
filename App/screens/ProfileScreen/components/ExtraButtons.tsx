@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import { View, Text, Dimensions, StyleSheet } from 'react-native';
+import { View, Text, Dimensions, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { red } from '../../../config/colors';
 
 const {width} = Dimensions.get('window');
@@ -15,14 +15,18 @@ const ExtraButtons:FC<ExtraButtonsProps> = ({submit, cancle}):JSX.Element => {
     return(
         <View style={styles.container}>
             <View style={styles.div}>
-                <View style={styles.button}>
-                    <Text style={styles.text}>Cancle</Text>
-                </View>
+                <TouchableWithoutFeedback onPress={cancle}>
+                    <View style={styles.button}>
+                        <Text style={styles.text}>Cancle</Text>
+                    </View>
+                </TouchableWithoutFeedback>
             </View>
             <View style={styles.div2}>
-                <View style={[styles.button2, {backgroundColor: '#000'}]}>
-                    <Text style={[styles.text, {color: '#fff'}]}>Update</Text>
-                </View>
+                <TouchableWithoutFeedback onPress={submit}>
+                    <View style={[styles.button2, {backgroundColor: '#000'}]}>
+                        <Text style={[styles.text, {color: '#fff'}]}>Update</Text>
+                    </View>
+                </TouchableWithoutFeedback>
             </View>
         </View>
     )
@@ -32,7 +36,7 @@ const styles = StyleSheet.create({
     container: {
         height: 45,
         width: width - 30,
-        marginBottom: 200,
+        marginBottom: 100,
         marginTop: 40,
         marginLeft: 15,
         display: 'flex',

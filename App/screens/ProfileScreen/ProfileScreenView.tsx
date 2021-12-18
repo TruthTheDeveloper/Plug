@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, StyleSheet, Dimensions, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Dimensions, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import { Header, Username } from '../../components';
 import PersonalityBoxes from '../../components/MainComponents/PersonalityBoxes';
 import { red } from '../../config/colors';
@@ -15,6 +15,8 @@ const image = require('../../assets/images/girl.jpg');
 const {height, width} = Dimensions.get('window');
 
 const ProfileScreenView = () => {
+    const [Edit, setEdit] = useState(false);
+
     return(
         <View style={styles.container}>
             <Header label='Profile' home={false} />
@@ -38,15 +40,17 @@ const ProfileScreenView = () => {
                 <View style={styles.description}>
                     <Text style={styles.descriptionText}>Looking for a roomate who's smart and loves God.Also one who's not a racist, or a cultist or fraudster, or a criminal</Text>
                 </View>
-                <View style={styles.EditButton}>
-                    <Text style={styles.EditButtonText}>Edit Profile</Text>
-                </View>
+                <TouchableWithoutFeedback onPress={() => setEdit(true)}>
+                    <View style={styles.EditButton}>
+                        <Text style={styles.EditButtonText}>Edit Profile</Text>
+                    </View>
+                </TouchableWithoutFeedback>
                 <View style={styles.ExtraButtonsContainer}>
                     <Button iconLabel='bell-off' label='Avaliability' />
                     <Button iconLabel='log-out' label='Logout' />
                 </View>
             </ScrollView>
-            <EditScreen image={image} />
+            {Edit  && <EditScreen image={image} cancle={() => setEdit(false)} /> }
         </View>
     )
 };

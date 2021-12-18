@@ -1,5 +1,6 @@
 import React, {FC, useState} from 'react';
-import { View, Text, StyleSheet, Dimensions, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, ScrollView, TouchableWithoutFeedback } from 'react-native';
+import {launchImageLibrary} from 'react-native-image-picker';
 
 //Components
 import { Header } from '../../../components';
@@ -24,12 +25,10 @@ const {height, width} = Dimensions.get('window');
 
 interface EditScreenProps{
     image: string,
-    // university: string,
-    // depatrment: string,
-    // level: any
+    cancle: () => void
 }
 
-const EditScreen:FC<EditScreenProps> = ({image}):JSX.Element => {
+const EditScreen:FC<EditScreenProps> = ({image, cancle}):JSX.Element => {
     const [Institution, setInstitution] = useState(university);
 
     const [universityName, setUniversity] = useState();
@@ -41,6 +40,8 @@ const EditScreen:FC<EditScreenProps> = ({image}):JSX.Element => {
     const [loading, setLoading] = useState(false);
 
     const [personality, setPersonality] = useState<any | null>([]);
+
+    const [img, setImage] = useState();
 
     const addPersonality = (e: string) => {
         setPersonality((prev: any) => [...prev, e]);
@@ -178,8 +179,18 @@ const EditScreen:FC<EditScreenProps> = ({image}):JSX.Element => {
     const onSelect = (e: any) => {
         setList(null);
         setTimeout(() => {
-          setUniversity(e);
+            setUniversity(e);
         }, 100);
+    };
+
+    const selectPhoto = () => {
+        launchImageLibrary({mediaType: 'photo'}, (response: { assets: { uri: any; }[]; }) => {
+          if (response.assets) {
+            const data = response.assets[0].uri;
+            
+            
+          }
+        });
       };
 
     return (
@@ -188,7 +199,9 @@ const EditScreen:FC<EditScreenProps> = ({image}):JSX.Element => {
             <ScrollView>
             <Header label='Edit' home={false} />
             <View style={styles.ImageContainer}>
-                <ProfilePic image={image} />
+                <TouchableWithoutFeedback>
+                    <ProfilePic image={image} />
+                </TouchableWithoutFeedback>
             </View>
             <View style={styles.FormContainer}>
                 <LargeLabeledInput label='Description' value='' setValue={(e:string) => console.log(e)} />
@@ -209,7 +222,7 @@ const EditScreen:FC<EditScreenProps> = ({image}):JSX.Element => {
                     {div4}
                 </View>
             </View>
-            <ExtraButtons />
+            <ExtraButtons cancle={cancle} submit={() => alert('submitted')} />
             </ScrollView>
             {List && <Modal packages={List} onSelect={onSelect} />}
         </View>
@@ -263,3 +276,7 @@ const styles = StyleSheet.create({
 });
 
 export default EditScreen;
+
+function alert(arg0: string): void {
+    throw new Error('Function not implemented.');
+}
