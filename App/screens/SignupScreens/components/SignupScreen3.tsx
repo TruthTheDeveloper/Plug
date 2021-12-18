@@ -151,6 +151,7 @@ const SignupScreen3 = () => {
   const attributeEight = useSelector((state:any) => state.profileReducer.attributeEight);
   const availabilty = useSelector((state:any) => state.profileReducer.availabilty);
   const profilePic = useSelector((state:any) => state.profileReducer.profilePic);
+  const username = useSelector((state:any) => state.profileReducer.username);
 
 
 
@@ -175,6 +176,7 @@ const SignupScreen3 = () => {
       availabilty:availabilty,
       profilePic:profilePic,
       token:token,
+      username:username,
 
     };
 

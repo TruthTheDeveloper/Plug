@@ -13,6 +13,9 @@ const LoginView = () => {
   const [email, setEmail]:any = useState();
   const [password, setPassword]:any  = useState();
   const [border, setBorder]:any = useState('#000');
+  const [validEmail, setValidEmail] = useState('');
+  const [validPassword, setValidPassword] = useState('');
+
 
 
   useEffect(() => {
@@ -29,18 +32,37 @@ const LoginView = () => {
   };
 
   const authError = useSelector((state:any) => state.authReducer.error);
+  const authToken = useSelector((state:any)=> state.authReducer.token);
+  console.log(authError, 'error');
 
   useEffect(() => {
-    if (authError !== null){
+
+    let result = authError === null;
+    if (result){
+      setValidEmail('');
+      setValidPassword('');
+    } else if (authError.email){
+      setValidEmail(authError.email);
+    } else if (authError.password){
+      setValidPassword(authError.password);
+    }
+
+    let auth = authToken === false;
+    if (!result && auth){
       setBorder('#Fe1135');
     }
-  },[authError]);
+
+    return () => {
+      result = authError !== null;
+      auth = authError === true;
+    };
+  },[authError, authToken]);
 
   return (
     <Animated.View style={[value.getLayout(), styles.loginScreen]}>
       <Text style={styles.header}>Log in</Text>
-      <LabeledInput label="Email" type={false} setValue={(e) => setEmail(e)} value={email} validationError={authError === null ? '' : authError.email}  border={border}/>
-      <LabeledInput label="Password" type={true} setValue={(e) => setPassword(e)} value={password} validationError={authError === null ? '' : authError.password}  border={border}/>
+      <LabeledInput label="Email" type={false} setValue={(e) => setEmail(e)} value={email} validationError={validEmail}  border={border}/>
+      <LabeledInput label="Password" type={true} setValue={(e) => setPassword(e)} value={password} validationError={validPassword}  border={border}/>
       <SubmitButton label="Log in" email={email} password={password} signUp={false} resetInput={setInputToEmpty} username={''}/>
     </Animated.View>
   );

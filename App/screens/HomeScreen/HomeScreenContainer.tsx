@@ -1,8 +1,9 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import HomeScreenView from './HomeScreenView';
 
 const HomeScreenContainer = () => {
-    return <HomeScreenView />
+  return <HomeScreenView />;
 };
 
 export default HomeScreenContainer;

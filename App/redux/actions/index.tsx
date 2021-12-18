@@ -14,15 +14,7 @@ export {
 
 export {
   postProfile,
-  getFirstDetailsToState,
-  getSecondDetailsToState,
   getProfilePic,
-  getattributeOne,
-  getattributeTwo,
-  getattributeThree,
-  getattributeFour,
-  getattributeFive,
-  getattributeSix,
-  getattributeSeven,
-  getattributeEight,
+  getProfile,
+
 } from './profile';
