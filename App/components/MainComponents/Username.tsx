@@ -5,13 +5,14 @@ const icon = require('../../assets/images/verified.png');
 
 interface usernameProps {
     username: string,
-    active: boolean
+    active: boolean,
+    fontSize: number
 }
 
-const Username:FC<usernameProps> = ({username, active}):JSX.Element => {
+const Username:FC<usernameProps> = ({username, active, fontSize}):JSX.Element => {
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>{username}</Text>
+            <Text style={[styles.text, {fontSize: fontSize}]}>{username}</Text>
             {active && <Image source={icon} />}
         </View>
     )

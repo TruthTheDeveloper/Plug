@@ -18,7 +18,7 @@ const PersonalityBoxes:FC<PersonalityProps> = ({value}):JSX.Element => {
 
 const styles = StyleSheet.create({
     container: {
-        height: 28,
+        height: 26,
         width: 'auto',
         backgroundColor: red,
         display: 'flex',
