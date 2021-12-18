@@ -41,7 +41,7 @@ const EditScreen:FC<EditScreenProps> = ({image, cancle}):JSX.Element => {
 
     const [personality, setPersonality] = useState<any | null>([]);
 
-    const [img, setImage] = useState();
+    const [img, setImage] = useState(image);
 
     const addPersonality = (e: string) => {
         setPersonality((prev: any) => [...prev, e]);
@@ -187,8 +187,7 @@ const EditScreen:FC<EditScreenProps> = ({image, cancle}):JSX.Element => {
         launchImageLibrary({mediaType: 'photo'}, (response: { assets: { uri: any; }[]; }) => {
           if (response.assets) {
             const data = response.assets[0].uri;
-            
-            
+            setImage(data)
           }
         });
       };
@@ -199,8 +198,8 @@ const EditScreen:FC<EditScreenProps> = ({image, cancle}):JSX.Element => {
             <ScrollView>
             <Header label='Edit' home={false} />
             <View style={styles.ImageContainer}>
-                <TouchableWithoutFeedback>
-                    <ProfilePic image={image} />
+                <TouchableWithoutFeedback onPress={selectPhoto}>
+                    <ProfilePic image={img} />
                 </TouchableWithoutFeedback>
             </View>
             <View style={styles.FormContainer}>
