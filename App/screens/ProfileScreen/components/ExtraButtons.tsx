@@ -12,7 +12,7 @@ interface ExtraButtonsProps {
 const ExtraButtons:FC<ExtraButtonsProps> = ({submit, cancle}):JSX.Element => {
     return(
         <View style={styles.container}>
-            <View></View>
+            <View style={styles.div}></View>
         </View>
     )
 };
@@ -24,6 +24,11 @@ const styles = StyleSheet.create({
         backgroundColor: red,
         marginBottom: 200,
         marginTop: 40
+    },
+    div: {
+        height: 45,
+        width: (width-30)/2,
+        backgroundColor: 'blue'
     }
 })
 
