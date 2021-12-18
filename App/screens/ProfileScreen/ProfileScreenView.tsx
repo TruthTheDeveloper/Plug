@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import React, {useEffect} from 'react';
-import {View, Text, StyleSheet, Dimensions, ScrollView} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, Text, StyleSheet, Dimensions, ScrollView, TouchableWithoutFeedback} from 'react-native';
 import {Header, Username} from '../../components';
 import PersonalityBoxes from '../../components/MainComponents/PersonalityBoxes';
 import {red} from '../../config/colors';
@@ -22,6 +22,7 @@ const image = 'http://res.cloudinary.com/ahumareze/image/upload/v1638211548/a5wr
 const {width} = Dimensions.get('window');
 
 const ProfileScreenView = () => {
+    const [edit, setEdit] = useState(false)
     // const Id = useSelector((state:any) => state.profileReducer.profileId);
     const profileIdData = useSelector((state:any) => state.profileReducer.profileIdData);
     const dispatch = useDispatch();
@@ -74,15 +75,18 @@ const ProfileScreenView = () => {
             {profileIdData.description}
           </Text>
         </View>
-        <View style={styles.EditButton}>
-          <Text style={styles.EditButtonText}>Edit Profile</Text>
-        </View>
+        <TouchableWithoutFeedback onPress={() => setEdit(true)}>
+          <View style={styles.EditButton}>
+            <Text style={styles.EditButtonText}>Edit Profile</Text>
+          </View>
+        </TouchableWithoutFeedback>
         <View style={styles.ExtraButtonsContainer}>
           <Button iconLabel="bell-off" label="Avaliability" />
           <Button iconLabel="log-out" label="Logout" />
         </View>
       </ScrollView>
     </View> : <Text>No Data</Text>}
+    {edit && <EditScreen image={image} cancle={() => setEdit(false)} /> }
     </View>
   );
 };
