@@ -56,9 +56,9 @@ const HomeScreenView = () => {
   return (
     // eslint-disable-next-line react-native/no-inline-styles
     <View style={{backgroundColor: '#fff'}}>
-      <Header label="Gallery" />
+      <Header label="Gallery" home={false} />
     <View style={styles.container}>
-      <Carousel
+      {profileData ? <Carousel
         data={profileData}
         renderItem={Profile}
         sliderWidth={width}
@@ -66,7 +66,7 @@ const HomeScreenView = () => {
         layout={'default'}
         removeClippedSubviews={true}
         // layoutCardOffset={9}
-      />
+      /> : null}
     </View>
     </View>
   );

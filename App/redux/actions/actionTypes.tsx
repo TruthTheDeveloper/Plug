@@ -41,7 +41,9 @@ export const GET_USER_ID = 'GET_USER_ID';
 export const POST_SUCCESS = 'POST_SUCCESS';
 
 //set profile data
-
 export const GET_PROFILE_DATA = 'PROFILE_DATA';
+
+//get profile Id
+export const GET_PROFILE_ID_DATA = 'GET_PROFILE_ID_DATA';
 
 

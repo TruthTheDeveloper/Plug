@@ -16,5 +16,5 @@ export {
   postProfile,
   getProfilePic,
   getProfile,
-
+  retrieveProfileDetail,
 } from './profile';

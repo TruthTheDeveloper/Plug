@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import {View, Text, Dimensions} from 'react-native';
+import {View, Dimensions} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
@@ -16,7 +16,7 @@ import {
   HomeScreenContainer,
   NotificationScreenContainer,
   ChatSceenContainer,
-  ProfileScreenContainer
+  ProfileScreenContainer,
 } from '../../index';
 import {ChatView} from '../../components';
 
@@ -30,7 +30,7 @@ const Home = () => {
 };
 
 const Profile = () => {
-  return <ProfileScreenContainer />
+  return <ProfileScreenContainer />;
 };
 
 const Chat = () => {
