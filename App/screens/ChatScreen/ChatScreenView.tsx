@@ -30,7 +30,7 @@ const ChatScreenView  = () => {
 
     return(
         <View style={styles.container}>
-            <Header label='Chats' />
+            <Header label='Chats' home />
             <FlatList 
                 data={users}
                 keyExtractor={user => user.username}
