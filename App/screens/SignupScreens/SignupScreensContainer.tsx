@@ -18,7 +18,7 @@ const SignupScreensContainer = () => {
   //   }
   // };
   const success = useSelector((state:any)=> state.profileReducer.profileId);
-  console.log(success, 'your sucess id')
+  console.log(success, 'your sucess id');
 
   useEffect(() => {
     const getSuccess = async () => {

@@ -27,8 +27,9 @@ const ProfileScreenView = () => {
 
 
     useEffect(() => {
-       if(profileIdData){
-        console.log(profileIdData, 'from profile data')
+        console.log(profileIdData, 'first');
+       if (profileIdData){
+        console.log(profileIdData, 'from profile data');
        }
 
         dispatch(actions.retrieveProfileDetail(Id));
@@ -46,7 +47,7 @@ const ProfileScreenView = () => {
 
         // };
         // getToken();
-    },[Id, dispatch]);
+    },[Id, dispatch, profileIdData]);
 
   return (
     <View>

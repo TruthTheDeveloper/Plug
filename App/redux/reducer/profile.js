@@ -21,7 +21,7 @@ const initialState = {
     profileIdData:null,
 };
 
-const setProfileDataId = (state,action) => {
+const setProfileIdData = (state,action) => {
     return updateObject(state, {
         profileIdData:action.profileIdData,
     });
@@ -148,7 +148,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.GET_PROFILE_DATA:
         return setProfileData(state, action);
     case actionTypes.GET_PROFILE_ID_DATA:
-        return setProfileDataId(state,action);
+        return setProfileIdData(state,action);
     default:
         return state;
   }
