@@ -12,7 +12,7 @@ interface ExtraButtonsProps {
 const ExtraButtons:FC<ExtraButtonsProps> = ({submit, cancle}):JSX.Element => {
     return(
         <View style={styles.container}>
-            
+            <View></View>
         </View>
     )
 };
