@@ -16,6 +16,7 @@ import {
   HomeScreenContainer,
   NotificationScreenContainer,
   ChatSceenContainer,
+  ProfileScreenContainer
 } from '../../index';
 import {ChatView} from '../../components';
 
@@ -29,19 +30,7 @@ const Home = () => {
 };
 
 const Profile = () => {
-  return (
-    <View
-    // eslint-disable-next-line react-native/no-inline-styles
-    style={{
-        backgroundColor: '#fff',
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-      >
-      <Text>Profile</Text>
-    </View>
-  );
+  return <ProfileScreenContainer />
 };
 
 const Chat = () => {

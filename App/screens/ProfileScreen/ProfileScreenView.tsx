@@ -7,6 +7,7 @@ import { red } from '../../config/colors';
 //Components
 import ProfilePic from './components/ProfilePic';
 import Button from './components/Buttons';
+import EditScreen from './components/EditScreen';
 
 //Image
 const image = require('../../assets/images/girl.jpg');
@@ -45,6 +46,7 @@ const ProfileScreenView = () => {
                     <Button iconLabel='log-out' label='Logout' />
                 </View>
             </ScrollView>
+            <EditScreen image={image} />
         </View>
     )
 };
