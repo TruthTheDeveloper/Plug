@@ -30,6 +30,7 @@ export const postProfile = (data) => {
       formdata.append('attributeSeven', data.attributeSeven);
       formdata.append('attributeEight', data.attributeEight);
       formdata.append('availabilty', data.availabilty);
+      formdata.append('username', data.username);
       console.log(formdata);
       axios
         .post('https://findplug.herokuapp.com/profile',formdata,{headers:{
@@ -66,7 +67,7 @@ export const profileData = (data) => {
 export const getProfile = () => {
   console.log('it got here');
   return dispatch => {
-    axios.get('https://findplug.herokuapp.com/profile')
+    axios.get('https://findplug.herokuapp.com/profile?query=male')
     .then(response => {
       console.log(response.data, 'retriev data');
       dispatch(profileData(response.data));

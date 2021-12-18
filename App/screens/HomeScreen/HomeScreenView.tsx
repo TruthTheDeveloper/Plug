@@ -22,7 +22,7 @@ const {height, width} = Dimensions.get('window');
 
 const HomeScreenView = () => {
     const dispatch = useDispatch();
-    const profileData = useSelector((state:any) => state.profileReducer.profileData);
+    const profileData = useSelector((state:any) => state.profileReducer.profileData.profile);
 
     useEffect(() => {
         dispatch(actions.getProfile());
