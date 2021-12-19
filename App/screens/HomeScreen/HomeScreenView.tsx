@@ -41,7 +41,7 @@ const HomeScreenView = () => {
   return (
     <View style={{backgroundColor: '#fff'}}>
       <Header label="Gallery" home={false} />
-      <FlatList 
+      {/* <FlatList 
         numColumns={2}
         data={data}
         renderItem={({item}) => 
@@ -53,6 +53,11 @@ const HomeScreenView = () => {
             image={item.image}
           /> 
         }
+      /> */}
+      <FlatList 
+        horizontal
+        data={data}
+        renderItem={Profile}
       />
     </View>
   );
