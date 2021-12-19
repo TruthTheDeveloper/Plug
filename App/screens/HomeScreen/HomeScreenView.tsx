@@ -19,14 +19,12 @@ const girl6 = require('../../assets/images/girl5.jpg');
 
 const {height, width} = Dimensions.get('window');
 
-
 const HomeScreenView = () => {
     const dispatch = useDispatch();
     const profileData = useSelector((state:any) => state.profileReducer.profileData.profile);
 
     useEffect(() => {
         dispatch(actions.getProfile());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
   const [data] = useState([
@@ -57,17 +55,6 @@ const HomeScreenView = () => {
     // eslint-disable-next-line react-native/no-inline-styles
     <View style={{backgroundColor: '#fff'}}>
       <Header label="Gallery" home={false} />
-    <View style={styles.container}>
-      {profileData ? <Carousel
-        data={profileData}
-        renderItem={Profile}
-        sliderWidth={width}
-        itemWidth={width}
-        layout={'default'}
-        removeClippedSubviews={true}
-        // layoutCardOffset={9}
-      /> : null}
-    </View>
     </View>
   );
 };
