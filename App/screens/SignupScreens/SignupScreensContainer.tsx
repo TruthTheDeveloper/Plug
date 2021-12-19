@@ -8,7 +8,7 @@ import {View} from 'react-native';
 
 
 const SignupScreensContainer = () => {
-  const [postSucess, setPostSucess]:any = useState(false);
+  // const [postSucess, setPostSucess]:any = useState(false);
 
   const success = useSelector((state:any)=> state.profileReducer.profileId);
   console.log(success, 'your sucess id');
