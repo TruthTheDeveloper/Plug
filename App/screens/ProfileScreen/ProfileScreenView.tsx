@@ -13,10 +13,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 //Components
 import ProfilePic from './components/ProfilePic';
 import Button from './components/Buttons';
-import EditScreen from './components/EditScreen';
 
 //Image
-const image = 'http://res.cloudinary.com/ahumareze/image/upload/v1638211548/a5wrllvag4a12vrwkqmm.png'
 
 
 const {width} = Dimensions.get('window');
@@ -29,7 +27,7 @@ const ProfileScreenView = () => {
 
 
     useEffect(() => {
-
+      console.log('something');
         let userId : any = null;
 
         const getToken = async() => {
@@ -40,7 +38,6 @@ const ProfileScreenView = () => {
             } else {
                 console.log('no user id');
         }
-        console.log(userId);
 
         };
         getToken();
@@ -52,7 +49,7 @@ const ProfileScreenView = () => {
       <Header label="Profile" home={false} />
       <ScrollView>
         <View style={styles.ProfileHeader}>
-          <ProfilePic image={{uri:profileIdData.profilePic}} />
+          <ProfilePic image={profileIdData.profilePic} />
           <View style={{ height: 10 }} />
           <Username username={profileIdData.username} fontSize={22} active />
         </View>

@@ -9,31 +9,29 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const MainScreen = () => {
-  const [auth, setAuth]:any = useState(false);
+  const [auth, setAuth]:any = useState(null);
 
-  // const getToken = async () => {
-  //   let authenticate = null;
-  //   authenticate = await AsyncStorage.getItem('token');
-  //   if (authenticate !== null){
-  //     setAuth(true);
-  //   }
-  // };
-
-  useEffect(() => {
-    const getToken = async () => {
-      let authenticate = null;
-      authenticate = await AsyncStorage.getItem('token');
-      if (authenticate){
-        setAuth(true);
-      }
-    };
-    getToken();
-  },[auth]);
 
   const authToken = useSelector((state:any)=> state.authReducer.token);
+
+  let RenderScreen = null;
+
+  useEffect(() => {
+    AsyncStorage.getItem('token').then((result) => {
+      setAuth(result);
+    });
+  },[auth, authToken]);
+
+
+  if (auth){
+    RenderScreen = <SignUpScreensContainer/>;
+  } else {
+    RenderScreen = <AuthScreenContainer/>;
+  }
+
   return (
     <View>
-        { auth || authToken ? <SignUpScreensContainer/> : <AuthScreenContainer/>}
+        {RenderScreen}
     </View>
   );
 };
