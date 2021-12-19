@@ -7,10 +7,10 @@ import ChatSceenContainer from './screens/ChatScreen/index';
 import ProfileScreenContainer from './screens/ProfileScreen';
 
 export {
-        AuthScreenContainer, 
-        SignupScreensContainer, 
-        HomeScreenContainer, 
+        AuthScreenContainer,
+        SignupScreensContainer,
+        HomeScreenContainer,
         NotificationScreenContainer,
         ChatSceenContainer,
-        ProfileScreenContainer
+        ProfileScreenContainer,
     };

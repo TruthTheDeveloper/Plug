@@ -20,27 +20,10 @@ const MainScreen = () => {
     AsyncStorage.getItem('token').then((result) => {
       setAuth(result);
     });
-    // const getToken =  async () => {
-    //   try {
-    //     const value = await AsyncStorage.getItem('token');
-    //     if (value !== null){
-    //       console.log('switch auth to true');
-    //       setAuth(true);
-    //     } else {
-    //       console.log('not changing')
-    //       setAuth(false);
-    //     }
-    //   } catch (e) {
-    //     console.log(e, 'failed to get item token');
-    //   }
-    // };
-    // console.log(auth, authToken);
-    // getToken();
-    console.log(auth)
-  },[authToken]);
+  },[auth, authToken]);
 
 
-  if (auth !== null){
+  if (auth){
     RenderScreen = <SignUpScreensContainer/>;
   } else {
     RenderScreen = <AuthScreenContainer/>;

@@ -11,7 +11,6 @@ const SignupScreensContainer = () => {
   const [postSucess, setPostSucess]:any = useState(false);
 
   const success = useSelector((state:any)=> state.profileReducer.profileId);
-  // console.log(success, 'your sucess id');
 
   let RenderScreen = null;
 
@@ -19,21 +18,7 @@ const SignupScreensContainer = () => {
     AsyncStorage.getItem('profileId').then((result) => {
       setPostSucess(result);
     });
-    // const getSuccess = async () => {
-    //   try {
-    //     const value = await AsyncStorage.getItem('profileId');
-    //     if (value !== null){
-    //       setPostSucess(true);
-    //     } else {
-    //       setPostSucess(false);
-    //     }
-    //   } catch (e) {
-    //     console.log(e, 'failed to get item profileId');
-    //   }
-    // };
-    // getSuccess();
-    console.log(success)
-  },[success]);
+  },[postSucess, success]);
 
   if (postSucess){
     RenderScreen = <Navigator/>;

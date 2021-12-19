@@ -26,7 +26,7 @@ const ProfileScreenView = () => {
 
 
     useEffect(() => {
-      console.log('something')
+      console.log('something');
         let userId : any = null;
 
         const getToken = async() => {
@@ -40,7 +40,7 @@ const ProfileScreenView = () => {
 
         };
         getToken();
-    },[]);
+    },[dispatch]);
 
   return (
     <View>

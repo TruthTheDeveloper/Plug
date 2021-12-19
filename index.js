@@ -3,7 +3,7 @@
  * @format
  */
 import React from 'react';
-import {Provider} from 'react-redux';
+import axios from 'axios';
 import {createStore, applyMiddleware, compose, combineReducers} from 'redux';
 import thunk from 'redux-thunk';
 import {AppRegistry} from 'react-native';
@@ -14,16 +14,21 @@ import navReducer from './App/redux/reducer/navigation';
 import chatReducer from './App/redux/reducer/chats';
 import profileReducer from './App/redux/reducer/profile';
 import { persistStore, persistReducer } from 'redux-persist';
-// import storage from 'redux-persist/lib/storage';
-import { PersistGate } from 'redux-persist/integration/react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
+// Alternative solution
 // const getAsyncStorage = async () => {
 //   axios.defaults.headers.common.Authorization =  await AsyncStorage.getItem('token');
 // };
 
 // getAsyncStorage();
 
+
+
+axios.defaults.headers.common.Authorization = AsyncStorage.getItem('token').then((result) => {
+  return result;
+});
 
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
