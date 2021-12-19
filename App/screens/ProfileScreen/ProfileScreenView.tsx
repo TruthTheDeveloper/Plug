@@ -26,7 +26,7 @@ const ProfileScreenView = () => {
 
 
     useEffect(() => {
-
+      console.log('something')
         let userId : any = null;
 
         const getToken = async() => {

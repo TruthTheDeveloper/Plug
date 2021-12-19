@@ -14,10 +14,9 @@ import navReducer from './App/redux/reducer/navigation';
 import chatReducer from './App/redux/reducer/chats';
 import profileReducer from './App/redux/reducer/profile';
 import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+// import storage from 'redux-persist/lib/storage';
 import { PersistGate } from 'redux-persist/integration/react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // const getAsyncStorage = async () => {
 //   axios.defaults.headers.common.Authorization =  await AsyncStorage.getItem('token');
@@ -29,35 +28,33 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-export const rootReducer = combineReducers({
-  authReducer: authReducer,
-  navReducer: navReducer,
-  chatReducer: chatReducer,
-  profileReducer:profileReducer,
-});
-
 const persistConfig = {
   key: 'root',
   storage:AsyncStorage,
 };
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const store = createStore(
-  persistedReducer,
+export const rootReducer = combineReducers({
+  authReducer: persistReducer(persistConfig, authReducer),
+  navReducer: navReducer,
+  chatReducer: chatReducer,
+  profileReducer:profileReducer,
+});
+
+
+// const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+export const store = createStore(
+  rootReducer,
   composeEnhancers(applyMiddleware(thunk)),
 );
 
-const persistor = persistStore(store);
+export const persistor = persistStore(store);
 
 
 
 const appUseRedux = () => (
-  <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
       <App />
-    </PersistGate>
-  </Provider>
 );
 
 AppRegistry.registerComponent(appName, () => appUseRedux);

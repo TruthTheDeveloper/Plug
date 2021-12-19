@@ -47,14 +47,14 @@ const LoginView = () => {
       setValidPassword(authError.password);
     }
 
-    let auth = authToken === false;
-    if (!result && auth){
+    // let auth = authToken === false;
+    if (!result){
       setBorder('#Fe1135');
     }
 
     return () => {
       result = authError !== null;
-      auth = authError === true;
+      // auth = authError === true;
     };
   },[authError, authToken]);
 

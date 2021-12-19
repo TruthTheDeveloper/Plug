@@ -8,30 +8,42 @@ import {View} from 'react-native';
 
 
 const SignupScreensContainer = () => {
-  // const [postSucess, setPostSucess]:any = useState(false);
+  const [postSucess, setPostSucess]:any = useState(false);
 
   const success = useSelector((state:any)=> state.profileReducer.profileId);
-  console.log(success, 'your sucess id');
+  // console.log(success, 'your sucess id');
 
-  // useEffect(() => {
-  //   const getSuccess = async () => {
-  //     try {
-  //       const value = await AsyncStorage.getItem('profileId');
-  //       if (value !== null){
-  //         setPostSucess(true);
-  //       } else {
-  //         setPostSucess(false);
-  //       }
-  //     } catch (e) {
-  //       console.log(e, 'failed to get item profileId');
-  //     }
-  //   };
-  //   getSuccess();
-  // },[postSucess]);
+  let RenderScreen = null;
+
+  useEffect(() => {
+    AsyncStorage.getItem('profileId').then((result) => {
+      setPostSucess(result);
+    });
+    // const getSuccess = async () => {
+    //   try {
+    //     const value = await AsyncStorage.getItem('profileId');
+    //     if (value !== null){
+    //       setPostSucess(true);
+    //     } else {
+    //       setPostSucess(false);
+    //     }
+    //   } catch (e) {
+    //     console.log(e, 'failed to get item profileId');
+    //   }
+    // };
+    // getSuccess();
+    console.log(success)
+  },[success]);
+
+  if (postSucess){
+    RenderScreen = <Navigator/>;
+  } else {
+    RenderScreen = <SignupScreensView/>;
+  }
 
   return (
      <View>
-       {success ? <Navigator/> : <SignupScreensView/> }
+       { RenderScreen }
      </View>
      );
 };
