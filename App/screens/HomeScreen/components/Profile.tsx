@@ -23,8 +23,9 @@ interface ProfileProps {
 const Profile: FC<ProfileProps> = ({item}): JSX.Element => {
     console.log(item.department, 'profile item');
   return (
+    <View style={{width: width}}>
     <View style={styles.container}>
-      <ImageBackground style={styles.bgImage} source={{uri:`${item.profilePic}`}}>
+      <ImageBackground style={styles.bgImage} source={item.image}>
         <LinearGradient
           colors={[
             'rgba(0, 0, 0, 0)',
@@ -53,6 +54,7 @@ const Profile: FC<ProfileProps> = ({item}): JSX.Element => {
         </LinearGradient>
       </ImageBackground>
     </View>
+    </View>
   );
 };
 
@@ -61,6 +63,7 @@ const styles = StyleSheet.create({
     height: height - 140,
     marginTop: 10,
     marginLeft: 15,
+    width: width - 30,
     borderRadius: 15,
     overflow: 'hidden',
   },

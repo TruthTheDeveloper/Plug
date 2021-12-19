@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, Dimensions, FlatList} from 'react-native';
+import {View, StyleSheet, Dimensions, FlatList, BackHandler} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../redux/actions/index';
 
@@ -30,31 +30,40 @@ const HomeScreenView = () => {
     },[]);
 
   const [data] = useState([
-    {username: 'kendall_jenner', level: 400, department: 'English', image: girl1, verified: true },
-    {username: 'marysmith', level: 100, department: 'Law', image: girl2, verified: true},
-    {username: 'clarris', level: 100, department: 'Chemistry', image: girl3, verified: true},
-    {username: 'officialSasha', level: 200, department: 'Computer Science', image: girl4, verified: true},
-    {username: 'poppins', level: 100, department: 'Geography', image: girl5, verified: true},
-    {username: 'queenjanedoe', level: 300, department: 'Statistics', image: girl6, verified: true},
+    {username: 'kendall_jenner', level: 400, department: 'English', image: girl1, availability: true },
+    {username: 'marysmith', level: 100, department: 'Law', image: girl2, availability: true},
+    {username: 'clarris', level: 100, department: 'Chemistry', image: girl3, availability: true},
+    {username: 'officialSasha', level: 200, department: 'Computer Science', image: girl4, availability: true},
+    {username: 'poppins', level: 100, department: 'Geography', image: girl5, availability: true},
+    {username: 'queenjanedoe', level: 300, department: 'Statistics', image: girl6, availability: true},
   ]);
 
-  const [showGrid, setShowGrid] = useState(false)
+  const [showGrid, setShowGrid] = useState<any>();
+
+  const goBack = () => {
+    setShowGrid(null)
+    return true
+  }
+
+  BackHandler.addEventListener('hardwareBackPress', goBack )
 
   return (
     <View style={{backgroundColor: '#fff'}}>
       <Header label="Gallery" home={false} />
-      {showGrid ? 
+      {!showGrid ? 
         <FlatList 
           key={'_'}
           numColumns={2}
           data={data}
-          renderItem={({item}) => 
+          renderItem={({item, index}) => 
             <ProfileItem 
               username={item.username} 
-              verified={item.verified}
+              verified={item.availability}
               level={item.level}
               department={item.department}
               image={item.image}
+              index={index}
+              setIndex={(e) => setShowGrid(e)}
             /> 
           }
         />
@@ -66,6 +75,8 @@ const HomeScreenView = () => {
           snapToAlignment="center"
           disableIntervalMomentum={true}
           snapToInterval={width}
+          showsHorizontalScrollIndicator={false}
+          initialScrollIndex={showGrid}
           data={data}
           renderItem={Profile}
         />

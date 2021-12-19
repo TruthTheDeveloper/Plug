@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import { View, Text, StyleSheet, ImageBackground, Image } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Image, TouchableWithoutFeedback } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 // const image = require('../../../assets/images/girl.jpg');
@@ -10,24 +10,28 @@ interface profileProps {
     level: number,
     department: string,
     image: any,
-    verified: boolean
+    verified: boolean,
+    index: number,
+    setIndex: (e: number) => void
 }
 
-const ProfileItem:FC<profileProps> = ({username, level, department, image, verified}):JSX.Element => {
+const ProfileItem:FC<profileProps> = ({username, level, department, image, verified, index, setIndex}):JSX.Element => {
     return(
-        <View style={styles.container}>
-            <View style={styles.main}>
-                <ImageBackground source={image} style={styles.backgroundImage}>
-                    <LinearGradient colors={['rgba(0, 0, 0, 0)','rgba(0, 0, 0, 0.4)', 'rgba(0, 0, 0, 0.5)', 'rgba(0, 0, 0, 0.7)']} style={styles.details}>
-                        <View style={styles.usernameContainer}>
-                            <Text style={styles.username}>{username}</Text>
-                            {verified && <Image source={verifiedIcon} /> }
-                        </View>
-                        <Text style={styles.department}>{level}l, {department}</Text>
-                    </LinearGradient>
-                </ImageBackground>
+        <TouchableWithoutFeedback onPress={() => setIndex(index)}>
+            <View style={styles.container}>
+                <View style={styles.main}>
+                    <ImageBackground source={image} style={styles.backgroundImage}>
+                        <LinearGradient colors={['rgba(0, 0, 0, 0)','rgba(0, 0, 0, 0.4)', 'rgba(0, 0, 0, 0.5)', 'rgba(0, 0, 0, 0.7)']} style={styles.details}>
+                            <View style={styles.usernameContainer}>
+                                <Text style={styles.username}>{username}</Text>
+                                {verified && <Image source={verifiedIcon} /> }
+                            </View>
+                            <Text style={styles.department}>{level}l, {department}</Text>
+                        </LinearGradient>
+                    </ImageBackground>
+                </View>
             </View>
-        </View>
+        </TouchableWithoutFeedback>
     )
 }
 
