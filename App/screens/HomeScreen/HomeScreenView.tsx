@@ -56,6 +56,7 @@ const HomeScreenView = () => {
       /> */}
       <FlatList 
         horizontal
+        snapToInterval={width}
         data={data}
         renderItem={Profile}
       />
