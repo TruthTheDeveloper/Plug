@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, Dimensions} from 'react-native';
+import {View, StyleSheet, Dimensions, ScrollView, FlatList} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import Profile from './components/Profile';
 import { useDispatch, useSelector } from 'react-redux';
@@ -52,9 +52,12 @@ const HomeScreenView = () => {
   ]);
 
   return (
-    // eslint-disable-next-line react-native/no-inline-styles
     <View style={{backgroundColor: '#fff'}}>
       <Header label="Gallery" home={false} />
+      <FlatList
+        horizontal
+        
+      />
     </View>
   );
 };
