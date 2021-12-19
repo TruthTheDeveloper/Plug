@@ -9,10 +9,11 @@ interface profileProps {
     username: string,
     level: number,
     department: string,
-    image: any
+    image: any,
+    verified: boolean
 }
 
-const ProfileItem:FC<profileProps> = ({username, level, department, image}):JSX.Element => {
+const ProfileItem:FC<profileProps> = ({username, level, department, image, verified}):JSX.Element => {
     return(
         <View style={styles.container}>
             <View style={styles.main}>
@@ -20,7 +21,7 @@ const ProfileItem:FC<profileProps> = ({username, level, department, image}):JSX.
                     <LinearGradient colors={['rgba(0, 0, 0, 0)','rgba(0, 0, 0, 0.4)', 'rgba(0, 0, 0, 0.5)', 'rgba(0, 0, 0, 0.7)']} style={styles.details}>
                         <View style={styles.usernameContainer}>
                             <Text style={styles.username}>{username}</Text>
-                            <Image source={verifiedIcon} />
+                            {verified && <Image source={verifiedIcon} /> }
                         </View>
                         <Text style={styles.department}>{level}l, {department}</Text>
                     </LinearGradient>
@@ -38,7 +39,7 @@ const styles = StyleSheet.create({
     main: {
         height: 250,
         width: '94%',
-        backgroundColor: 'red',
+        backgroundColor: '#f0f0f0',
         marginTop: 5,
         marginLeft: '3%',
         borderRadius: 11,

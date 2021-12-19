@@ -1,13 +1,15 @@
 /* eslint-disable prettier/prettier */
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, Dimensions, ScrollView, FlatList} from 'react-native';
-import Carousel from 'react-native-snap-carousel';
-import Profile from './components/Profile';
+import {View, StyleSheet, Dimensions, FlatList} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../redux/actions/index';
 
 //Components
 import {Header} from '../../components/index';
+
+import ProfileItem from './components/ProfileItem';
+import Profile from './components/Profile';
+
 //Imported Images
 const girl1 = require('../../assets/images/girl.jpg');
 const girl2 = require('../../assets/images/girl1.jpg');
@@ -28,33 +30,30 @@ const HomeScreenView = () => {
     },[]);
 
   const [data] = useState([
-    {
-      username: 'kendall_jenner',
-      level: 400,
-      department: 'English',
-      image: girl1,
-    },
-    {username: 'marysmith', level: 100, department: 'Law', image: girl2},
-    {username: 'clarris', level: 100, department: 'Chemistry', image: girl3},
-    {
-      username: 'officialSasha',
-      level: 200,
-      department: 'Computer Science',
-      image: girl4,
-    },
-    {username: 'poppins', level: 100, department: 'Geography', image: girl5},
-    {
-      username: 'queenjanedoe',
-      level: 300,
-      department: 'Statistics',
-      image: girl6,
-    },
+    {username: 'kendall_jenner', level: 400, department: 'English', image: girl1, verified: true },
+    {username: 'marysmith', level: 100, department: 'Law', image: girl2, verified: true},
+    {username: 'clarris', level: 100, department: 'Chemistry', image: girl3, verified: true},
+    {username: 'officialSasha', level: 200, department: 'Computer Science', image: girl4, verified: true},
+    {username: 'poppins', level: 100, department: 'Geography', image: girl5, verified: true},
+    {username: 'queenjanedoe', level: 300, department: 'Statistics', image: girl6, verified: true},
   ]);
 
   return (
     <View style={{backgroundColor: '#fff'}}>
       <Header label="Gallery" home={false} />
-      
+      <FlatList 
+        horizontal
+        data={data}
+        renderItem={({item}) => 
+          <ProfileItem 
+            username={item.username} 
+            verified={item.verified}
+            level={item.level}
+            department={item.department}
+            image={item.image}
+          /> 
+        }
+      />
     </View>
   );
 };
