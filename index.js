@@ -16,6 +16,7 @@ import profileReducer from './App/redux/reducer/profile';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { PersistGate } from 'redux-persist/integration/react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // const getAsyncStorage = async () => {
@@ -37,7 +38,7 @@ export const rootReducer = combineReducers({
 
 const persistConfig = {
   key: 'root',
-  storage,
+  storage:AsyncStorage,
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
