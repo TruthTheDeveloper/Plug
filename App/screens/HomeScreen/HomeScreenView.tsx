@@ -42,7 +42,7 @@ const HomeScreenView = () => {
     <View style={{backgroundColor: '#fff'}}>
       <Header label="Gallery" home={false} />
       <FlatList 
-        horizontal
+        numColumns={2}
         data={data}
         renderItem={({item}) => 
           <ProfileItem 
