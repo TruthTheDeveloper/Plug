@@ -38,28 +38,38 @@ const HomeScreenView = () => {
     {username: 'queenjanedoe', level: 300, department: 'Statistics', image: girl6, verified: true},
   ]);
 
+  const [showGrid, setShowGrid] = useState(false)
+
   return (
     <View style={{backgroundColor: '#fff'}}>
       <Header label="Gallery" home={false} />
-      {/* <FlatList 
-        numColumns={2}
-        data={data}
-        renderItem={({item}) => 
-          <ProfileItem 
-            username={item.username} 
-            verified={item.verified}
-            level={item.level}
-            department={item.department}
-            image={item.image}
-          /> 
-        }
-      /> */}
-      <FlatList 
-        horizontal
-        snapToInterval={width}
-        data={data}
-        renderItem={Profile}
-      />
+      {showGrid ? 
+        <FlatList 
+          key={'_'}
+          numColumns={2}
+          data={data}
+          renderItem={({item}) => 
+            <ProfileItem 
+              username={item.username} 
+              verified={item.verified}
+              level={item.level}
+              department={item.department}
+              image={item.image}
+            /> 
+          }
+        />
+      :
+        <FlatList 
+          key={'#'}
+          horizontal
+          decelerationRate={'fast'}
+          snapToAlignment="center"
+          disableIntervalMomentum={true}
+          snapToInterval={width}
+          data={data}
+          renderItem={Profile}
+        />
+      }
     </View>
   );
 };
