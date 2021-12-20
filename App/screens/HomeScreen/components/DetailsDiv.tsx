@@ -3,7 +3,11 @@ import { View, Text, StyleSheet, Dimensions, Animated } from 'react-native';
 
 const {height, width} = Dimensions.get('window');
 
-const DetailsDiv = () => {
+interface DetailsProps {
+    details: any
+}
+
+const DetailsDiv:FC<DetailsProps> = ({details}):JSX.Element => {
     const value = useState(new Animated.ValueXY({x:0, y: height}))[0];
 
     useEffect(() => {
@@ -16,7 +20,9 @@ const DetailsDiv = () => {
 
     return(
         <Animated.View style={value.getLayout()}>
-            <View style={styles.main}></View>
+            <View style={styles.main}>
+                <Text>{details}</Text>
+            </View>
         </Animated.View>
     )
 };

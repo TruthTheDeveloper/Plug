@@ -31,12 +31,12 @@ const HomeScreenView = () => {
     },[]);
 
   const [data] = useState([
-    {username: 'kendall_jenner', level: 400, department: 'English', image: girl1, availability: true },
-    {username: 'marysmith', level: 100, department: 'Law', image: girl2, availability: true},
-    {username: 'clarris', level: 100, department: 'Chemistry', image: girl3, availability: true},
-    {username: 'officialSasha', level: 200, department: 'Computer Science', image: girl4, availability: true},
-    {username: 'poppins', level: 100, department: 'Geography', image: girl5, availability: true},
-    {username: 'queenjanedoe', level: 300, department: 'Statistics', image: girl6, availability: true},
+    {username: 'kendall_jenner', level: 400, department: 'English', image: girl1, availability: true, details: 'Looking for a sharp looking roomate, one who is NOT A JEW PERSON' },
+    {username: 'marysmith', level: 100, department: 'Law', image: girl2, availability: true, details: 'Looking for a roomate who can clean and cook, and also one who is NOT A JEW PERSON'},
+    {username: 'clarris', level: 100, department: 'Chemistry', image: girl3, availability: true, details: 'Looking for a sharp looking roomate, one who is NOT A JEW PERSON'},
+    {username: 'officialSasha', level: 200, department: 'Computer Science', image: girl4, availability: true, details: 'Looking for a roomate who can clean and cook, and also one who is NOT A JEW PERSON'},
+    {username: 'poppins', level: 100, department: 'Geography', image: girl5, availability: true, details: 'Looking for a sharp looking roomate, one who is NOT A JEW PERSON'},
+    {username: 'queenjanedoe', level: 300, department: 'Statistics', image: girl6, availability: true, details: 'Looking for a roomate who can clean and cook, and also one who is NOT A JEW PERSON'},
   ]);
 
   const [showGrid, setShowGrid] = useState<any>(0);
@@ -85,7 +85,7 @@ const HomeScreenView = () => {
           renderItem={Profile}
         />
       }
-      {showDetails && <DetailsDiv /> }
+      {showDetails && <DetailsDiv details={showDetails} /> }
     </View>
   );
 };

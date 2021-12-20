@@ -7,13 +7,17 @@ import {
   Dimensions,
   ImageBackground,
   Image,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import PersonslityBoxes from '../../../components/MainComponents/PersonalityBoxes';
 
+import * as actionTypes from '../../../redux/actions/actionTypes';
+
 import Icons from 'react-native-vector-icons/Feather';
 import Icons2 from 'react-native-vector-icons/Ionicons';
 import { red } from '../../../config/colors';
+import { useDispatch } from 'react-redux';
 
 const verifiedIcon = require('../../../assets/images/verified.png');
 const {height, width} = Dimensions.get('window');
@@ -24,7 +28,12 @@ interface ProfileProps {
 }
 
 const Profile: FC<ProfileProps> = ({item}): JSX.Element => {
-    console.log(item.department, 'profile item');
+  const dispatch = useDispatch();
+
+  const showDetails = () => {
+    dispatch({type: actionTypes.OPEN_CHAT, value: item.details})
+  }
+
   return (
     <View style={{width: width}}>
     <View style={styles.container}>
@@ -37,9 +46,11 @@ const Profile: FC<ProfileProps> = ({item}): JSX.Element => {
               <View style={styles.chatCircle}>
                 <Icons2 name="chatbubble-outline" size={30} color={'#fff'} />
               </View>
-              <View style={[styles.chatCircle, styles.bubble2]}>
-                <Icons name="info" size={15} color={red} />
-              </View>
+              <TouchableWithoutFeedback onPress={showDetails}>
+                <View style={[styles.chatCircle, styles.bubble2]}>
+                  <Icons name="info" size={15} color={red} />
+                </View>
+              </TouchableWithoutFeedback>
             </View>
           </View>
           <LinearGradient
