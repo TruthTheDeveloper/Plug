@@ -38,7 +38,7 @@ const Profile: FC<ProfileProps> = ({item}): JSX.Element => {
               'rgba(0, 0, 0, 0.5)',
               'rgba(0, 0, 0, 0.7)',
             ]}
-            style={styles.details}>
+            style={styles.details2}>
             <View style={styles.usernameContainer}>
               <Text style={styles.username}>{item.username}</Text>
               <Image source={item.availability ? verifiedIcon : null} />
@@ -82,11 +82,13 @@ const styles = StyleSheet.create({
   details: {
     width: '100%',
     minHeight: 100,
-    backgroundColor: 'transparent',
     position: 'absolute',
     bottom: 0,
     paddingBottom: 8,
-    paddingTop: 10,
+  },
+  details2: {
+    backgroundColor: 'transparent',
+    paddingTop: 10
   },
   usernameContainer: {
     display: 'flex',
