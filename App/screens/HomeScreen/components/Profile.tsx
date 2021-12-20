@@ -38,7 +38,7 @@ const Profile: FC<ProfileProps> = ({item}): JSX.Element => {
                 <Icons2 name="chatbubble-outline" size={30} color={'#fff'} />
               </View>
               <View style={[styles.chatCircle, styles.bubble2]}>
-                <Icons name="info" size={25} color={red} />
+                <Icons name="info" size={15} color={red} />
               </View>
             </View>
           </View>
@@ -159,8 +159,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   bubble2: {
-    height: 45,
-    width: 45,
+    height: 35,
+    width: 35,
     marginTop: 25,
     backgroundColor: '#fff'
   }

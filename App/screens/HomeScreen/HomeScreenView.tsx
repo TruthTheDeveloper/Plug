@@ -9,6 +9,7 @@ import {Header} from '../../components/index';
 
 import ProfileItem from './components/ProfileItem';
 import Profile from './components/Profile';
+import DetailsDiv from './components/DetailsDiv';
 
 //Imported Images
 const girl1 = require('../../assets/images/girl.jpg');
@@ -38,7 +39,8 @@ const HomeScreenView = () => {
     {username: 'queenjanedoe', level: 300, department: 'Statistics', image: girl6, availability: true},
   ]);
 
-  const [showGrid, setShowGrid] = useState<any>();
+  const [showGrid, setShowGrid] = useState<any>(0);
+  const [showDetails, setShowDetails] = useState();
 
   const goBack = () => {
     setShowGrid(null)
@@ -82,6 +84,7 @@ const HomeScreenView = () => {
           renderItem={Profile}
         />
       }
+      {showDetails && <DetailsDiv /> }
     </View>
   );
 };
