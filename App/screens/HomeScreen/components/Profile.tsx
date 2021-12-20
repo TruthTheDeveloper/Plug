@@ -11,6 +11,9 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import PersonslityBoxes from '../../../components/MainComponents/PersonalityBoxes';
 
+import Icons from 'react-native-vector-icons/Feather';
+import Icons2 from 'react-native-vector-icons/Ionicons';
+import { red } from '../../../config/colors';
 
 const verifiedIcon = require('../../../assets/images/verified.png');
 const {height, width} = Dimensions.get('window');
@@ -31,7 +34,12 @@ const Profile: FC<ProfileProps> = ({item}): JSX.Element => {
           <View style={styles.middleContainer}>
             <View style={styles.grid1} />
             <View style={styles.grid2}>
-              <View style={styles.chatCircle} />
+              <View style={styles.chatCircle}>
+                <Icons2 name="chatbubble-outline" size={30} color={red} />
+              </View>
+              <View style={[styles.chatCircle, styles.bubble2]}>
+                <Icons name="info" size={25} color={red} />
+              </View>
             </View>
           </View>
           <LinearGradient
@@ -121,10 +129,10 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
   },
   middleContainer: {
-    height: 200,
     width: '100%',
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    paddingBottom: 20
   },
   grid1: {
     height: '100%',
@@ -144,6 +152,11 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  bubble2: {
+    height: 45,
+    width: 45,
+    marginTop: 25
   }
 });
 
