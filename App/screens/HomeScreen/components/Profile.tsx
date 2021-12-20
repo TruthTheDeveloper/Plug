@@ -35,7 +35,7 @@ const Profile: FC<ProfileProps> = ({item}): JSX.Element => {
             <View style={styles.grid1} />
             <View style={styles.grid2}>
               <View style={styles.chatCircle}>
-                <Icons2 name="chatbubble" size={30} color={red} />
+                <Icons2 name="chatbubble-outline" size={30} color={red} />
               </View>
               <View style={[styles.chatCircle, styles.bubble2]}>
                 <Icons name="info" size={25} color={red} />
