@@ -66,7 +66,7 @@ const HomeScreenView = () => {
               setIndex={(e) => setShowGrid(e)}
             /> 
           }
-          style={{marginBottom: 50}}
+          style={{marginBottom: 37}}
         />
       :
         <FlatList 
