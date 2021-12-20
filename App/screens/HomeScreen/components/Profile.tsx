@@ -58,14 +58,19 @@ const Profile: FC<ProfileProps> = ({item}): JSX.Element => {
               {item.level}l, {item.department}
             </Text>
             <View style={styles.personalityContainer}>
-                {item.attributeOne && item.attributeOne !== '' ? <PersonslityBoxes value={item.attributeOne} /> : null}
+                {/* {item.attributeOne && item.attributeOne !== '' ? <PersonslityBoxes value={item.attributeOne} /> : null}
                 {item.attributeTwo && item.attributeTwo !== '' ? <PersonslityBoxes value={item.attributeTwo} /> : null}
                 {item.attributeThree && item.attributeThree !== '' ? <PersonslityBoxes value={item.attributeThree} /> : null}
                 {item.attributeFour && item.attributeFour !== '' ? <PersonslityBoxes value={item.attributeFour} /> : null}
                 {item.attributeFive && item.attributeFive !== '' ? <PersonslityBoxes value={item.attributeFive} /> : null}
                 {item.attributeSix && item.attributeSix !== '' ? <PersonslityBoxes value={item.attributeSix} /> : null}
                 {item.attributeSeven && item.attributeSeven !== '' ? <PersonslityBoxes value={item.attributeSeven} /> : null}
-                {item.attributeEight && item.attributeEight !== '' ? <PersonslityBoxes value={item.attributeEight} /> : null}
+                {item.attributeEight && item.attributeEight !== '' ? <PersonslityBoxes value={item.attributeEight} /> : null} */}
+                <PersonslityBoxes value='Music'/> 
+                <PersonslityBoxes value='Politics'/>
+                <PersonslityBoxes value='Potatoe'/>
+                <PersonslityBoxes value='Football'/>
+                <PersonslityBoxes value='Movies'/>
             </View>
           </LinearGradient>
         </View>
