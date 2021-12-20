@@ -29,9 +29,9 @@ interface ProfileProps {
 
 const Profile: FC<ProfileProps> = ({item}): JSX.Element => {
   const dispatch = useDispatch();
-
+  
   const showDetails = () => {
-    dispatch({type: actionTypes.OPEN_CHAT, value: item.details})
+    dispatch({type: actionTypes.SHOW_DETAILS, value: item.details})
   }
 
   return (
