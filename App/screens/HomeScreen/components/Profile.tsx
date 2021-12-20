@@ -29,7 +29,8 @@ const Profile: FC<ProfileProps> = ({item}): JSX.Element => {
       <ImageBackground style={styles.bgImage} source={item.image}>
         <View style={styles.details}>
           <View style={styles.middleContainer}>
-
+            <View style={styles.grid1} />
+            <View style={styles.grid2} />
           </View>
           <LinearGradient
             colors={[
@@ -83,12 +84,12 @@ const styles = StyleSheet.create({
     width: '100%',
     minHeight: 100,
     position: 'absolute',
-    bottom: 0,
-    paddingBottom: 8,
+    bottom: 0
   },
   details2: {
     backgroundColor: 'transparent',
-    paddingTop: 10
+    paddingTop: 10,
+    paddingBottom: 8
   },
   usernameContainer: {
     display: 'flex',
@@ -120,7 +121,17 @@ const styles = StyleSheet.create({
   middleContainer: {
     height: 200,
     width: '100%',
-    backgroundColor: 'blue',
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  grid1: {
+    height: '100%',
+    width: width - 110
+  },
+  grid2: {
+    height: '100%',
+    width: 89,
+    backgroundColor: 'red'
   }
 });
 
