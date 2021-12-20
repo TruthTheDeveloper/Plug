@@ -12,7 +12,9 @@ const reducer = (state = initialState, action) => {
         case actionTypes.OPEN_CHAT:
             return {...state, user: action.value};
         case actionTypes.SET_DEFAULT_ROUTE: 
-            return {...state, DefaultRoute: action.value}
+            return {...state, DefaultRoute: action.value};
+        case actionTypes.SHOW_DETAILS:
+            return {...state, details: action.value};
         default: return state
     }
 };
