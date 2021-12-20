@@ -2,7 +2,9 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
   user: null,
-  DefaultRoute: 'HOME'
+  DefaultRoute: 'HOME',
+  index: null,
+  details: null
 };
 
 const reducer = (state = initialState, action) => {
