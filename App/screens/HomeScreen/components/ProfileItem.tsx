@@ -13,7 +13,7 @@ interface profileProps {
     verified: boolean,
     index: number,
     setIndex: (e: number) => void
-}
+};
 
 const ProfileItem:FC<profileProps> = ({username, level, department, image, verified, index, setIndex}):JSX.Element => {
     return(
@@ -33,7 +33,7 @@ const ProfileItem:FC<profileProps> = ({username, level, department, image, verif
             </View>
         </TouchableWithoutFeedback>
     )
-}
+};
 
 const styles = StyleSheet.create({
     container: {
