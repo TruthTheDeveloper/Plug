@@ -27,6 +27,9 @@ const Profile: FC<ProfileProps> = ({item}): JSX.Element => {
     <View style={styles.container}>
       {/* <ImageBackground style={styles.bgImage} source={{uri:`${item.profilePic}`}}> */}
       <ImageBackground style={styles.bgImage} source={item.image}>
+        <View style={styles.middleContainer}>
+
+        </View>
         <LinearGradient
           colors={[
             'rgba(0, 0, 0, 0)',
@@ -109,6 +112,12 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     paddingLeft: 15,
   },
+  middleContainer: {
+    height: 150,
+    width: '100%',
+    backgroundColor: 'blue',
+    position: 'absolute'
+  }
 });
 
 export default Profile;
