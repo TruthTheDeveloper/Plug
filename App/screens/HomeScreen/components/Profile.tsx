@@ -26,7 +26,7 @@ const Profile: FC<ProfileProps> = ({item}): JSX.Element => {
     <View style={{width: width}}>
     <View style={styles.container}>
       {/* <ImageBackground style={styles.bgImage} source={{uri:`${item.profilePic}`}}> */}
-      <ImageBackground style={styles.bgImage} source={item.img}>
+      <ImageBackground style={styles.bgImage} source={item.image}>
         <LinearGradient
           colors={[
             'rgba(0, 0, 0, 0)',
