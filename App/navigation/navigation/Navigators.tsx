@@ -83,7 +83,7 @@ const Container = () => {
             }}
           />
 
-          <Tab.Screen
+          {/* <Tab.Screen
             name={NOTIFICATIONS}
             component={Notifications}
             options={{
@@ -95,7 +95,7 @@ const Container = () => {
                 />
               ),
             }}
-          />
+          /> */}
 
           <Tab.Screen
             name={PROFILE}
