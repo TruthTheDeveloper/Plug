@@ -30,7 +30,9 @@ const Profile: FC<ProfileProps> = ({item}): JSX.Element => {
         <View style={styles.details}>
           <View style={styles.middleContainer}>
             <View style={styles.grid1} />
-            <View style={styles.grid2} />
+            <View style={styles.grid2}>
+              <View style={styles.chatCircle} />
+            </View>
           </View>
           <LinearGradient
             colors={[
@@ -126,12 +128,22 @@ const styles = StyleSheet.create({
   },
   grid1: {
     height: '100%',
-    width: width - 110
+    width: width - 114
   },
   grid2: {
     height: '100%',
-    width: 89,
-    backgroundColor: 'red'
+    width: 90,
+  },
+  chatCircle: {
+    height: 60,
+    width: 60,
+    backgroundColor: '#fff',
+    borderRadius: 30,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 });
 
