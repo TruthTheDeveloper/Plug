@@ -1,5 +1,5 @@
 import React, { useState, FC } from 'react';
-import { View, Text, StyleSheet, Dimensions, FlatList } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, FlatList, BackHandler } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 import * as actionTypes from '../../redux/actions/actionTypes';
@@ -23,8 +23,11 @@ const ChatView:FC<ChatViewProps> = ({user}):JSX.Element => {
     ]);
 
     const goBack = () => {
-        dispatch({type: actionTypes.OPEN_CHAT, value: null })
+        dispatch({type: actionTypes.OPEN_CHAT, value: null });
+        return true
     }
+
+    BackHandler.addEventListener('hardwareBackPress', goBack )
 
     return(
         <View style={styles.container}>

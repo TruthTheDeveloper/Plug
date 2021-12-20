@@ -40,14 +40,15 @@ const HomeScreenView = () => {
   ]);
 
   const [showGrid, setShowGrid] = useState<any>(0);
-  const [showDetails, setShowDetails] = useState();
 
   const goBack = () => {
     setShowGrid(null)
     return true
   }
 
-  BackHandler.addEventListener('hardwareBackPress', goBack )
+  BackHandler.addEventListener('hardwareBackPress', goBack );
+
+  const showDetails = useSelector((state: any) => state.chatReducer.details);
 
   return (
     <View style={{backgroundColor: '#fff'}}>
