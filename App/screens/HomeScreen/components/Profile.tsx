@@ -27,35 +27,37 @@ const Profile: FC<ProfileProps> = ({item}): JSX.Element => {
     <View style={styles.container}>
       {/* <ImageBackground style={styles.bgImage} source={{uri:`${item.profilePic}`}}> */}
       <ImageBackground style={styles.bgImage} source={item.image}>
-        <View style={styles.middleContainer}>
+        <View style={styles.details}>
+          <View style={styles.middleContainer}>
 
+          </View>
+          <LinearGradient
+            colors={[
+              'rgba(0, 0, 0, 0)',
+              'rgba(0, 0, 0, 0.4)',
+              'rgba(0, 0, 0, 0.5)',
+              'rgba(0, 0, 0, 0.7)',
+            ]}
+            style={styles.details}>
+            <View style={styles.usernameContainer}>
+              <Text style={styles.username}>{item.username}</Text>
+              <Image source={item.availability ? verifiedIcon : null} />
+            </View>
+            <Text style={styles.department}>
+              {item.level}l, {item.department}
+            </Text>
+            <View style={styles.personalityContainer}>
+                {item.attributeOne && item.attributeOne !== '' ? <PersonslityBoxes value={item.attributeOne} /> : null}
+                {item.attributeTwo && item.attributeTwo !== '' ? <PersonslityBoxes value={item.attributeTwo} /> : null}
+                {item.attributeThree && item.attributeThree !== '' ? <PersonslityBoxes value={item.attributeThree} /> : null}
+                {item.attributeFour && item.attributeFour !== '' ? <PersonslityBoxes value={item.attributeFour} /> : null}
+                {item.attributeFive && item.attributeFive !== '' ? <PersonslityBoxes value={item.attributeFive} /> : null}
+                {item.attributeSix && item.attributeSix !== '' ? <PersonslityBoxes value={item.attributeSix} /> : null}
+                {item.attributeSeven && item.attributeSeven !== '' ? <PersonslityBoxes value={item.attributeSeven} /> : null}
+                {item.attributeEight && item.attributeEight !== '' ? <PersonslityBoxes value={item.attributeEight} /> : null}
+            </View>
+          </LinearGradient>
         </View>
-        <LinearGradient
-          colors={[
-            'rgba(0, 0, 0, 0)',
-            'rgba(0, 0, 0, 0.4)',
-            'rgba(0, 0, 0, 0.5)',
-            'rgba(0, 0, 0, 0.7)',
-          ]}
-          style={styles.details}>
-          <View style={styles.usernameContainer}>
-            <Text style={styles.username}>{item.username}</Text>
-            <Image source={item.availability ? verifiedIcon : null} />
-          </View>
-          <Text style={styles.department}>
-            {item.level}l, {item.department}
-          </Text>
-          <View style={styles.personalityContainer}>
-              {item.attributeOne && item.attributeOne !== '' ? <PersonslityBoxes value={item.attributeOne} /> : null}
-              {item.attributeTwo && item.attributeTwo !== '' ? <PersonslityBoxes value={item.attributeTwo} /> : null}
-              {item.attributeThree && item.attributeThree !== '' ? <PersonslityBoxes value={item.attributeThree} /> : null}
-              {item.attributeFour && item.attributeFour !== '' ? <PersonslityBoxes value={item.attributeFour} /> : null}
-              {item.attributeFive && item.attributeFive !== '' ? <PersonslityBoxes value={item.attributeFive} /> : null}
-              {item.attributeSix && item.attributeSix !== '' ? <PersonslityBoxes value={item.attributeSix} /> : null}
-              {item.attributeSeven && item.attributeSeven !== '' ? <PersonslityBoxes value={item.attributeSeven} /> : null}
-              {item.attributeEight && item.attributeEight !== '' ? <PersonslityBoxes value={item.attributeEight} /> : null}
-          </View>
-        </LinearGradient>
       </ImageBackground>
     </View>
     </View>
@@ -79,6 +81,7 @@ const styles = StyleSheet.create({
   },
   details: {
     width: '100%',
+    minHeight: 100,
     backgroundColor: 'transparent',
     position: 'absolute',
     bottom: 0,
@@ -113,10 +116,9 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
   },
   middleContainer: {
-    height: 150,
+    height: 200,
     width: '100%',
     backgroundColor: 'blue',
-    position: 'absolute'
   }
 });
 
