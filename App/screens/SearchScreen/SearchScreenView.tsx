@@ -7,12 +7,23 @@ import Icons from 'react-native-vector-icons/Feather';
 const {height, width} = Dimensions.get('window')
 
 const SearchScreenView = () => {
+
+    const searchSubmit = () => {
+        console.log('Search')
+    }
+
     return(
         <View style={styles.container}>
             <View style={styles.searchContainer}>
                 <View style={styles.searchBar}>
                     <View style={styles.grid1}>
-                        <TextInput placeholder='Search department and level' style={styles.searchBox} />
+                        <TextInput 
+                            placeholder='Search department and level' 
+                            style={styles.searchBox} 
+                            returnKeyType='search' 
+                            autoFocus={true} 
+                            onSubmitEditing={searchSubmit}
+                        />
                     </View>
                     <View style={styles.grid2}>
                         <Icons name="search" size={25} color='#000' />
