@@ -83,11 +83,11 @@ export const profileData = (data) => {
 };
 
 export const getAllProfile = (pageNum) => {
-  console.log('it got here');
+  console.log('it got here', pageNum);
   return dispatch => {
-    axios.get(`https://findplug.herokuapp.com/profile?query=male&page${pageNum}`)
+    axios.get(`https://findplug.herokuapp.com/profile?query=male&page=${pageNum}`)
     .then(response => {
-      console.log(response.data, 'retriev data');
+      // console.log(response.data, 'retriev data');
       if (response.data.total !== 0){
         dispatch(profileData(response.data));
       }

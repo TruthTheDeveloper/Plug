@@ -27,11 +27,13 @@ const {width} = Dimensions.get('window');
 const HomeScreenView = () => {
     const [pageNum, setPageNum] = useState(1);
     const dispatch = useDispatch();
-    const profileData = useSelector((state:any) => state.profileReducer.profileData.profile);
+    const profileData = useSelector((state:any) => state.profileReducer.profileData[0].profile);
+    const profileDat = useSelector((state:any) => state.profileReducer.profileData[0].profile);
+    console.log(profileDat, 'your data profile');
 
     useEffect(() => {
-        dispatch(actions.getAllProfile());
-    },[dispatch]);
+        dispatch(actions.getAllProfile(pageNum));
+    },[dispatch, pageNum]);
 
     const getNewList = () => {
       dispatch(actions.getAllProfile(pageNum));
