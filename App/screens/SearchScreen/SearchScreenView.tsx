@@ -48,7 +48,10 @@ const styles = StyleSheet.create({
     grid2: {
         height: 40,
         width: 60,
-        backgroundColor: 'red'
+        backgroundColor: 'red',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 })
 
