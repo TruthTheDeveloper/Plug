@@ -21,9 +21,9 @@ const Loader = () => {
 
 const styles = StyleSheet.create({
     container: {
-        height: height,
+        height: height - 100,
         width: width,
-        backgroundColor: 'green'
+        backgroundColor: '#fff',
     }
 });
 

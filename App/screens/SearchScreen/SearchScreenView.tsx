@@ -11,7 +11,9 @@ const {height, width} = Dimensions.get('window')
 
 const SearchScreenView = () => {
     const [searchData, setSearchData] = useState<number|string>();
-    const [sumbitSearch, setSumbitSearch] = useState<boolean>(false)
+    const [sumbitSearch, setSumbitSearch] = useState<boolean>(false);
+
+    const [loading, setLoading] = useState<boolean>(false)
 
     const searchSubmit = () => {
         setSumbitSearch(true)
@@ -36,8 +38,8 @@ const SearchScreenView = () => {
                     </View>
                 </View>
             </View>
-            {/* {sumbitSearch && <Item /> } */}
-            <Loader />
+            {sumbitSearch && <Item /> }
+            {loading && <Loader /> }
         </View>
     )
 };
