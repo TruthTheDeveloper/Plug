@@ -92,7 +92,7 @@ const HomeScreenView = () => {
               level={item.level}
               department={item.department}
               image={item.profilePic}
-              details={item.details}
+              details={item.description}
             />
           }
         />
