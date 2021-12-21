@@ -10,31 +10,25 @@ import {View} from 'react-native';
 const SignupScreensContainer = () => {
   const [postSucess, setPostSucess]:any = useState(false);
 
-  // const getSuccess = async () => {
-  //   let setSucess : any = null;
-  //   setSucess = JSON.parse(await AsyncStorage.getItem('success') || '{}');
-  //   if (setSucess !== null){
-  //     setPostSucess(true);
-  //   }
-  // };
   const success = useSelector((state:any)=> state.profileReducer.profileId);
-  console.log(success, 'your sucess id');
+
+  let RenderScreen = null;
 
   useEffect(() => {
-    const getSuccess = async () => {
-      let setSucess : any = null;
-      // setSucess = JSON.parse(await AsyncStorage.getItem('profileId') || '{}')
-      setSucess = await AsyncStorage.getItem('profileId');
-      if (setSucess){
-        setPostSucess(true);
-      }
-    };
-    getSuccess();
-  },[postSucess]);
+    AsyncStorage.getItem('profileId').then((result) => {
+      setPostSucess(result);
+    });
+  },[postSucess, success]);
+
+  if (postSucess){
+    RenderScreen = <Navigator/>;
+  } else {
+    RenderScreen = <SignupScreensView/>;
+  }
 
   return (
      <View>
-       {success || postSucess ? <Navigator/> : <SignupScreensView/> }
+       { RenderScreen }
      </View>
      );
 };

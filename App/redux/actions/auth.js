@@ -118,7 +118,7 @@ export const auth = (username, email, password, isSignup) => {
                 // AsyncStorage.setItem('refreshTokenLimit', refreshLimit)
                 dispatch(getUserId(response.data.id));
                 dispatch(authSuccess(response.data.token, response.data.username));
-                dispatch(checkAuthTimeout(300));
+                // dispatch(checkAuthTimeout(300));
             })
             .catch(err => {
                 console.log(err.response.data.errors);
