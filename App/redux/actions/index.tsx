@@ -15,6 +15,6 @@ export {
 export {
   postProfile,
   getProfilePic,
-  getProfile,
+  getAllProfile,
   retrieveProfileDetail,
 } from './profile';

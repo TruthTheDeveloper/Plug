@@ -29,7 +29,7 @@ const setProfileIdData = (state,action) => {
 
 const setProfileData = (state, action) => {
     return updateObject(state,{
-        profileData:action.profileData,
+        profileData:state.profileData.append(action.profileData),
     });
 };
 

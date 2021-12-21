@@ -82,14 +82,16 @@ export const profileData = (data) => {
   };
 };
 
-
-export const getProfile = () => {
+export const getAllProfile = (pageNum) => {
   console.log('it got here');
   return dispatch => {
-    axios.get('https://findplug.herokuapp.com/profile?query=male')
+    axios.get(`https://findplug.herokuapp.com/profile?query=male&page${pageNum}`)
     .then(response => {
       console.log(response.data, 'retriev data');
-      dispatch(profileData(response.data));
+      if (response.data.total !== 0){
+        dispatch(profileData(response.data));
+      }
+
     })
     .catch((err) => console.log(err, 'ur err'));
   };

@@ -25,12 +25,18 @@ const girl6 = require('../../assets/images/girl5.jpg');
 const {width} = Dimensions.get('window');
 
 const HomeScreenView = () => {
+    const [pageNum, setPageNum] = useState(1);
     const dispatch = useDispatch();
     const profileData = useSelector((state:any) => state.profileReducer.profileData.profile);
 
     useEffect(() => {
-        dispatch(actions.getProfile());
+        dispatch(actions.getAllProfile());
     },[dispatch]);
+
+    const getNewList = () => {
+      dispatch(actions.getAllProfile(pageNum));
+        setPageNum(prev => prev + 1);
+    };
 
   const [data] = useState([
     {username: 'kendall_jenner', level: 400, department: 'English', image: girl1, availability: true, details: 'Looking for a sharp looking roomate, one who is NOT A JEW PERSON jkdkd dkmdldd mlsmlss ,m,mdd  kmlms ,dmdld mlmsllsd fdflkdfl flflkf lklf fmllf mflmlf f,mlfm fmlflf flmfmdfl flmdflmdf dfmlmdf fdmdglmdg glmdgldgmm' },
@@ -54,7 +60,7 @@ const HomeScreenView = () => {
 
   return (
     <>
-    <View style={{backgroundColor: '#fff'}}>
+    <View style={{backgroundColor: '#fff', borderTopWidth: 0, borderBottomWidth: 0}}>
       <Header label="Gallery" home={false} />
       {!showGrid ?
         <FlatList
@@ -72,7 +78,9 @@ const HomeScreenView = () => {
               setIndex={(e) => setShowGrid(e)}
             />
           }
-          style={{marginBottom: 37}}
+          // style={{marginBottom: 37, borderBottomWidth: 0 }}
+          // ItemSeparatorComponent={RenderSeperator}
+          onEndReached={getNewList}
         />
       :
         <FlatList
