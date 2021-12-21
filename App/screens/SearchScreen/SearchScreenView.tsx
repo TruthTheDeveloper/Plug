@@ -15,7 +15,7 @@ const SearchScreenView = () => {
                         <TextInput placeholder='Search department and level' style={styles.searchBox} />
                     </View>
                     <View style={styles.grid2}>
-                        <Icons name="home" size={25} color='#000' />
+                        <Icons name="search" size={25} color='#000' />
                     </View>
                 </View>
             </View>
@@ -46,20 +46,23 @@ const styles = StyleSheet.create({
     },
     grid1: {
         width: width - 100,
-        backgroundColor: 'blue'
+        backgroundColor: 'transparent'
     },
     grid2: {
         height: 40,
         width: 60,
-        backgroundColor: '#fff',
+        backgroundColor: 'transparent',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
     },
     searchBox: {
         height: 40,
-        width: '90%',
-        backgroundColor: 'red'
+        width: '100%',
+        backgroundColor: 'transparent',
+        color: '#000',
+        fontSize: 18,
+        paddingLeft: '10%'
     }
 })
 
