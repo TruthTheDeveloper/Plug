@@ -27,9 +27,9 @@ const {width} = Dimensions.get('window');
 const HomeScreenView = () => {
     const [pageNum, setPageNum] = useState(1);
     const dispatch = useDispatch();
+
     const profileData = useSelector((state:any) => state.profileReducer.profileData[0].profile);
-    const profileDat = useSelector((state:any) => state.profileReducer.profileData[0].profile);
-    console.log(profileDat, 'your data profile');
+
 
     useEffect(() => {
         dispatch(actions.getAllProfile(pageNum));
@@ -56,19 +56,19 @@ const HomeScreenView = () => {
     return true;
   };
 
-  BackHandler.addEventListener('hardwareBackPress', goBack );
-
   const showDetails = useSelector((state: any) => state.chatReducer.details);
 
-  return (
-    <>
+  let list = null
+
+  for (const i in profileData){
+    list = <>
     <View style={{backgroundColor: '#fff', borderTopWidth: 0, borderBottomWidth: 0}}>
       <Header label="Gallery" home={false} />
       {!showGrid ?
         <FlatList
           key={'_'}
           numColumns={2}
-          data={profileData}
+          data={profileData[i]}
           renderItem={({item, index}) =>
             <ProfileItem
               username={item.username}
@@ -94,7 +94,7 @@ const HomeScreenView = () => {
           snapToInterval={width}
           showsHorizontalScrollIndicator={false}
           initialScrollIndex={showGrid}
-          data={profileData}
+          data={profileData[i]}
           renderItem={({item}) =>
             <Profile
               username={item.username}
@@ -111,6 +111,14 @@ const HomeScreenView = () => {
     </View>
     {showDetails && <DetailsDiv details={showDetails} /> }
     </>
+  }
+
+  BackHandler.addEventListener('hardwareBackPress', goBack );
+
+  
+
+  return (
+    {list}
   );
 };
 
