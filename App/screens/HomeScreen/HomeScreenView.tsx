@@ -39,11 +39,17 @@ const HomeScreenView = () => {
     {username: 'queenjanedoe', level: 300, department: 'Statistics', image: girl6, availability: true, details: 'Looking for a roomate who can clean and cook, and also one who is NOT A JEW PERSON'},
   ]);
 
-  const [showGrid, setShowGrid] = useState<any>(0);
+  const [showGrid, setShowGrid] = useState<boolean>(false);
+  const [indexx, setIndex] = useState<number>()
 
   const goBack = () => {
-    setShowGrid(null)
+    setShowGrid(false)
     return true
+  }
+
+  const openGrid = (e: number) => {
+    setShowGrid(true)
+    setIndex(e)
   }
 
   BackHandler.addEventListener('hardwareBackPress', goBack );
@@ -67,7 +73,7 @@ const HomeScreenView = () => {
               department={item.department}
               image={item.image}
               index={index}
-              setIndex={(e) => setShowGrid(e)}
+              setIndex={openGrid}
             /> 
           }
           style={{marginBottom: 37}}
@@ -81,7 +87,7 @@ const HomeScreenView = () => {
           disableIntervalMomentum={true}
           snapToInterval={width}
           showsHorizontalScrollIndicator={false}
-          initialScrollIndex={showGrid}
+          initialScrollIndex={indexx}
           data={data}
           renderItem={({item}) => 
             <Profile 
