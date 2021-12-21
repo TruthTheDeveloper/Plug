@@ -5,6 +5,8 @@ import { TextInput } from 'react-native-gesture-handler';
 import Icons from 'react-native-vector-icons/Feather';
 import Item from './components/Items';
 
+import { Loader } from '../../components';
+
 const {height, width} = Dimensions.get('window')
 
 const SearchScreenView = () => {
@@ -34,7 +36,8 @@ const SearchScreenView = () => {
                     </View>
                 </View>
             </View>
-            {sumbitSearch && <Item /> }
+            {/* {sumbitSearch && <Item /> } */}
+            <Loader />
         </View>
     )
 };
