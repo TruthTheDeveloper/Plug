@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { TextInput } from 'react-native-gesture-handler';
 
 import Icons from 'react-native-vector-icons/Feather';
 
@@ -10,7 +11,9 @@ const SearchScreenView = () => {
         <View style={styles.container}>
             <View style={styles.searchContainer}>
                 <View style={styles.searchBar}>
-                    <View style={styles.grid1}></View>
+                    <View style={styles.grid1}>
+                        <TextInput placeholder='Search department and level' style={styles.searchBox} />
+                    </View>
                     <View style={styles.grid2}>
                         <Icons name="home" size={25} color='#000' />
                     </View>
@@ -52,6 +55,11 @@ const styles = StyleSheet.create({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    searchBox: {
+        height: 40,
+        width: '90%',
+        backgroundColor: 'red'
     }
 })
 
