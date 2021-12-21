@@ -16,7 +16,7 @@ const DetailsDiv:FC<DetailsProps> = ({details}):JSX.Element => {
 
     const closeDetails = () => {
         dispatch({type: actionTypes.SHOW_DETAILS, value: null});
-      }
+    }
 
     useEffect(() => {
         Animated.timing(value, {
