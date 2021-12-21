@@ -45,6 +45,7 @@ const Tab = createBottomTabNavigator();
 
 const Container = () => {
   const RouteName = useSelector((state: any) => state.chatReducer.DefaultRoute);
+  
   return (
     <View style={{height: height}}>
       <NavigationContainer>
@@ -83,7 +84,7 @@ const Container = () => {
             }}
           />
 
-          <Tab.Screen
+          {/* <Tab.Screen
             name={NOTIFICATIONS}
             component={Notifications}
             options={{
@@ -95,7 +96,7 @@ const Container = () => {
                 />
               ),
             }}
-          />
+          /> */}
 
           <Tab.Screen
             name={PROFILE}
