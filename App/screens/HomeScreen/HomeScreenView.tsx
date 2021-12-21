@@ -1,6 +1,8 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable prettier/prettier */
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, Dimensions, FlatList, BackHandler} from 'react-native';
+import {View, Dimensions, FlatList, BackHandler} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../redux/actions/index';
 
@@ -20,7 +22,7 @@ const girl5 = require('../../assets/images/girl4.jpg');
 const girl6 = require('../../assets/images/girl5.jpg');
 
 
-const {height, width} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 
 const HomeScreenView = () => {
     const dispatch = useDispatch();
@@ -28,7 +30,7 @@ const HomeScreenView = () => {
 
     useEffect(() => {
         dispatch(actions.getProfile());
-    },[]);
+    },[dispatch]);
 
   const [data] = useState([
     {username: 'kendall_jenner', level: 400, department: 'English', image: girl1, availability: true, details: 'Looking for a sharp looking roomate, one who is NOT A JEW PERSON' },
@@ -60,14 +62,14 @@ const HomeScreenView = () => {
     <>
     <View style={{backgroundColor: '#fff'}}>
       <Header label="Gallery" home={false} />
-      {!showGrid ? 
-        <FlatList 
+      {!showGrid ?
+        <FlatList
           key={'_'}
           numColumns={2}
           data={data}
-          renderItem={({item, index}) => 
-            <ProfileItem 
-              username={item.username} 
+          renderItem={({item, index}) =>
+            <ProfileItem
+              username={item.username}
               verified={item.availability}
               level={item.level}
               department={item.department}
@@ -79,7 +81,7 @@ const HomeScreenView = () => {
           style={{marginBottom: 37}}
         />
       :
-        <FlatList 
+        <FlatList
           key={'#'}
           horizontal
           decelerationRate={'fast'}
@@ -89,8 +91,8 @@ const HomeScreenView = () => {
           showsHorizontalScrollIndicator={false}
           initialScrollIndex={indexx}
           data={data}
-          renderItem={({item}) => 
-            <Profile 
+          renderItem={({item}) =>
+            <Profile
               username={item.username}
               availability={item.availability}
               level={item.level}
@@ -101,27 +103,12 @@ const HomeScreenView = () => {
           }
         />
       }
-      
+
     </View>
     {showDetails && <DetailsDiv details={showDetails} /> }
     </>
   );
 };
 
-const styles = StyleSheet.create({
-    container: {
-      height: height,
-      width: width,
-      backgroundColor: '#fff',
-    },
-    box: {
-      height: height - 140,
-      marginTop: 10,
-      marginLeft: 15,
-      width: width - 30,
-      backgroundColor: 'red',
-      borderRadius: 10,
-    },
-  });
 
 export default HomeScreenView;
