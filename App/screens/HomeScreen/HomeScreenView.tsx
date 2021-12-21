@@ -51,6 +51,7 @@ const HomeScreenView = () => {
   const showDetails = useSelector((state: any) => state.chatReducer.details);
 
   return (
+    <>
     <View style={{backgroundColor: '#fff'}}>
       <Header label="Gallery" home={false} />
       {!showGrid ? 
@@ -89,12 +90,15 @@ const HomeScreenView = () => {
               level={item.level}
               department={item.department}
               image={item.image}
+              details={item.details}
             />
           }
         />
       }
-      {showDetails && <DetailsDiv details={showDetails} /> }
+      
     </View>
+    {showDetails && <DetailsDiv details={showDetails} /> }
+    </>
   );
 };
 

@@ -28,14 +28,20 @@ interface ProfileProps {
     department: string,
     image: any,
     availability: boolean,
+    details: string
 }
 
-const Profile: FC<ProfileProps> = ({username, level, department, image, availability}): JSX.Element => {
+const Profile: FC<ProfileProps> = ({username, level, department, image, availability, details}): JSX.Element => {
   const dispatch = useDispatch();
   
-  // const showDetails = () => {
-  //   dispatch({type: actionTypes.SHOW_DETAILS, value: item.details});
-  // }
+  const showDetails = () => {
+    dispatch({type: actionTypes.SHOW_DETAILS, value: details});
+  }
+
+  const openChat = () => {
+    dispatch({type: actionTypes.OPEN_CHAT, value: username})
+    dispatch({type: actionTypes.SET_DEFAULT_ROUTE, value: 'CHATS'})
+  }
 
   return (
     <View style={{width: width}}>
@@ -46,10 +52,12 @@ const Profile: FC<ProfileProps> = ({username, level, department, image, availabi
           <View style={styles.middleContainer}>
             <View style={styles.grid1} />
             <View style={styles.grid2}>
-              <View style={styles.chatCircle}>
-                <Icons2 name="chatbubble-outline" size={30} color={'#fff'} />
-              </View>
-              <TouchableWithoutFeedback>
+              <TouchableWithoutFeedback onPress={openChat}>
+                <View style={styles.chatCircle}>
+                  <Icons2 name="chatbubble-outline" size={30} color={'#fff'} />
+                </View>
+              </TouchableWithoutFeedback>
+              <TouchableWithoutFeedback onPress={showDetails}>
                 <View style={[styles.chatCircle, styles.bubble2]}>
                   <Icons name="info" size={15} color={red} />
                 </View>

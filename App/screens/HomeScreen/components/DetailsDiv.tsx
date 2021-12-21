@@ -1,5 +1,8 @@
 import React, {FC, useState, useEffect} from 'react';
-import { View, Text, StyleSheet, Dimensions, Animated } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, Animated, TouchableWithoutFeedback } from 'react-native';
+import { useDispatch } from 'react-redux';
+
+import * as actionTypes from '../../../redux/actions/actionTypes';
 
 const {height, width} = Dimensions.get('window');
 
@@ -9,6 +12,11 @@ interface DetailsProps {
 
 const DetailsDiv:FC<DetailsProps> = ({details}):JSX.Element => {
     const value = useState(new Animated.ValueXY({x:0, y: height}))[0];
+    const dispatch = useDispatch();
+
+    const closeDetails = () => {
+        dispatch({type: actionTypes.SHOW_DETAILS, value: null});
+      }
 
     useEffect(() => {
         Animated.timing(value, {
@@ -19,11 +27,13 @@ const DetailsDiv:FC<DetailsProps> = ({details}):JSX.Element => {
     }, [value]);
 
     return(
-        <Animated.View style={value.getLayout()}>
-            <View style={styles.main}>
-                <Text>{details}</Text>
-            </View>
-        </Animated.View>
+        <TouchableWithoutFeedback onPress={closeDetails}>
+            <Animated.View style={[value.getLayout(), styles.container]}>
+                <View style={styles.main}>
+                    <Text style={styles.text}>{details}</Text>
+                </View>
+            </Animated.View>
+        </TouchableWithoutFeedback>
     )
 };
 
@@ -33,18 +43,26 @@ const styles = StyleSheet.create({
         width: width,
         backgroundColor: 'transparent',
         position: 'absolute',
-        top: 0
+        top: 0,
+        display: 'flex',
+        flexDirection: 'column-reverse',
+        paddingBottom: 60
     },
     main: {
-        height: 250,
+        padding: 20,
         width: width,
         backgroundColor: '#fff',
         borderColor: 'cyan',
         borderWidth: 1,
-        position: 'absolute',
-        bottom: 0,
+        // position: 'absolute',
+        // bottom: 0,
         borderTopRightRadius: 15,
         borderTopLeftRadius: 15,
+    },
+    text: {
+        color: '#000',
+        fontSize: 15,
+        opacity: 0.8
     }
 });
 
