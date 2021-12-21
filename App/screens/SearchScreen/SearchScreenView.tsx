@@ -9,6 +9,7 @@ const {height, width} = Dimensions.get('window')
 const SearchScreenView = () => {
     return(
         <View style={styles.container}>
+            
             <View style={styles.searchContainer}>
                 <View style={styles.searchBar}>
                     <View style={styles.grid1}>
