@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 
@@ -8,9 +8,11 @@ import Item from './components/Items';
 const {height, width} = Dimensions.get('window')
 
 const SearchScreenView = () => {
+    const [searchData, setSearchData] = useState<number|string>();
+    const [sumbitSearch, setSumbitSearch] = useState<boolean>(false)
 
     const searchSubmit = () => {
-        console.log('Search')
+        setSumbitSearch(true)
     }
 
     return(
@@ -24,6 +26,7 @@ const SearchScreenView = () => {
                             returnKeyType='search' 
                             autoFocus={true} 
                             onSubmitEditing={searchSubmit}
+                            onChangeText={(e:any) => setSearchData(e)}
                         />
                     </View>
                     <View style={styles.grid2}>
@@ -31,7 +34,7 @@ const SearchScreenView = () => {
                     </View>
                 </View>
             </View>
-            <Item />
+            {sumbitSearch && <Item /> }
         </View>
     )
 };
