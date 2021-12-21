@@ -82,7 +82,15 @@ const HomeScreenView = () => {
           showsHorizontalScrollIndicator={false}
           initialScrollIndex={showGrid}
           data={data}
-          renderItem={Profile}
+          renderItem={({item}) => 
+            <Profile 
+              username={item.username}
+              availability={item.availability}
+              level={item.level}
+              department={item.department}
+              image={item.image}
+            />
+          }
         />
       }
       {showDetails && <DetailsDiv details={showDetails} /> }

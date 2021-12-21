@@ -23,22 +23,25 @@ const verifiedIcon = require('../../../assets/images/verified.png');
 const {height, width} = Dimensions.get('window');
 
 interface ProfileProps {
-  item: any;
-  index: any;
+    username: string,
+    level: number,
+    department: string,
+    image: any,
+    availability: boolean,
 }
 
-const Profile: FC<ProfileProps> = ({item}): JSX.Element => {
+const Profile: FC<ProfileProps> = ({username, level, department, image, availability}): JSX.Element => {
   const dispatch = useDispatch();
   
-  const showDetails = () => {
-    dispatch({type: actionTypes.SHOW_DETAILS, value: item.details})
-  }
+  // const showDetails = () => {
+  //   dispatch({type: actionTypes.SHOW_DETAILS, value: item.details});
+  // }
 
   return (
     <View style={{width: width}}>
     <View style={styles.container}>
       {/* <ImageBackground style={styles.bgImage} source={{uri:`${item.profilePic}`}}> */}
-      <ImageBackground style={styles.bgImage} source={item.image}>
+      <ImageBackground style={styles.bgImage} source={image}>
         <View style={styles.details}>
           <View style={styles.middleContainer}>
             <View style={styles.grid1} />
@@ -46,7 +49,7 @@ const Profile: FC<ProfileProps> = ({item}): JSX.Element => {
               <View style={styles.chatCircle}>
                 <Icons2 name="chatbubble-outline" size={30} color={'#fff'} />
               </View>
-              <TouchableWithoutFeedback onPress={showDetails}>
+              <TouchableWithoutFeedback>
                 <View style={[styles.chatCircle, styles.bubble2]}>
                   <Icons name="info" size={15} color={red} />
                 </View>
@@ -62,11 +65,11 @@ const Profile: FC<ProfileProps> = ({item}): JSX.Element => {
             ]}
             style={styles.details2}>
             <View style={styles.usernameContainer}>
-              <Text style={styles.username}>{item.username}</Text>
-              <Image source={item.availability ? verifiedIcon : null} />
+              <Text style={styles.username}>{username}</Text>
+              <Image source={availability ? verifiedIcon : null} />
             </View>
             <Text style={styles.department}>
-              {item.level}l, {item.department}
+              {level}l, {department}
             </Text>
             <View style={styles.personalityContainer}>
                 {/* {item.attributeOne && item.attributeOne !== '' ? <PersonslityBoxes value={item.attributeOne} /> : null}
@@ -90,6 +93,8 @@ const Profile: FC<ProfileProps> = ({item}): JSX.Element => {
     </View>
   );
 };
+
+export default Profile;
 
 const styles = StyleSheet.create({
   container: {
@@ -177,4 +182,3 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Profile;
