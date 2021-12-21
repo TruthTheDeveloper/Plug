@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 
 import Icons from 'react-native-vector-icons/Feather';
+import Item from './components/Items';
 
 const {height, width} = Dimensions.get('window')
 
@@ -30,6 +31,7 @@ const SearchScreenView = () => {
                     </View>
                 </View>
             </View>
+            <Item />
         </View>
     )
 };
