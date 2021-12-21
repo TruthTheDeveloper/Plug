@@ -61,7 +61,7 @@ const HomeScreenView = () => {
   return (
     <>
     <View style={{backgroundColor: '#fff'}}>
-      <Header label="Gallery" home={false} />
+      <Header label="Gallery" />
       {!showGrid ?
         <FlatList
           key={'_'}

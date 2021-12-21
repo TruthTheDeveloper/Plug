@@ -8,18 +8,19 @@ import {store} from './index';
 import { persistor } from './index';
 
 
-// import Navigator from './App/navigation/navigation/Navigators';
-import MainScreen from './App/screens/MainScreen';
+import Navigator from './App/navigation/navigation/Navigators';
+// import MainScreen from './App/screens/MainScreen';
 
 const App = () => {
 
   return (
     <View>
         <StatusBar backgroundColor="#fff" barStyle="dark-content" />
-        {/* <Navigator /> */}
+        
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
-            <MainScreen/>
+            {/* <MainScreen/> */}
+            <Navigator />
           </PersistGate>
         </Provider>
     </View>
