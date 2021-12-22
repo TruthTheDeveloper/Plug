@@ -26,53 +26,24 @@ const {width} = Dimensions.get('window');
 
 
 
-const HomeScreenView = React.memo(() => {
+const HomeScreenView = () => {
     const [pageNum, setPageNum] = useState(1);
-    const [allData, setAllData] :any = useState([]);
     const dispatch = useDispatch();
 
-    
     const profileData = useSelector((state:any) => state.profileReducer.profileData);
-    // console.log(profileData.profile, 'profile');
-    // let allData : any = [];
-    useEffect(() => {
-      if (profileData.profile) {
-        setAllData((prev: any) => [...prev, ...profileData.profile]);
 
 
-        // console.log(allData, 'state')
-        // console.log(profileData)
-        // allData = [...allData, ...profileData.profile];
-        // allData.push(...profileData.profile)
-      }
-    },[profileData])
-
-    // const updateProfile = useCallback(() => {
-      
-
-    // },[profileData])
-
-    
-
-    
-    // useEffect(() => {
-    //   setAllData({...profileData});
-    //   console.log(allData, 'alldata')
-    // },[allData, profileData]);
-
-    console.log(allData, 'this data');
-
-    // const profileDat = useSelector((state:any) => state.profileReducer.profileData[0].profile);
-    // console.log(profileDat, 'your data profile');
+    console.log(profileData, 'this data');
 
     useEffect(() => {
         dispatch(actions.getAllProfile(pageNum));
-    },[dispatch, pageNum]);
+        setPageNum(prev => prev + 1)
+    },[]);
 
-    const getNewList = () => {
+    const getNewList = useCallback(() => {
       dispatch(actions.getAllProfile(pageNum));
-        setPageNum(prev => prev + 1);
-    };
+      setPageNum(prev => prev + 1)
+    },[dispatch, pageNum]);
 
   const [data] = useState([
     {username: 'kendall_jenner', level: 400, department: 'English', image: girl1, availability: true, details: 'Looking for a sharp looking roomate, one who is NOT A JEW PERSON jkdkd dkmdldd mlsmlss ,m,mdd  kmlms ,dmdld mlmsllsd fdflkdfl flflkf lklf fmllf mflmlf f,mlfm fmlflf flmfmdfl flmdflmdf dfmlmdf fdmdglmdg glmdgldgmm' },
@@ -101,7 +72,7 @@ const HomeScreenView = React.memo(() => {
       <><Text>Daata rendering</Text><FlatList
             key={'_'}
             numColumns={2}
-            data={allData}
+            data={profileData}
             renderItem={({ item, index }) => <ProfileItem
               username={item.username}
               verified={item.availability}
@@ -123,7 +94,7 @@ const HomeScreenView = React.memo(() => {
           snapToInterval={width}
           showsHorizontalScrollIndicator={false}
           initialScrollIndex={showGrid}
-          data={allData}
+          data={profileData}
           renderItem={({item}) =>
             <Profile
               username={item.username}
@@ -141,7 +112,7 @@ const HomeScreenView = React.memo(() => {
     {showDetails && <DetailsDiv details={showDetails} /> }
     </>
   );
-});
+};
 
 
 export default HomeScreenView;

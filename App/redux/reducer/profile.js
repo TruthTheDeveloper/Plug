@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import * as actionTypes from '../actions/actionTypes';
+import { profileData } from '../actions/profile';
 import {updateObject} from '../utility';
 
 const initialState = {
@@ -28,9 +29,11 @@ const setProfileIdData = (state,action) => {
 };
 
 const setProfileData = (state, action) => {
-    return updateObject(state,{
-        profileData:action.profileData,
-    });
+    // state.profileData.push(...action.profileData.profile)
+    return {
+        ...state,
+        profileData:[...state.profileData,...action.profileData.profile],
+    };
 };
 
 
@@ -150,7 +153,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.GET_PROFILE_DATA:
         return setProfileData(state, action);
     case actionTypes.GET_PROFILE_ID_DATA:
-        return setProfileIdData(state,action)
+        return setProfileIdData(state,action);
     default:
         return state;
   }
