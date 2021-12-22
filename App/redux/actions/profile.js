@@ -93,7 +93,7 @@ export const updateProfile = (data) => {
       formdata.append('attributeEight', data.attributeEight);
       formdata.append('availabilty', data.availabilty);
       formdata.append('username', data.username);
-      console.log(formdata)
+      console.log(formdata);
         axios.put(`https://findplug.herokuapp.com/profile/${data.profileId}`,formdata,{headers:{
           Accept: 'application/json',
           'Content-Type': 'multipart/form-data; charset=utf-8',
