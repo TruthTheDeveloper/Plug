@@ -207,7 +207,7 @@ const EditScreen: FC<EditScreenProps> = ({image, cancle}): JSX.Element => {
   return (
     <View style={styles.container}>
       <ScrollView>
-        <Header label="Edit" home={false} />
+        <Header label="Edit"/>
         <TouchableWithoutFeedback onPress={selectPhoto}>
           <View style={styles.ImageContainer}>
             <ProfilePic image={img} />
@@ -217,8 +217,7 @@ const EditScreen: FC<EditScreenProps> = ({image, cancle}): JSX.Element => {
           <LargeLabeledInput
             label="Description"
             value=""
-            setValue={(e: string) => console.log(e)}
-          />
+            setValue={(e: string) => console.log(e)} validationError={''} border={''}          />
         </View>
         <InstitutionChecker
           active={Institution}
@@ -236,7 +235,7 @@ const EditScreen: FC<EditScreenProps> = ({image, cancle}): JSX.Element => {
             {div4}
           </View>
         </View>
-        <ExtraButtons cancle={cancle} submit={() => alert('submitted')} />
+        <ExtraButtons cancel={cancle} submit={() => alert('submitted')} />
       </ScrollView>
       {List && <Modal packages={List} onSelect={onSelect} />}
     </View>

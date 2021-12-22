@@ -5,6 +5,7 @@ import HomeScreenContainer from './screens/HomeScreen/index';
 import NotificationScreenContainer from './screens/NotificationScreen';
 import ChatSceenContainer from './screens/ChatScreen/index';
 import ProfileScreenContainer from './screens/ProfileScreen';
+import SearchScreenContainer from './screens/SearchScreen';
 
 export {
         AuthScreenContainer,
@@ -13,4 +14,5 @@ export {
         NotificationScreenContainer,
         ChatSceenContainer,
         ProfileScreenContainer,
+        SearchScreenContainer,
     };

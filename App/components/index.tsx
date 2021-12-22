@@ -14,6 +14,7 @@ import Form3 from './InstitutionComponents/Form3';
 
 import Header from './MainComponents/Header';
 import Username from './MainComponents/Username';
+import Loader from './MainComponents/Loader';
 
 import ChatView from './Chat/ChatView';
 
@@ -33,6 +34,7 @@ export {
 
     Header,
     Username,
+    Loader,
 
     ChatView
 };

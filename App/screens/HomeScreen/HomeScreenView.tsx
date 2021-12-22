@@ -37,12 +37,13 @@ const HomeScreenView = () => {
 
     useEffect(() => {
         dispatch(actions.getAllProfile(pageNum));
-        setPageNum(prev => prev + 1)
+        setPageNum(prev => prev + 1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
     const getNewList = useCallback(() => {
       dispatch(actions.getAllProfile(pageNum));
-      setPageNum(prev => prev + 1)
+      setPageNum(prev => prev + 1);
     },[dispatch, pageNum]);
 
   const [data] = useState([
@@ -54,11 +55,17 @@ const HomeScreenView = () => {
     {username: 'queenjanedoe', level: 300, department: 'Statistics', image: girl6, availability: true, details: 'Looking for a roomate who can clean and cook, and also one who is NOT A JEW PERSON'},
   ]);
 
-  const [showGrid, setShowGrid] = useState<any>(0);
+  const [showGrid, setShowGrid] = useState<boolean>(false);
+  const [indexx, setIndex] = useState<number>();
 
   const goBack = () => {
-    setShowGrid(null);
+    setShowGrid(false);
     return true;
+  };
+
+  const openGrid = (e: number) => {
+    setShowGrid(true);
+    setIndex(e);
   };
 
   BackHandler.addEventListener('hardwareBackPress', goBack );
@@ -66,8 +73,8 @@ const HomeScreenView = () => {
 
   return (
     <>
-    <View style={{backgroundColor: '#fff', borderTopWidth: 0, borderBottomWidth: 0}}>
-      <Header label="Gallery" home={false} />
+    <View>
+      <Header label="Gallery" />
       {!showGrid ?
       <><Text>Daata rendering</Text><FlatList
             key={'_'}
@@ -80,10 +87,12 @@ const HomeScreenView = () => {
               department={item.department}
               image={item.profilePic}
               index={index}
-              setIndex={(e) => setShowGrid(e)} />}
-            // style={{marginBottom: 37, borderBottomWidth: 0 }}
-            // ItemSeparatorComponent={RenderSeperator}
-            onEndReached={getNewList} /></>
+              setIndex={openGrid}
+              />
+            }
+            style={{ marginBottom: 37 }}
+            onEndReached={getNewList}
+            /></>
       :
         <FlatList
           key={'#'}
@@ -93,7 +102,7 @@ const HomeScreenView = () => {
           disableIntervalMomentum={true}
           snapToInterval={width}
           showsHorizontalScrollIndicator={false}
-          initialScrollIndex={showGrid}
+          initialScrollIndex={indexx}
           data={profileData}
           renderItem={({item}) =>
             <Profile
@@ -107,7 +116,6 @@ const HomeScreenView = () => {
           }
         />
       }
-
     </View>
     {showDetails && <DetailsDiv details={showDetails} /> }
     </>

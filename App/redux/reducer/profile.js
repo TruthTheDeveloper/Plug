@@ -1,6 +1,5 @@
 /* eslint-disable prettier/prettier */
 import * as actionTypes from '../actions/actionTypes';
-import { profileData } from '../actions/profile';
 import {updateObject} from '../utility';
 
 const initialState = {

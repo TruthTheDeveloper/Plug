@@ -17,11 +17,12 @@ import {
   NotificationScreenContainer,
   ChatSceenContainer,
   ProfileScreenContainer,
+  SearchScreenContainer
 } from '../../index';
 import {ChatView} from '../../components';
 
 //ROUTES
-import {HOME, CHATS, NOTIFICATIONS, PROFILE} from '../ROUTE';
+import {HOME, CHATS, SEARCH, PROFILE} from '../ROUTE';
 
 const {height} = Dimensions.get('window');
 
@@ -37,8 +38,8 @@ const Chat = () => {
   return <ChatSceenContainer />;
 };
 
-const Notifications = () => {
-  return <NotificationScreenContainer />;
+const Search = () => {
+  return <SearchScreenContainer />;
 };
 
 const Tab = createBottomTabNavigator();
@@ -71,6 +72,20 @@ const Container = () => {
           />
 
           <Tab.Screen
+            name={SEARCH}
+            component={Search}
+            options={{
+              tabBarIcon: ({focused}) => (
+                <Icons
+                  name="search"
+                  size={25}
+                  color={focused ? '#000' : 'grey'}
+                />
+              ),
+            }}
+          />
+
+          <Tab.Screen
             name={CHATS}
             component={Chat}
             options={{
@@ -83,20 +98,6 @@ const Container = () => {
               ),
             }}
           />
-
-          {/* <Tab.Screen
-            name={NOTIFICATIONS}
-            component={Notifications}
-            options={{
-              tabBarIcon: ({focused}) => (
-                <Icons
-                  name="bell"
-                  size={25}
-                  color={focused ? '#000' : 'grey'}
-                />
-              ),
-            }}
-          /> */}
 
           <Tab.Screen
             name={PROFILE}

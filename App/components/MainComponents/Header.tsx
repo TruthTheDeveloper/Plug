@@ -8,10 +8,9 @@ const {width} = Dimensions.get('window');
 
 interface headerProps {
     label: string,
-    home: boolean
 }
 
-const Header:FC<headerProps>  = ({label, home}):JSX.Element => {
+const Header:FC<headerProps>  = ({label}):JSX.Element => {
     return(
         <View style={styles.container}>
             <View style={styles.flex1}>
@@ -21,7 +20,7 @@ const Header:FC<headerProps>  = ({label, home}):JSX.Element => {
                 <Text style={styles.title}>{label}</Text>
             </View>
             <View style={styles.flex3}>
-                {home && <Icons name="search" color="#000" size={22} /> }
+                {/* {home && <Icons name="search" color="#000" size={22} /> } */}
             </View>
         </View>
     )
