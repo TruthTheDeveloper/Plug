@@ -14,16 +14,16 @@ const {width} = Dimensions.get('window');
 
 interface ExtraButtonsProps {
   submit: () => void;
-  cancle: () => void;
+  cancel: () => void;
 }
 
 const buttonDiv = (width - 30) / 2;
 
-const ExtraButtons: FC<ExtraButtonsProps> = ({submit, cancle}): JSX.Element => {
+const ExtraButtons: FC<ExtraButtonsProps> = ({submit, cancel}): JSX.Element => {
   return (
     <View style={styles.container}>
       <View style={styles.div}>
-        <TouchableWithoutFeedback onPress={cancle}>
+        <TouchableWithoutFeedback onPress={cancel}>
           <View style={styles.button}>
             <Text style={styles.text}>Cancle</Text>
           </View>

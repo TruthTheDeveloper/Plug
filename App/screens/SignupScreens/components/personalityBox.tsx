@@ -43,21 +43,21 @@ const PersonalityBox: FC<PersonalityProps> = ({
       console.log(attribute);
       switch (attribute){
         case 'attributeOne':
-          dispatch({type: actionTypes.SET_ATTRIBUTE_ONE, attributeOne:name});
+          dispatch({type: actionTypes.SET_ATTRIBUTE_FIRST, attributeOne:name});
         case 'attributeTwo':
-          dispatch({type: actionTypes.SET_ATTRIBUTE_TWO, attributeTwo:name});
+          dispatch({type: actionTypes.SET_ATTRIBUTE_SECOND, attributeTwo:name});
         case 'attributeThree':
-          dispatch({type: actionTypes.SET_ATTRIBUTE_THREE, attributeThree:name});
+          dispatch({type: actionTypes.SET_ATTRIBUTE_THIRD, attributeThree:name});
         case 'attributeFour':
-          dispatch({type: actionTypes.SET_ATTRIBUTE_FOUR, attributeFour:name});
+          dispatch({type: actionTypes.SET_ATTRIBUTE_FOURTH , attributeFour:name});
         case 'attributeFive':
-          dispatch({type: actionTypes.SET_ATTRIBUTE_FIVE, attributeFive:name});
+          dispatch({type: actionTypes.SET_ATTRIBUTE_FIFTH, attributeFive:name});
         case 'attributeSix':
-          dispatch({type: actionTypes.SET_ATTRIBUTE_SIX, attributeSix:name});
+          dispatch({type: actionTypes.SET_ATTRIBUTE_SIXTH, attributeSix:name});
         case 'attributeSeven':
-          dispatch({type: actionTypes.SET_ATTRIBUTE_SEVEN, attributeSeven:name});
+          dispatch({type: actionTypes.SET_ATTRIBUTE_SEVENTH, attributeSeven:name});
         case 'attributeEight':
-          dispatch({type: actionTypes.SET_ATTRIBUTE_EIGHT, attributeEight:name});
+          dispatch({type: actionTypes.SET_ATTRIBUTE_EIGHTH, attributeEight:name});
       }
 
     } else {
@@ -73,21 +73,21 @@ const PersonalityBox: FC<PersonalityProps> = ({
 
     switch (attribute){
       case 'attributeOne':
-        dispatch({type: actionTypes.SET_ATTRIBUTE_ONE, attributeOne:''});
+        dispatch({type: actionTypes.SET_ATTRIBUTE_FIRST, attributeOne:''});
       case 'attributeTwo':
-        dispatch({type: actionTypes.SET_ATTRIBUTE_TWO, attributeTwo:''});
+        dispatch({type: actionTypes.SET_ATTRIBUTE_SECOND, attributeTwo:''});
       case 'attributeThree':
-        dispatch({type: actionTypes.SET_ATTRIBUTE_THREE, attributeThree:''});
+        dispatch({type: actionTypes.SET_ATTRIBUTE_THIRD, attributeThree:''});
       case 'attributeFour':
-        dispatch({type: actionTypes.SET_ATTRIBUTE_FOUR, attributeFour:''});
+        dispatch({type: actionTypes.SET_ATTRIBUTE_FOURTH, attributeFour:''});
       case 'attributeFive':
-        dispatch({type: actionTypes.SET_ATTRIBUTE_FIVE, attributeFive:''});
+        dispatch({type: actionTypes.SET_ATTRIBUTE_FIFTH, attributeFive:''});
       case 'attributeSix':
-        dispatch({type: actionTypes.SET_ATTRIBUTE_SIX, attributeSix:''});
+        dispatch({type: actionTypes.SET_ATTRIBUTE_SIXTH, attributeSix:''});
       case 'attributeSeven':
-        dispatch({type: actionTypes.SET_ATTRIBUTE_SEVEN, attributeSeven:''});
+        dispatch({type: actionTypes.SET_ATTRIBUTE_SEVENTH, attributeSeven:''});
       case 'attributeEight':
-        dispatch({type: actionTypes.SET_ATTRIBUTE_EIGHT, attributeEight:''});
+        dispatch({type: actionTypes.SET_ATTRIBUTE_EIGHTH, attributeEight:''});
     }
   };
 

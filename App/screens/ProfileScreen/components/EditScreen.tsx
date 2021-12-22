@@ -43,15 +43,13 @@ interface EditScreenProps {
 
 const EditScreen: FC<EditScreenProps> = ({image, cancel}): JSX.Element => {
 
-  const desc = useSelector((state:any) => state.profileReducer.description);
-  const dept = useSelector((state:any) => state.profileReducer.department);
-  const lev = useSelector((state:any) => state.profileReducer.level);
+  const profileIdData = useSelector((state:any) => state.profileReducer.profileIdData)
   const [Institution, setInstitution] = useState(university);
-  const [description, setDescription]  = useState(desc);
+  const [description, setDescription]  = useState(profileIdData.description);
 
   const [universityName, setUniversity] = useState();
-  const [department, setDepartment] = useState(dept);
-  const [level, setLevel] = useState(lev);
+  const [department, setDepartment] = useState(profileIdData.department);
+  const [level, setLevel] = useState(profileIdData.level);
 
   const [List, setList] = useState<any | null>(null);
 

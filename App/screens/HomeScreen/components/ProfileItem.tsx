@@ -36,7 +36,7 @@ const ProfileItem: FC<profileProps> = ({
     <TouchableWithoutFeedback onPress={() => setIndex(index)}>
       <View style={styles.container}>
         <View style={styles.main}>
-          <ImageBackground source={{uri:image}} style={styles.backgroundImage}>
+          <ImageBackground source={image} style={styles.backgroundImage}>
             <LinearGradient
               colors={[
                 'rgba(0, 0, 0, 0)',
