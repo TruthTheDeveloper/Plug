@@ -73,7 +73,7 @@ export const getAlreadyPostedProfile = (id) => {
 
 
 export const updateProfile = (data) => {
-  console.log(data.profileId, 'yours');
+  console.log(data.token, 'yours');
   return dispatch => {
       const formdata = new FormData();
       formdata.append('profilePic', {uri:data.profilePic, name: 'image.jpg', type: 'image/jpg'});
@@ -93,6 +93,7 @@ export const updateProfile = (data) => {
       formdata.append('attributeEight', data.attributeEight);
       formdata.append('availabilty', data.availabilty);
       formdata.append('username', data.username);
+      console.log(formdata)
         axios.put(`https://findplug.herokuapp.com/profile/${data.profileId}`,formdata,{headers:{
           Accept: 'application/json',
           'Content-Type': 'multipart/form-data; charset=utf-8',
