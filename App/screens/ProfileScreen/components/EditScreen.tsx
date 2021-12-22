@@ -98,7 +98,6 @@ const EditScreen: FC<EditScreenProps> = ({image, cancel}): JSX.Element => {
   const attributeSix = useSelector((state:any) => state.profileReducer.attributeSix);
   const attributeSeven = useSelector((state:any) => state.profileReducer.attributeSeven);
   const attributeEight = useSelector((state:any) => state.profileReducer.attributeEight);
-  const username = useSelector((state:any) => state.authReducer.username);
   const profilePic = useSelector((state:any) => state.profileReducer.profilePic);
 
   const updateProfileHandler = async () => {
@@ -112,7 +111,7 @@ const EditScreen: FC<EditScreenProps> = ({image, cancel}): JSX.Element => {
         userId:id,
         description:description,
         available:true,
-        gender:'Male',
+        sex:profileIdData.sex,
         institution:universityName,
         department:department,
         level:level,
@@ -126,7 +125,7 @@ const EditScreen: FC<EditScreenProps> = ({image, cancel}): JSX.Element => {
         attributeEight:attributeEight,
         profilePic:profilePic,
         token:token,
-        username:username,
+        username:profileIdData.username,
         profileId:profileId,
       };
       dispatch(actions.updateProfile(data));
