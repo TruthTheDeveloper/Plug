@@ -31,7 +31,7 @@ const Item = () => {
   );
 
   useEffect(() => {
-    dispatch(actions.getProfile());
+    dispatch(actions.getAllProfile());
   }, [dispatch]);
 
   const [data] = useState([
