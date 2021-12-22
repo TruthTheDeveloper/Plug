@@ -47,7 +47,7 @@ const EditScreen: FC<EditScreenProps> = ({image, cancel}): JSX.Element => {
   const [Institution, setInstitution] = useState(university);
   const [description, setDescription]  = useState(profileIdData.description);
 
-  const [universityName, setUniversity] = useState();
+  const [universityName, setUniversity] = useState(profileIdData.institution);
   const [department, setDepartment] = useState(profileIdData.department);
   const [level, setLevel] = useState(profileIdData.level);
 
@@ -104,7 +104,7 @@ const EditScreen: FC<EditScreenProps> = ({image, cancel}): JSX.Element => {
     console.log('update');
     const id = await AsyncStorage.getItem('userId');
     const token = await AsyncStorage.getItem('token');
-    const profileId = await AsyncStorage.getItem('profileId')
+    const profileId = await AsyncStorage.getItem('profileId');
     console.log(validation);
     if (validation === '' && description.length >= 0){
       const data = {

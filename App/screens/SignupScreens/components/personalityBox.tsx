@@ -48,7 +48,7 @@ const PersonalityBox: FC<PersonalityProps> = ({
         dispatch({type: actionTypes.SET_ATTRIBUTE_THIRD, attributeThree:name});
       } else if (attribute === 'attributeFour'){
         dispatch({type: actionTypes.SET_ATTRIBUTE_FOURTH, attributeFour:name});
-      } else if (attribute === 'attributFive'){
+      } else if (attribute === 'attributeFive'){
         dispatch({type: actionTypes.SET_ATTRIBUTE_FIFTH, attributeFive:name});
       } else if (attribute === 'attributeSix'){
         dispatch({type: actionTypes.SET_ATTRIBUTE_SIXTH, attributeSix:name});
@@ -77,7 +77,7 @@ const PersonalityBox: FC<PersonalityProps> = ({
       dispatch({type: actionTypes.SET_ATTRIBUTE_THIRD, attributeThree:''});
     } else if (attribute === 'attributeFour'){
       dispatch({type: actionTypes.SET_ATTRIBUTE_FOURTH, attributeFour:''});
-    } else if (attribute === 'attributFive'){
+    } else if (attribute === 'attributeFive'){
       dispatch({type: actionTypes.SET_ATTRIBUTE_FIFTH, attributeFive:''});
     } else if (attribute === 'attributeSix'){
       dispatch({type: actionTypes.SET_ATTRIBUTE_SIXTH, attributeSix:''});
