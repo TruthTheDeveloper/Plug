@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {View, Dimensions, FlatList, BackHandler, Text} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../redux/actions/index';
@@ -24,15 +24,43 @@ const girl6 = require('../../assets/images/girl5.jpg');
 
 const {width} = Dimensions.get('window');
 
-const HomeScreenView = () => {
+
+
+const HomeScreenView = React.memo(() => {
     const [pageNum, setPageNum] = useState(1);
+    const [allData, setAllData] :any = useState([]);
     const dispatch = useDispatch();
 
-    let allData = []
+    
     const profileData = useSelector((state:any) => state.profileReducer.profileData);
-    console.log(profileData);
+    // console.log(profileData.profile, 'profile');
+    // let allData : any = [];
+    useEffect(() => {
+      if (profileData.profile) {
+        setAllData((prev: any) => [...prev, ...profileData.profile]);
 
-    allData.push(profileData)
+
+        // console.log(allData, 'state')
+        // console.log(profileData)
+        // allData = [...allData, ...profileData.profile];
+        // allData.push(...profileData.profile)
+      }
+    },[profileData])
+
+    // const updateProfile = useCallback(() => {
+      
+
+    // },[profileData])
+
+    
+
+    
+    // useEffect(() => {
+    //   setAllData({...profileData});
+    //   console.log(allData, 'alldata')
+    // },[allData, profileData]);
+
+    console.log(allData, 'this data');
 
     // const profileDat = useSelector((state:any) => state.profileReducer.profileData[0].profile);
     // console.log(profileDat, 'your data profile');
@@ -65,10 +93,8 @@ const HomeScreenView = () => {
   BackHandler.addEventListener('hardwareBackPress', goBack );
   const showDetails = useSelector((state: any) => state.chatReducer.details);
 
-  let flatlist = <Text>'no data'</Text>;
-
-  for (const i in allData){
-    flatlist = <>
+  return (
+    <>
     <View style={{backgroundColor: '#fff', borderTopWidth: 0, borderBottomWidth: 0}}>
       <Header label="Gallery" home={false} />
       {!showGrid ?
@@ -113,13 +139,9 @@ const HomeScreenView = () => {
 
     </View>
     {showDetails && <DetailsDiv details={showDetails} /> }
-    </>;
-  }
-
-  return (
-    <View>{flatlist}</View>
+    </>
   );
-};
+});
 
 
 export default HomeScreenView;

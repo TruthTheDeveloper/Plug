@@ -150,7 +150,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.GET_PROFILE_DATA:
         return setProfileData(state, action);
     case actionTypes.GET_PROFILE_ID_DATA:
-        return setProfileIdData(state,action);
+        return setProfileIdData(state,action)
     default:
         return state;
   }
