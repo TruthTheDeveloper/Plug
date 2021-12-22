@@ -1,8 +1,9 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable prettier/prettier */
 import React, {useState, useEffect} from 'react';
 import {
   View,
-  StyleSheet,
   Dimensions,
   FlatList,
   BackHandler,
@@ -22,7 +23,7 @@ const girl4 = require('../../../assets/images/girl3.jpg');
 const girl5 = require('../../../assets/images/girl4.jpg');
 const girl6 = require('../../../assets/images/girl5.jpg');
 
-const {height, width} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 
 const Item = () => {
   const dispatch = useDispatch();
@@ -157,12 +158,5 @@ const Item = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    height: height,
-    width: width,
-    backgroundColor: 'red',
-  },
-});
 
 export default Item;

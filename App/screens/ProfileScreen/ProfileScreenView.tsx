@@ -21,7 +21,7 @@ import EditScreen from './components/EditScreen';
 const {width} = Dimensions.get('window');
 
 const ProfileScreenView = () => {
-    const [edit, setEdit] = useState(false)
+    const [edit, setEdit] = useState(false);
     // const Id = useSelector((state:any) => state.profileReducer.profileId);
     const profileIdData = useSelector((state:any) => state.profileReducer.profileIdData);
     const dispatch = useDispatch();

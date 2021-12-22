@@ -35,6 +35,5 @@ export {
     Header,
     Username,
     Loader,
-
-    ChatView
+    ChatView,
 };
