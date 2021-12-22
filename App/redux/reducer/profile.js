@@ -28,22 +28,12 @@ const setProfileIdData = (state,action) => {
 };
 
 const setProfileData = (state, action) => {
-    return{
-        ...state,
-        ...state.profileData.push(action.profileData),
-    }
-    
-    // state.profileData.push([...action.profileData]);
-    // return updateObject(state,{
-    //     profileData:[...action.profileData],
-    // });
-    // // return {
-    //     ...state,
-    //     ...state.profileData.push([...action.profileData]),
-    // };
+    return updateObject(state,{
+        profileData:action.profileData,
+    });
 };
 
-    
+
 
 const setPostSuccess = (state, action) => {
     console.log(action.success);

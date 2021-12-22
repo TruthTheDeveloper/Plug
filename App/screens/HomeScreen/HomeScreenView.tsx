@@ -2,7 +2,7 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import React, {useState, useEffect} from 'react';
-import {View, Dimensions, FlatList, BackHandler} from 'react-native';
+import {View, Dimensions, FlatList, BackHandler, Text} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../redux/actions/index';
 
@@ -28,8 +28,14 @@ const HomeScreenView = () => {
     const [pageNum, setPageNum] = useState(1);
     const dispatch = useDispatch();
 
-    const profileData = useSelector((state:any) => state.profileReducer.profileData[0].profile);
+    let allData = []
+    const profileData = useSelector((state:any) => state.profileReducer.profileData);
+    console.log(profileData);
 
+    allData.push(profileData)
+
+    // const profileDat = useSelector((state:any) => state.profileReducer.profileData[0].profile);
+    // console.log(profileDat, 'your data profile');
 
     useEffect(() => {
         dispatch(actions.getAllProfile(pageNum));
@@ -56,34 +62,31 @@ const HomeScreenView = () => {
     return true;
   };
 
+  BackHandler.addEventListener('hardwareBackPress', goBack );
   const showDetails = useSelector((state: any) => state.chatReducer.details);
 
-  let list = null
+  let flatlist = <Text>'no data'</Text>;
 
-  for (const i in profileData){
-    list = <>
+  for (const i in allData){
+    flatlist = <>
     <View style={{backgroundColor: '#fff', borderTopWidth: 0, borderBottomWidth: 0}}>
       <Header label="Gallery" home={false} />
       {!showGrid ?
-        <FlatList
-          key={'_'}
-          numColumns={2}
-          data={profileData[i]}
-          renderItem={({item, index}) =>
-            <ProfileItem
+      <><Text>Daata rendering</Text><FlatList
+            key={'_'}
+            numColumns={2}
+            data={allData}
+            renderItem={({ item, index }) => <ProfileItem
               username={item.username}
               verified={item.availability}
               level={item.level}
               department={item.department}
               image={item.profilePic}
               index={index}
-              setIndex={(e) => setShowGrid(e)}
-            />
-          }
-          // style={{marginBottom: 37, borderBottomWidth: 0 }}
-          // ItemSeparatorComponent={RenderSeperator}
-          onEndReached={getNewList}
-        />
+              setIndex={(e) => setShowGrid(e)} />}
+            // style={{marginBottom: 37, borderBottomWidth: 0 }}
+            // ItemSeparatorComponent={RenderSeperator}
+            onEndReached={getNewList} /></>
       :
         <FlatList
           key={'#'}
@@ -94,7 +97,7 @@ const HomeScreenView = () => {
           snapToInterval={width}
           showsHorizontalScrollIndicator={false}
           initialScrollIndex={showGrid}
-          data={profileData[i]}
+          data={allData}
           renderItem={({item}) =>
             <Profile
               username={item.username}
@@ -110,15 +113,11 @@ const HomeScreenView = () => {
 
     </View>
     {showDetails && <DetailsDiv details={showDetails} /> }
-    </>
+    </>;
   }
 
-  BackHandler.addEventListener('hardwareBackPress', goBack );
-
-  
-
   return (
-    {list}
+    <View>{flatlist}</View>
   );
 };
 
