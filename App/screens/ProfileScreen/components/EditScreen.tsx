@@ -100,12 +100,12 @@ const EditScreen: FC<EditScreenProps> = ({image, cancel}): JSX.Element => {
   const attributeEight = useSelector((state:any) => state.profileReducer.attributeEight);
   const username = useSelector((state:any) => state.authReducer.username);
   const profilePic = useSelector((state:any) => state.profileReducer.profilePic);
-  const profileId = useSelector((state:any) => state.profileReducer.profileId);
 
   const updateProfileHandler = async () => {
     console.log('update');
     const id = await AsyncStorage.getItem('userId');
     const token = await AsyncStorage.getItem('token');
+    const profileId = await AsyncStorage.getItem('profileId')
     console.log(validation);
     if (validation === '' && description.length >= 0){
       const data = {
