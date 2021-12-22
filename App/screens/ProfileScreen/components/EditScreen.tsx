@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -11,7 +11,7 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
-
+import * as actionTypes from '../../../redux/actions/actionTypes';
 //Components
 import {Header} from '../../../components';
 import ProfilePic from './ProfilePic';
@@ -30,19 +30,28 @@ import InstitutionChecker from '../../SignupScreens/components/InstitutionChecke
 import PersonalityBox from '../../SignupScreens/components/personalityBox';
 import ExtraButtons from './ExtraButtons';
 
+import * as actions from '../../../redux/actions/index';
+import {useDispatch, useSelector} from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const {height, width} = Dimensions.get('window');
 
 interface EditScreenProps {
   image: string;
-  cancle: () => void;
+  cancel: () => void;
 }
 
-const EditScreen: FC<EditScreenProps> = ({image, cancle}): JSX.Element => {
+const EditScreen: FC<EditScreenProps> = ({image, cancel}): JSX.Element => {
+
+  const desc = useSelector((state:any) => state.profileReducer.description);
+  const dept = useSelector((state:any) => state.profileReducer.department);
+  const lev = useSelector((state:any) => state.profileReducer.level);
   const [Institution, setInstitution] = useState(university);
+  const [description, setDescription]  = useState(desc);
 
   const [universityName, setUniversity] = useState();
-  const [department, setDepartment] = useState();
-  const [level, setLevel] = useState();
+  const [department, setDepartment] = useState(dept);
+  const [level, setLevel] = useState(lev);
 
   const [List, setList] = useState<any | null>(null);
 
@@ -51,6 +60,24 @@ const EditScreen: FC<EditScreenProps> = ({image, cancle}): JSX.Element => {
   const [personality, setPersonality] = useState<any | null>([]);
 
   const [img, setImage] = useState(image);
+  const [validation, setValidation] = useState('');
+  const [border, setBorder]:any = useState('#000');
+
+  useEffect(() => {
+    if (validation !== ''){
+      setBorder('#Fe1135');
+    } else if (validation === '') {
+      setBorder('#000');
+    }
+  }, [validation]);
+
+  const checkDescription = () => {
+    if (description === ''){
+      setValidation('This field cannot be empty');
+    } else {
+      setValidation('');
+    }
+  };
 
   const addPersonality = (e: string) => {
     setPersonality((prev: any) => [...prev, e]);
@@ -62,6 +89,54 @@ const EditScreen: FC<EditScreenProps> = ({image, cancle}): JSX.Element => {
     item.splice(idx, 1);
     setPersonality(item);
   };
+
+    const dispatch = useDispatch();
+
+  const attributeOne = useSelector((state:any) => state.profileReducer.attributeOne);
+  const attributeTwo = useSelector((state:any) => state.profileReducer.attributeTwo);
+  const attributeThree = useSelector((state:any) => state.profileReducer.attributeThree);
+  const attributeFour = useSelector((state:any) => state.profileReducer.attributeFour);
+  const attributeFive = useSelector((state:any) => state.profileReducer.attributeFive);
+  const attributeSix = useSelector((state:any) => state.profileReducer.attributeSix);
+  const attributeSeven = useSelector((state:any) => state.profileReducer.attributeSeven);
+  const attributeEight = useSelector((state:any) => state.profileReducer.attributeEight);
+  const username = useSelector((state:any) => state.authReducer.username);
+  const profilePic = useSelector((state:any) => state.profileReducer.profilePic);
+  const profileId = useSelector((state:any) => state.profileReducer.profileId);
+
+  const updateProfileHandler = async () => {
+    console.log('update');
+    const id = await AsyncStorage.getItem('userId');
+    const token = await AsyncStorage.getItem('token');
+    console.log(validation);
+    if (validation === '' && description.length >= 0){
+      const data = {
+        userId:id,
+        description:description,
+        available:true,
+        gender:'Male',
+        institution:universityName,
+        department:department,
+        level:level,
+        attributeOne:attributeOne,
+        attributeTwo:attributeTwo,
+        attributeThree:attributeThree,
+        attributeFour:attributeFour,
+        attributeFive:attributeFive,
+        attributeSix:attributeSix,
+        attributeSeven:attributeSeven,
+        attributeEight:attributeEight,
+        profilePic:profilePic,
+        token:token,
+        username:username,
+        profileId:profileId,
+      };
+      dispatch(actions.updateProfile(data));
+    }
+
+    checkDescription();
+  };
+
 
   //personality Containers
   const div1 = (
@@ -199,6 +274,7 @@ const EditScreen: FC<EditScreenProps> = ({image, cancle}): JSX.Element => {
         if (response.assets) {
           const data = response.assets[0].uri;
           setImage(data);
+          dispatch({type: actionTypes.SET_PROFILE_PIC, profilePic:data});
         }
       },
     );
@@ -207,7 +283,7 @@ const EditScreen: FC<EditScreenProps> = ({image, cancle}): JSX.Element => {
   return (
     <View style={styles.container}>
       <ScrollView>
-        <Header label="Edit"/>
+        <Header label="Edit" home={false}/>
         <TouchableWithoutFeedback onPress={selectPhoto}>
           <View style={styles.ImageContainer}>
             <ProfilePic image={img} />
@@ -216,8 +292,11 @@ const EditScreen: FC<EditScreenProps> = ({image, cancle}): JSX.Element => {
         <View style={styles.FormContainer}>
           <LargeLabeledInput
             label="Description"
-            value=""
-            setValue={(e: string) => console.log(e)} validationError={''} border={''}          />
+            value={description}
+            setValue={e => setDescription(e)}
+            validationError={validation}
+            border={border}
+          />
         </View>
         <InstitutionChecker
           active={Institution}
@@ -235,7 +314,7 @@ const EditScreen: FC<EditScreenProps> = ({image, cancle}): JSX.Element => {
             {div4}
           </View>
         </View>
-        <ExtraButtons cancel={cancle} submit={() => alert('submitted')} />
+        <ExtraButtons cancel={cancel} submit={updateProfileHandler} />
       </ScrollView>
       {List && <Modal packages={List} onSelect={onSelect} />}
     </View>
@@ -289,7 +368,3 @@ const styles = StyleSheet.create({
 });
 
 export default EditScreen;
-
-function alert(_arg0: string): void {
-  throw new Error('Function not implemented.');
-}

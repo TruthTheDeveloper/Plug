@@ -17,8 +17,7 @@ export {
   getProfilePic,
   getAllProfile,
   retrieveProfileDetail,
+  updateProfile,
 } from './profile';
-export function getProfile(): any {
-  throw new Error('Function not implemented.');
-}
+
 

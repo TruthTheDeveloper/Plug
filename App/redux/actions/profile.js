@@ -48,6 +48,66 @@ export const postProfile = (data) => {
   };
 
 
+// eslint-disable-next-line no-unused-vars
+const addAlreadyPostedProfile = (profileId, userId) => {
+  console.log('tryed addin data');
+  const formdata = new FormData();
+  formdata.append('postedId', profileId);
+  formdata.append('userId', userId);
+  axios.post('https://findplug.herokuapp.com/postid', formdata)
+  .then(response => {
+    console.log(response.data);
+  })
+  .catch((err) => console.log(err));
+};
+
+export const getAlreadyPostedProfile = (id) => {
+  console.log('tryin getting data');
+  axios.post(`https://findplug.herokuapp.com/getPosted/${id}`)
+  .then(response => {
+    console.log(response.data);
+    AsyncStorage.setItem('profileId', response.data.postedId);
+  })
+  .catch((err) => console.log(err));
+};
+
+
+export const updateProfile = (data) => {
+  console.log(data.token, 'yours');
+  return dispatch => {
+      const formdata = new FormData();
+      formdata.append('profilePic', {uri:data.profilePic, name: 'image.jpg', type: 'image/jpg'});
+      formdata.append('userId', data.userId);
+      formdata.append('sex', data.sex);
+      formdata.append('level', data.level);
+      formdata.append('department',data.department);
+      formdata.append('institution', data.institution);
+      formdata.append('description',data.description);
+      formdata.append('attributeOne',data.attributeOne);
+      formdata.append('attributeTwo',data.attributeTwo);
+      formdata.append('attributeThree',data.attributeThree);
+      formdata.append('attributeFour', data.attributeFour);
+      formdata.append('attributeFive', data.attributeFive);
+      formdata.append('attributeSix', data.attributeSix);
+      formdata.append('attributeSeven', data.attributeSeven);
+      formdata.append('attributeEight', data.attributeEight);
+      formdata.append('availabilty', data.availabilty);
+      formdata.append('username', data.username);
+    axios
+        .put(`https://findplug.herokuapp.com/profile/${data.profileId}`,formdata,{headers:{
+          Accept: 'application/json',
+          'Content-Type': 'multipart/form-data; charset=utf-8',
+          'Authorization': data.token,
+          }},)
+        .then(response => {
+          console.log(response.data, 'the response');
+          dispatch(retrieveProfileDetail(response.data.profile._id));
+        })
+        .catch((err) => console.log(err, 'its  err err err err'));
+  };
+};
+
+
 export const getProfilePic = (pic) => {
   return {
     type:actionTypes.SET_PROFILE_PIC,
