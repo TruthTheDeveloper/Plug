@@ -122,7 +122,7 @@ const Item: FC<ItemProps> = React.memo(({pageNumber, changePageNumber, queryData
       <View style={{backgroundColor: '#fff'}}>
         {!showGrid ? (
           <FlatList
-            key={'_'}
+            key={'__'}
             numColumns={2}
             data={searchedData}
             renderItem={({item, index}) => (
@@ -142,7 +142,7 @@ const Item: FC<ItemProps> = React.memo(({pageNumber, changePageNumber, queryData
           />
         ) : (
           <FlatList
-            key={'#'}
+            key={'*'}
             horizontal
             decelerationRate={'fast'}
             snapToAlignment="center"

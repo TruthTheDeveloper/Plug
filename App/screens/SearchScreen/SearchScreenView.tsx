@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, Dimensions} from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
 import * as actionTypes from '../../redux/actions/actionTypes';
@@ -33,11 +33,20 @@ const SearchScreenView = () => {
     setPageNum(prev => prev + 1);
   };
 
-  const searchTextHandler = (e:string) => {
+  useEffect(() => {
     dispatch({searchedData:[], type:actionTypes.RESET_SEARCH_DATA});
-    setSearchData(e);
-    setPageNum(1);
-  };
+      setPageNum(1);
+      setTimeout(() => {
+        dispatch(actions.searchAllProfile(searchData, pageNum));
+        setPageNum(prev => prev + 1);
+      },2000)
+  },[searchData])
+
+  // const searchTextHandler = (e:string) => {
+  //   dispatch({searchedData:[], type:actionTypes.RESET_SEARCH_DATA});
+  //   setSearchData(e);
+    
+  // };
 
   return (
     <View style={styles.container}>
@@ -50,7 +59,7 @@ const SearchScreenView = () => {
               returnKeyType="search"
               autoFocus={true}
               onSubmitEditing={searchSubmit}
-              onChangeText={(e:string) => searchTextHandler(e)}
+              onChangeText={(e:string) => setSearchData(e)}
             />
           </View>
           <View style={styles.grid2}>
