@@ -60,6 +60,6 @@ export const GET_PROFILE_ID_DATA = 'GET_PROFILE_ID_DATA';
 export const GET_SEARCH_DATA = 'GET_SEARCH_DATA';
 
 // reset searched Data
-export const RESET_SEARCH_DATA = 'RESET_SEARCH_DATA'
+export const RESET_SEARCH_DATA = 'RESET_SEARCH_DATA';
 
 

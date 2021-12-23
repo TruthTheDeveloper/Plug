@@ -33,21 +33,27 @@ const SearchScreenView = () => {
     setPageNum(prev => prev + 1);
   };
 
-  // useEffect(() => {
-  //   dispatch({searchedData:[], type:actionTypes.RESET_SEARCH_DATA});
-  //     setPageNum(1);
-  //     setTimeout(() => {
-  //       dispatch(actions.searchAllProfile(searchData, pageNum));
-  //       setPageNum(prev => prev + 1);
-  //     },2000)
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // },[searchData])
+  useEffect(() => {
+    dispatch({searchedData:[], type:actionTypes.RESET_SEARCH_DATA});
+      setPageNum(1);
+      const timer = setTimeout(() => {
+        if (searchData !== ''){
+          dispatch(actions.searchAllProfile(searchData, pageNum));
+          setSumbitSearch(true);
+          setPageNum(prev => prev + 1);
+        }
+      },500);
 
-  // const searchTextHandler = (e:string) => {
-  //   dispatch({searchedData:[], type:actionTypes.RESET_SEARCH_DATA});
-  //   setSearchData(e);
-    
-  // };
+      return () => {
+        clearTimeout(timer);
+      };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[searchData]);
+
+  const searchTextHandler = (e:string) => {
+    dispatch({searchedData:[], type:actionTypes.RESET_SEARCH_DATA});
+    setSearchData(e);
+  };
 
   return (
     <View style={styles.container}>
