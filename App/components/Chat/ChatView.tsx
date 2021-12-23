@@ -23,12 +23,12 @@ interface ChatViewProps {
   user: any;
 }
 
-const SOCKET_URL = 'https://findplug.herokuapp.com';
+const SOCKET_URL = io('https://findplug.herokuapp.com');
 let socket : any;
 const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
 
     useEffect(() => {
-         socket(io(SOCKET_URL));
+         socket(SOCKET_URL);
          socket.on('connect', () => {
              console.log('you are now connected');
          });
