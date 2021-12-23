@@ -7,7 +7,6 @@ import Icons from 'react-native-vector-icons/Feather';
 import Item from './components/Items';
 
 import {Loader} from '../../components';
-import { tapGestureHandlerProps } from 'react-native-gesture-handler/lib/typescript/handlers/TapGestureHandler';
 
 const {height, width} = Dimensions.get('window');
 
@@ -15,7 +14,7 @@ const SearchScreenView = () => {
   const [, setSearchData] = useState<number | string>();
   const [sumbitSearch, setSumbitSearch] = useState<boolean>(false);
 
-  const [loading] = useState<boolean>(tapGestureHandlerProps);
+  const [loading] = useState<boolean>(true);
 
   const searchSubmit = () => {
     setSumbitSearch(true);
