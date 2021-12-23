@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, {FC} from 'react';
-import {View, StyleSheet, Dimensions, TextInput} from 'react-native';
+import {View, StyleSheet, Dimensions, TextInput, TouchableWithoutFeedback} from 'react-native';
 
 import Icon1 from 'react-native-vector-icons/AntDesign';
 import Icon2 from 'react-native-vector-icons/Ionicons';
@@ -10,14 +10,21 @@ const {width} = Dimensions.get('window');
 interface ChatBarProps {
   text: string;
   setText: (e: string) => void;
+  send: any;
 }
 
-const ChatInputBar: FC<ChatBarProps> = ({text, setText}): JSX.Element => {
+const ChatInputBar: FC<ChatBarProps> = ({text, setText, send}): JSX.Element => {
+
+  const submitMessage = () => {
+    send(text);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.main}>
         <TextInput
           placeholder="Type message..."
+          value={text}
           style={styles.input}
           onChangeText={e => setText(e)}
         />
@@ -25,12 +32,14 @@ const ChatInputBar: FC<ChatBarProps> = ({text, setText}): JSX.Element => {
           {!text ? (
             <Icon1 name="picture" color="#000" size={30} />
           ) : (
-            <Icon2
-              name="ios-send"
-              color="#3345EB"
-              size={30}
-              style={styles.sendButton}
-            />
+            <TouchableWithoutFeedback onPress={submitMessage}>
+              <Icon2
+                name="ios-send"
+                color="#3345EB"
+                size={30}
+                style={styles.sendButton}
+              />
+            </TouchableWithoutFeedback>
           )}
         </View>
       </View>

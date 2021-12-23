@@ -28,13 +28,18 @@ let socket : any;
 const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
 
     useEffect(() => {
-         socket(SOCKET_URL);
+         socket = SOCKET_URL;
          socket.on('connect', () => {
              console.log('you are now connected');
          });
     },[]);
 
+    const sendMessage = (message: string, id: string) => {
+        socket.emit('send-message', message, id);
+    };
+
     const senderId = useSelector((state:any) => state.profileReducer.profileId);
+    // console.log(senderId, user, user.username);
     const username = useSelector((state:any) => state.authReducer.username);
     const dispatch = useDispatch();
     const [text, setText] = useState<any>();
@@ -60,6 +65,13 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
         return true;
     };
 
+    const submitMessageHandler = (msg:string, id:string) => {
+        console.log(msg, senderId);
+        sendMessage(msg, id);
+        setText('');
+
+    };
+
     BackHandler.addEventListener('hardwareBackPress', goBack);
 
   return (
@@ -74,7 +86,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
           )}
         />
       </View>
-      <ChatInputBar text={text} setText={(e: string) => setText(e)} />
+      <ChatInputBar text={text} setText={(e: string) => setText(e)}  send={(msg:string) => submitMessageHandler(msg, user.userId)} />
     </View>
   );
 };
