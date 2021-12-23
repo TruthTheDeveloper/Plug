@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import React, {useState, useEffect} from 'react';
+import React, {useState, useCallback, FC} from 'react';
 import {
   View,
   Dimensions,
@@ -25,17 +25,21 @@ const girl6 = require('../../../assets/images/girl5.jpg');
 
 const {width} = Dimensions.get('window');
 
-const Item = () => {
+
+interface ItemProps {
+  pageNumber:Number
+  changePageNumber:() => void
+  queryData:String
+}
+
+
+const Item: FC<ItemProps> = React.memo(({pageNumber, changePageNumber, queryData}): JSX.Element => {
+
   const dispatch = useDispatch();
-  const profileData = useSelector(
-    (state: any) => state.profileReducer.profileData.profile,
-  );
+  const searchedData = useSelector((state:any) => state.profileReducer.searchedData);
 
-  useEffect(() => {
-    dispatch(actions.getAllProfile());
-  }, [dispatch]);
 
-  const [data] = useState([
+  const [] = useState([
     {
       username: 'kendall_jenner',
       level: 400,
@@ -105,6 +109,11 @@ const Item = () => {
     setIndex(e);
   };
 
+  const getNewList = useCallback(() => {
+    dispatch(actions.searchAllProfile(queryData, pageNumber));
+    changePageNumber();
+  },[changePageNumber, dispatch, pageNumber, queryData]);
+
   BackHandler.addEventListener('hardwareBackPress', goBack);
 
   const showDetails = useSelector((state: any) => state.chatReducer.details);
@@ -115,7 +124,7 @@ const Item = () => {
           <FlatList
             key={'_'}
             numColumns={2}
-            data={data}
+            data={searchedData}
             renderItem={({item, index}) => (
               <ProfileItem
                 username={item.username}
@@ -128,6 +137,8 @@ const Item = () => {
               />
             )}
             style={{marginBottom: 127}}
+            onEndReached={getNewList}
+
           />
         ) : (
           <FlatList
@@ -139,7 +150,7 @@ const Item = () => {
             snapToInterval={width}
             showsHorizontalScrollIndicator={false}
             initialScrollIndex={indexx}
-            data={data}
+            data={searchedData}
             renderItem={({item}) => (
               <Profile
                 username={item.username}
@@ -156,7 +167,7 @@ const Item = () => {
       {showDetails && <DetailsDiv details={showDetails} />}
     </>
   );
-};
+});
 
 
 export default Item;

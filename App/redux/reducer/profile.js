@@ -4,6 +4,7 @@ import {updateObject} from '../utility';
 
 const initialState = {
     profileData:[],
+    searchedData:[],
     sex: null,
     department: null,
     level: null,
@@ -20,6 +21,13 @@ const initialState = {
     availabilty: true,
     profileId:null,
     profileIdData:null,
+};
+
+const setSearchData = (state, action) => {
+    return {
+        ...state,
+        searchedData:[...state.searchedData,...action.searchedData.profile],
+    };
 };
 
 const setProfileIdData = (state,action) => {
@@ -163,6 +171,8 @@ const reducer = (state = initialState, action) => {
         return setProfileData(state, action);
     case actionTypes.GET_PROFILE_ID_DATA:
         return setProfileIdData(state,action);
+    case actionTypes.GET_SEARCH_DATA:
+        return setSearchData(state,action);
     default:
         return state;
   }

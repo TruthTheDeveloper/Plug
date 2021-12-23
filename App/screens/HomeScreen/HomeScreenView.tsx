@@ -26,7 +26,7 @@ const {width} = Dimensions.get('window');
 
 
 
-const HomeScreenView = () => {
+const HomeScreenView = React.memo(() => {
     const [pageNum, setPageNum] = useState(1);
     const dispatch = useDispatch();
 
@@ -46,7 +46,7 @@ const HomeScreenView = () => {
       setPageNum(prev => prev + 1);
     },[dispatch, pageNum]);
 
-  const [data] = useState([
+  const [] = useState([
     {username: 'kendall_jenner', level: 400, department: 'English', image: girl1, availability: true, details: 'Looking for a sharp looking roomate, one who is NOT A JEW PERSON jkdkd dkmdldd mlsmlss ,m,mdd  kmlms ,dmdld mlmsllsd fdflkdfl flflkf lklf fmllf mflmlf f,mlfm fmlflf flmfmdfl flmdflmdf dfmlmdf fdmdglmdg glmdgldgmm' },
     {username: 'marysmith', level: 100, department: 'Law', image: girl2, availability: true, details: 'Looking for a roomate who can clean and cook, and also one who is NOT A JEW PERSON'},
     {username: 'clarris', level: 100, department: 'Chemistry', image: girl3, availability: true, details: 'Looking for a sharp looking roomate, one who is NOT A JEW PERSON'},
@@ -120,7 +120,7 @@ const HomeScreenView = () => {
     {showDetails && <DetailsDiv details={showDetails} /> }
     </>
   );
-};
+});
 
 
 export default HomeScreenView;

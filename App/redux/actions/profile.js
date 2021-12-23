@@ -10,6 +10,33 @@ export const postSucess = (data) => {
   };
 };
 
+export const searchedData = (data) => {
+  return {
+    type:actionTypes.GET_SEARCH_DATA,
+    searchedData:data,
+  };
+};
+
+
+
+export const searchAllProfile = (query, pageNum) => {
+  return dispatch => {
+    axios.get(`https://findplug.herokuapp.com/profile?query=${data.query}&page=${data.pageNum}`)
+    .then( response => {
+      console.log(response, 'return search data');
+      if (response.data.total !== 0){
+        dispatch(searchedData(response.data));
+      }
+    })
+    .catch(err => {
+      console.log(err, 'search err');
+    })
+    ;
+
+
+  };
+};
+
 export const postProfile = (data) => {
   console.log(data.username);
     return dispatch => {

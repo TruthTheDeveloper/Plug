@@ -5,19 +5,34 @@ import {TextInput} from 'react-native-gesture-handler';
 
 import Icons from 'react-native-vector-icons/Feather';
 import Item from './components/Items';
+import { useDispatch } from 'react-redux';
+import * as actions from '../../redux/actions/index';
 
 import {Loader} from '../../components';
 
 const {height, width} = Dimensions.get('window');
 
 const SearchScreenView = () => {
-  const [, setSearchData] = useState<number | string>();
+  const [searchData, setSearchData] = useState<number | string>();
   const [sumbitSearch, setSumbitSearch] = useState<boolean>(false);
 
-  const [loading] = useState<boolean>(true);
+  const dispatch = useDispatch();
+  const [loading] = useState<boolean>(false);
+  const [pageNum, setPageNum] = useState(1);
 
   const searchSubmit = () => {
     setSumbitSearch(true);
+
+    let search = {
+      query:searchData,
+    };
+
+    dispatch(actions.searchAllProfile(search, pageNum));
+    setPageNum(prev => prev + 1);
+  };
+
+  const incrementPageNumber = () => {
+    setPageNum(prev => prev + 1);
   };
 
   return (
@@ -26,7 +41,7 @@ const SearchScreenView = () => {
         <View style={styles.searchBar}>
           <View style={styles.grid1}>
             <TextInput
-              placeholder="Search department and level"
+              placeholder="Search department or level"
               style={styles.searchBox}
               returnKeyType="search"
               autoFocus={true}
@@ -39,7 +54,7 @@ const SearchScreenView = () => {
           </View>
         </View>
       </View>
-      {/* {sumbitSearch && <Item />} */}
+      {sumbitSearch && <Item pageNumber={pageNum} changePageNumber={incrementPageNumber} queryData={searchData}/>}
       {loading && <Loader />}
     </View>
   );

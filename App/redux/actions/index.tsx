@@ -18,6 +18,7 @@ export {
   getAllProfile,
   retrieveProfileDetail,
   updateProfile,
+  searchAllProfile,
 } from './profile';
 
 
