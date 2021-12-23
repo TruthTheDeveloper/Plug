@@ -14,7 +14,6 @@ import Icons2 from 'react-native-vector-icons/Ionicons';
 //components
 import {
   HomeScreenContainer,
-  NotificationScreenContainer,
   ChatSceenContainer,
   ProfileScreenContainer,
   SearchScreenContainer

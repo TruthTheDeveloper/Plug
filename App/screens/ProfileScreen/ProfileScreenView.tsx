@@ -47,7 +47,7 @@ const ProfileScreenView = () => {
   return (
     <View>
         {profileIdData ? <View style={styles.container}>
-      <Header label="Profile" home={false} />
+      <Header label="Profile"  />
       <ScrollView>
         <View style={styles.ProfileHeader}>
           <ProfilePic image={profileIdData.profilePic} />

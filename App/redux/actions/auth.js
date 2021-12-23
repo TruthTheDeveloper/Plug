@@ -92,6 +92,7 @@ export const auth = (username, email, password, isSignup) => {
             };
 
             url = 'https://findplug.herokuapp.com/signup';
+            console.log(url)
 
         } else {
             authData = {
@@ -121,7 +122,7 @@ export const auth = (username, email, password, isSignup) => {
                 // dispatch(checkAuthTimeout(300));
             })
             .catch(err => {
-                console.log(err.response.data.errors);
+                console.log(err, 'the eror');
                 dispatch(authFail(err.response.data.errors));
             });
     };
