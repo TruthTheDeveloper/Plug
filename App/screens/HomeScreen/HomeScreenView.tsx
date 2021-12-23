@@ -5,6 +5,7 @@ import React, {useState, useEffect, useCallback} from 'react';
 import {View, Dimensions, FlatList, BackHandler, Text} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../redux/actions/index';
+import * as actionTypes from '../../redux/actions/actionTypes';
 
 //Components
 import {Header} from '../../components/index';
@@ -31,6 +32,8 @@ const HomeScreenView = React.memo(() => {
     const dispatch = useDispatch();
 
     const profileData = useSelector((state:any) => state.profileReducer.profileData);
+    const index = useSelector((state: any) => state.generalReducer.index);
+    const showCard = useSelector((state: any) => state.generalReducer.showCard);
 
 
     console.log(profileData, 'this data');
@@ -56,17 +59,14 @@ const HomeScreenView = React.memo(() => {
     {username: 'queenjanedoe', level: 300, department: 'Statistics', image: girl6, availability: true, details: 'Looking for a roomate who can clean and cook, and also one who is NOT A JEW PERSON'},
   ]);
 
-  const [showGrid, setShowGrid] = useState<boolean>(false);
-  const [indexx, setIndex] = useState<number>();
-
   const goBack = () => {
-    setShowGrid(false);
+    dispatch({type: actionTypes.SHOW_CARDS, value: false});
     return true;
   };
 
   const openGrid = (e: number) => {
-    setShowGrid(true);
-    setIndex(e);
+    dispatch({type: actionTypes.SHOW_CARDS, value: true});
+    dispatch({type: actionTypes.INDEX, value: e });
   };
 
   BackHandler.addEventListener('hardwareBackPress', goBack );
@@ -76,7 +76,7 @@ const HomeScreenView = React.memo(() => {
     <>
     <View>
       <Header label="Gallery" />
-      {!showGrid ?
+      {!showCard ?
       <><Text>Daata rendering</Text><FlatList
             key={'_'}
             numColumns={2}
@@ -103,7 +103,7 @@ const HomeScreenView = React.memo(() => {
           disableIntervalMomentum={true}
           snapToInterval={width}
           showsHorizontalScrollIndicator={false}
-          initialScrollIndex={indexx}
+          initialScrollIndex={index}
           data={profileData}
           renderItem={({item}) =>
             <Profile

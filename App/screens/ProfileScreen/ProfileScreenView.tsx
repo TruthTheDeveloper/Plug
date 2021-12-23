@@ -18,13 +18,15 @@ import EditScreen from './components/EditScreen';
 //Image
 
 
-const {width} = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 const ProfileScreenView = () => {
     const [edit, setEdit] = useState(false);
     // const Id = useSelector((state:any) => state.profileReducer.profileId);
     const profileIdData = useSelector((state:any) => state.profileReducer.profileIdData);
     const dispatch = useDispatch();
+
+    const [, setAvailiable] = useState(true);
 
 
     useEffect(() => {
@@ -45,7 +47,7 @@ const ProfileScreenView = () => {
     },[dispatch]);
 
   return (
-    <View>
+    <View style={{height: height, backgroundColor: '#fff'}}>
         {profileIdData ? <View style={styles.container}>
       <Header label="Profile"  />
       <ScrollView>
@@ -79,8 +81,8 @@ const ProfileScreenView = () => {
           </View>
         </TouchableWithoutFeedback>
         <View style={styles.ExtraButtonsContainer}>
-          <Button iconLabel="bell-off" label="Avaliability" />
-          <Button iconLabel="log-out" label="Logout" />
+          <Button iconLabel="bell-off" label="Avaliability" setAvaliable={(e: boolean) => setAvailiable(e)} logout={() => null } />
+          <Button iconLabel="log-out" label="Logout" setAvaliable={() => null} logout={() => console.log('Logged out')} />
         </View>
       </ScrollView>
     </View> : <Text>No Data</Text>}
@@ -91,7 +93,7 @@ const ProfileScreenView = () => {
 
 const styles = StyleSheet.create({
   container: {
-    // height: height,
+    height: height - 50,
     width: width,
     backgroundColor: '#fff',
   },
@@ -158,3 +160,4 @@ const styles = StyleSheet.create({
 });
 
 export default ProfileScreenView;
+

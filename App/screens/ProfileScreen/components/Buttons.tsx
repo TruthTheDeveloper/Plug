@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, {FC, useState} from 'react';
-import {View, Text, StyleSheet, Switch} from 'react-native';
+import {View, Text, StyleSheet, Switch, TouchableWithoutFeedback} from 'react-native';
 
 import Icon from 'react-native-vector-icons/Feather';
 import {red} from '../../../config/colors';
@@ -8,13 +8,16 @@ import {red} from '../../../config/colors';
 interface ButtonProps {
   iconLabel: string;
   label: string;
+  setAvaliable: (e: boolean) => void,
+  logout: () => void
 }
 
-const Button: FC<ButtonProps> = ({iconLabel, label}): JSX.Element => {
+const Button: FC<ButtonProps> = ({iconLabel, label, setAvaliable, logout}): JSX.Element => {
   const [isEnabled, setIsEnabled] = useState(true);
 
   const toggleSwitch = () => {
     setIsEnabled(prevState => !prevState);
+    setAvaliable(isEnabled)
   };
 
   let extraButton = (
@@ -29,19 +32,42 @@ const Button: FC<ButtonProps> = ({iconLabel, label}): JSX.Element => {
   );
 
   if (iconLabel !== 'bell-off') {
-    extraButton = <Icon name="chevron-right" size={30} color={'#000'} />;
+    extraButton = <TouchableWithoutFeedback onPress={logout}>
+                      <Icon name="chevron-right" size={30} color={'#000'} />
+                  </TouchableWithoutFeedback>;
+  }
+
+  let button = 
+    <TouchableWithoutFeedback onPress={toggleSwitch}>
+      <View style={styles.container}>
+        <View style={styles.Main}>
+          <View style={styles.IconContainer}>
+            <Icon name={iconLabel} color="#fff" size={20} />
+          </View>
+          <Text style={styles.text}>{label}</Text>
+        </View>
+        <View style={styles.Extra}>{extraButton}</View>
+      </View>
+    </TouchableWithoutFeedback>
+
+  if(iconLabel !== 'bell-off'){
+    button = <TouchableWithoutFeedback onPress={logout}>
+        <View style={styles.container}>
+          <View style={styles.Main}>
+            <View style={styles.IconContainer}>
+              <Icon name={iconLabel} color="#fff" size={20} />
+            </View>
+            <Text style={styles.text}>{label}</Text>
+          </View>
+          <View style={styles.Extra}>{extraButton}</View>
+        </View>
+      </TouchableWithoutFeedback>
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.Main}>
-        <View style={styles.IconContainer}>
-          <Icon name={iconLabel} color="#fff" size={20} />
-        </View>
-        <Text style={styles.text}>{label}</Text>
-      </View>
-      <View style={styles.Extra}>{extraButton}</View>
-    </View>
+    <>
+      {button}
+    </>
   );
 };
 
