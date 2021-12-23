@@ -33,14 +33,15 @@ const SearchScreenView = () => {
     setPageNum(prev => prev + 1);
   };
 
-  useEffect(() => {
-    dispatch({searchedData:[], type:actionTypes.RESET_SEARCH_DATA});
-      setPageNum(1);
-      setTimeout(() => {
-        dispatch(actions.searchAllProfile(searchData, pageNum));
-        setPageNum(prev => prev + 1);
-      },2000)
-  },[searchData])
+  // useEffect(() => {
+  //   dispatch({searchedData:[], type:actionTypes.RESET_SEARCH_DATA});
+  //     setPageNum(1);
+  //     setTimeout(() => {
+  //       dispatch(actions.searchAllProfile(searchData, pageNum));
+  //       setPageNum(prev => prev + 1);
+  //     },2000)
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // },[searchData])
 
   // const searchTextHandler = (e:string) => {
   //   dispatch({searchedData:[], type:actionTypes.RESET_SEARCH_DATA});

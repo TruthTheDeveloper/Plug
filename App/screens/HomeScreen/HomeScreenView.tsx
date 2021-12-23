@@ -81,7 +81,7 @@ const HomeScreenView = React.memo(() => {
             key={'_'}
             numColumns={2}
             data={profileData}
-            renderItem={({ item, index }) => <ProfileItem
+            renderItem={({ item, index }) => <ProfileItem 
               username={item.username}
               verified={item.availability}
               level={item.level}
