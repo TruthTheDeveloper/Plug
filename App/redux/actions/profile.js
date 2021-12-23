@@ -21,9 +21,9 @@ export const searchedData = (data) => {
 
 export const searchAllProfile = (query, pageNum) => {
   return dispatch => {
-    axios.get(`https://findplug.herokuapp.com/profile?query=${data.query}&page=${data.pageNum}`)
+    axios.get(`https://findplug.herokuapp.com/profile?query=${query}&page=${pageNum}`)
     .then( response => {
-      console.log(response, 'return search data');
+      console.log(response.data, 'return search data');
       if (response.data.total !== 0){
         dispatch(searchedData(response.data));
       }

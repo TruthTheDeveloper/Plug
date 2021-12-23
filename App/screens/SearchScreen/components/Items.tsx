@@ -29,7 +29,7 @@ const {width} = Dimensions.get('window');
 interface ItemProps {
   pageNumber:Number
   changePageNumber:() => void
-  queryData:String
+  queryData:any
 }
 
 
@@ -131,7 +131,7 @@ const Item: FC<ItemProps> = React.memo(({pageNumber, changePageNumber, queryData
                 verified={item.availability}
                 level={item.level}
                 department={item.department}
-                image={item.image}
+                image={item.profilePic}
                 index={index}
                 setIndex={openGrid}
               />
@@ -157,7 +157,7 @@ const Item: FC<ItemProps> = React.memo(({pageNumber, changePageNumber, queryData
                 availability={item.availability}
                 level={item.level}
                 department={item.department}
-                image={item.image}
+                image={item.profilePic}
                 details={item.details}
               />
             )}

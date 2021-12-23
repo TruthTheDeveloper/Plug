@@ -2,6 +2,7 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, Dimensions} from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
+import * as actionTypes from '../../redux/actions/actionTypes';
 
 import Icons from 'react-native-vector-icons/Feather';
 import Item from './components/Items';
@@ -13,7 +14,7 @@ import {Loader} from '../../components';
 const {height, width} = Dimensions.get('window');
 
 const SearchScreenView = () => {
-  const [searchData, setSearchData] = useState<number | string>();
+  const [searchData, setSearchData]  = useState<string>();
   const [sumbitSearch, setSumbitSearch] = useState<boolean>(false);
 
   const dispatch = useDispatch();
@@ -23,16 +24,19 @@ const SearchScreenView = () => {
   const searchSubmit = () => {
     setSumbitSearch(true);
 
-    let search = {
-      query:searchData,
-    };
 
-    dispatch(actions.searchAllProfile(search, pageNum));
+    dispatch(actions.searchAllProfile(searchData, pageNum));
     setPageNum(prev => prev + 1);
   };
 
   const incrementPageNumber = () => {
     setPageNum(prev => prev + 1);
+  };
+
+  const searchTextHandler = (e:string) => {
+    dispatch({searchedData:[], type:actionTypes.RESET_SEARCH_DATA});
+    setSearchData(e);
+    setPageNum(1);
   };
 
   return (
@@ -46,7 +50,7 @@ const SearchScreenView = () => {
               returnKeyType="search"
               autoFocus={true}
               onSubmitEditing={searchSubmit}
-              onChangeText={(e: any) => setSearchData(e)}
+              onChangeText={(e:string) => searchTextHandler(e)}
             />
           </View>
           <View style={styles.grid2}>

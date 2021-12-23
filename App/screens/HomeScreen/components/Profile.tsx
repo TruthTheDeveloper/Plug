@@ -46,7 +46,7 @@ const Profile: FC<ProfileProps> = ({username, level, department, image, availabi
   return (
     <View style={{width: width}}>
     <View style={styles.container}>
-      <ImageBackground style={styles.bgImage} source={image}>
+      <ImageBackground style={styles.bgImage} source={{uri:image}}>
         <View style={styles.details}>
           <View style={styles.middleContainer}>
             <View style={styles.grid1} />

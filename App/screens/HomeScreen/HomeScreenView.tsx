@@ -36,6 +36,7 @@ const HomeScreenView = React.memo(() => {
     console.log(profileData, 'this data');
 
     useEffect(() => {
+      console.log('got here');
         dispatch(actions.getAllProfile(pageNum));
         setPageNum(prev => prev + 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps

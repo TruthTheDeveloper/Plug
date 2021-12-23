@@ -23,6 +23,12 @@ const initialState = {
     profileIdData:null,
 };
 
+const resetSearchData = (state, action) => {
+    return {
+        searchedData:action.searchedData,
+    };
+};
+
 const setSearchData = (state, action) => {
     return {
         ...state,
@@ -173,6 +179,8 @@ const reducer = (state = initialState, action) => {
         return setProfileIdData(state,action);
     case actionTypes.GET_SEARCH_DATA:
         return setSearchData(state,action);
+    case actionTypes.RESET_SEARCH_DATA:
+        return resetSearchData(state,action);
     default:
         return state;
   }
