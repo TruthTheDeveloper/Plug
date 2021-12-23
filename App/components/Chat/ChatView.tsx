@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, {useState, FC} from 'react';
+import React, {useState, FC, useEffect} from 'react';
 import {
   View,
   StyleSheet,
@@ -15,6 +15,7 @@ import ChatHeader from './ChatHeader';
 import ChatInputBar from './ChatInputBar';
 import ChatItem from './ChatItem';
 import {useSelector} from 'react-redux';
+import io from 'socket.io-client';
 
 const {height} = Dimensions.get('window');
 
@@ -22,7 +23,17 @@ interface ChatViewProps {
   user: any;
 }
 
+const SOCKET_URL = 'https://findplug.herokuapp.com';
+let socket : any;
 const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
+
+    useEffect(() => {
+         socket(io(SOCKET_URL));
+         socket.on('connect', () => {
+             console.log('you are now connected');
+         });
+    },[]);
+
     const senderId = useSelector((state:any) => state.profileReducer.profileId);
     const username = useSelector((state:any) => state.authReducer.username);
     const dispatch = useDispatch();
