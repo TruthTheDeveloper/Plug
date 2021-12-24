@@ -129,6 +129,8 @@ const EditScreen: FC<EditScreenProps> = ({image, cancel}): JSX.Element => {
         profileId:profileId,
       };
       dispatch(actions.updateProfile(data));
+
+      //check if profile data has been submitted then call cancle function
     }
 
     checkDescription();
@@ -280,7 +282,7 @@ const EditScreen: FC<EditScreenProps> = ({image, cancel}): JSX.Element => {
   return (
     <View style={styles.container}>
       <ScrollView>
-        <Header label="Edit" home={false}/>
+        <Header label="Edit"/>
         <TouchableWithoutFeedback onPress={selectPhoto}>
           <View style={styles.ImageContainer}>
             <ProfilePic image={img} />
