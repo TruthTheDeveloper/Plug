@@ -122,7 +122,7 @@ const Item: FC<ItemProps> = React.memo(({pageNumber, changePageNumber, queryData
       <View style={{backgroundColor: '#fff'}}>
         {!showGrid ? (
           <FlatList
-            key={'-'}
+            key={'()'}
             numColumns={2}
             data={searchedData}
             renderItem={({item, index}) => (
