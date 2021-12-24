@@ -82,7 +82,7 @@ const ProfileScreenView = () => {
         </TouchableWithoutFeedback>
         <View style={styles.ExtraButtonsContainer}>
           <Button iconLabel="bell-off" label="Avaliability" setAvaliable={(e: boolean) => setAvailiable(e)} logout={() => null } />
-          <Button iconLabel="log-out" label="Logout" setAvaliable={() => null} logout={() => alert('Logged out')} />
+          <Button iconLabel="log-out" label="Logout" setAvaliable={() => null} logout={() => console.log('Logged out')} />
         </View>
       </ScrollView>
     </View> : <Text>No Data</Text>}

@@ -22,6 +22,6 @@ const reducer = (state = initialState, action) => {
             return {...state, searchShowCard: action.value};
         default: return state
     }
-}
+}; 
 
 export default reducer;
