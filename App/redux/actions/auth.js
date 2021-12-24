@@ -121,7 +121,7 @@ export const auth = (username, email, password, isSignup) => {
                 // dispatch(checkAuthTimeout(300));
             })
             .catch(err => {
-                console.log(err.response.data.errors);
+                console.log(err + ' Error here');
                 dispatch(authFail(err.response.data.errors));
             });
     };

@@ -12,7 +12,7 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import * as actions from '../../../redux/actions/index';
 
-import ProfileItem from '../../HomeScreen/components/ProfileItem';
+import SearchProfileItem from './SearchProfileItem';
 import Profile from '../../HomeScreen/components/Profile';
 import DetailsDiv from '../../HomeScreen/components/DetailsDiv';
 
@@ -122,11 +122,11 @@ const Item: FC<ItemProps> = React.memo(({pageNumber, changePageNumber, queryData
       <View style={{backgroundColor: '#fff'}}>
         {!showGrid ? (
           <FlatList
-            key={'-'}
+            key={'()'}
             numColumns={2}
             data={searchedData}
             renderItem={({item, index}) => (
-              <ProfileItem
+              <SearchProfileItem
                 username={item.username}
                 verified={item.availability}
                 level={item.level}
