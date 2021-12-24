@@ -9,10 +9,13 @@ import thunk from 'redux-thunk';
 import {AppRegistry} from 'react-native';
 import App from './App';
 import {name as appName} from './app.json';
+
 import authReducer from './App/redux/reducer/auth';
 import navReducer from './App/redux/reducer/navigation';
 import chatReducer from './App/redux/reducer/chats';
 import profileReducer from './App/redux/reducer/profile';
+import generalReducer from './App/redux/reducer/generalReducer';
+
 import { persistStore, persistReducer } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -44,6 +47,7 @@ export const rootReducer = combineReducers({
   navReducer: navReducer,
   chatReducer: chatReducer,
   profileReducer:profileReducer,
+  generalReducer: generalReducer
 });
 
 
