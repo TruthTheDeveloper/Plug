@@ -3,10 +3,7 @@ import * as actionTypes from '../actions/actionTypes';
 const initialState = {
   user: null,
   DefaultRoute: 'HOME',
-  index: null,
-  searchIndex: null,
-  showCard: false,
-  searchShowCard: false,
+  
   details: null
 };
 

@@ -19,13 +19,18 @@ export const SET_DEFAULT_ROUTE = 'SET_DEFAULT_ROUTE';
 
 // HomeScreen
 export const SHOW_DETAILS = 'SHOW_DETAILS';
-export const SHOW_CARDS = 'SHOW_CARDS';
-export const SHOW_SEARCHCARDS = 'SHOW_SEARCHCARDS';
 
 // Profile
 export const SET_FIRST_SCREEN_DETAIL = 'SET_FIRST_SCREEN_DETAIL';
 export const SET_SECOND_SCREEN_DETAIL = 'SET_SECOND_SCREEN_DETAIL';
 export const SET_THIRD_SCREEN_DETAIL = 'SET_THIRD_SCREEN_DETAIL';
+
+//General Reducer
+export const LOADING = 'LOADING';
+export const SHOW_CARDS = 'SHOW_CARDS';
+export const SHOW_SEARCHCARDS = 'SHOW_SEARCHCARDS';
+export const INDEX = 'INDEX';
+export const SEARCH_INDEX = 'SEARCH_INDEX';
 
 // Attribute
 // export const SET_ATTRIBUTE_ONE = 'SET_ATTRIBUTE_ONE';
