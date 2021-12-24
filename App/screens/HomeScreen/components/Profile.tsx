@@ -33,21 +33,20 @@ interface ProfileProps {
 
 const Profile: FC<ProfileProps> = ({username, level, department, image, availability, details}): JSX.Element => {
   const dispatch = useDispatch();
-  
+
   const showDetails = () => {
     dispatch({type: actionTypes.SHOW_DETAILS, value: details});
-  }
+  };
 
   const openChat = () => {
-    dispatch({type: actionTypes.OPEN_CHAT, value: username})
-    dispatch({type: actionTypes.SET_DEFAULT_ROUTE, value: 'CHATS'})
-  }
+    dispatch({type: actionTypes.OPEN_CHAT, value: username});
+    dispatch({type: actionTypes.SET_DEFAULT_ROUTE, value: 'CHATS'});
+  };
 
   return (
     <View style={{width: width}}>
     <View style={styles.container}>
-      {/* <ImageBackground style={styles.bgImage} source={{uri:`${item.profilePic}`}}> */}
-      <ImageBackground style={styles.bgImage} source={image}>
+      <ImageBackground style={styles.bgImage} source={{uri:image}}>
         <View style={styles.details}>
           <View style={styles.middleContainer}>
             <View style={styles.grid1} />
@@ -88,11 +87,11 @@ const Profile: FC<ProfileProps> = ({username, level, department, image, availabi
                 {item.attributeSix && item.attributeSix !== '' ? <PersonslityBoxes value={item.attributeSix} /> : null}
                 {item.attributeSeven && item.attributeSeven !== '' ? <PersonslityBoxes value={item.attributeSeven} /> : null}
                 {item.attributeEight && item.attributeEight !== '' ? <PersonslityBoxes value={item.attributeEight} /> : null} */}
-                <PersonslityBoxes value='Music'/> 
-                <PersonslityBoxes value='Politics'/>
-                <PersonslityBoxes value='Potatoe'/>
-                <PersonslityBoxes value='Football'/>
-                <PersonslityBoxes value='Movies'/>
+                <PersonslityBoxes value="Music"/>
+                <PersonslityBoxes value="Politics"/>
+                <PersonslityBoxes value="Potatoe"/>
+                <PersonslityBoxes value="Football"/>
+                <PersonslityBoxes value="Movies"/>
             </View>
           </LinearGradient>
         </View>
@@ -123,12 +122,12 @@ const styles = StyleSheet.create({
     width: '100%',
     minHeight: 100,
     position: 'absolute',
-    bottom: 0
+    bottom: 0,
   },
   details2: {
     backgroundColor: 'transparent',
     paddingTop: 10,
-    paddingBottom: 8
+    paddingBottom: 8,
   },
   usernameContainer: {
     display: 'flex',
@@ -161,11 +160,11 @@ const styles = StyleSheet.create({
     width: '100%',
     display: 'flex',
     flexDirection: 'row',
-    paddingBottom: 20
+    paddingBottom: 20,
   },
   grid1: {
     height: '100%',
-    width: width - 114
+    width: width - 114,
   },
   grid2: {
     height: '100%',
@@ -180,13 +179,13 @@ const styles = StyleSheet.create({
     marginRight: 'auto',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   bubble2: {
     height: 35,
     width: 35,
     marginTop: 25,
-    backgroundColor: '#fff'
-  }
+    backgroundColor: '#fff',
+  },
 });
 

@@ -1,5 +1,4 @@
 /* eslint-disable prettier/prettier */
-/* eslint-disable no-fallthrough */
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
@@ -39,25 +38,24 @@ const PersonalityBox: FC<PersonalityProps> = ({
     if (personality.length < 5) {
       setSelected(true);
       postPersonality(name);
-      // actions.getattributeOne(name);
-      console.log(attribute);
-      switch (attribute){
-        case 'attributeOne':
-          dispatch({type: actionTypes.SET_ATTRIBUTE_ONE, attributeOne:name});
-        case 'attributeTwo':
-          dispatch({type: actionTypes.SET_ATTRIBUTE_TWO, attributeTwo:name});
-        case 'attributeThree':
-          dispatch({type: actionTypes.SET_ATTRIBUTE_THREE, attributeThree:name});
-        case 'attributeFour':
-          dispatch({type: actionTypes.SET_ATTRIBUTE_FOUR, attributeFour:name});
-        case 'attributeFive':
-          dispatch({type: actionTypes.SET_ATTRIBUTE_FIVE, attributeFive:name});
-        case 'attributeSix':
-          dispatch({type: actionTypes.SET_ATTRIBUTE_SIX, attributeSix:name});
-        case 'attributeSeven':
-          dispatch({type: actionTypes.SET_ATTRIBUTE_SEVEN, attributeSeven:name});
-        case 'attributeEight':
-          dispatch({type: actionTypes.SET_ATTRIBUTE_EIGHT, attributeEight:name});
+
+
+      if (attribute === 'attributeOne'){
+        dispatch({type: actionTypes.SET_ATTRIBUTE_FIRST, attributeOne:name});
+      } else if (attribute === 'attributeTwo'){
+        dispatch({type: actionTypes.SET_ATTRIBUTE_SECOND, attributeTwo:name});
+      } else if (attribute === 'attributeThree'){
+        dispatch({type: actionTypes.SET_ATTRIBUTE_THIRD, attributeThree:name});
+      } else if (attribute === 'attributeFour'){
+        dispatch({type: actionTypes.SET_ATTRIBUTE_FOURTH, attributeFour:name});
+      } else if (attribute === 'attributeFive'){
+        dispatch({type: actionTypes.SET_ATTRIBUTE_FIFTH, attributeFive:name});
+      } else if (attribute === 'attributeSix'){
+        dispatch({type: actionTypes.SET_ATTRIBUTE_SIXTH, attributeSix:name});
+      } else if (attribute === 'attributeSeven'){
+        dispatch({type: actionTypes.SET_ATTRIBUTE_SEVENTH, attributeSeven:name});
+      } else if (attribute === 'attributeEight'){
+        dispatch({type: actionTypes.SET_ATTRIBUTE_EIGHTH, attributeEight:name});
       }
 
     } else {
@@ -71,23 +69,22 @@ const PersonalityBox: FC<PersonalityProps> = ({
     setSelected(false);
     deletePersonality(name);
 
-    switch (attribute){
-      case 'attributeOne':
-        dispatch({type: actionTypes.SET_ATTRIBUTE_ONE, attributeOne:''});
-      case 'attributeTwo':
-        dispatch({type: actionTypes.SET_ATTRIBUTE_TWO, attributeTwo:''});
-      case 'attributeThree':
-        dispatch({type: actionTypes.SET_ATTRIBUTE_THREE, attributeThree:''});
-      case 'attributeFour':
-        dispatch({type: actionTypes.SET_ATTRIBUTE_FOUR, attributeFour:''});
-      case 'attributeFive':
-        dispatch({type: actionTypes.SET_ATTRIBUTE_FIVE, attributeFive:''});
-      case 'attributeSix':
-        dispatch({type: actionTypes.SET_ATTRIBUTE_SIX, attributeSix:''});
-      case 'attributeSeven':
-        dispatch({type: actionTypes.SET_ATTRIBUTE_SEVEN, attributeSeven:''});
-      case 'attributeEight':
-        dispatch({type: actionTypes.SET_ATTRIBUTE_EIGHT, attributeEight:''});
+    if (attribute === 'attributeOne'){
+      dispatch({type: actionTypes.SET_ATTRIBUTE_FIRST, attributeOne:''});
+    } else if (attribute === 'attributeTwo'){
+      dispatch({type: actionTypes.SET_ATTRIBUTE_SECOND, attributeTwo:''});
+    } else if (attribute === 'attributeThree'){
+      dispatch({type: actionTypes.SET_ATTRIBUTE_THIRD, attributeThree:''});
+    } else if (attribute === 'attributeFour'){
+      dispatch({type: actionTypes.SET_ATTRIBUTE_FOURTH, attributeFour:''});
+    } else if (attribute === 'attributeFive'){
+      dispatch({type: actionTypes.SET_ATTRIBUTE_FIFTH, attributeFive:''});
+    } else if (attribute === 'attributeSix'){
+      dispatch({type: actionTypes.SET_ATTRIBUTE_SIXTH, attributeSix:''});
+    } else if (attribute === 'attributeSeven'){
+      dispatch({type: actionTypes.SET_ATTRIBUTE_SEVENTH, attributeSeven:''});
+    } else if (attribute === 'attributeEight'){
+      dispatch({type: actionTypes.SET_ATTRIBUTE_EIGHTH, attributeEight:''});
     }
   };
 

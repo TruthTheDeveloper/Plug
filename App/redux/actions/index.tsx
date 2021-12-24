@@ -15,6 +15,10 @@ export {
 export {
   postProfile,
   getProfilePic,
-  getProfile,
+  getAllProfile,
   retrieveProfileDetail,
+  updateProfile,
+  searchAllProfile,
 } from './profile';
+
+

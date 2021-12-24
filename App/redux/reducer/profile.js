@@ -4,6 +4,7 @@ import {updateObject} from '../utility';
 
 const initialState = {
     profileData:[],
+    searchedData:[],
     sex: null,
     department: null,
     level: null,
@@ -11,6 +12,7 @@ const initialState = {
     description: null,
     attributeOne: '',
     attributeTwo: '',
+    attributeThree:'',
     attributeFour: '',
     attributeFive: '',
     attributeSix: '',
@@ -21,6 +23,19 @@ const initialState = {
     profileIdData:null,
 };
 
+const resetSearchData = (state, action) => {
+    return {
+        searchedData:action.searchedData,
+    };
+};
+
+const setSearchData = (state, action) => {
+    return {
+        ...state,
+        searchedData:[...state.searchedData,...action.searchedData.profile],
+    };
+};
+
 const setProfileIdData = (state,action) => {
     return updateObject(state, {
         profileIdData:action.profileIdData,
@@ -28,10 +43,14 @@ const setProfileIdData = (state,action) => {
 };
 
 const setProfileData = (state, action) => {
-    return updateObject(state,{
-        profileData:action.profileData,
-    });
+    // state.profileData.push(...action.profileData.profile)
+    return {
+        ...state,
+        profileData:[...state.profileData,...action.profileData.profile],
+    };
 };
+
+
 
 const setPostSuccess = (state, action) => {
     console.log(action.success);
@@ -64,18 +83,21 @@ const setProfilePic = (state, action) => {
 };
 
 const setAttributeOne = (state, action) => {
+    console.log(action.attributeOne, 'cas1');
     return updateObject(state, {
         attributeOne: action.attributeOne,
     });
 };
 
 const setAttributeTwo = (state, action) => {
+    console.log(action.attributeTwo, 'cas2');
     return updateObject(state, {
         attributeTwo: action.attributeTwo,
     });
 };
 
 const setAttributeThree = (state, action) => {
+    console.log(action.attributeThree, 'cas3');
     return updateObject(state, {
         attributeThree: action.attributeThree,
     });
@@ -83,6 +105,7 @@ const setAttributeThree = (state, action) => {
 
 
 const setAttributeFour = (state, action) => {
+    console.log(action.attributeFour, 'cas4');
     return updateObject(state, {
         attributeFour: action.attributeFour,
     });
@@ -90,6 +113,7 @@ const setAttributeFour = (state, action) => {
 
 
 const setAttributeFive = (state, action) => {
+    console.log(action.attributeFive, 'cas5');
     return updateObject(state, {
         attributeFive: action.attributeFive,
     });
@@ -97,6 +121,7 @@ const setAttributeFive = (state, action) => {
 
 
 const setAttributeSix = (state, action) => {
+    console.log(action.attributeSix, 'cas6');
     return updateObject(state, {
         attributeSix: action.attributeSix,
     });
@@ -104,12 +129,14 @@ const setAttributeSix = (state, action) => {
 
 
 const setAttributeSeven = (state, action) => {
+    console.log(action.attributeSeven, 'cas7');
     return updateObject(state, {
         attributeSeven: action.attributeSeven,
     });
 };
 
 const setAttributeEight = (state, action) => {
+    console.log(action.attributeEight, 'cas8');
     return updateObject(state, {
         attributeEight: action.attributeEight,
     });
@@ -127,21 +154,22 @@ const reducer = (state = initialState, action) => {
       return setSecondScreenDetail(state, action);
     case actionTypes.SET_PROFILE_PIC:
       return setProfilePic(state, action);
-    case actionTypes.SET_ATTRIBUTE_ONE:
+    case actionTypes.SET_ATTRIBUTE_FIRST:
+        console.log('got one');
         return setAttributeOne(state, action);
-    case actionTypes.SET_ATTRIBUTE_TWO:
+    case actionTypes.SET_ATTRIBUTE_SECOND:
         return setAttributeTwo(state, action);
-    case actionTypes.SET_ATTRIBUTE_THREE:
+    case actionTypes.SET_ATTRIBUTE_THIRD:
         return setAttributeThree(state, action);
-    case actionTypes.SET_ATTRIBUTE_FOUR:
+    case actionTypes.SET_ATTRIBUTE_FOURTH:
         return setAttributeFour(state, action);
-    case actionTypes.SET_ATTRIBUTE_FIVE:
+    case actionTypes.SET_ATTRIBUTE_FIFTH:
         return setAttributeFive(state, action);
-    case actionTypes.SET_ATTRIBUTE_SIX:
+    case actionTypes.SET_ATTRIBUTE_SIXTH:
         return setAttributeSix(state,action);
-    case actionTypes.SET_ATTRIBUTE_SEVEN:
+    case actionTypes.SET_ATTRIBUTE_SEVENTH:
         return setAttributeSeven(state, action);
-    case actionTypes.SET_ATTRIBUTE_EIGHT:
+    case actionTypes.SET_ATTRIBUTE_EIGHTH:
         return setAttributeEight(state,action);
     case actionTypes.POST_SUCCESS:
         return setPostSuccess(state,action);
@@ -149,6 +177,10 @@ const reducer = (state = initialState, action) => {
         return setProfileData(state, action);
     case actionTypes.GET_PROFILE_ID_DATA:
         return setProfileIdData(state,action);
+    case actionTypes.GET_SEARCH_DATA:
+        return setSearchData(state,action);
+    case actionTypes.RESET_SEARCH_DATA:
+        return resetSearchData(state,action);
     default:
         return state;
   }

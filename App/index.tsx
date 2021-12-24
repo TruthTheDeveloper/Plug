@@ -14,5 +14,5 @@ export {
         NotificationScreenContainer,
         ChatSceenContainer,
         ProfileScreenContainer,
-        SearchScreenContainer
+        SearchScreenContainer,
     };

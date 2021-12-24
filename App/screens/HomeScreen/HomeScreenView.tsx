@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import React, {useState, useEffect} from 'react';
-import {View, Dimensions, FlatList, BackHandler} from 'react-native';
+import React, {useState, useEffect, useCallback} from 'react';
+import {View, Dimensions, FlatList, BackHandler, Text} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../redux/actions/index';
 
@@ -24,16 +24,31 @@ const girl6 = require('../../assets/images/girl5.jpg');
 
 const {width} = Dimensions.get('window');
 
-const HomeScreenView = () => {
+
+
+const HomeScreenView = React.memo(() => {
+    const [pageNum, setPageNum] = useState(1);
     const dispatch = useDispatch();
-    const profileData = useSelector((state:any) => state.profileReducer.profileData.profile);
+
+    const profileData = useSelector((state:any) => state.profileReducer.profileData);
+
+
+    console.log(profileData, 'this data');
 
     useEffect(() => {
-        dispatch(actions.getProfile());
-    },[dispatch]);
+      console.log('got here');
+        dispatch(actions.getAllProfile(pageNum));
+        setPageNum(prev => prev + 1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[]);
 
-  const [data] = useState([
-    {username: 'kendall_jenner', level: 400, department: 'English', image: girl1, availability: true, details: 'Looking for a sharp looking roomate, one who is NOT A JEW PERSON' },
+    const getNewList = useCallback(() => {
+      dispatch(actions.getAllProfile(pageNum));
+      setPageNum(prev => prev + 1);
+    },[dispatch, pageNum]);
+
+  const [] = useState([
+    {username: 'kendall_jenner', level: 400, department: 'English', image: girl1, availability: true, details: 'Looking for a sharp looking roomate, one who is NOT A JEW PERSON jkdkd dkmdldd mlsmlss ,m,mdd  kmlms ,dmdld mlmsllsd fdflkdfl flflkf lklf fmllf mflmlf f,mlfm fmlflf flmfmdfl flmdflmdf dfmlmdf fdmdglmdg glmdgldgmm' },
     {username: 'marysmith', level: 100, department: 'Law', image: girl2, availability: true, details: 'Looking for a roomate who can clean and cook, and also one who is NOT A JEW PERSON'},
     {username: 'clarris', level: 100, department: 'Chemistry', image: girl3, availability: true, details: 'Looking for a sharp looking roomate, one who is NOT A JEW PERSON'},
     {username: 'officialSasha', level: 200, department: 'Computer Science', image: girl4, availability: true, details: 'Looking for a roomate who can clean and cook, and also one who is NOT A JEW PERSON'},
@@ -42,44 +57,43 @@ const HomeScreenView = () => {
   ]);
 
   const [showGrid, setShowGrid] = useState<boolean>(false);
-  const [indexx, setIndex] = useState<number>()
+  const [indexx, setIndex] = useState<number>();
 
   const goBack = () => {
-    setShowGrid(false)
-    return true
-  }
+    setShowGrid(false);
+    return true;
+  };
 
   const openGrid = (e: number) => {
-    setShowGrid(true)
-    setIndex(e)
-  }
+    setShowGrid(true);
+    setIndex(e);
+  };
 
   BackHandler.addEventListener('hardwareBackPress', goBack );
-
   const showDetails = useSelector((state: any) => state.chatReducer.details);
 
   return (
     <>
-    <View style={{backgroundColor: '#fff'}}>
+    <View>
       <Header label="Gallery" />
       {!showGrid ?
-        <FlatList
-          key={'_'}
-          numColumns={2}
-          data={data}
-          renderItem={({item, index}) =>
-            <ProfileItem
+      <><Text>Daata rendering</Text><FlatList
+            key={'_'}
+            numColumns={2}
+            data={profileData}
+            renderItem={({ item, index }) => <ProfileItem 
               username={item.username}
               verified={item.availability}
               level={item.level}
               department={item.department}
-              image={item.image}
+              image={item.profilePic}
               index={index}
               setIndex={openGrid}
-            /> 
-          }
-          style={{marginBottom: 37}}
-        />
+              />
+            }
+            style={{ marginBottom: 37 }}
+            onEndReached={getNewList}
+            /></>
       :
         <FlatList
           key={'#'}
@@ -90,25 +104,24 @@ const HomeScreenView = () => {
           snapToInterval={width}
           showsHorizontalScrollIndicator={false}
           initialScrollIndex={indexx}
-          data={data}
+          data={profileData}
           renderItem={({item}) =>
             <Profile
               username={item.username}
               availability={item.availability}
               level={item.level}
               department={item.department}
-              image={item.image}
-              details={item.details}
+              image={item.profilePic}
+              details={item.description}
             />
           }
         />
       }
-
     </View>
     {showDetails && <DetailsDiv details={showDetails} /> }
     </>
   );
-};
+});
 
 
 export default HomeScreenView;

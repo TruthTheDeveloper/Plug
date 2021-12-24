@@ -13,6 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 //Components
 import ProfilePic from './components/ProfilePic';
 import Button from './components/Buttons';
+import EditScreen from './components/EditScreen';
 
 //Image
 
@@ -20,7 +21,7 @@ import Button from './components/Buttons';
 const {width} = Dimensions.get('window');
 
 const ProfileScreenView = () => {
-    const [edit, setEdit] = useState(false)
+    const [edit, setEdit] = useState(false);
     // const Id = useSelector((state:any) => state.profileReducer.profileId);
     const profileIdData = useSelector((state:any) => state.profileReducer.profileIdData);
     const dispatch = useDispatch();
@@ -46,7 +47,7 @@ const ProfileScreenView = () => {
   return (
     <View>
         {profileIdData ? <View style={styles.container}>
-      <Header label="Profile" />
+      <Header label="Profile" home={false} />
       <ScrollView>
         <View style={styles.ProfileHeader}>
           <ProfilePic image={profileIdData.profilePic} />
@@ -83,7 +84,7 @@ const ProfileScreenView = () => {
         </View>
       </ScrollView>
     </View> : <Text>No Data</Text>}
-    {edit && <EditScreen image={image} cancle={() => setEdit(false)} /> }
+    {edit && <EditScreen image={profileIdData.profilePic} cancel={() => setEdit(false)} /> }
     </View>
   );
 };
