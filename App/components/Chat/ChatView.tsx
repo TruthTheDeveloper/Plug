@@ -1,5 +1,5 @@
-import React, { useState, FC } from 'react';
-import { View, Text, StyleSheet, Dimensions, FlatList, BackHandler } from 'react-native';
+import React, { useState, FC, useEffect } from 'react';
+import { View, Text, StyleSheet, Dimensions, FlatList, BackHandler, Keyboard, EmitterSubscription } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 import * as actionTypes from '../../redux/actions/actionTypes';
@@ -15,6 +15,7 @@ interface ChatViewProps {
 }
 
 const ChatView:FC<ChatViewProps> = ({user}):JSX.Element => {
+    const [newHeight, setHeight] = useState(height - 135)
     const dispatch = useDispatch();
     const [text, setText] = useState<any>();
     const [chats, setChats] = useState([
@@ -27,12 +28,30 @@ const ChatView:FC<ChatViewProps> = ({user}):JSX.Element => {
         return true
     }
 
-    BackHandler.addEventListener('hardwareBackPress', goBack )
+    BackHandler.addEventListener('hardwareBackPress', goBack );
+
+    useEffect(() => {
+        let keyboardDidShowListener: EmitterSubscription;
+
+        keyboardDidShowListener = Keyboard.addListener("keyboardDidShow", keyboardDidShow);
+
+        return () => {
+            if (keyboardDidShowListener) {
+                keyboardDidShowListener.remove();
+                setHeight(height - 135)
+            }
+        };
+    }, []);
+
+    const keyboardDidShow = (e: any) => {
+        setHeight(e.endCoordinates.height);
+        
+    }
 
     return(
-        <View style={styles.container}>
+        <View style={[styles.container]}>
             <ChatHeader username={user} active back={goBack} />
-            <View style={styles.chatSection}>
+            <View style={[styles.chatSection, {height: newHeight}]}>
                 <FlatList 
                     data={chats}
                     keyExtractor={item => item.sender}
@@ -46,13 +65,12 @@ const ChatView:FC<ChatViewProps> = ({user}):JSX.Element => {
 
 const styles = StyleSheet.create({
     container: {
-        height: height,
         width: '100%',
         backgroundColor: '#fff'
     },
     chatSection: {
         height: height - 135,
-        backgroundColor: '#FFF'
+        backgroundColor: 'red'
     }
 });
 
