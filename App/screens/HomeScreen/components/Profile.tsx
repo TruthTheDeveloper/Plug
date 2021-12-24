@@ -29,10 +29,22 @@ interface ProfileProps {
     department: string,
     image: any,
     availability: boolean,
-    details: string
+    details: string,
+    attributeOne:string,
+    attributeTwo:string,
+    attributeThree:string,
+    attributeFour:string,
+    attributeFive:string,
+    attributeSix:string,
+    attributeSeven:string,
+    attributeEight:string
 }
 
-const Profile: FC<ProfileProps> = ({userId, username, level, department, image, availability, details}): JSX.Element => {
+const Profile: FC<ProfileProps> = ({
+  userId, username, level, department, image, availability, details,
+  attributeOne, attributeTwo, attributeThree, attributeFour, attributeFive,
+  attributeSix, attributeSeven, attributeEight
+}): JSX.Element => {
   const dispatch = useDispatch();
 
   const showDetails = () => {
@@ -80,19 +92,19 @@ const Profile: FC<ProfileProps> = ({userId, username, level, department, image, 
               {level}l, {department}
             </Text>
             <View style={styles.personalityContainer}>
-                {/* {item.attributeOne && item.attributeOne !== '' ? <PersonslityBoxes value={item.attributeOne} /> : null}
-                {item.attributeTwo && item.attributeTwo !== '' ? <PersonslityBoxes value={item.attributeTwo} /> : null}
-                {item.attributeThree && item.attributeThree !== '' ? <PersonslityBoxes value={item.attributeThree} /> : null}
-                {item.attributeFour && item.attributeFour !== '' ? <PersonslityBoxes value={item.attributeFour} /> : null}
-                {item.attributeFive && item.attributeFive !== '' ? <PersonslityBoxes value={item.attributeFive} /> : null}
-                {item.attributeSix && item.attributeSix !== '' ? <PersonslityBoxes value={item.attributeSix} /> : null}
-                {item.attributeSeven && item.attributeSeven !== '' ? <PersonslityBoxes value={item.attributeSeven} /> : null}
-                {item.attributeEight && item.attributeEight !== '' ? <PersonslityBoxes value={item.attributeEight} /> : null} */}
-                <PersonslityBoxes value="Music"/>
+                {attributeOne && attributeOne !== '' ? <PersonslityBoxes value={attributeOne} /> : null}
+                {attributeTwo && attributeTwo !== '' ? <PersonslityBoxes value={attributeTwo} /> : null}
+                {attributeThree && attributeThree !== '' ? <PersonslityBoxes value={attributeThree} /> : null}
+                {attributeFour && attributeFour !== '' ? <PersonslityBoxes value={attributeFour} /> : null}
+                {attributeFive && attributeFive !== '' ? <PersonslityBoxes value={attributeFive} /> : null}
+                {attributeSix && attributeSix !== '' ? <PersonslityBoxes value={attributeSix} /> : null}
+                {attributeSeven && attributeSeven !== '' ? <PersonslityBoxes value={attributeSeven} /> : null}
+                {attributeEight && attributeEight !== '' ? <PersonslityBoxes value={attributeEight} /> : null}
+                {/* <PersonslityBoxes value="Music"/>
                 <PersonslityBoxes value="Politics"/>
                 <PersonslityBoxes value="Potatoe"/>
                 <PersonslityBoxes value="Football"/>
-                <PersonslityBoxes value="Movies"/>
+                <PersonslityBoxes value="Movies"/> */}
             </View>
           </LinearGradient>
         </View>

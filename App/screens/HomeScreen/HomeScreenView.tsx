@@ -75,7 +75,7 @@ const HomeScreenView = React.memo(() => {
   return (
     <>
     <View>
-      <Header label="Gallery" />
+      <Header label="All Student" />
       {!showCard ?
       <><Text>Daata rendering</Text><FlatList
             key={'_'}
@@ -114,6 +114,14 @@ const HomeScreenView = React.memo(() => {
               department={item.department}
               image={item.profilePic}
               details={item.description}
+              attributeOne={item.attributeOne}
+              attributeTwo={item.attributeTwo}
+              attributeThree={item.attributeThree}
+              attributeFour={item.attributeFour}
+              attributeFive={item.attributeFive}
+              attributeSix={item.attributeSix}
+              attributeSeven={item.attributeSeven}
+              attributeEight={item.attributeEight}
             />
           }
         />

@@ -39,6 +39,7 @@ const SignupScreen1 = () => {
 
 
   const setAvailableState = (e:boolean) => {
+    console.log(e);
     setAvailable(e);
   };
 
@@ -87,7 +88,7 @@ const SignupScreen1 = () => {
       <Text style={styles.header}>Basic details</Text>
       <View style={styles.formContainer}>
         <LargeLabeledInput label="Roomate Description" setValue={inputHandler} value={description} validationError={validation} border={border}/>
-        <AvailabilitySwitch availableState={setAvailableState}/>
+        <AvailabilitySwitch availableState={(e:boolean) => setAvailableState(e)}/>
         <SexCheckbox genderState={setGenderState}/>
         <ContinueButton label="Continue" continue={next} loading={loading}/>
       </View>

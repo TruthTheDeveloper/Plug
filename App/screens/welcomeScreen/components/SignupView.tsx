@@ -51,6 +51,10 @@ const SignupView = () => {
       setValidPassword(authError.password);
     } else if (authError.username){
       setValidUsername(authError.username);
+    } else if (authError === undefined && !authError.email && !authError.password && !authError.username){
+      setValidPassword('');
+      setValidEmail('');
+      setValidUsername('');
     }
 
     // let auth = authToken === false;

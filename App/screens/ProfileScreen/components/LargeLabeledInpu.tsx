@@ -6,9 +6,11 @@ interface LabelProps {
   label: string;
   setValue:(e:string)=>void,
   value:string,
+  validationError:string
+  border:string
 }
 
-const LargeLabeledInput: FC<LabelProps> = ({setValue, label, value}): JSX.Element => {
+const LargeLabeledInput: FC<LabelProps> = ({setValue, label, value, validationError, border}): JSX.Element => {
 
   const inputHandler = (e:string) => {
     setValue(e);
@@ -16,6 +18,7 @@ const LargeLabeledInput: FC<LabelProps> = ({setValue, label, value}): JSX.Elemen
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
+      {validationError !== '' ? <Text style={validationStyle.validationColor}>{validationError}</Text> : null }
       <TextInput
         style={styles.input}
         numberOfLines={4}
@@ -29,6 +32,12 @@ const LargeLabeledInput: FC<LabelProps> = ({setValue, label, value}): JSX.Elemen
     </View>
   );
 };
+
+const validationStyle = StyleSheet.create({
+  validationColor:{
+    color:'#FE1135',
+  },
+});
 
 const styles = StyleSheet.create({
   container: {

@@ -39,11 +39,12 @@ const {height, width} = Dimensions.get('window');
 interface EditScreenProps {
   image: string;
   cancel: () => void;
+  available:boolean
 }
 
-const EditScreen: FC<EditScreenProps> = ({image, cancel}): JSX.Element => {
+const EditScreen: FC<EditScreenProps> = ({image, cancel, available}): JSX.Element => {
 
-  const profileIdData = useSelector((state:any) => state.profileReducer.profileIdData)
+  const profileIdData = useSelector((state:any) => state.profileReducer.profileIdData);
   const [Institution, setInstitution] = useState(university);
   const [description, setDescription]  = useState(profileIdData.description);
 
@@ -107,10 +108,20 @@ const EditScreen: FC<EditScreenProps> = ({image, cancel}): JSX.Element => {
     const profileId = await AsyncStorage.getItem('profileId');
     console.log(validation);
     if (validation === '' && description.length >= 0){
+      console.log(available, 'its available');
+      dispatch({type:actionTypes.RESET_ATTRIBUTE_ONE, attributeOne:''});
+      dispatch({type:actionTypes.RESET_ATTRIBUTE_TWO, attributeTwo:''});
+      dispatch({type:actionTypes.RESET_ATTRIBUTE_THREE, attributeThree:''});
+      dispatch({type:actionTypes.RESET_ATTRIBUTE_FOUR, attributeFour:''});
+      dispatch({type:actionTypes.RESET_ATTRIBUTE_FIVE, attributeFive:''});
+      dispatch({type:actionTypes.RESET_ATTRIBUTE_SIX, attributeSix:''});
+      dispatch({type:actionTypes.RESET_ATTRIBUTE_SEVEN, attributeSeven:''});
+      dispatch({type:actionTypes.RESET_ATTRIBUTE_EIGHT, attributeEight:''});
+
       const data = {
         userId:id,
         description:description,
-        available:true,
+        available:available,
         sex:profileIdData.sex,
         institution:universityName,
         department:department,
