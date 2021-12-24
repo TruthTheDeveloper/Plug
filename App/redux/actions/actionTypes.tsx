@@ -19,6 +19,8 @@ export const SET_DEFAULT_ROUTE = 'SET_DEFAULT_ROUTE';
 
 // HomeScreen
 export const SHOW_DETAILS = 'SHOW_DETAILS';
+export const SHOW_CARDS = 'SHOW_CARDS';
+export const SHOW_SEARCHCARDS = 'SHOW_SEARCHCARDS';
 
 // Profile
 export const SET_FIRST_SCREEN_DETAIL = 'SET_FIRST_SCREEN_DETAIL';
