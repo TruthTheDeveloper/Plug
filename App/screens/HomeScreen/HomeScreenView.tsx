@@ -14,6 +14,7 @@ import ProfileItem from './components/ProfileItem';
 import Profile from './components/Profile';
 import DetailsDiv from './components/DetailsDiv';
 
+
 //Imported Images
 const girl1 = require('../../assets/images/girl.jpg');
 const girl2 = require('../../assets/images/girl1.jpg');
@@ -32,7 +33,7 @@ const HomeScreenView = React.memo(() => {
     const dispatch = useDispatch();
 
     const profileData = useSelector((state:any) => state.profileReducer.profileData);
-    const index = useSelector((state: any) => state.generalReducer.index);
+    const indx = useSelector((state: any) => state.generalReducer.index);
     const showCard = useSelector((state: any) => state.generalReducer.showCard);
 
 
@@ -103,11 +104,11 @@ const HomeScreenView = React.memo(() => {
           disableIntervalMomentum={true}
           snapToInterval={width}
           showsHorizontalScrollIndicator={false}
-          initialScrollIndex={index}
+          initialScrollIndex={indx}
           data={profileData}
           renderItem={({item}) =>
             <Profile
-              userId={item.id}
+              receiverId={item.socketId}
               username={item.username}
               availability={item.availability}
               level={item.level}

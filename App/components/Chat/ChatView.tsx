@@ -25,30 +25,38 @@ interface ChatViewProps {
 
 const SOCKET_URL = io('https://findplug.herokuapp.com');
 let socket : any;
+let socketId : any;
+let message:string;
 const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
-
+  const profileIdData = useSelector((state:any) => state.profileReducer.profileIdData);
     useEffect(() => {
          socket = SOCKET_URL;
          socket.on('connect', () => {
              console.log('you are now connected');
+             socketId = socket.id;
+         });
+         socket.on('receive-message', (msg:string) => {
+          message = msg;
          });
     },[]);
 
-    const sendMessage = (message: string, id: string) => {
+    const sendMessage = (msg: string, id: string) => {
         socket.emit('send-message', message, id);
+
     };
 
-    const senderId = useSelector((state:any) => state.profileReducer.profileId);
+    // const senderId = useSelector((state:any) => state.profileReducer.profileId);
     // console.log(senderId, user, user.username);
     const username = useSelector((state:any) => state.authReducer.username);
     const dispatch = useDispatch();
     const [text, setText] = useState<any>();
+    // 'Hello there i am' + username + ", I think we've met somewhere in school"
     const [chats] = useState([
         {
-            receiverId:user.userId,
+            receiverId:user.receiverId,
             receiverName: user.username,
-            message:'Hello there I am ' + username + ", I think we've met somewhere in school",
-            senderId:senderId,
+            message:message,
+            senderId:profileIdData.socketId || socketId,
             senderName:username,
         },
         {
@@ -65,9 +73,9 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
         return true;
     };
 
-    const submitMessageHandler = (msg:string, id:string) => {
-        console.log(msg, senderId);
-        sendMessage(msg, id);
+    const submitMessageHandler = (msg:string) => {
+        console.log(msg, chats[0].senderId);
+        sendMessage(msg, chats[0].senderId);
         setText('');
 
     };
@@ -86,7 +94,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
           )}
         />
       </View>
-      <ChatInputBar text={text} setText={(e: string) => setText(e)}  send={(msg:string) => submitMessageHandler(msg, user.userId)} />
+      <ChatInputBar text={text} setText={(e: string) => setText(e)}  send={(msg:string) => submitMessageHandler(msg)} />
     </View>
   );
 };

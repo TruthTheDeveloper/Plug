@@ -23,7 +23,7 @@ const verifiedIcon = require('../../../assets/images/verified.png');
 const {height, width} = Dimensions.get('window');
 
 interface ProfileProps {
-    userId:string,
+    receiverId:any,
     username: string,
     level: number,
     department: string,
@@ -41,9 +41,9 @@ interface ProfileProps {
 }
 
 const Profile: FC<ProfileProps> = ({
-  userId, username, level, department, image, availability, details,
+  receiverId, username, level, department, image, availability, details,
   attributeOne, attributeTwo, attributeThree, attributeFour, attributeFive,
-  attributeSix, attributeSeven, attributeEight
+  attributeSix, attributeSeven, attributeEight,
 }): JSX.Element => {
   const dispatch = useDispatch();
 
@@ -52,7 +52,7 @@ const Profile: FC<ProfileProps> = ({
   };
 
   const openChat = () => {
-    dispatch({type: actionTypes.OPEN_CHAT, value: {username, userId}});
+    dispatch({type: actionTypes.OPEN_CHAT, value: {username, receiverId}});
     dispatch({type: actionTypes.SET_DEFAULT_ROUTE, value: 'CHATS'});
   };
 

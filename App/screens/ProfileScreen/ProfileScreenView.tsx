@@ -27,7 +27,7 @@ const ProfileScreenView = () => {
     const dispatch = useDispatch();
 
 
-    const [available, setAvailiable] = useState(true);
+    const [available, setAvailiable] = useState(profileIdData.availability);
 
 
     useEffect(() => {

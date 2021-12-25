@@ -143,6 +143,58 @@ const setAttributeEight = (state, action) => {
 };
 
 
+const resetAttributeOne = (state, action) => {
+    return updateObject(state, {
+        attributeOne:action.attributeOne,
+    });
+};
+
+
+const resetAtrributeTwo = (state, action) => {
+    return updateObject(state, {
+        attributeThree:action.attributeTwo,
+    });
+};
+
+const resetAttributeThree = (state, action) => {
+    return updateObject(state, {
+        attributeThree:action.attributeThree,
+    });
+};
+
+
+const resetAtrributeFour = (state, action) => {
+    return updateObject(state, {
+        attributeFour:action.attributeFour,
+    });
+};
+
+
+const resetAttributeFive = (state, action) => {
+    return updateObject(state, {
+        attributeFive:action.attributeFive,
+    });
+};
+
+const resetAtrributeSix = (state, action) => {
+    return updateObject(state, {
+        attributeSix:action.attributeSix,
+    });
+};
+
+const resetAttributeSeven = (state, action) => {
+    return updateObject(state,{
+        attributeSeven:action.attributeSeven,
+    });
+};
+
+
+const resetAttributeEight = (state, action) => {
+    return updateObject(state, {
+        attributeEight:action.attributeEight,
+    });
+};
+
 
 
 
@@ -181,6 +233,25 @@ const reducer = (state = initialState, action) => {
         return setSearchData(state,action);
     case actionTypes.RESET_SEARCH_DATA:
         return resetSearchData(state,action);
+    case actionTypes.RESET_ATTRIBUTE_ONE:
+        return resetAttributeOne(state, action);
+    case actionTypes.RESET_ATTRIBUTE_TWO:
+        return resetAtrributeTwo(state, action);
+    case actionTypes.RESET_ATTRIBUTE_THREE:
+        return resetAttributeThree(state, action);
+    case actionTypes.RESET_ATTRIBUTE_FOUR:
+        return resetAtrributeFour(state, action);
+    case actionTypes.RESET_ATTRIBUTE_FIVE:
+        return resetAttributeFive(state, action);
+    case actionTypes.RESET_ATTRIBUTE_SIX:
+        return resetAtrributeSix(state, action);
+    case actionTypes.RESET_ATTRIBUTE_SEVEN:
+        return resetAttributeSeven(state,action);
+    case actionTypes.RESET_ATTRIBUTE_EIGHT:
+        return resetAttributeEight(state, action);
+
+
+
     default:
         return state;
   }

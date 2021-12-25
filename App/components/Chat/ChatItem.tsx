@@ -10,10 +10,10 @@ interface ChatProps {
 }
 
 const ChatItem: FC<ChatProps> = ({id, message}): JSX.Element => {
-    const profileData = useSelector((state:any) => state.profileReducer.profileId);
+  const profileIdData = useSelector((state:any) => state.profileReducer.profileIdData.socketId);
     return (
         <View style={styles.container}>
-        {id === profileData ? (
+        {id === profileIdData ? (
             <View style={styles.box2}>
             <Text style={styles.text}>{message}</Text>
             </View>
