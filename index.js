@@ -18,6 +18,10 @@ import generalReducer from './App/redux/reducer/generalReducer';
 
 import { persistStore, persistReducer } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Provider} from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+// import {store} from './index';
+// import { persistor } from './index';
 
 
 // Alternative solution
@@ -63,7 +67,11 @@ export const persistor = persistStore(store);
 
 
 const appUseRedux = () => (
-      <App />
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+    <App />
+    </PersistGate>
+  </Provider>
 );
 
 AppRegistry.registerComponent(appName, () => appUseRedux);

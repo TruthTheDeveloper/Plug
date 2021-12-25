@@ -14,6 +14,8 @@ const SignupScreensContainer = () => {
 
   let RenderScreen = null;
 
+  console.log('success id', success);
+
   useEffect(() => {
     AsyncStorage.getItem('profileId').then((result) => {
       setPostSucess(result);

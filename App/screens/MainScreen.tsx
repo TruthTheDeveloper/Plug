@@ -13,6 +13,7 @@ const MainScreen = () => {
 
 
   const authToken = useSelector((state:any)=> state.authReducer.token);
+  const success = useSelector((state:any)=> state.profileReducer.profileId);
 
   let RenderScreen = null;
 
@@ -22,10 +23,13 @@ const MainScreen = () => {
     });
   },[auth, authToken]);
 
+  console.log(authToken);
 
-  if (auth){
+
+
+  if (auth !== null && success === null){
     RenderScreen = <SignUpScreensContainer/>;
-  } else {
+  } else if (auth === null && success === null ) {
     RenderScreen = <AuthScreenContainer/>;
   }
 
