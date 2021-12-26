@@ -21,15 +21,10 @@ import ProfilePhoto from './ProfilePhoto';
 import PersonalityBox from './personalityBox';
 import ContinueButton from './ContinueButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import io from 'socket.io-client';
-
-
+import uuid from 'react-native-uuid';
 
 const {height, width} = Dimensions.get('window');
-
-const SOCKET_URL = io('https://findplug.herokuapp.com');
-let socket : any;
-let socketId : any;
+let socketId: any;
 const SignupScreen3 = () => {
   const [personality, setPersonality] = useState<any | null>([]);
 
@@ -38,14 +33,9 @@ const SignupScreen3 = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    console.log('useEffect', socketId)
-    socket = SOCKET_URL;
-    socket.on('connect', () => {
-        console.log('you are now connected');
-        socketId = socket.id;
-        console.log(socketId, 'socketId');
-    });
+    socketId = uuid.v4();
   },[]);
+
 
   const setImage = (img: any) => {
     setProfilePic(img);
