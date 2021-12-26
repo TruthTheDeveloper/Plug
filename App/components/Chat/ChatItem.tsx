@@ -1,19 +1,21 @@
 /* eslint-disable prettier/prettier */
 import React, {FC} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 
 
 interface ChatProps {
   id: any;
   message: string;
+  socket:any
 }
 
-const ChatItem: FC<ChatProps> = ({id, message}): JSX.Element => {
-  const profileIdData = useSelector((state:any) => state.profileReducer.profileIdData.socketId);
+const ChatItem: FC<ChatProps> = ({id, message, socket}): JSX.Element => {
+  console.log(socket, 'your socket id')
+  // const profileIdData = useSelector((state:any) => state.profileReducer.profileIdData.socketId);
     return (
         <View style={styles.container}>
-        {id === profileIdData ? (
+        {id === socket ? (
             <View style={styles.box2}>
             <Text style={styles.text}>{message}</Text>
             </View>
