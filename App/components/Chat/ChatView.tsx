@@ -1,6 +1,7 @@
 import React, { useState, FC, useEffect } from 'react';
-import { View, Text, StyleSheet, Dimensions, FlatList, BackHandler, Keyboard, EmitterSubscription } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, FlatList, BackHandler, Keyboard, EmitterSubscription, KeyboardAvoidingView } from 'react-native';
 import { useDispatch } from 'react-redux';
+import {launchImageLibrary} from 'react-native-image-picker';
 
 import * as actionTypes from '../../redux/actions/actionTypes';
 
@@ -32,24 +33,41 @@ const ChatView:FC<ChatViewProps> = ({user}):JSX.Element => {
 
     useEffect(() => {
         let keyboardDidShowListener: EmitterSubscription;
+        let keyboardDidHideListener: EmitterSubscription;
 
         keyboardDidShowListener = Keyboard.addListener("keyboardDidShow", keyboardDidShow);
+        keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', keyboardDidHide)
 
         return () => {
             if (keyboardDidShowListener) {
                 keyboardDidShowListener.remove();
-                setHeight(height - 135)
             }
         };
     }, []);
 
     const keyboardDidShow = (e: any) => {
-        setHeight(e.endCoordinates.height);
-        
+        setHeight(e.endCoordinates.height - 15);
+    }
+
+    const keyboardDidHide = (e: any) => {
+        setHeight(height - 135)
+    };
+
+    const openGallery = () => {
+        launchImageLibrary(
+            {mediaType: 'photo'},
+            (response) => {
+                if (response.assets) {
+                const data = response.assets[0].uri;
+                console.log(data);
+                dispatch({type: actionTypes.SET_PROFILE_PIC, profilePic:data});
+                }
+            },
+        );
     }
 
     return(
-        <View style={[styles.container]}>
+        <KeyboardAvoidingView style={[styles.container]} behavior='height' enabled>
             <ChatHeader username={user} active back={goBack} />
             <View style={[styles.chatSection, {height: newHeight}]}>
                 <FlatList 
@@ -58,8 +76,8 @@ const ChatView:FC<ChatViewProps> = ({user}):JSX.Element => {
                     renderItem={({item}) => <ChatItem id={item.id} message={item.message} />}
                 />
             </View>
-            <ChatInputBar text={text} setText={(e:string) => setText(e)} />
-        </View>
+            <ChatInputBar text={text} setText={(e:string) => setText(e)} openGallery={openGallery} />
+        </KeyboardAvoidingView>
     )
 };
 
@@ -70,7 +88,7 @@ const styles = StyleSheet.create({
     },
     chatSection: {
         height: height - 135,
-        backgroundColor: 'red'
+        backgroundColor: '#fff'
     }
 });
 
