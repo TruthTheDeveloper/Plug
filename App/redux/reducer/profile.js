@@ -21,6 +21,7 @@ const initialState = {
     availabilty: true,
     profileId:null,
     profileIdData:null,
+    updateSuccesFull:'',
 };
 
 const resetSearchData = (state, action) => {
@@ -39,6 +40,7 @@ const setSearchData = (state, action) => {
 const setProfileIdData = (state,action) => {
     return updateObject(state, {
         profileIdData:action.profileIdData,
+        updateSuccesFull:action.updateSuccesFull,
     });
 };
 
@@ -152,7 +154,7 @@ const resetAttributeOne = (state, action) => {
 
 const resetAtrributeTwo = (state, action) => {
     return updateObject(state, {
-        attributeThree:action.attributeTwo,
+        attributeTwo:action.attributeTwo,
     });
 };
 

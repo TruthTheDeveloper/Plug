@@ -161,6 +161,7 @@ export const getProfileIdData = (id) => {
   return {
     type:actionTypes.GET_PROFILE_ID_DATA,
     profileIdData:id,
+    updateSuccesFull:'updateSuccessfull',
   };
 };
 

@@ -26,8 +26,10 @@ interface ChatViewProps {
 const SOCKET_URL = io('https://findplug.herokuapp.com');
 let socket : any;
 let socketId : any;
-let message:string;
 const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
+  // const username = useSelector((state:any) => state.authReducer.username);
+  const [chats] : any = useState([
+  ]);
   const profileIdData = useSelector((state:any) => state.profileReducer.profileIdData);
     useEffect(() => {
          socket = SOCKET_URL;
@@ -35,38 +37,32 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
              console.log('you are now connected');
              socketId = socket.id;
          });
-         socket.on('receive-message', (msg:string) => {
-          message = msg;
+         socket.on('receive-message', (msg:string, Sid:string, Rid:string) => {
+          let data = {
+            senderId:Sid,
+            receiverId:Rid,
+            message:msg,
+          };
+          chats.push(data);
          });
-    },[]);
+    },[chats]);
 
-    const sendMessage = (msg: string, id: string) => {
-        socket.emit('send-message', message, id);
+    const sendMessage = (msg: string, Rid: string, Sid:string) => {
+        socket.emit('send-message', msg, Rid, Sid);
+        let data = {
+          senderId:Sid,
+          receiverId:Rid,
+          message:msg,
+        };
+        chats.push(data);
 
     };
 
     // const senderId = useSelector((state:any) => state.profileReducer.profileId);
     // console.log(senderId, user, user.username);
-    const username = useSelector((state:any) => state.authReducer.username);
     const dispatch = useDispatch();
     const [text, setText] = useState<any>();
     // 'Hello there i am' + username + ", I think we've met somewhere in school"
-    const [chats] = useState([
-        {
-            receiverId:user.receiverId,
-            receiverName: user.username,
-            message:message,
-            senderId:profileIdData.socketId || socketId,
-            senderName:username,
-        },
-        {
-            id: 1,
-            sender: 'maria',
-            senderId: 3,
-            message:
-                'hi i am ' +  user.username + "I don't think I remember seeing you. Mind sending me another of your pic? " ,
-            },
-    ]);
 
     const goBack = () => {
         dispatch({type: actionTypes.OPEN_CHAT, value: null});
@@ -74,8 +70,8 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
     };
 
     const submitMessageHandler = (msg:string) => {
-        console.log(msg, chats[0].senderId);
-        sendMessage(msg, chats[0].senderId);
+        console.log(msg, user.receiverId);
+        sendMessage(msg, user.receiverId, profileIdData.socketId || socketId);
         setText('');
 
     };
@@ -86,13 +82,14 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
     <View style={styles.container}>
       <ChatHeader username={user.username} active back={goBack} />
       <View style={styles.chatSection}>
+        {chats.length !== 0 ?
         <FlatList
-          data={chats}
-          keyExtractor={item => item.senderId}
-          renderItem={({item}) => (
-            <ChatItem id={item.senderId} message={item.message} />
-          )}
-        />
+        data={chats}
+        keyExtractor={item => item.senderId}
+        renderItem={({item}) => (
+          <ChatItem id={item.senderId} message={item.message} />
+        )}
+      /> : null}
       </View>
       <ChatInputBar text={text} setText={(e: string) => setText(e)}  send={(msg:string) => submitMessageHandler(msg)} />
     </View>

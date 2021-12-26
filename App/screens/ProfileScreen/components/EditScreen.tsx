@@ -141,6 +141,9 @@ const EditScreen: FC<EditScreenProps> = ({image, cancel, available}): JSX.Elemen
       };
       dispatch(actions.updateProfile(data));
 
+      if (profileIdData.updateSuccesFull !== ''){
+        cancel();
+      }
       //check if profile data has been submitted then call cancle function
     }
 

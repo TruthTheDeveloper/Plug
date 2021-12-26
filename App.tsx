@@ -13,22 +13,22 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const App = () => {
   const [getToken, setToken]:any = useState(null);
-  const authToken = useSelector((state:any)=> state.authReducer.token);
   const success = useSelector((state:any)=> state.profileReducer.profileId);
+  const authToken = useSelector((state:any)=> state.authReducer.token);
   console.log(success, 'success');
-  console.log(authToken, 'token');
+  console.log(getToken, 'token');
 
   useEffect(() => {
-    AsyncStorage.getItem('profileId').then((result) => {
+    AsyncStorage.getItem('token').then((result) => {
       setToken(result);
     });
-  },[authToken]);
+  },[]);
 
   return (
     <View>
         <StatusBar backgroundColor="#fff" barStyle="dark-content" />
         {/* <Navigator /> */}
-        {getToken !== null && success !== null ? <Navigator/> : <MainScreen/>}
+        {getToken !== null || authToken !== null && success !== null ? <Navigator/> : <MainScreen/>}
     </View>
   );
 };

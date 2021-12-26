@@ -38,10 +38,12 @@ const SignupScreen3 = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    console.log('useEffect', socketId)
     socket = SOCKET_URL;
     socket.on('connect', () => {
         console.log('you are now connected');
         socketId = socket.id;
+        console.log(socketId, 'socketId');
     });
   },[]);
 

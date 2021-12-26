@@ -15,6 +15,7 @@ import Profile from './components/Profile';
 import DetailsDiv from './components/DetailsDiv';
 
 
+
 //Imported Images
 const girl1 = require('../../assets/images/girl.jpg');
 const girl2 = require('../../assets/images/girl1.jpg');
@@ -31,13 +32,15 @@ const {width} = Dimensions.get('window');
 const HomeScreenView = React.memo(() => {
     const [pageNum, setPageNum] = useState(1);
     const dispatch = useDispatch();
+    // const [socketId, setSocketId] = useState()
 
     const profileData = useSelector((state:any) => state.profileReducer.profileData);
     const indx = useSelector((state: any) => state.generalReducer.index);
     const showCard = useSelector((state: any) => state.generalReducer.showCard);
 
 
-    console.log(profileData, 'this data');
+
+    // console.log(profileData, 'this data');
 
     useEffect(() => {
       console.log('got here');
