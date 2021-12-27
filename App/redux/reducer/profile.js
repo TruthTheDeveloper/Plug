@@ -204,6 +204,12 @@ const updateChatContact = (state, action) => {
     });
 };
 
+const refreshHomePage = (state, action) => {
+    return updateObject(state,{
+        profileData:action.profileData,
+    });
+};
+
 
 
 
@@ -260,6 +266,8 @@ const reducer = (state = initialState, action) => {
         return resetAttributeEight(state, action);
     case actionTypes.CHAT_CONTACT:
         return updateChatContact(state, action);
+    case actionTypes.REFRESH_HOME_PAGE:
+        return refreshHomePage(state, action);
 
 
 
