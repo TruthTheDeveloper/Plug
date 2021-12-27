@@ -31,7 +31,7 @@ interface ChatViewProps {
 // lastmessage ---> message[0]
 // image ---> user
 
-let newSocket: any;
+let newSocket : any;
 const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
   const [, setHeight] = useState(height - 135);
   const dispatch = useDispatch();
@@ -44,47 +44,61 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
   const updatedContactData = useSelector(
     (state: any) => state.profileReducer.chatContactData,
   );
-  console.log(updatedContactData, 'contact sata');
+  // console.log(updatedContactData, 'contact sata');
 
   const socketId = profileIdData.socketId;
+
   useEffect(() => {
+    newSocket = io('https://findplug.herokuapp.com',{query:{id:user.receiverId}});
     console.log('useEffect called');
-    newSocket = io('https://findplug.herokuapp.com', {
-      query: {id: user.receiverId},
-    });
     newSocket.on('connect', () => {
       console.log('you are now connected');
-    });
-    newSocket.on('receive-message', (msg: string, Sid: string, Rid: string) => {
-      let data = {
-        senderId: Sid,
-        receiverId: Rid,
-        message: msg,
-      };
-      setChats((prev: any) => [...prev, data]);
-    });
-    return () => newSocket.close();
-  }, [chats, user.receiverId]);
+      newSocket.emit('chat', 'can we chat');
 
-  useEffect(() => {
-    console.log('got to this effect')
-    if (newSocket === null) {return}
+      newSocket.on('receive', (msg: any, Rid:any, Sid:any) => {
+        console.log('incoming message', msg, Rid, Sid);
+        let data = {
+          senderId: Sid,
+          receiverId: Rid,
+          message: msg,
+        };
+        console.log(data)
+        setChats((prev: any) => [...prev, data]);
+      });
 
-    newSocket.on('receive-message', (msg: string, Sid: string, Rid: string) => {
-      console.log('incoming message')
-      let data = {
-        senderId: Sid,
-        receiverId: Rid,
-        message: msg,
-      };
-      setChats((prev: any) => [...prev, data]);
+      // console.log(newSocket)
     });
 
-    return () => newSocket.off('receive-message');
-  }, [chats])
+    
+
+    // return () => newSocket.close();
+
+    // return () => newSocket.off('receive')
+
+  }, [user.receiverId])
+
+  
+
+  // useEffect(() => {
+  //   console.log('got to this effect')
+  //   if (newSocket === null) {return}
+
+  //   newSocket.on('receive-message', (msg: string, Sid: string, Rid: string) => {
+  //     console.log('incoming message', console.log(msg))
+  //     let data = {
+  //       senderId: Sid,
+  //       receiverId: Rid,
+  //       message: msg,
+  //     };
+  //     setChats((prev: any) => [...prev, data]);
+  //   });
+
+  //   return () => newSocket.off('receive-message');
+  // });
 
   const sendMessage = (msg: string, Rid: string, Sid: string) => {
-    newSocket.emit('send-message', msg, Rid, Sid);
+    console.log('emitted')
+    newSocket.emit('send', msg, Rid, Sid);
     let data = {
       senderId: Sid,
       receiverId: Rid,
@@ -161,7 +175,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
   };
 
   const submitMessageHandler = (msg: string) => {
-    console.log(msg, user.receiverId, 'reci');
+    // console.log(msg, user.receiverId, 'reci');
     sendMessage(msg, user.receiverId, socketId);
     setText('');
   };
@@ -173,7 +187,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
         {chats.length !== 0 ? (
           <FlatList
             data={chats}
-            keyExtractor={item => item.senderId}
+            keyExtractor={item => item.message}
             renderItem={({item}) => (
               <ChatItem
                 id={item.senderId}
