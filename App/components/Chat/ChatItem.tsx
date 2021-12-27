@@ -11,7 +11,7 @@ interface ChatProps {
 }
 
 const ChatItem: FC<ChatProps> = ({id, message, socket}): JSX.Element => {
-  console.log(socket, 'your socket id')
+  console.log(socket, 'your socket id');
   // const profileIdData = useSelector((state:any) => state.profileReducer.profileIdData.socketId);
     return (
         <View style={styles.container}>

@@ -14,7 +14,8 @@ const {width} = Dimensions.get('window');
 
 interface ChatProps {
   username: string;
-  active: boolean;
+  time:any;
+  // active: boolean;
   lastText: string;
   image: any;
   openChat: (e: string) => void;
@@ -22,7 +23,8 @@ interface ChatProps {
 
 const ChatItem: FC<ChatProps> = ({
   username,
-  active,
+  time,
+  // active,
   lastText,
   image,
   openChat,
@@ -37,14 +39,15 @@ const ChatItem: FC<ChatProps> = ({
       onPress={() => openChat(username)}>
       <View style={styles.container}>
         <View style={styles.UserImage}>
-          <ImageBackground source={image} style={styles.image} />
+          <ImageBackground source={{uri:image}} style={styles.image} />
         </View>
         <View style={styles.container2}>
-          <Username username={username} active={active} fontSize={17} />
+          {/* <Username username={username} active={active} fontSize={17} /> */}
+          <Username username={username}  fontSize={17} active={false} />
           <Text style={styles.text}>{newText}</Text>
         </View>
         <View style={styles.dateContainer}>
-          <Text style={styles.date}>10:55 pm</Text>
+          <Text style={styles.date}>{time}</Text>
         </View>
       </View>
     </TouchableHighlight>

@@ -52,7 +52,7 @@ const Profile: FC<ProfileProps> = ({
   };
 
   const openChat = () => {
-    dispatch({type: actionTypes.OPEN_CHAT, value: {username, receiverId}});
+    dispatch({type: actionTypes.OPEN_CHAT, value: {username, receiverId, image}});
     dispatch({type: actionTypes.SET_DEFAULT_ROUTE, value: 'CHATS'});
   };
 

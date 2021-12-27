@@ -69,4 +69,8 @@ export const GET_SEARCH_DATA = 'GET_SEARCH_DATA';
 // reset searched Data
 export const RESET_SEARCH_DATA = 'RESET_SEARCH_DATA';
 
+// update chat contact view
+
+export const CHAT_CONTACT = 'CHAT_CONTACT';
+
 

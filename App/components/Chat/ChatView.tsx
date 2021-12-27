@@ -23,14 +23,22 @@ interface ChatViewProps {
   user: any;
 }
 
+// receiver username ---> userprops
+// // receiver is_online
+// lastmessage ---> message[0]
+// image ---> user
 
 let newSocket : any;
 const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
+  const dispatch = useDispatch();
   // const [socketId, setSocketId] : any = useState()
   // const profileIdDa= useSelector((state:any) => state.profileReducer.profileIdData);
   const [chats, setChats] : any = useState([
   ]);
   const profileIdData = useSelector((state:any) => state.profileReducer.profileIdData);
+  const updatedContactData = useSelector((state:any) => state.profileReducer.chatContactData);
+  console.log(updatedContactData, 'contact sata')
+
   const socketId = profileIdData.socketId;
     useEffect(() => {
       console.log('useEffect called');
@@ -57,12 +65,26 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
           message:msg,
         };
         setChats((prev: any) => [...prev, data]);
+        const chatViewData = {
+          receiverId:Rid,
+          receiverUsername:user.username,
+          lastmessage:msg,
+          receiverImage:user.image,
+          time:new Date().toLocaleTimeString(),
+        };
+
+        const updatechatContact = updatedContactData.filter((e: { receiverId: string; }) => e.receiverId !== chatViewData.receiverId);
+        updatechatContact.unshift(chatViewData);
+
+        dispatch({type:actionTypes.CHAT_CONTACT, chatContactData:updatechatContact});
+
 
     };
 
+
+
     // const senderId = useSelector((state:any) => state.profileReducer.profileId);
     // console.log(senderId, user, user.username);
-    const dispatch = useDispatch();
     const [text, setText] = useState<any>();
     // 'Hello there i am' + username + ", I think we've met somewhere in school"
 

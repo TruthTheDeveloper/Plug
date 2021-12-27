@@ -22,6 +22,7 @@ const initialState = {
     profileId:null,
     profileIdData:null,
     updateSuccesFull:'',
+    chatContactData:[],
 };
 
 const resetSearchData = (state, action) => {
@@ -197,6 +198,12 @@ const resetAttributeEight = (state, action) => {
     });
 };
 
+const updateChatContact = (state, action) => {
+    return updateObject(state, {
+        chatContactData:action.chatContactData,
+    });
+};
+
 
 
 
@@ -251,6 +258,8 @@ const reducer = (state = initialState, action) => {
         return resetAttributeSeven(state,action);
     case actionTypes.RESET_ATTRIBUTE_EIGHT:
         return resetAttributeEight(state, action);
+    case actionTypes.CHAT_CONTACT:
+        return updateChatContact(state, action);
 
 
 
