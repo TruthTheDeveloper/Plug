@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, {FC} from 'react';
+import React, {FC, useEffect} from 'react';
 import {View, StyleSheet, Dimensions, ScrollView} from 'react-native';
 
 import {ModalItem} from '../index';
@@ -12,6 +12,9 @@ interface PackageData {
 }
 
 const Modal: FC<PackageData> = ({packages, onSelect}): JSX.Element => {
+  useEffect(() => {
+    console.log('landed')
+  }, [])
   return (
     <View style={styles.container}>
       <View style={styles.mainModal}>

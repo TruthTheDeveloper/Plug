@@ -127,7 +127,7 @@ const SignupScreen2 = () => {
         {forms}
         <ContinueButton label="Continue" continue={next} loading={loading} />
       </View>
-      {List && <Modal packages={List} onSelect={onSelect} />}
+      {List && <Modal packages={[{name: 'name'}]} onSelect={onSelect} />}
     </View>
   );
 };
