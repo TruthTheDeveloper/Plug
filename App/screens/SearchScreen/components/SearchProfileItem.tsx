@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   main: {
     height: 250,
     width: '94%',
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#E60025',
     marginTop: 5,
     marginLeft: '3%',
     borderRadius: 11,

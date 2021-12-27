@@ -33,7 +33,7 @@ interface ChatViewProps {
 
 let newSocket : any;
 const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
-  const [, setHeight] = useState(height - 135);
+  const [newHeight, setHeight] = useState(height - 135);
   const dispatch = useDispatch();
   // const [socketId, setSocketId] : any = useState()
   // const profileIdDa= useSelector((state:any) => state.profileReducer.profileIdData);
@@ -183,7 +183,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
   return (
     <View style={styles.container}>
       <ChatHeader username={user.username} active back={goBack} />
-      <View style={styles.chatSection}>
+      <View style={[styles.chatSection, {height: newHeight}]}>
         {chats.length !== 0 ? (
           <FlatList
             data={chats}

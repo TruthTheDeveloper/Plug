@@ -1,12 +1,16 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
+import React, {FC} from 'react';
 import { View } from 'react-native';
 import HomeScreenView from './HomeScreenView';
 
-const HomeScreenContainer = () => {
+interface homeProps {
+  navigate: any
+}
+
+const HomeScreenContainer:FC<homeProps> = ({navigate}):JSX.Element => {
   return (
     <View style={{height: '100%', backgroundColor: '#fff'}}>
-      <HomeScreenView />
+      <HomeScreenView navigate={navigate} />
     </View>
   );
 };
