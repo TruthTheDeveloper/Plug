@@ -28,8 +28,7 @@ const SignupScreensContainer = () => {
 
   return (
      <View>
-       {/* { RenderScreen } */}
-       <SignupScreensView/>
+       { RenderScreen }
      </View>
      );
 };

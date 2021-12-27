@@ -12,12 +12,12 @@ import SignupScreen3 from './components/SignupScreen3';
 const SignupScreensView: FC = () => {
   const screen = useSelector((state: any) => state.navReducer.screen);
 
-  let Screen = <SignupScreen2 />;
-  // if (screen === 2){
-  //   Screen = <SignupScreen2 />;
-  // } else if (screen === 3){
-  //   Screen = <SignupScreen3 />;
-  // }
+  let Screen = <SignupScreen1 />;
+  if (screen === 2){
+    Screen = <SignupScreen2 />;
+  } else if (screen === 3){
+    Screen = <SignupScreen3 />;
+  }
 
   return (
     <View>

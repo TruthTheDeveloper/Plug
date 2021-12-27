@@ -20,11 +20,11 @@ const Loader2:FC<LoaderProps> = ({endLoading}):JSX.Element => {
     const clearLoading = () => {
         setTimeout(() => {
             endLoading()
-        }, 1000)
+        }, 500)
     };
     return (
         <View style={styles.container}>
-        <LottieView source={loader} autoPlay loop />
+            <LottieView source={loader} autoPlay loop />
         </View>
     );
 };
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   container: {
     height: height - 100,
     width: width,
-    backgroundColor: '#fff',
+    backgroundColor: 'transparent',
     position: 'absolute',
     top: 0
   },

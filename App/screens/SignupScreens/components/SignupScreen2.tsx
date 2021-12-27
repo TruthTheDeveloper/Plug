@@ -25,7 +25,7 @@ import EmojiHeader from './EmojiHeader';
 import StatusBar from './StatusBar';
 import InstitutionChecker from './InstitutionChecker';
 import ContinueButton from './ContinueButton';
-import { Loader } from '../../../components';
+import { Loader2 } from '../../../components';
 
 const {height, width} = Dimensions.get('window');
 
@@ -80,6 +80,7 @@ const SignupScreen2 = () => {
 
   const onSelect = (e: any) => {
     setList(null);
+    setModalLoading(true)
     setTimeout(() => {
       setUniversity(e);
     }, 100);
@@ -111,8 +112,8 @@ const SignupScreen2 = () => {
 
   let modal = (
     <>
-      <Loader />
-      {!modalLoading && <Modal packages={List} onSelect={onSelect} endLoading={() => setModalLoading(false)} />}
+      <Loader2 endLoading={() => setModalLoading(false)} />
+      {!modalLoading && <Modal packages={List} onSelect={onSelect} />}
     </>
   )
 
