@@ -9,11 +9,12 @@ const {height, width} = Dimensions.get('window');
 interface PackageData {
   packages: {[index: string]: any};
   onSelect: (e: any) => void;
+  endLoading: () => void
 }
 
-const Modal: FC<PackageData> = ({packages, onSelect}): JSX.Element => {
+const Modal: FC<PackageData> = ({packages, onSelect, endLoading}): JSX.Element => {
   useEffect(() => {
-    console.log('landed')
+    endLoading()
   }, [])
   return (
     <View style={styles.container}>

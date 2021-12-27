@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
+import React, { useEffect } from 'react';
 import {View, Dimensions, StyleSheet} from 'react-native';
 
 import LottieView from 'lottie-react-native';
@@ -21,6 +21,8 @@ const styles = StyleSheet.create({
     height: height - 100,
     width: width,
     backgroundColor: '#fff',
+    position: 'absolute',
+    top: 0
   },
 });
 
