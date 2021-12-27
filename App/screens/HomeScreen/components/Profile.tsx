@@ -37,7 +37,7 @@ interface ProfileProps {
 
 const Profile: FC<ProfileProps> = ({username, level, department, image, availability, details}): JSX.Element => {
   const dispatch = useDispatch();
-  console.log(random)
+  console.log(random + ' random number')
 
   const showDetails = () => {
     dispatch({type: actionTypes.SHOW_DETAILS, value: details});

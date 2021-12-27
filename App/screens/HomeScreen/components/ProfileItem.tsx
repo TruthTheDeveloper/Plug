@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, {FC} from 'react';
+import React, {FC, useEffect} from 'react';
 import {
   View,
   Text,
@@ -24,14 +24,15 @@ interface profileProps {
 }
 
 const ProfileItem: FC<profileProps> = ({
-  username,
-  level,
-  department,
-  image,
-  verified,
-  index,
-  setIndex,
-}): JSX.Element => {
+    username,
+    level,
+    department,
+    image,
+    verified,
+    index,
+    setIndex,
+  }): JSX.Element => {
+
   return (
     <TouchableWithoutFeedback onPress={() => setIndex(index)}>
       <View style={styles.container}>
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
   main: {
     height: 250,
     width: '94%',
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#d9d9d9',
     marginTop: 5,
     marginLeft: '3%',
     borderRadius: 11,
