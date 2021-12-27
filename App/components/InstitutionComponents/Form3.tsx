@@ -44,7 +44,7 @@ const Form3: FC<ModalProps> = ({
     <Animated.View style={value.getLayout()}>
       <DropDownSelector
         label="Select Polythecnic"
-        label2={name ? newName : 'Federal Polythecnic Nekede'}
+        label2={name ? newName : '_____________'}
         onClick={onSelect}
       />
       <LabeledInput

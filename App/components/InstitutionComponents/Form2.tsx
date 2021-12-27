@@ -44,7 +44,7 @@ const Form2: FC<ModalProps> = ({
     <Animated.View style={value.getLayout()}>
       <DropDownSelector
         label="Select College"
-        label2={name ? newName : 'Alvan Ikoku University'}
+        label2={name ? newName : '_____________'}
         onClick={onSelect}
       />
       <LabeledInput
