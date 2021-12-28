@@ -26,14 +26,11 @@ interface ChatViewProps {
   user: any;
 }
 
-// receiver username ---> userprops
-// // receiver is_online
-// lastmessage ---> message[0]
-// image ---> user
 
 let newSocket : any;
 const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
   const [newHeight, setHeight] = useState(height - 135);
+  const [online, setOnline] = useState(false);
   const dispatch = useDispatch();
   // const [socketId, setSocketId] : any = useState()
   // const profileIdDa= useSelector((state:any) => state.profileReducer.profileIdData);
@@ -51,7 +48,12 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
   useEffect(() => {
     newSocket = io('https://findplug.herokuapp.com',{query:{id:socketId}});
     console.log('useEffect called');
+    let timer : any = null;
     newSocket.on('connect', () => {
+
+      timer = setTimeout(() => {
+        setOnline(true);
+      },30000);
       console.log('you are now connected');
       newSocket.emit('chat', 'can we chat');
 
@@ -62,42 +64,32 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
           receiverId: Rid,
           message: msg,
         };
-        console.log(data)
+        console.log(data);
         setChats((prev: any) => [...prev, data]);
       });
 
       // console.log(newSocket)
     });
 
-    
-
+    setOnline(false)
     // return () => newSocket.close();
 
-    return () => newSocket.off('receive')
+    return () => {
+      newSocket.off('receive');
+      if (timer !== null){
+        clearTimeout(timer);
+        setOnline(false);
+      }
+      newSocket.close();
+    };
 
-  }, [user.receiverId])
+  }, [socketId, user.receiverId]);
 
-  
 
-  // useEffect(() => {
-  //   console.log('got to this effect')
-  //   if (newSocket === null) {return}
 
-  //   newSocket.on('receive-message', (msg: string, Sid: string, Rid: string) => {
-  //     console.log('incoming message', console.log(msg))
-  //     let data = {
-  //       senderId: Sid,
-  //       receiverId: Rid,
-  //       message: msg,
-  //     };
-  //     setChats((prev: any) => [...prev, data]);
-  //   });
 
-  //   return () => newSocket.off('receive-message');
-  // });
-
-  const sendMessage = (msg: string, Rid: string, Sid: string) => {
-    console.log('emitted')
+  const sendMessage = (msg: any, Rid: string, Sid: string) => {
+    console.log('emitted');
     newSocket.emit('send', msg, Rid, Sid);
     let data = {
       senderId: Sid,
@@ -169,14 +161,15 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
       if (response.assets) {
         const data = response.assets[0].uri;
         console.log(data);
-        dispatch({type: actionTypes.SET_PROFILE_PIC, profilePic: data});
+        sendMessage(data, user.receiverId, socketId);
+        // dispatch({type: actionTypes.SET_PROFILE_PIC, profilePic: data});
       }
     });
   };
 
-  const submitMessageHandler = (msg: string) => {
+  const submitMessageHandler = (msg: any) => {
     // console.log(msg, user.receiverId, 'reci');
-    console.log(socketId, msg, user.receiverId)
+    console.log(socketId, msg, user.receiverId);
     sendMessage(msg, user.receiverId, socketId);
     setText('');
   };
