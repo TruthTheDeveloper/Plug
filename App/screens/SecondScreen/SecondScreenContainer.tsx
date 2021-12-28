@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { FC } from 'react';
 import SecondScreenView from './SecondScreenView';
 
-const SecondScreenContainer = () => {
-    return <SecondScreenView />
+interface secondscreenProps {
+    navigate: any
+}
+
+const SecondScreenContainer:FC<secondscreenProps> = ({navigate}):JSX.Element => {
+    return <SecondScreenView navigate={navigate} />
 };
 
 export default SecondScreenContainer;

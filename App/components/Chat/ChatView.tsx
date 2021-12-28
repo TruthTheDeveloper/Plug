@@ -137,7 +137,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
   return (
     <View style={styles.container}>
       <ChatHeader username={user.username} active back={goBack} />
-      <View style={styles.chatSection}>
+      <View style={[styles.chatSection, {height: newHeight}]}>
         {chats.length !== 0 ?
         <FlatList
         data={chats}

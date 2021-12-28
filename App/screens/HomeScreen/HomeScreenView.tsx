@@ -77,7 +77,6 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
   };
 
   BackHandler.addEventListener('hardwareBackPress', goBack );
-  const showDetails = useSelector((state: any) => state.chatReducer.details);
 
   return (
     <View>

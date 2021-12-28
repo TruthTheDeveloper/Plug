@@ -22,12 +22,12 @@ import {
 import {ChatView} from '../../components';
 
 //ROUTES
-import {HOME, CHATS, SEARCH, PROFILE} from '../ROUTE';
+import {HOME, CHATS, SEARCH, PROFILE, SECOND_SCREEN} from '../ROUTE';
 
 const {height} = Dimensions.get('window');
 
 const Home = ({navigation}: {navigation: any}) => {
-  return <HomeScreenContainer navigate={() => navigation.navigate({ name: 'SECOND_SCREEN', merge: true })} />;
+  return <HomeScreenContainer navigate={() => navigation.navigate({ name: SECOND_SCREEN, merge: true })} />;
 };
 
 const Profile = () => {
@@ -42,8 +42,8 @@ const Search = () => {
   return <SearchScreenContainer />;
 };
 
-const SecondScreen= () => {
-  return <SecondScreenContainer />
+const SecondScreen= ({navigation}: {navigation: any}) => {
+  return <SecondScreenContainer navigate={() => navigation.navigate({ name: HOME, merge: true })} />
 }
 
 const Tab = createBottomTabNavigator();
@@ -76,7 +76,7 @@ const Container = () => {
           />
 
           <Tab.Screen
-            name={'SECOND_SCREEN'}
+            name={SECOND_SCREEN}
             component={SecondScreen}
             options={{
               tabBarButton: () => null

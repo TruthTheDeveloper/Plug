@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, Dimensions, StyleSheet, FlatList } from 'react-native';
+import React, { FC } from 'react';
+import { View, Text, Dimensions, StyleSheet, FlatList, BackHandler } from 'react-native';
 import { useSelector } from 'react-redux';
 
 import Profile from '../HomeScreen/components/Profile';
@@ -9,14 +9,21 @@ import { Header } from '../../components';
 
 const {width, height} = Dimensions.get('window');
 
-const SecondScreenView = () => {
+interface secondscreenProps {
+    navigate: () => void
+}
+
+const SecondScreenView:FC<secondscreenProps> = ({navigate}):JSX.Element => {
     const showDetails = useSelector((state: any) => state.chatReducer.details);
     const profileData = useSelector((state:any) => state.profileReducer.profileData);
     const indx = useSelector((state: any) => state.generalReducer.index);
 
-    const scrollData = () => {
-        
+    const goBack = () => {
+        navigate()
+        return true
     }
+
+    BackHandler.addEventListener('hardwareBackPress', goBack );
 
     return(
         <View style={styles.container}>
