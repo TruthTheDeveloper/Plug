@@ -39,7 +39,7 @@ const ChatHeader: FC<ChatHeaderProps> = ({username, active, back}) => {
           <Text style={styles.title}>{username}</Text>
           {active && <Image source={icon} />}
         </View>
-        <Text style={styles.onlineText}>Online</Text>
+        <Text style={styles.onlineText}>~Online~</Text>
       </View>
     </View>
   );
