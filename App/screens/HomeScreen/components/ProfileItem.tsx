@@ -12,6 +12,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 // const image = require('../../../assets/images/girl.jpg');
 const verifiedIcon = require('../../../assets/images/verified.png');
+const backgroungImage = require('../../../assets/images/emptyimage.png');
 
 interface profileProps {
   username: string;
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
   main: {
     height: 250,
     width: '94%',
-    backgroundColor: '#d9d9d9',
+    backgroundColor: '#E601A6',
     marginTop: 5,
     marginLeft: '3%',
     borderRadius: 11,
