@@ -79,7 +79,7 @@ const Container = () => {
             name={'SECOND_SCREEN'}
             component={SecondScreenContainer}
             options={{
-              // tabBarButton: () => null
+              tabBarButton: () => null
             }}
           />
 
