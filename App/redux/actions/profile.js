@@ -20,7 +20,7 @@ export const searchedData = (data) => {
 
 
 export const searchAllProfile = (query, pageNum) => {
-  console.log(query)
+  console.log(query);
   return dispatch => {
     axios.get(`https://findplug.herokuapp.com/profile?query=${query}&page=${pageNum}`)
     .then( response => {

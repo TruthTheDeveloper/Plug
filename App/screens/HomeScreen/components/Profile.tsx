@@ -27,6 +27,7 @@ const max = 10;
 const random = Math.floor(Math.random() * (max - min + 1)) + min;
 
 interface ProfileProps {
+    userId:string,
     username: string,
     level: number,
     department: string,
@@ -35,7 +36,7 @@ interface ProfileProps {
     details: string
 }
 
-const Profile: FC<ProfileProps> = ({username, level, department, image, availability, details}): JSX.Element => {
+const Profile: FC<ProfileProps> = ({userId, username, level, department, image, availability, details}): JSX.Element => {
   const dispatch = useDispatch();
   console.log(random + ' random number')
 
@@ -44,7 +45,7 @@ const Profile: FC<ProfileProps> = ({username, level, department, image, availabi
   };
 
   const openChat = () => {
-    dispatch({type: actionTypes.OPEN_CHAT, value: username});
+    dispatch({type: actionTypes.OPEN_CHAT, value: {username, userId}});
     dispatch({type: actionTypes.SET_DEFAULT_ROUTE, value: 'CHATS'});
   };
 

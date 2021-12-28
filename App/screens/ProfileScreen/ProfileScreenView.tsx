@@ -26,7 +26,7 @@ const ProfileScreenView = () => {
     const profileIdData = useSelector((state:any) => state.profileReducer.profileIdData);
     const dispatch = useDispatch();
 
-    const [availiable, setAvailiable] = useState(true);
+    const [, setAvailiable] = useState(true);
 
 
     useEffect(() => {
@@ -49,7 +49,7 @@ const ProfileScreenView = () => {
   return (
     <View style={{height: height, backgroundColor: '#fff'}}>
         {profileIdData ? <View style={styles.container}>
-      <Header label="Profile" />
+      <Header label="Profile"  />
       <ScrollView>
         <View style={styles.ProfileHeader}>
           <ProfilePic image={profileIdData.profilePic} />
@@ -160,7 +160,4 @@ const styles = StyleSheet.create({
 });
 
 export default ProfileScreenView;
-function alert(arg0: string): void {
-  throw new Error('Function not implemented.');
-}
 

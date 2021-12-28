@@ -60,12 +60,12 @@ const HomeScreenView = React.memo(() => {
   ]);
 
   const goBack = () => {
-    dispatch({type: actionTypes.SHOW_CARDS, value: false})
+    dispatch({type: actionTypes.SHOW_CARDS, value: false});
     return true;
   };
 
   const openGrid = (e: number) => {
-    dispatch({type: actionTypes.SHOW_CARDS, value: true})
+    dispatch({type: actionTypes.SHOW_CARDS, value: true});
     dispatch({type: actionTypes.INDEX, value: e });
   };
 
@@ -81,7 +81,7 @@ const HomeScreenView = React.memo(() => {
             key={'_'}
             numColumns={2}
             data={profileData}
-            renderItem={({ item, index }) => <ProfileItem 
+            renderItem={({ item, index }) => <ProfileItem
               username={item.username}
               verified={item.availability}
               level={item.level}
@@ -107,6 +107,7 @@ const HomeScreenView = React.memo(() => {
           data={profileData}
           renderItem={({item}) =>
             <Profile
+              userId={item.id}
               username={item.username}
               availability={item.availability}
               level={item.level}

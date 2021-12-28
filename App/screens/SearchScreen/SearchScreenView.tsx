@@ -50,11 +50,6 @@ const SearchScreenView = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[searchData]);
 
-  const searchTextHandler = (e:string) => {
-    dispatch({searchedData:[], type:actionTypes.RESET_SEARCH_DATA});
-    setSearchData(e);
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.searchContainer}>
