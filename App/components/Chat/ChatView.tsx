@@ -49,7 +49,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
   const socketId = profileIdData.socketId;
 
   useEffect(() => {
-    newSocket = io('https://findplug.herokuapp.com',{query:{id:socketId}});
+    newSocket = io('https://findplug.herokuapp.com',{query:{id:user.receiverId}});
     console.log('useEffect called');
     newSocket.on('connect', () => {
       console.log('you are now connected');
@@ -73,7 +73,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
 
     // return () => newSocket.close();
 
-    // return () => newSocket.off('receive')
+    return () => newSocket.off('receive')
 
   }, [user.receiverId])
 
