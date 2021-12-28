@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, {FC} from 'react';
+import React, {FC, useEffect} from 'react';
 import {View, StyleSheet, Dimensions, ScrollView} from 'react-native';
 
 import {ModalItem} from '../index';

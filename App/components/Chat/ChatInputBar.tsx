@@ -11,9 +11,10 @@ interface ChatBarProps {
   text: string;
   setText: (e: string) => void;
   send: any;
+  openGallery: () => void
 }
 
-const ChatInputBar: FC<ChatBarProps> = ({text, setText, send}): JSX.Element => {
+const ChatInputBar: FC<ChatBarProps> = ({text, setText, send, openGallery}): JSX.Element => {
 
   const submitMessage = () => {
     send(text);
@@ -30,7 +31,9 @@ const ChatInputBar: FC<ChatBarProps> = ({text, setText, send}): JSX.Element => {
         />
         <View style={styles.IconContainer}>
           {!text ? (
-            <Icon1 name="picture" color="#000" size={30} />
+            <TouchableWithoutFeedback onPress={() => openGallery()}>
+              <Icon1 name="picture" color="#000" size={30} />
+            </TouchableWithoutFeedback>
           ) : (
             <TouchableWithoutFeedback onPress={submitMessage}>
               <Icon2

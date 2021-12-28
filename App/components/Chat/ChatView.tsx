@@ -1,13 +1,7 @@
-/* eslint-disable prettier/prettier */
-import React, {useState, FC, useEffect} from 'react';
-import {
-  View,
-  StyleSheet,
-  Dimensions,
-  FlatList,
-  BackHandler,
-} from 'react-native';
-import {useDispatch} from 'react-redux';
+import React, { useState, FC, useEffect } from 'react';
+import { View, Text, StyleSheet, Dimensions, FlatList, BackHandler, Keyboard, EmitterSubscription, KeyboardAvoidingView } from 'react-native';
+import { useDispatch } from 'react-redux';
+import {launchImageLibrary} from 'react-native-image-picker';
 
 import * as actionTypes from '../../redux/actions/actionTypes';
 
@@ -22,6 +16,7 @@ const {height} = Dimensions.get('window');
 interface ChatViewProps {
   user: any;
 }
+    
 
 // receiver username ---> userprops
 // // receiver is_online
@@ -30,6 +25,7 @@ interface ChatViewProps {
 
 let newSocket : any;
 const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
+    const [newHeight, setHeight] = useState(height - 135)
   const dispatch = useDispatch();
   // const [socketId, setSocketId] : any = useState()
   // const profileIdDa= useSelector((state:any) => state.profileReducer.profileIdData);
@@ -89,9 +85,46 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
     // 'Hello there i am' + username + ", I think we've met somewhere in school"
 
     const goBack = () => {
-        dispatch({type: actionTypes.OPEN_CHAT, value: null});
-        return true;
+        dispatch({type: actionTypes.OPEN_CHAT, value: null });
+        return true
+    }
+
+    BackHandler.addEventListener('hardwareBackPress', goBack );
+
+    useEffect(() => {
+        let keyboardDidShowListener: EmitterSubscription;
+        let keyboardDidHideListener: EmitterSubscription;
+
+        keyboardDidShowListener = Keyboard.addListener("keyboardDidShow", keyboardDidShow);
+        keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', keyboardDidHide)
+
+        return () => {
+            if (keyboardDidShowListener) {
+                keyboardDidShowListener.remove();
+            }
+        };
+    }, []);
+
+    const keyboardDidShow = (e: any) => {
+        setHeight(e.endCoordinates.height - 15);
+    }
+
+    const keyboardDidHide = (e: any) => {
+        setHeight(height - 135)
     };
+
+    const openGallery = () => {
+        launchImageLibrary(
+            {mediaType: 'photo'},
+            (response) => {
+                if (response.assets) {
+                const data = response.assets[0].uri;
+                console.log(data);
+                dispatch({type: actionTypes.SET_PROFILE_PIC, profilePic:data});
+                }
+            },
+        );
+    }
 
     const submitMessageHandler = (msg:string) => {
         console.log(msg, user.receiverId);
@@ -99,8 +132,6 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
         setText('');
 
     };
-
-    BackHandler.addEventListener('hardwareBackPress', goBack);
 
   return (
     <View style={styles.container}>
@@ -115,21 +146,20 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
         )}
       /> : null}
       </View>
-      <ChatInputBar text={text} setText={(e: string) => setText(e)}  send={(msg:string) => submitMessageHandler(msg)} />
+      <ChatInputBar text={text} setText={(e: string) => setText(e)} openGallery={openGallery}  send={(msg:string) => submitMessageHandler(msg)} />
     </View>
   );
-};
+}; 
 
 const styles = StyleSheet.create({
-  container: {
-    height: height,
-    width: '100%',
-    backgroundColor: '#fff',
-  },
-  chatSection: {
-    height: height - 135,
-    backgroundColor: '#FFF',
-  },
-});
+    container: {
+        width: '100%',
+        backgroundColor: '#fff'
+    },
+    chatSection: {
+        height: height - 135,
+        backgroundColor: '#fff'
+    }
+})
 
 export default ChatView;

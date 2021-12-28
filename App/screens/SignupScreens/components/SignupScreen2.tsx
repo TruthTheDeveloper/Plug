@@ -25,6 +25,7 @@ import EmojiHeader from './EmojiHeader';
 import StatusBar from './StatusBar';
 import InstitutionChecker from './InstitutionChecker';
 import ContinueButton from './ContinueButton';
+import { Loader2 } from '../../../components';
 
 const {height, width} = Dimensions.get('window');
 
@@ -39,6 +40,7 @@ const SignupScreen2 = () => {
   const [List, setList] = useState<any | null>(null);
 
   const [loading, setLoading] = useState(false);
+  const [modalLoading, setModalLoading] = useState(true);
 
   let forms;
   if (Institution === university) {
@@ -78,6 +80,7 @@ const SignupScreen2 = () => {
 
   const onSelect = (e: any) => {
     setList(null);
+    setModalLoading(true)
     setTimeout(() => {
       setUniversity(e);
     }, 100);
@@ -107,6 +110,13 @@ const SignupScreen2 = () => {
     dispatch({type: actionTypes.SCREEN1});
   };
 
+  let modal = (
+    <>
+      <Loader2 endLoading={() => setModalLoading(false)} />
+      {!modalLoading && <Modal packages={List} onSelect={onSelect} />}
+    </>
+  )
+
   return (
     <View style={styles.container}>
       <View style={styles.headerFlexer}>
@@ -127,7 +137,7 @@ const SignupScreen2 = () => {
         {forms}
         <ContinueButton label="Continue" continue={next} loading={loading} />
       </View>
-      {List && <Modal packages={List} onSelect={onSelect} />}
+      {List && modal }
     </View>
   );
 };

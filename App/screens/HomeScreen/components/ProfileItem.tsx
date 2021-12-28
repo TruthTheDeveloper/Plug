@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, {FC} from 'react';
+import React, {FC, useEffect} from 'react';
 import {
   View,
   Text,
@@ -12,6 +12,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 // const image = require('../../../assets/images/girl.jpg');
 const verifiedIcon = require('../../../assets/images/verified.png');
+const backgroungImage = require('../../../assets/images/emptyimage.png');
 
 interface profileProps {
   username: string;
@@ -24,14 +25,15 @@ interface profileProps {
 }
 
 const ProfileItem: FC<profileProps> = ({
-  username,
-  level,
-  department,
-  image,
-  verified,
-  index,
-  setIndex,
-}): JSX.Element => {
+    username,
+    level,
+    department,
+    image,
+    verified,
+    index,
+    setIndex,
+  }): JSX.Element => {
+
   return (
     <TouchableWithoutFeedback onPress={() => setIndex(index)}>
       <View style={styles.container}>
@@ -68,7 +70,7 @@ const styles = StyleSheet.create({
   main: {
     height: 250,
     width: '94%',
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#E601A6',
     marginTop: 5,
     marginLeft: '3%',
     borderRadius: 11,
