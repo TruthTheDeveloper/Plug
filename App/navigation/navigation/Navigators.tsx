@@ -16,7 +16,8 @@ import {
   HomeScreenContainer,
   ChatSceenContainer,
   ProfileScreenContainer,
-  SearchScreenContainer
+  SearchScreenContainer,
+  SecondScreenContainer
 } from '../../index';
 import {ChatView} from '../../components';
 
@@ -40,6 +41,10 @@ const Chat = () => {
 const Search = () => {
   return <SearchScreenContainer />;
 };
+
+const SecondScreen= () => {
+  return <SecondScreenContainer />
+}
 
 const Tab = createBottomTabNavigator();
 
@@ -67,6 +72,14 @@ const Container = () => {
                   color={focused ? '#000' : 'grey'}
                 />
               ),
+            }}
+          />
+
+          <Tab.Screen
+            name={'SECOND_SCREEN'}
+            component={SecondScreenContainer}
+            options={{
+              // tabBarButton: () => null
             }}
           />
 
