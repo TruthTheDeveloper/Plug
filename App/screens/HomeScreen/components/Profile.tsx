@@ -50,7 +50,6 @@ const Profile: FC<ProfileProps> = ({
   attributeSix, attributeSeven, attributeEight,
 }): JSX.Element => {
   const dispatch = useDispatch();
-  console.log(random + ' random number')
 
   const showDetails = () => {
     dispatch({type: actionTypes.SHOW_DETAILS, value: details});

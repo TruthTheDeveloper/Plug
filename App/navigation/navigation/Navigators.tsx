@@ -77,7 +77,7 @@ const Container = () => {
 
           <Tab.Screen
             name={'SECOND_SCREEN'}
-            component={SecondScreenContainer}
+            component={SecondScreen}
             options={{
               tabBarButton: () => null
             }}

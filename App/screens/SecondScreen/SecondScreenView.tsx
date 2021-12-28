@@ -5,7 +5,9 @@ import { useSelector } from 'react-redux';
 import Profile from '../HomeScreen/components/Profile';
 import DetailsDiv from '../HomeScreen/components/DetailsDiv';
 
-const {width} = Dimensions.get('window');
+import { Header } from '../../components';
+
+const {width, height} = Dimensions.get('window');
 
 const SecondScreenView = () => {
     const showDetails = useSelector((state: any) => state.chatReducer.details);
@@ -14,6 +16,7 @@ const SecondScreenView = () => {
 
     return(
         <View style={styles.container}>
+            <Header label="All Student" />
             <FlatList
                 key={'#'}
                 horizontal
@@ -50,9 +53,9 @@ const SecondScreenView = () => {
 
 const styles = StyleSheet.create({
     container: {
-        height: 700,
-        width: 400,
-        backgroundColor: 'red'
+        height: height,
+        width: width,
+        backgroundColor: '#fff'
     }
 })
 
