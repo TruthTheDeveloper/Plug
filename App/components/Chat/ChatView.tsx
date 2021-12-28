@@ -175,6 +175,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
   };
 
   const submitMessageHandler = (msg: string) => {
+    // console.log(msg, user.receiverId, 'reci');
     sendMessage(msg, user.receiverId, socketId);
     setText('');
   };
