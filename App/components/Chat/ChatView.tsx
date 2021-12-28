@@ -43,6 +43,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
              console.log('you are now connected');
          });
          newSocket.on('receive-message', (msg:string, Sid:string, Rid:string) => {
+           console.log(msg + ' anything')
           let data = {
             senderId:Sid,
             receiverId:Rid,

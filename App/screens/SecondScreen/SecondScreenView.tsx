@@ -47,6 +47,7 @@ const SecondScreenView = () => {
                     />
                 }
             />
+            {showDetails && <DetailsDiv details={showDetails} /> }
         </View>
     )
 };

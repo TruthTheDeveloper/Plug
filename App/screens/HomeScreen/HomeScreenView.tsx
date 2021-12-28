@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect, useCallback, FC} from 'react';
 import {View, Dimensions, FlatList, BackHandler, Text} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../redux/actions/index';
@@ -27,9 +27,11 @@ const girl6 = require('../../assets/images/girl5.jpg');
 
 const {width} = Dimensions.get('window');
 
+interface homeProps {
+  navigate: any
+}
 
-
-const HomeScreenView = React.memo(() => {
+const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
     const [pageNum, setPageNum] = useState(1);
     const dispatch = useDispatch();
     // const [socketId, setSocketId] = useState()
@@ -69,6 +71,7 @@ const HomeScreenView = React.memo(() => {
   };
 
   const openGrid = (e: number) => {
+    navigate()
     dispatch({type: actionTypes.SHOW_CARDS, value: true});
     dispatch({type: actionTypes.INDEX, value: e });
   };
@@ -77,11 +80,9 @@ const HomeScreenView = React.memo(() => {
   const showDetails = useSelector((state: any) => state.chatReducer.details);
 
   return (
-    <>
     <View>
       <Header label="All Student" />
-      {!showCard ?
-      <><Text>Daata rendering</Text><FlatList
+      <FlatList
             key={'_'}
             numColumns={2}
             data={profileData}
@@ -97,42 +98,8 @@ const HomeScreenView = React.memo(() => {
             }
             style={{ marginBottom: 37 }}
             onEndReached={getNewList}
-            /></>
-      :
-        <FlatList
-          key={'#'}
-          horizontal
-          decelerationRate={'fast'}
-          snapToAlignment="center"
-          disableIntervalMomentum={true}
-          snapToInterval={width}
-          showsHorizontalScrollIndicator={false}
-          initialScrollIndex={indx}
-          data={profileData}
-          renderItem={({item}) =>
-            <Profile
-              receiverId={item.socketId}
-              username={item.username}
-              availability={item.availability}
-              level={item.level}
-              department={item.department}
-              image={item.profilePic}
-              details={item.description}
-              attributeOne={item.attributeOne}
-              attributeTwo={item.attributeTwo}
-              attributeThree={item.attributeThree}
-              attributeFour={item.attributeFour}
-              attributeFive={item.attributeFive}
-              attributeSix={item.attributeSix}
-              attributeSeven={item.attributeSeven}
-              attributeEight={item.attributeEight}
             />
-          }
-        />
-      }
     </View>
-    {showDetails && <DetailsDiv details={showDetails} /> }
-    </>
   );
 });
 
