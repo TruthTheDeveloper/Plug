@@ -43,7 +43,11 @@ const ChatItem: FC<ChatProps> = ({
         </View>
         <View style={styles.container2}>
           {/* <Username username={username} active={active} fontSize={17} /> */}
-          <Username username={username}  fontSize={17} active={false} />
+          <View style={styles.gridChatItemHeader}>
+            <Username username={username}  fontSize={17} active={false} />
+            <Text style={styles.onlineText}>Online</Text>
+          </View>
+          
           <Text style={styles.text}>{newText}</Text>
         </View>
         <View style={styles.dateContainer}>
@@ -72,6 +76,16 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     backgroundColor: '#f0f0f0',
     overflow: 'hidden',
+  },
+  gridChatItemHeader: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'flex-end'
+  },
+  onlineText: {
+    fontSize: 16,
+    color: 'green',
+    paddingLeft: 5
   },
   container2: {
     height: 60,

@@ -35,8 +35,11 @@ const ChatHeader: FC<ChatHeaderProps> = ({username, active, back}) => {
         </View>
       </TouchableWithoutFeedback>
       <View style={styles.flex2}>
-        <Text style={styles.title}>{username}</Text>
-        {active && <Image source={icon} />}
+        <View style={styles.flex3} >
+          <Text style={styles.title}>{username}</Text>
+          {active && <Image source={icon} />}
+        </View>
+        <Text style={styles.onlineText}>Online</Text>
       </View>
     </View>
   );
@@ -44,12 +47,13 @@ const ChatHeader: FC<ChatHeaderProps> = ({username, active, back}) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: 30,
+    height: 60,
     width: '100%',
     display: 'flex',
     flexDirection: 'row',
     backgroundColor: '#fff',
-    paddingBottom: 40,
+    paddingBottom: 60,
+    paddingTop: 10
   },
   flex1: {
     height: 30,
@@ -59,6 +63,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   flex2: {
+    height: 30,
+    width: width - 130,
+    alignItems: 'center'
+  },
+  onlineText: {
+    fontSize: 16,
+    color: 'green',
+    paddingLeft: 5
+  },
+  flex3: {
     height: 30,
     width: width - 130,
     display: 'flex',
