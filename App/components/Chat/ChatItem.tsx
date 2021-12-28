@@ -71,11 +71,7 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     borderWidth: 1,
     alignSelf: 'flex-start',
-<<<<<<< HEAD
     paddingRight: 15,
-=======
-    paddingRight: 15
->>>>>>> b88e50c08e4bb627b454ace693c6502ccb57af6a
   },
   box2: {
     minHeight: 20,

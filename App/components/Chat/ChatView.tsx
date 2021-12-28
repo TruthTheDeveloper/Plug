@@ -29,12 +29,8 @@ interface ChatViewProps {
 
 let newSocket : any;
 const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
-<<<<<<< HEAD
-  const [newHeight, setHeight] = useState(height - 135);
-  const [online, setOnline] = useState(false);
-=======
   const [newHeight, setHeight] = useState(height - 165);
->>>>>>> b88e50c08e4bb627b454ace693c6502ccb57af6a
+  const [online, setOnline] = useState(false);
   const dispatch = useDispatch();
   // const [socketId, setSocketId] : any = useState()
   // const profileIdDa= useSelector((state:any) => state.profileReducer.profileIdData);
