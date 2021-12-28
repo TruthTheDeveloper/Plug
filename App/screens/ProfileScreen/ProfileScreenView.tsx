@@ -29,8 +29,8 @@ const ProfileScreenView = () => {
     // console.log(profileIdData)
 
 
-    const [available, setAvailiable] = useState(profileIdData.availabilty);
-
+    // const [available, setAvailiable] = useState(profileIdData.availabilty);
+    const [available, setAvailiable] = useState(true);
 
     useEffect(() => {
       console.log('something');

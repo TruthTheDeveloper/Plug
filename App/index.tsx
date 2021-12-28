@@ -6,6 +6,7 @@ import NotificationScreenContainer from './screens/NotificationScreen';
 import ChatSceenContainer from './screens/ChatScreen/index';
 import ProfileScreenContainer from './screens/ProfileScreen';
 import SearchScreenContainer from './screens/SearchScreen';
+import SecondScreenContainer from './screens/SecondScreen';
 
 export {
         AuthScreenContainer,
@@ -15,4 +16,5 @@ export {
         ChatSceenContainer,
         ProfileScreenContainer,
         SearchScreenContainer,
+        SecondScreenContainer
     };
