@@ -43,6 +43,8 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     borderColor: '#ccc',
     borderWidth: 1,
+    alignSelf: 'flex-start',
+    paddingRight: 15
   },
   box2: {
     minHeight: 20,
