@@ -33,7 +33,7 @@ interface ChatViewProps {
 
 let newSocket : any;
 const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
-  const [newHeight, setHeight] = useState(height - 135);
+  const [newHeight, setHeight] = useState(height - 165);
   const dispatch = useDispatch();
   // const [socketId, setSocketId] : any = useState()
   // const profileIdDa= useSelector((state:any) => state.profileReducer.profileIdData);
@@ -157,11 +157,11 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
   }, []);
 
   const keyboardDidShow = (e: any) => {
-    setHeight(e.endCoordinates.height - 15);
+    setHeight(e.endCoordinates.height - 45);
   };
 
   const keyboardDidHide = () => {
-    setHeight(height - 135);
+    setHeight(height - 165);
   };
 
   const openGallery = () => {
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   chatSection: {
-    height: height - 135,
+    height: height - 165,
     backgroundColor: '#fff',
   },
 });
