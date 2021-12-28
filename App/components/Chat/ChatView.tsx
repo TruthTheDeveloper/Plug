@@ -149,7 +149,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
       <ChatInputBar text={text} setText={(e: string) => setText(e)} openGallery={openGallery}  send={(msg:string) => submitMessageHandler(msg)} />
     </View>
   );
-};
+}; 
 
 const styles = StyleSheet.create({
     container: {
