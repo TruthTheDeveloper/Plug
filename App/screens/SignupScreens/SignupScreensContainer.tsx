@@ -8,11 +8,13 @@ import {View} from 'react-native';
 
 
 const SignupScreensContainer = () => {
-  const [postSucess, setPostSucess]:any = useState(false);
+  const [postSucess, setPostSucess]:any = useState(null);
 
   const success = useSelector((state:any)=> state.profileReducer.profileId);
 
   let RenderScreen = null;
+
+  console.log('success id', success);
 
   useEffect(() => {
     AsyncStorage.getItem('profileId').then((result) => {
@@ -20,7 +22,7 @@ const SignupScreensContainer = () => {
     });
   },[postSucess, success]);
 
-  if (postSucess){
+  if (postSucess !== null){
     RenderScreen = <Navigator/>;
   } else {
     RenderScreen = <SignupScreensView/>;

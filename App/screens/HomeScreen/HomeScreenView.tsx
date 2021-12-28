@@ -14,6 +14,8 @@ import ProfileItem from './components/ProfileItem';
 import Profile from './components/Profile';
 import DetailsDiv from './components/DetailsDiv';
 
+
+
 //Imported Images
 const girl1 = require('../../assets/images/girl.jpg');
 const girl2 = require('../../assets/images/girl1.jpg');
@@ -30,13 +32,15 @@ const {width} = Dimensions.get('window');
 const HomeScreenView = React.memo(() => {
     const [pageNum, setPageNum] = useState(1);
     const dispatch = useDispatch();
+    // const [socketId, setSocketId] = useState()
 
     const profileData = useSelector((state:any) => state.profileReducer.profileData);
-    const index = useSelector((state: any) => state.generalReducer.index);
+    const indx = useSelector((state: any) => state.generalReducer.index);
     const showCard = useSelector((state: any) => state.generalReducer.showCard);
 
 
-    console.log(profileData, 'this data');
+
+    // console.log(profileData, 'this data');
 
     useEffect(() => {
       console.log('got here');
@@ -75,7 +79,7 @@ const HomeScreenView = React.memo(() => {
   return (
     <>
     <View>
-      <Header label="Gallery" />
+      <Header label="All Student" />
       {!showCard ?
       <><Text>Daata rendering</Text><FlatList
             key={'_'}
@@ -103,17 +107,25 @@ const HomeScreenView = React.memo(() => {
           disableIntervalMomentum={true}
           snapToInterval={width}
           showsHorizontalScrollIndicator={false}
-          initialScrollIndex={index}
+          initialScrollIndex={indx}
           data={profileData}
           renderItem={({item}) =>
             <Profile
-              userId={item.id}
+              receiverId={item.socketId}
               username={item.username}
               availability={item.availability}
               level={item.level}
               department={item.department}
               image={item.profilePic}
               details={item.description}
+              attributeOne={item.attributeOne}
+              attributeTwo={item.attributeTwo}
+              attributeThree={item.attributeThree}
+              attributeFour={item.attributeFour}
+              attributeFive={item.attributeFive}
+              attributeSix={item.attributeSix}
+              attributeSeven={item.attributeSeven}
+              attributeEight={item.attributeEight}
             />
           }
         />

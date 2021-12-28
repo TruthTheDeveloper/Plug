@@ -59,6 +59,7 @@ export const postProfile = (data) => {
       formdata.append('attributeEight', data.attributeEight);
       formdata.append('availabilty', data.availabilty);
       formdata.append('username', data.username);
+      formdata.append('socketId', data.socketId);
       console.log(formdata);
       axios
         .post('https://findplug.herokuapp.com/profile',formdata,{headers:{
@@ -119,9 +120,9 @@ export const updateProfile = (data) => {
       formdata.append('attributeSix', data.attributeSix);
       formdata.append('attributeSeven', data.attributeSeven);
       formdata.append('attributeEight', data.attributeEight);
-      formdata.append('availabilty', data.availabilty);
+      formdata.append('availabilty', data.available);
       formdata.append('username', data.username);
-      console.log(formdata);
+      console.log(formdata, 'available');
         axios.put(`https://findplug.herokuapp.com/profile/${data.profileId}`,formdata,{headers:{
           Accept: 'application/json',
           'Content-Type': 'multipart/form-data; charset=utf-8',
@@ -160,6 +161,7 @@ export const getProfileIdData = (id) => {
   return {
     type:actionTypes.GET_PROFILE_ID_DATA,
     profileIdData:id,
+    updateSuccesFull:'updateSuccessfull',
   };
 };
 

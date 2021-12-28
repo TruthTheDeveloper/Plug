@@ -5,6 +5,7 @@ import AuthScreenContainer from './welcomeScreen/index';
 import SignUpScreensContainer from './SignupScreens/index';
 import {useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Navigator from '../navigation/navigation/Navigators';
 
 
 
@@ -13,6 +14,7 @@ const MainScreen = () => {
 
 
   const authToken = useSelector((state:any)=> state.authReducer.token);
+  const success = useSelector((state:any)=> state.profileReducer.profileId);
 
   let RenderScreen = null;
 
@@ -22,11 +24,16 @@ const MainScreen = () => {
     });
   },[auth, authToken]);
 
+  console.log(authToken);
 
-  if (auth){
+
+
+  if (authToken !== null && success === null){
     RenderScreen = <SignUpScreensContainer/>;
-  } else {
+  } else if (authToken === null && success === null ) {
     RenderScreen = <AuthScreenContainer/>;
+  } else if (authToken !== null && success !== null){
+    RenderScreen = <Navigator/>;
   }
 
   return (

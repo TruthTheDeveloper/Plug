@@ -16,44 +16,73 @@ const {height} = Dimensions.get('window');
 interface ChatViewProps {
   user: any;
 }
+    
 
-const ChatView:FC<ChatViewProps> = ({user}):JSX.Element => {
+// receiver username ---> userprops
+// // receiver is_online
+// lastmessage ---> message[0]
+// image ---> user
+
+let newSocket : any;
+const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
     const [newHeight, setHeight] = useState(height - 135)
-const SOCKET_URL = io('https://findplug.herokuapp.com');
-let socket : any;
+  const dispatch = useDispatch();
+  // const [socketId, setSocketId] : any = useState()
+  // const profileIdDa= useSelector((state:any) => state.profileReducer.profileIdData);
+  const [chats, setChats] : any = useState([
+  ]);
+  const profileIdData = useSelector((state:any) => state.profileReducer.profileIdData);
+  const updatedContactData = useSelector((state:any) => state.profileReducer.chatContactData);
+  console.log(updatedContactData, 'contact sata')
 
+  const socketId = profileIdData.socketId;
     useEffect(() => {
-         socket = SOCKET_URL;
-         socket.on('connect', () => {
+      console.log('useEffect called');
+         newSocket  = io('https://findplug.herokuapp.com', { query : {id:user.receiverId}});
+         newSocket.on('connect', () => {
              console.log('you are now connected');
          });
-    },[]);
+         newSocket.on('receive-message', (msg:string, Sid:string, Rid:string) => {
+          let data = {
+            senderId:Sid,
+            receiverId:Rid,
+            message:msg,
+          };
+          setChats((prev: any) => [...prev, data]);
+         });
+         return () => newSocket.close();
+    },[chats, user.receiverId]);
 
-    const sendMessage = (message: string, id: string) => {
-        socket.emit('send-message', message, id);
+    const sendMessage = (msg: string, Rid: string, Sid:string) => {
+        newSocket.emit('send-message', msg, Rid, Sid);
+        let data = {
+          senderId:Sid,
+          receiverId:Rid,
+          message:msg,
+        };
+        setChats((prev: any) => [...prev, data]);
+        const chatViewData = {
+          receiverId:Rid,
+          receiverUsername:user.username,
+          lastmessage:msg,
+          receiverImage:user.image,
+          time:new Date().toLocaleTimeString(),
+        };
+
+        const updatechatContact = updatedContactData.filter((e: { receiverId: string; }) => e.receiverId !== chatViewData.receiverId);
+        updatechatContact.unshift(chatViewData);
+
+        dispatch({type:actionTypes.CHAT_CONTACT, chatContactData:updatechatContact});
+
+
     };
 
-    const senderId = useSelector((state:any) => state.profileReducer.profileId);
+
+
+    // const senderId = useSelector((state:any) => state.profileReducer.profileId);
     // console.log(senderId, user, user.username);
-    const username = useSelector((state:any) => state.authReducer.username);
-    const dispatch = useDispatch();
     const [text, setText] = useState<any>();
-    const [chats] = useState([
-        {
-            receiverId:user.userId,
-            receiverName: user.username,
-            message:'Hello there I am ' + username + ", I think we've met somewhere in school",
-            senderId:senderId,
-            senderName:username,
-        },
-        {
-            id: 1,
-            sender: 'maria',
-            senderId: 3,
-            message:
-                'hi i am ' +  user.username + "I don't think I remember seeing you. Mind sending me another of your pic? " ,
-            },
-    ]);
+    // 'Hello there i am' + username + ", I think we've met somewhere in school"
 
     const goBack = () => {
         dispatch({type: actionTypes.OPEN_CHAT, value: null });
@@ -97,28 +126,29 @@ let socket : any;
         );
     }
 
-    const submitMessageHandler = (msg:string, id:string) => {
-        console.log(msg, senderId);
-        sendMessage(msg, id);
+    const submitMessageHandler = (msg:string) => {
+        console.log(msg, user.receiverId);
+        sendMessage(msg, user.receiverId, socketId);
         setText('');
 
     };
 
-    return(
-        <KeyboardAvoidingView style={[styles.container]} behavior='height' enabled>
-            <ChatHeader username={user.username} active back={goBack} />
-            <View style={styles.chatSection}>
-                <FlatList
-                    data={chats}
-                    keyExtractor={item => item.senderId}
-                    renderItem={({item}) => (
-                        <ChatItem id={item.senderId} message={item.message} />
-                    )}
-                />
-            </View>
-            <ChatInputBar text={text} setText={(e:string) => setText(e)} openGallery={openGallery} send={(msg:string) => submitMessageHandler(msg, user.userId)} />
-        </KeyboardAvoidingView>
-    )
+  return (
+    <View style={styles.container}>
+      <ChatHeader username={user.username} active back={goBack} />
+      <View style={styles.chatSection}>
+        {chats.length !== 0 ?
+        <FlatList
+        data={chats}
+        keyExtractor={item => item.senderId}
+        renderItem={({item}) => (
+          <ChatItem id={item.senderId} message={item.message} socket={socketId}/>
+        )}
+      /> : null}
+      </View>
+      <ChatInputBar text={text} setText={(e: string) => setText(e)} openGallery={openGallery}  send={(msg:string) => submitMessageHandler(msg)} />
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({

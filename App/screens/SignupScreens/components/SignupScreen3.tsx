@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -21,16 +21,21 @@ import ProfilePhoto from './ProfilePhoto';
 import PersonalityBox from './personalityBox';
 import ContinueButton from './ContinueButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import uuid from 'react-native-uuid';
 
 const {height, width} = Dimensions.get('window');
-
+let socketId: any;
 const SignupScreen3 = () => {
   const [personality, setPersonality] = useState<any | null>([]);
 
   const [, setProfilePic] = useState();
 
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    socketId = uuid.v4();
+  },[]);
+
 
   const setImage = (img: any) => {
     setProfilePic(img);
@@ -177,6 +182,7 @@ const SignupScreen3 = () => {
       profilePic:profilePic,
       token:token,
       username:username,
+      socketId:socketId,
 
     };
 

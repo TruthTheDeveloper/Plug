@@ -3,7 +3,6 @@ import React, {FC, useState} from 'react';
 import {View, Text, StyleSheet, Switch, TouchableWithoutFeedback} from 'react-native';
 
 import Icon from 'react-native-vector-icons/Feather';
-import {red} from '../../../config/colors';
 
 interface ButtonProps {
   iconLabel: string;
@@ -17,12 +16,12 @@ const Button: FC<ButtonProps> = ({iconLabel, label, setAvaliable, logout}): JSX.
 
   const toggleSwitch = () => {
     setIsEnabled(prevState => !prevState);
-    setAvaliable(isEnabled)
+    setAvaliable(!isEnabled);
   };
 
   let extraButton = (
     <Switch
-      trackColor={{false: '#767577', true: red}}
+      trackColor={{false: '#767577', true: '#60A40B'}}
       thumbColor={isEnabled ? '#fff' : '#f4f3f4'}
       ios_backgroundColor="#3e3e3e"
       onValueChange={toggleSwitch}
@@ -37,7 +36,7 @@ const Button: FC<ButtonProps> = ({iconLabel, label, setAvaliable, logout}): JSX.
                   </TouchableWithoutFeedback>;
   }
 
-  let button = 
+  let button =
     <TouchableWithoutFeedback onPress={toggleSwitch}>
       <View style={styles.container}>
         <View style={styles.Main}>
@@ -48,9 +47,9 @@ const Button: FC<ButtonProps> = ({iconLabel, label, setAvaliable, logout}): JSX.
         </View>
         <View style={styles.Extra}>{extraButton}</View>
       </View>
-    </TouchableWithoutFeedback>
+    </TouchableWithoutFeedback>;
 
-  if(iconLabel !== 'bell-off'){
+  if (iconLabel !== 'bell-off'){
     button = <TouchableWithoutFeedback onPress={logout}>
         <View style={styles.container}>
           <View style={styles.Main}>
@@ -61,7 +60,7 @@ const Button: FC<ButtonProps> = ({iconLabel, label, setAvaliable, logout}): JSX.
           </View>
           <View style={styles.Extra}>{extraButton}</View>
         </View>
-      </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback>;
   }
 
   return (

@@ -8,6 +8,7 @@ import {Header} from '../../components/index';
 import ChatItem from './components/ChatItems';
 
 import * as actionTypes from '../../redux/actions/actionTypes';
+import {useSelector} from 'react-redux';
 
 import {useDispatch} from 'react-redux';
 
@@ -18,7 +19,7 @@ const gir2 = require('../../assets/images/girl2.jpg');
 
 const ChatScreenView = () => {
   const dispatch = useDispatch();
-  const [users] = useState([
+  const [] = useState([
     {
       username: 'Mina_Okabe',
       active: true,
@@ -33,8 +34,11 @@ const ChatScreenView = () => {
     },
   ]);
 
-  const openChat = (e: string) => {
-    dispatch({type: actionTypes.OPEN_CHAT, value: e});
+  const updatedContactData = useSelector((state:any) => state.profileReducer.chatContactData);
+  console.log(updatedContactData, 'updated')
+
+  const openChat = (username: string, receiverId:any, image:any) => {
+    dispatch({type: actionTypes.OPEN_CHAT, value: {username, receiverId, image}});
     dispatch({type: actionTypes.SET_DEFAULT_ROUTE, value: 'CHATS'});
     // console.log(e)
   };
@@ -43,15 +47,16 @@ const ChatScreenView = () => {
     <View style={styles.container}>
       <Header label="Chats" />
       <FlatList
-        data={users}
-        keyExtractor={user => user.username}
+        data={updatedContactData}
+        keyExtractor={user => user.receiverId}
         renderItem={({item}) => (
           <ChatItem
-            username={item.username}
-            active={item.active}
-            image={item.image}
-            lastText={item.lastText}
-            openChat={openChat}
+            username={item.receiverUsername}
+            time={item.time}
+            // active={item.active}
+            image={item.receiverImage}
+            lastText={item.lastmessage}
+            openChat={() => openChat(item.receiverUsername, item.receiverId, item.receiverImage)}
           />
         )}
       />

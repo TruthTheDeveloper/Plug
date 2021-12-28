@@ -26,7 +26,10 @@ const ProfileScreenView = () => {
     const profileIdData = useSelector((state:any) => state.profileReducer.profileIdData);
     const dispatch = useDispatch();
 
-    const [, setAvailiable] = useState(true);
+    // console.log(profileIdData)
+
+
+    const [available, setAvailiable] = useState(profileIdData.availabilty);
 
 
     useEffect(() => {
@@ -54,7 +57,7 @@ const ProfileScreenView = () => {
         <View style={styles.ProfileHeader}>
           <ProfilePic image={profileIdData.profilePic} />
           <View style={{ height: 10 }} />
-          <Username username={profileIdData.username} fontSize={22} active />
+          <Username username={profileIdData.username} fontSize={22} active={available} />
         </View>
         <View style={styles.institutionContainer}>
           <Text style={styles.institution}>{profileIdData.department}</Text>
@@ -86,7 +89,7 @@ const ProfileScreenView = () => {
         </View>
       </ScrollView>
     </View> : <Text>No Data</Text>}
-    {edit && <EditScreen image={profileIdData.profilePic} cancel={() => setEdit(false)} /> }
+    {edit && <EditScreen image={profileIdData.profilePic} cancel={() => setEdit(false)} available={available} /> }
     </View>
   );
 };

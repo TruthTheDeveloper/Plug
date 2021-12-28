@@ -21,6 +21,8 @@ const initialState = {
     availabilty: true,
     profileId:null,
     profileIdData:null,
+    updateSuccesFull:'',
+    chatContactData:[],
 };
 
 const resetSearchData = (state, action) => {
@@ -39,6 +41,7 @@ const setSearchData = (state, action) => {
 const setProfileIdData = (state,action) => {
     return updateObject(state, {
         profileIdData:action.profileIdData,
+        updateSuccesFull:action.updateSuccesFull,
     });
 };
 
@@ -143,6 +146,64 @@ const setAttributeEight = (state, action) => {
 };
 
 
+const resetAttributeOne = (state, action) => {
+    return updateObject(state, {
+        attributeOne:action.attributeOne,
+    });
+};
+
+
+const resetAtrributeTwo = (state, action) => {
+    return updateObject(state, {
+        attributeTwo:action.attributeTwo,
+    });
+};
+
+const resetAttributeThree = (state, action) => {
+    return updateObject(state, {
+        attributeThree:action.attributeThree,
+    });
+};
+
+
+const resetAtrributeFour = (state, action) => {
+    return updateObject(state, {
+        attributeFour:action.attributeFour,
+    });
+};
+
+
+const resetAttributeFive = (state, action) => {
+    return updateObject(state, {
+        attributeFive:action.attributeFive,
+    });
+};
+
+const resetAtrributeSix = (state, action) => {
+    return updateObject(state, {
+        attributeSix:action.attributeSix,
+    });
+};
+
+const resetAttributeSeven = (state, action) => {
+    return updateObject(state,{
+        attributeSeven:action.attributeSeven,
+    });
+};
+
+
+const resetAttributeEight = (state, action) => {
+    return updateObject(state, {
+        attributeEight:action.attributeEight,
+    });
+};
+
+const updateChatContact = (state, action) => {
+    return updateObject(state, {
+        chatContactData:action.chatContactData,
+    });
+};
+
 
 
 
@@ -181,6 +242,27 @@ const reducer = (state = initialState, action) => {
         return setSearchData(state,action);
     case actionTypes.RESET_SEARCH_DATA:
         return resetSearchData(state,action);
+    case actionTypes.RESET_ATTRIBUTE_ONE:
+        return resetAttributeOne(state, action);
+    case actionTypes.RESET_ATTRIBUTE_TWO:
+        return resetAtrributeTwo(state, action);
+    case actionTypes.RESET_ATTRIBUTE_THREE:
+        return resetAttributeThree(state, action);
+    case actionTypes.RESET_ATTRIBUTE_FOUR:
+        return resetAtrributeFour(state, action);
+    case actionTypes.RESET_ATTRIBUTE_FIVE:
+        return resetAttributeFive(state, action);
+    case actionTypes.RESET_ATTRIBUTE_SIX:
+        return resetAtrributeSix(state, action);
+    case actionTypes.RESET_ATTRIBUTE_SEVEN:
+        return resetAttributeSeven(state,action);
+    case actionTypes.RESET_ATTRIBUTE_EIGHT:
+        return resetAttributeEight(state, action);
+    case actionTypes.CHAT_CONTACT:
+        return updateChatContact(state, action);
+
+
+
     default:
         return state;
   }
