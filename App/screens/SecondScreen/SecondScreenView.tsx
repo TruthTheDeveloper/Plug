@@ -14,6 +14,10 @@ const SecondScreenView = () => {
     const profileData = useSelector((state:any) => state.profileReducer.profileData);
     const indx = useSelector((state: any) => state.generalReducer.index);
 
+    const scrollData = () => {
+        
+    }
+
     return(
         <View style={styles.container}>
             <Header label="All Student" />

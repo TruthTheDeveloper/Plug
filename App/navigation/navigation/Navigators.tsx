@@ -26,7 +26,7 @@ import {HOME, CHATS, SEARCH, PROFILE} from '../ROUTE';
 
 const {height} = Dimensions.get('window');
 
-const Home = ({navigation}) => {
+const Home = ({navigation}: {navigation: any}) => {
   return <HomeScreenContainer navigate={() => navigation.navigate({ name: 'SECOND_SCREEN', merge: true })} />;
 };
 
