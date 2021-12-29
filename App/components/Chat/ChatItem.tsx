@@ -43,8 +43,8 @@ const ChatItem: FC<ChatProps> = ({id, message, socket, rec}): JSX.Element => {
     chatDisplay = <View style={styles.box}>
     <Text style={styles.text}>{msg}</Text>
     </View>;
-  } else if(!message.includes('http') && id !== socket && id !== rec){
-    chatDisplay = null
+  } else if (!message.includes('http') && id !== socket && id !== rec){
+    chatDisplay = null;
   }
 
 

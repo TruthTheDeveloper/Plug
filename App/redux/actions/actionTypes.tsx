@@ -72,7 +72,9 @@ export const RESET_SEARCH_DATA = 'RESET_SEARCH_DATA';
 // update chat contact view
 export const CHAT_CONTACT = 'CHAT_CONTACT';
 
-// refresh home page 
+// refresh home page
 export const REFRESH_HOME_PAGE = 'REFRESH_HOME_PAGE';
+
+export const GET_CONVERSATION = 'GET_CONVERSATION';
 
 

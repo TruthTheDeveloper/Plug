@@ -13,6 +13,7 @@ import {useDispatch} from 'react-redux';
 import {launchImageLibrary} from 'react-native-image-picker';
 
 import * as actionTypes from '../../redux/actions/actionTypes';
+import { getMessage } from '../../redux/actions/message';
 
 import ChatHeader from './ChatHeader';
 import ChatInputBar from './ChatInputBar';
@@ -34,18 +35,21 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
   const dispatch = useDispatch();
   // const [socketId, setSocketId] : any = useState()
   // const profileIdDa= useSelector((state:any) => state.profileReducer.profileIdData);
-  const [chats, setChats]: any = useState([]);
+  // const [chats, setChats]: any = useState([]);
   const profileIdData = useSelector(
     (state: any) => state.profileReducer.profileIdData,
   );
   const updatedContactData = useSelector(
     (state: any) => state.profileReducer.chatContactData,
   );
+
+  const allConversation = useSelector((state:any) => state.conversation);
   // console.log(updatedContactData, 'contact sata');
 
   const socketId = profileIdData.socketId;
 
   useEffect(() => {
+    dispatch(getMessage(user.receiverId, socketId));
     newSocket = io('https://findplug.herokuapp.com',{query:{id:socketId}});
     console.log('useEffect called');
     let timer : any = null;
@@ -65,13 +69,14 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
           message: msg,
         };
         console.log(data);
-        setChats((prev: any) => [...prev, data]);
+        // setChats((prev:any) => [...prev, ...allConversation]);
+        // setChats((prev: any) => [...prev, data]);
       });
 
       // console.log(newSocket)
     });
 
-    setOnline(false)
+    setOnline(false);
     // return () => newSocket.close();
 
     return () => {
@@ -83,7 +88,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
       newSocket.close();
     };
 
-  }, [socketId, user.receiverId]);
+  }, [dispatch, socketId, user.receiverId]);
 
 
 
@@ -91,18 +96,20 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
   const sendMessage = (msg: any, Rid: string, Sid: string) => {
     console.log('emitted');
     newSocket.emit('send', msg, Rid, Sid);
-    let data = {
-      senderId: Sid,
-      receiverId: Rid,
-      message: msg,
-    };
-    setChats((prev: any) => [...prev, data]);
+    dispatch(getMessage(user.receiverId, socketId));
+    // let data = {
+    //   senderId: Sid,
+    //   receiverId: Rid,
+    //   message: msg,
+    // };
+    // setChats((prev: any) => [...prev, data]);
     const chatViewData = {
       receiverId: Rid,
       receiverUsername: user.username,
       lastmessage: msg,
       receiverImage: user.image,
-      time: new Date().toLocaleTimeString(),
+      online:online,
+      time: new Date().toLocaleTimeString().slice(0,5),
     };
 
     const updatechatContact = updatedContactData.filter(
@@ -130,16 +137,16 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
 
   useEffect(() => {
     let keyboardDidShowListener: EmitterSubscription;
-    let keyboardDidHideListener: EmitterSubscription;
+    // let keyboardDidHideListener: EmitterSubscription;
 
     keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       keyboardDidShow,
     );
-    keyboardDidHideListener = Keyboard.addListener(
-      'keyboardDidHide',
-      keyboardDidHide,
-    );
+    // keyboardDidHideListener = Keyboard.addListener(
+    //   'keyboardDidHide',
+    //   keyboardDidHide,
+    // );
 
     return () => {
       if (keyboardDidShowListener) {
@@ -152,9 +159,9 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
     setHeight(e.endCoordinates.height - 45);
   };
 
-  const keyboardDidHide = () => {
-    setHeight(height - 165);
-  };
+  // const keyboardDidHide = () => {
+  //   setHeight(height - 165);
+  // };
 
   const openGallery = () => {
     launchImageLibrary({mediaType: 'photo'}, response => {
@@ -176,12 +183,12 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
 
   return (
     <View style={styles.container}>
-      <ChatHeader username={user.username} active back={goBack} />
+      <ChatHeader username={user.username} online={online} active back={goBack} />
       <View style={[styles.chatSection, {height: newHeight}]}>
-        {chats.length !== 0 ? (
+        {allConversation.length !== 0 ? (
           <FlatList
-            data={chats}
-            keyExtractor={item => item.message}
+            data={allConversation}
+            keyExtractor={item => item._id}
             renderItem={({item}) => (
               <ChatItem
                 id={item.senderId}

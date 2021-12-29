@@ -35,7 +35,7 @@ const ChatScreenView = () => {
   ]);
 
   const updatedContactData = useSelector((state:any) => state.profileReducer.chatContactData);
-  console.log(updatedContactData, 'updated')
+  console.log(updatedContactData, 'updated');
 
   const openChat = (username: string, receiverId:any, image:any) => {
     dispatch({type: actionTypes.OPEN_CHAT, value: {username, receiverId, image}});
@@ -53,6 +53,7 @@ const ChatScreenView = () => {
           <ChatItem
             username={item.receiverUsername}
             time={item.time}
+            online={item.online}
             // active={item.active}
             image={item.receiverImage}
             lastText={item.lastmessage}
