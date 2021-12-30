@@ -17,6 +17,43 @@ export const searchedData = (data) => {
   };
 };
 
+export const setSearchLoading = (data) => {
+  return {
+    type:actionTypes.SET_SEARCH_LOADING,
+    searchLoading:data,
+  };
+};
+
+export const setPostProfileLoading = (data) => {
+  return {
+    type:actionTypes.SET_POST_PROFILE_LOADING,
+    postProfileLoading:data,
+  };
+};
+
+export const setUpdateProfileLoading = (data) => {
+  return {
+    type:actionTypes.SET_UPDATE_PROFILE_LOADING,
+    updateProfileLoading:data,
+  };
+};
+
+export const setRetreiveProfileLoading = (data) => {
+  return {
+    type:actionTypes.SET_RETRIEVE_PROFILE_LOADING,
+    retreiveProfileLoading:data,
+  };
+};
+
+export const setAllProfileLoading = (data) => {
+  return {
+    type:actionTypes.SET_ALL_PROFILE_LOADING,
+    allProfileLoading:data,
+  };
+
+};
+
+
 
 
 export const searchAllProfile = (query, pageNum) => {
@@ -27,14 +64,12 @@ export const searchAllProfile = (query, pageNum) => {
       console.log(response.data, 'return search data');
       if (response.data.total !== 0){
         dispatch(searchedData(response.data));
+        dispatch(setSearchLoading(false));
       }
     })
     .catch(err => {
       console.log(err, 'search err');
-    })
-    ;
-
-
+    });
   };
 };
 
@@ -71,6 +106,7 @@ export const postProfile = (data) => {
           console.log(response.data, 'the response');
           AsyncStorage.setItem('profileId', response.data._id);
           dispatch(postSucess(response.data._id));
+          dispatch(setPostProfileLoading(false));
         })
         .catch((err) => console.log(err, 'its  err err err err'));
     };
@@ -131,6 +167,7 @@ export const updateProfile = (data) => {
         .then(response => {
           console.log(response.data, 'the response');
           dispatch(retrieveProfileDetail(response.data.profile._id));
+          dispatch(setUpdateProfileLoading(false));
         })
         .catch((err) => console.log(err, 'its  err err err err'));
   };
@@ -152,6 +189,7 @@ export const retrieveProfileDetail = (id) => {
     .then(response => {
       console.log(response.data, 'urs');
       dispatch(getProfileIdData(response.data));
+      dispatch(setRetreiveProfileLoading(true));
     })
     .catch((err) => console.log(err, 'its id err'));
   };
@@ -177,7 +215,9 @@ export const getAllProfile = (pageNum) => {
   return dispatch => {
     axios.get(`https://findplug.herokuapp.com/profile?query=male&page=${pageNum}`)
     .then(response => {
-      console.log(response.data, 'retriev data');
+      console.log(response.data);
+      dispatch(setAllProfileLoading(false));
+      // console.log(response.data, 'retriev data');
       if (response.data.total !== 0){
         dispatch(profileData(response.data));
       }

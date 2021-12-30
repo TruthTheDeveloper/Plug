@@ -4,6 +4,7 @@ import {updateObject} from '../utility';
 
 const initialState = {
     consversation:[],
+    messageLoading:true
 };
 
 const setConversation = (state, action) => {
@@ -12,12 +13,20 @@ const setConversation = (state, action) => {
      });
 };
 
+const setMessageLoading = (state, action) => {
+  return updateObject(state,{
+    messageLoading:action.messageLoading
+  })
+}
+
 
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
       case actionTypes.GET_CONVERSATION:
           return setConversation(state,action);
+      case actionTypes.SET_MESSAGE_LOADING:
+        return setMessageLoading(state,action)
       default:
         return state;
     }

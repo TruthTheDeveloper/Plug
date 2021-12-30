@@ -23,19 +23,73 @@ const initialState = {
     profileIdData:null,
     updateSuccesFull:'',
     chatContactData:[],
+    searchLoading:true,
+    postProfileLoading:true,
+    allProfileLoading:true,
+    updateProfileLoading:true,
+    retreiveProfileLoading:true,
 };
 
 const resetSearchData = (state, action) => {
-    return {
+    return updateObject(state,{
         searchedData:action.searchedData,
-    };
+    });
 };
 
+const getSearchLoading = (state, action) => {
+    return updateObject(state, {
+        searchLoading:action.searchLoading,
+    });
+};
+
+const getPostProfileLoading = (state,action) => {
+    return updateObject(state,{
+        postProfileLoading:action.postProfileLoading,
+    });
+};
+
+const getAllProfileLoading = (state,action) => {
+    return updateObject(state,{
+        allProfileLoading:action.allProfileLoading,
+    });
+};
+
+const getUpdateProfileLoading = (state,action) => {
+    return updateObject(state,{
+        updateProfileLoading:action.updateProfileLoading,
+    });
+};
+
+const getRetreiveProfileLoading = (state, action) => {
+    return updateObject(state,{
+        retreiveProfileLoading:action.retreiveProfileLoading,
+    });
+};
+
+// const resetLoading = (state, action) => {
+//     return updateObject(state,{
+//         loading:true,
+//     });
+// };
+
+// const setSearchData = (state, action) => {
+//     return {
+//         ...state,
+//         searchedData:[...state.searchedData,...action.searchedData.profile],
+//     };
+// };
+
+// const setSearchData = (state, action) => {
+//     return updateObject(state,{
+//         searchedData:action.searchedData.profile,
+//     });
+// };
+
 const setSearchData = (state, action) => {
-    return {
-        ...state,
+    // state.profileData.push(...action.profileData.profile)
+    return updateObject(state,{
         searchedData:[...state.searchedData,...action.searchedData.profile],
-    };
+    });
 };
 
 const setProfileIdData = (state,action) => {
@@ -45,13 +99,22 @@ const setProfileIdData = (state,action) => {
     });
 };
 
+// const setProfileData = (state, action) => {
+//     // state.profileData.push(...action.profileData.profile)
+//     return {
+//         ...state,
+//         profileData:[...state.profileData,...action.profileData.profile],
+//     };
+// };
+
 const setProfileData = (state, action) => {
     // state.profileData.push(...action.profileData.profile)
-    return {
-        ...state,
+    return updateObject(state,{
         profileData:[...state.profileData,...action.profileData.profile],
-    };
+    });
 };
+
+
 
 
 
@@ -268,8 +331,16 @@ const reducer = (state = initialState, action) => {
         return updateChatContact(state, action);
     case actionTypes.REFRESH_HOME_PAGE:
         return refreshHomePage(state, action);
-
-
+    case actionTypes.SET_SEARCH_LOADING:
+        return getSearchLoading(state, action);
+    case actionTypes.SET_POST_PROFILE_LOADING:
+        return getPostProfileLoading(state, action);
+    case actionTypes.SET_UPDATE_PROFILE_LOADING:
+        return getUpdateProfileLoading(state, action);
+    case actionTypes.SET_RETRIEVE_PROFILE_LOADING:
+        return getRetreiveProfileLoading(state,action);
+    case actionTypes.SET_ALL_PROFILE_LOADING:
+        return getAllProfileLoading(state, action);
 
     default:
         return state;

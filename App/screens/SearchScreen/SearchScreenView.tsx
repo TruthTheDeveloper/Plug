@@ -6,20 +6,20 @@ import * as actionTypes from '../../redux/actions/actionTypes';
 
 import Icons from 'react-native-vector-icons/Feather';
 import Item from './components/Items';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
 import * as actions from '../../redux/actions/index';
 
 import {Loader} from '../../components';
 
 const {height, width} = Dimensions.get('window');
 
-const SearchScreenView = () => {
+const SearchScreenView = React.memo(() => {
   const [searchData, setSearchData]  = useState<string>();
   const [sumbitSearch, setSumbitSearch] = useState<boolean>(false);
 
   const dispatch = useDispatch();
-  const [loading] = useState<boolean>(false);
   const [pageNum, setPageNum] = useState(1);
+  const isLoading = useSelector((state:any) => state.profileReducer.searchLoading);
 
   const searchSubmit = () => {
     setSumbitSearch(true);
@@ -28,6 +28,7 @@ const SearchScreenView = () => {
     dispatch(actions.searchAllProfile(searchData, pageNum));
     setPageNum(prev => prev + 1);
   };
+
 
   const incrementPageNumber = () => {
     setPageNum(prev => prev + 1);
@@ -70,10 +71,10 @@ const SearchScreenView = () => {
         </View>
       </View>
       {sumbitSearch && <Item pageNumber={pageNum} changePageNumber={incrementPageNumber} queryData={searchData}/>}
-      {loading && <Loader />}
+      {isLoading && <Loader/>}
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {

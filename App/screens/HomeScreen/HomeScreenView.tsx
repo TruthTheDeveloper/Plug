@@ -2,17 +2,19 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import React, {useState, useEffect, useCallback, FC} from 'react';
-import {View, Dimensions, FlatList, BackHandler, Text} from 'react-native';
+import {View, FlatList, BackHandler} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../redux/actions/index';
 import * as actionTypes from '../../redux/actions/actionTypes';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //Components
-import {Header} from '../../components/index';
+import {Header, Loader} from '../../components/index';
 
 import ProfileItem from './components/ProfileItem';
-import Profile from './components/Profile';
-import DetailsDiv from './components/DetailsDiv';
+
+// import Profile from './components/Profile';
+// import DetailsDiv from './components/DetailsDiv';
 
 
 
@@ -25,37 +27,51 @@ const girl5 = require('../../assets/images/girl4.jpg');
 const girl6 = require('../../assets/images/girl5.jpg');
 
 
-const {width} = Dimensions.get('window');
 
 interface homeProps {
   navigate: any
 }
-
 const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
     const [pageNum, setPageNum] = useState(1);
     const dispatch = useDispatch();
+    const [initialPageNum] = useState(1);
     // const [socketId, setSocketId] = useState()
-
     const profileData = useSelector((state:any) => state.profileReducer.profileData);
-    const indx = useSelector((state: any) => state.generalReducer.index);
-    const showCard = useSelector((state: any) => state.generalReducer.showCard);
+    const isLoading = useSelector((state:any) => state.profileReducer.allProfileLoading);
+    // const indx = useSelector((state: any) => state.generalReducer.index);
+    // const showCard = useSelector((state: any) => state.generalReducer.showCard);
+
+    // console.log(profileData)
 
 
 
     // console.log(profileData, 'this data');
 
     useEffect(() => {
-      console.log('got here');
-        dispatch({type:actionTypes.REFRESH_HOME_PAGE, profileData:[]});
-        dispatch(actions.getAllProfile(pageNum));
-        if (pageNum === 1){
-          setPageNum(prev => prev + 1);
-        }
+        // dispatch({type:actionTypes.REFRESH_HOME_PAGE, profileData:[]});
+          dispatch(actions.getAllProfile(initialPageNum));
+          setPageNum(2);
+          let userId : any = null;
+          const getToken = async() => {
+            userId = await AsyncStorage.getItem('profileId');
+           if (userId){
+               console.log('meet');
+               dispatch(actions.retrieveProfileDetail(userId));
+           } else {
+               console.log('no user id');
+       }
+
+       };
+       getToken();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
+
     const getNewList = useCallback(() => {
-      dispatch(actions.getAllProfile(pageNum));
+      if (pageNum > 1){
+        dispatch(actions.getAllProfile(pageNum));
+      }
       setPageNum(prev => prev + 1);
     },[dispatch, pageNum]);
 
@@ -74,7 +90,7 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
   };
 
   const openGrid = (e: number) => {
-    navigate()
+    navigate();
     dispatch({type: actionTypes.SHOW_CARDS, value: true});
     dispatch({type: actionTypes.INDEX, value: e });
   };
@@ -83,8 +99,9 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
 
   return (
     <View>
-      <Header label="All Student" />
-      <FlatList
+      <Header label="All Students" />
+      {isLoading ? <Loader/> : <FlatList
+      // horizontal={true}
             key={'_'}
             numColumns={2}
             data={profileData}
@@ -100,7 +117,7 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
             }
             style={{ marginBottom: 37 }}
             onEndReached={getNewList}
-            />
+            /> }
     </View>
   );
 });

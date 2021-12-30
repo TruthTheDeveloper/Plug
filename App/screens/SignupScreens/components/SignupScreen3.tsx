@@ -12,8 +12,7 @@ import {
 import Icons from 'react-native-vector-icons/Feather';
 import * as actionTypes from '../../../redux/actions/actionTypes';
 import * as actions from '../../../redux/actions/index';
-import {useDispatch} from 'react-redux';
-import { useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import EmojiHeader from './EmojiHeader';
 import StatusBar from './StatusBar';
@@ -22,6 +21,7 @@ import PersonalityBox from './personalityBox';
 import ContinueButton from './ContinueButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import uuid from 'react-native-uuid';
+import { Loader } from '../../../components';
 
 const {height, width} = Dimensions.get('window');
 let socketId: any;
@@ -31,6 +31,8 @@ const SignupScreen3 = () => {
   const [, setProfilePic] = useState();
 
   const [loading, setLoading] = useState(false);
+
+  const isLoading = useSelector((state:any) => state.profileReducer.postProfileLoading);
 
   useEffect(() => {
     socketId = uuid.v4();
@@ -198,29 +200,26 @@ const SignupScreen3 = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerFlexer}>
+      {isLoading ? <Loader/> : <><View style={styles.headerFlexer}>
         <TouchableWithoutFeedback onPress={back}>
-          <View style={{paddingRight: 20}}>
+          <View style={{ paddingRight: 20 }}>
             <Icons name="chevron-left" color="#000" size={25} />
           </View>
         </TouchableWithoutFeedback>
         <EmojiHeader page={3} />
-      </View>
-      <StatusBar page={3} />
-      <View style={styles.profileContainer}>
-        <Text style={styles.header}>Profile</Text>
-        <ProfilePhoto setImage={setImage} />
-      </View>
-      <View style={styles.personalityContainer}>
-        <Text style={styles.title}>What best describe you</Text>
-        <View style={styles.personalitys}>
-          {div1}
-          {div2}
-          {div3}
-          {div4}
-        </View>
-        <ContinueButton label="Finish" continue={next} loading={loading} />
-      </View>
+      </View><StatusBar page={3} /><View style={styles.profileContainer}>
+          <Text style={styles.header}>Profile</Text>
+          <ProfilePhoto setImage={setImage} />
+        </View><View style={styles.personalityContainer}>
+          <Text style={styles.title}>What best describe you</Text>
+          <View style={styles.personalitys}>
+            {div1}
+            {div2}
+            {div3}
+            {div4}
+          </View>
+          <ContinueButton label="Finish" continue={next} loading={loading} />
+        </View></>}
     </View>
   );
 };

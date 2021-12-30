@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import React, {useState, useCallback, FC} from 'react';
+import React, {useCallback, FC} from 'react';
 import {
   View,
   Dimensions,
@@ -17,12 +17,6 @@ import SearchProfileItem from './SearchProfileItem';
 import Profile from '../../HomeScreen/components/Profile';
 import DetailsDiv from '../../HomeScreen/components/DetailsDiv';
 
-const girl2 = require('../../../assets/images/girl1.jpg');
-const girl1 = require('../../../assets/images/girl.jpg');
-const girl3 = require('../../../assets/images/girl2.jpg');
-const girl4 = require('../../../assets/images/girl3.jpg');
-const girl5 = require('../../../assets/images/girl4.jpg');
-const girl6 = require('../../../assets/images/girl5.jpg');
 
 const {width} = Dimensions.get('window');
 
@@ -38,18 +32,21 @@ const Item: FC<ItemProps> = React.memo(({pageNumber, changePageNumber, queryData
 
   const dispatch = useDispatch();
   const searchedData = useSelector((state:any) => state.profileReducer.searchedData);
-  const index = useSelector((state: any) => state.generalReducer.searchIndex);
+  const indx = useSelector((state: any) => state.generalReducer.searchIndex);
   const showCard = useSelector((state: any) => state.generalReducer.searchShowCard);
+
+  // console.log(profileData, 'from home')
+  // console.log(searchedData)
 
 
   const goBack = () => {
-    dispatch({type: actionTypes.SHOW_SEARCHCARDS, value: false})
+    dispatch({type: actionTypes.SHOW_SEARCHCARDS, value: false});
     return true;
   };
 
   const openGrid = (e: number) => {
-    dispatch({type: actionTypes.SHOW_SEARCHCARDS, value: true})
-    dispatch({type: actionTypes.SEARCH_INDEX, value: e})
+    dispatch({type: actionTypes.SHOW_SEARCHCARDS, value: true});
+    dispatch({type: actionTypes.SEARCH_INDEX, value: e});
   };
 
   const getNewList = useCallback(() => {
@@ -79,6 +76,7 @@ const Item: FC<ItemProps> = React.memo(({pageNumber, changePageNumber, queryData
                 setIndex={openGrid}
               />
             )}
+            extraData={showCard}
             style={{marginBottom: 127}}
             onEndReached={getNewList}
 
@@ -92,7 +90,7 @@ const Item: FC<ItemProps> = React.memo(({pageNumber, changePageNumber, queryData
             disableIntervalMomentum={true}
             snapToInterval={width}
             showsHorizontalScrollIndicator={false}
-            initialScrollIndex={index}
+            initialScrollIndex={indx}
             data={searchedData}
             renderItem={({item}) => (
               <Profile
@@ -102,6 +100,15 @@ const Item: FC<ItemProps> = React.memo(({pageNumber, changePageNumber, queryData
                 department={item.department}
                 image={item.profilePic}
                 details={item.details}
+                receiverId={undefined}
+                attributeOne={item.attributeOne}
+                attributeTwo={item.attributeTwo}
+                attributeThree={item.attibuteThree}
+                attributeFour={item.attributeFour}
+                attributeFive={item.attributeFive}
+                attributeSix={item.attributeSix}
+                attributeSeven={item.attributeSeven}
+                attributeEight={item.attributeEight}
               />
             )}
           />

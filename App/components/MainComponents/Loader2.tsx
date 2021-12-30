@@ -13,15 +13,17 @@ interface LoaderProps {
 }
 
 const Loader2:FC<LoaderProps> = ({endLoading}):JSX.Element => {
-    useEffect(() => {
-        clearLoading()
-    }, []);
 
-    const clearLoading = () => {
-        setTimeout(() => {
-            endLoading()
-        }, 500)
-    };
+    useEffect(() => {
+        const clearLoading = () => {
+            setTimeout(() => {
+                endLoading();
+            }, 500);
+        };
+        clearLoading();
+    }, [endLoading]);
+
+
     return (
         <View style={styles.container}>
             <LottieView source={loader} autoPlay loop />
@@ -35,7 +37,7 @@ const styles = StyleSheet.create({
     width: width,
     backgroundColor: 'transparent',
     position: 'absolute',
-    top: 0
+    top: 0,
   },
 });
 

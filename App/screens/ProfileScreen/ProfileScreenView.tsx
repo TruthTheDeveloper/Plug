@@ -3,7 +3,7 @@
 /* eslint-disable prettier/prettier */
 import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, Dimensions, ScrollView, TouchableWithoutFeedback} from 'react-native';
-import {Header, Username} from '../../components';
+import {Header, Loader, Username} from '../../components';
 import PersonalityBoxes from '../../components/MainComponents/PersonalityBoxes';
 import {red} from '../../config/colors';
 import { useDispatch, useSelector } from 'react-redux';
@@ -24,6 +24,7 @@ const ProfileScreenView = () => {
     const [edit, setEdit] = useState(false);
     // const Id = useSelector((state:any) => state.profileReducer.profileId);
     const profileIdData = useSelector((state:any) => state.profileReducer.profileIdData);
+    const isLoading = useSelector((state:any) => state.profileReducer.retrieveProfileLoading);
     const dispatch = useDispatch();
 
     // console.log(profileIdData)
@@ -51,7 +52,7 @@ const ProfileScreenView = () => {
 
   return (
     <View style={{height: height, backgroundColor: '#fff'}}>
-        {profileIdData ? <View style={styles.container}>
+        {isLoading  ? <Loader/> : <View style={styles.container}>
       <Header label="Profile"  />
       <ScrollView>
         <View style={styles.ProfileHeader}>
@@ -88,7 +89,7 @@ const ProfileScreenView = () => {
           <Button iconLabel="log-out" label="Logout" setAvaliable={() => null} logout={() => console.log('Logged out')} />
         </View>
       </ScrollView>
-    </View> : <Text>No Data</Text>}
+    </View>}
     {edit && <EditScreen image={profileIdData.profilePic} cancel={() => setEdit(false)} available={available} /> }
     </View>
   );
