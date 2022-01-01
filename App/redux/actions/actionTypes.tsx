@@ -31,6 +31,7 @@ export const SHOW_CARDS = 'SHOW_CARDS';
 export const SHOW_SEARCHCARDS = 'SHOW_SEARCHCARDS';
 export const INDEX = 'INDEX';
 export const SEARCH_INDEX = 'SEARCH_INDEX';
+export const LARGE_CARD_DATA = 'LARGE_CARD_DATA';
 
 //Reset attribute
 export const RESET_ATTRIBUTE_ONE = 'RESET_ATTRIBUTE_ONE';
