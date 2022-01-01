@@ -32,45 +32,39 @@ interface homeProps {
 }
 
 const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
-    const [pageNum, setPageNum] = useState(1);
-    const dispatch = useDispatch();
-    // const [socketId, setSocketId] = useState()
+  const [pageNum, setPageNum] = useState(1);
+  const dispatch = useDispatch();
+  // const [socketId, setSocketId] = useState()
 
-    const profileData = useSelector((state:any) => state.profileReducer.profileData);
+  const profileData = useSelector((state:any) => state.profileReducer.profileData);
 
-    const [user, setUser] = useState([
-      {username: 'kira', profilePic: girl1}
-    ])
+  const [user, setUser] = useState([
+    {username: 'kira', profilePic: girl1}
+  ])
 
-    // console.log(profileData, 'this data');
+  // console.log(profileData, 'this data');
 
-    useEffect(() => {
-      console.log('got here');
-        dispatch({type:actionTypes.REFRESH_HOME_PAGE, profileData:[]});
-        dispatch(actions.getAllProfile(pageNum));
-        if (pageNum === 1){
-          setPageNum(prev => prev + 1);
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[]);
-
-    const getNewList = useCallback(() => {
+  useEffect(() => {
+    console.log('got here');
+      dispatch({type:actionTypes.REFRESH_HOME_PAGE, profileData:[]});
       dispatch(actions.getAllProfile(pageNum));
-      setPageNum(prev => prev + 1);
-    },[dispatch, pageNum]);
+      if (pageNum === 1){
+        setPageNum(prev => prev + 1);
+      }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[]);
 
-  const goBack = () => {
-    dispatch({type: actionTypes.SHOW_CARDS, value: false});
-    return true;
-  };
+  const getNewList = useCallback(() => {
+    dispatch(actions.getAllProfile(pageNum));
+    setPageNum(prev => prev + 1);
+  },[dispatch, pageNum]);
 
   const openGrid = (e: number) => {
     navigate()
-    dispatch({type: actionTypes.SHOW_CARDS, value: true});
+    // dispatch({type: actionTypes.SHOW_CARDS, value: true});
     dispatch({type: actionTypes.INDEX, value: e });
+    dispatch({type: actionTypes.LARGE_CARD_DATA, value: profileData});
   };
-
-  BackHandler.addEventListener('hardwareBackPress', goBack );
 
   return (
     <View>
