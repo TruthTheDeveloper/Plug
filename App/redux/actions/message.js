@@ -18,7 +18,7 @@ export const setMessageLoading = (data) => {
 
 export const getMessage = (receiverId, senderId) => {
     return dispatch => {
-        axios.get(`https://findplug.herokuapp.com/profile?receiverId=${receiverId}&senderId=${senderId}`)
+        axios.get(`https://findplug.herokuapp.com/getMessage?receiverId=${receiverId}&senderId=${senderId}`)
         .then(response => {
             console.log(response.data);
             dispatch(getConversation(response.data));

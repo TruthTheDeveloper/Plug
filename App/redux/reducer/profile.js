@@ -25,7 +25,7 @@ const initialState = {
     chatContactData:[],
     searchLoading:false,
     postProfileLoading:false,
-    allProfileLoading:false,
+    allProfileLoading:true,
     updateProfileLoading:false,
     retreiveProfileLoading:false,
     resetSearchloading:false,
