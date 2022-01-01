@@ -23,12 +23,21 @@ const initialState = {
     profileIdData:null,
     updateSuccesFull:'',
     chatContactData:[],
-    searchLoading:true,
+    searchLoading:false,
     postProfileLoading:true,
     allProfileLoading:true,
     updateProfileLoading:true,
     retreiveProfileLoading:true,
+    resetSearchloading:true,
 };
+
+
+const getResetSearchLoading = (state, action) => {
+    return updateObject(state, {
+        resetSearchloading:true,
+    });
+};
+
 
 const resetSearchData = (state, action) => {
     return updateObject(state,{
@@ -341,6 +350,8 @@ const reducer = (state = initialState, action) => {
         return getRetreiveProfileLoading(state,action);
     case actionTypes.SET_ALL_PROFILE_LOADING:
         return getAllProfileLoading(state, action);
+    case actionTypes.RESET_SEARCH_LOADING:
+        return getResetSearchLoading(state,action);
 
     default:
         return state;

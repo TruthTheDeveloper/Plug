@@ -55,7 +55,6 @@ export const setAllProfileLoading = (data) => {
 
 
 
-
 export const searchAllProfile = (query, pageNum) => {
   console.log(query);
   return dispatch => {
@@ -69,6 +68,7 @@ export const searchAllProfile = (query, pageNum) => {
     })
     .catch(err => {
       console.log(err, 'search err');
+      dispatch(setSearchLoading(false));
     });
   };
 };
@@ -108,7 +108,10 @@ export const postProfile = (data) => {
           dispatch(postSucess(response.data._id));
           dispatch(setPostProfileLoading(false));
         })
-        .catch((err) => console.log(err, 'its  err err err err'));
+        .catch((err) => {
+          console.log(err, 'its  err err err err');
+          dispatch(setPostProfileLoading(false));
+        });
     };
   };
 
@@ -169,7 +172,10 @@ export const updateProfile = (data) => {
           dispatch(retrieveProfileDetail(response.data.profile._id));
           dispatch(setUpdateProfileLoading(false));
         })
-        .catch((err) => console.log(err, 'its  err err err err'));
+        .catch((err) => {
+          console.log(err, 'its  err err err err');
+          dispatch(setUpdateProfileLoading(false));
+        });
   };
 };
 
@@ -191,7 +197,10 @@ export const retrieveProfileDetail = (id) => {
       dispatch(getProfileIdData(response.data));
       dispatch(setRetreiveProfileLoading(true));
     })
-    .catch((err) => console.log(err, 'its id err'));
+    .catch((err) => {
+      console.log(err, 'its id err');
+      dispatch(setUpdateProfileLoading(false));
+    });
   };
 };
 
@@ -223,6 +232,9 @@ export const getAllProfile = (pageNum) => {
       }
 
     })
-    .catch((err) => console.log(err, 'ur err'));
+    .catch((err) => {
+      console.log(err, 'ur err');
+      dispatch(setAllProfileLoading(false));
+    });
   };
 };

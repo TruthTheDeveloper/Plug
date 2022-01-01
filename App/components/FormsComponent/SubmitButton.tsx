@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import * as actions from '../../redux/actions/index';
+import * as actionTypes from '../../redux/actions/actionTypes'
 import { useDispatch } from 'react-redux';
 import React, {FC} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
@@ -14,10 +15,11 @@ interface ButtonProps {
 }
 
 const SubmitButton: FC<ButtonProps> = ({label, username, email, password, signUp, resetInput}): JSX.Element => {
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
 
   const submitHandler = () => {
-    dispath(actions.auth(username, email, password, signUp));
+    dispatch(actions.auth(username, email, password, signUp));
+    dispatch({type:actionTypes.RESET_AUTH_LOADING, authLoading:true});
     setTimeout(() => {
       resetInput();
     },1500);

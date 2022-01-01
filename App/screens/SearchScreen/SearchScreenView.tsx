@@ -6,10 +6,9 @@ import * as actionTypes from '../../redux/actions/actionTypes';
 
 import Icons from 'react-native-vector-icons/Feather';
 import Item from './components/Items';
-import { useDispatch, useSelector} from 'react-redux';
+import { useDispatch} from 'react-redux';
 import * as actions from '../../redux/actions/index';
 
-import {Loader} from '../../components';
 
 const {height, width} = Dimensions.get('window');
 
@@ -19,7 +18,7 @@ const SearchScreenView = React.memo(() => {
 
   const dispatch = useDispatch();
   const [pageNum, setPageNum] = useState(1);
-  const isLoading = useSelector((state:any) => state.profileReducer.searchLoading);
+
 
   const searchSubmit = () => {
     setSumbitSearch(true);
@@ -36,6 +35,7 @@ const SearchScreenView = React.memo(() => {
 
   useEffect(() => {
     dispatch({searchedData:[], type:actionTypes.RESET_SEARCH_DATA});
+    dispatch({resetSearchLoading:true, type:actionTypes.RESET_SEARCH_LOADING});
       setPageNum(1);
       const timer = setTimeout(() => {
         if (searchData !== ''){
@@ -43,7 +43,7 @@ const SearchScreenView = React.memo(() => {
           setSumbitSearch(true);
           setPageNum(prev => prev + 1);
         }
-      },500);
+      },1000);
 
       return () => {
         clearTimeout(timer);
@@ -71,7 +71,6 @@ const SearchScreenView = React.memo(() => {
         </View>
       </View>
       {sumbitSearch && <Item pageNumber={pageNum} changePageNumber={incrementPageNumber} queryData={searchData}/>}
-      {isLoading && <Loader/>}
     </View>
   );
 });

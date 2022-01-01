@@ -8,7 +8,13 @@ const initialState = {
   error: null,
   loading: false,
   userId:null,
-  authLoading:true,
+  authLoading:false,
+};
+
+const resetAuthLoading = (state, action) => {
+  return updateObject(state, {
+    authloading:action.authLoading,
+  });
 };
 
 const authStart = (state, action) => {
@@ -59,6 +65,8 @@ const reducer = (state = initialState, action) => {
       return setUserId(state, action);
     case actionTypes.SET_AUTH_LOADING:
       return setAuthLoading(state, action);
+    case actionTypes.RESET_AUTH_LOADING:
+      return resetAuthLoading(state,action);
     default:
       return state;
   }

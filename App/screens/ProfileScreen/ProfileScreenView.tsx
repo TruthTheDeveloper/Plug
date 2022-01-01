@@ -27,10 +27,10 @@ const ProfileScreenView = () => {
     const isLoading = useSelector((state:any) => state.profileReducer.retrieveProfileLoading);
     const dispatch = useDispatch();
 
-    // console.log(profileIdData)
+    console.log(profileIdData);
 
 
-    const [available, setAvailiable] = useState(true);
+    const [available, setAvailiable] = useState(profileIdData.availabilty);
 
 
     useEffect(() => {

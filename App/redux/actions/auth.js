@@ -132,6 +132,7 @@ export const auth = (username, email, password, isSignup) => {
             .catch(err => {
                 console.log(err, 'the eror');
                 dispatch(authFail(err.response.data.errors));
+                dispatch(setAuthLoading(false));
             });
     };
 };

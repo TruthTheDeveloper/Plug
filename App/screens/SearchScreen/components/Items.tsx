@@ -16,6 +16,7 @@ import * as actionTypes from '../../../redux/actions/actionTypes';
 import SearchProfileItem from './SearchProfileItem';
 import Profile from '../../HomeScreen/components/Profile';
 import DetailsDiv from '../../HomeScreen/components/DetailsDiv';
+import { Loader } from '../../../components';
 
 
 const {width} = Dimensions.get('window');
@@ -34,6 +35,7 @@ const Item: FC<ItemProps> = React.memo(({pageNumber, changePageNumber, queryData
   const searchedData = useSelector((state:any) => state.profileReducer.searchedData);
   const indx = useSelector((state: any) => state.generalReducer.searchIndex);
   const showCard = useSelector((state: any) => state.generalReducer.searchShowCard);
+  const isLoading = useSelector((state:any) => state.profileReducer.searchLoading);
 
   // console.log(profileData, 'from home')
   // console.log(searchedData)
@@ -59,7 +61,7 @@ const Item: FC<ItemProps> = React.memo(({pageNumber, changePageNumber, queryData
   const showDetails = useSelector((state: any) => state.chatReducer.details);
   return (
     <>
-      <View style={{backgroundColor: '#fff'}}>
+      {isLoading ? <Loader/> : <View style={{backgroundColor: '#fff'}}>
         {!showCard ? (
           <FlatList
             key={'()'}
@@ -113,7 +115,7 @@ const Item: FC<ItemProps> = React.memo(({pageNumber, changePageNumber, queryData
             )}
           />
         )}
-      </View>
+      </View>}
       {showDetails && <DetailsDiv details={showDetails} />}
     </>
   );
