@@ -19,7 +19,7 @@ const SubmitButton: FC<ButtonProps> = ({label, username, email, password, signUp
 
   const submitHandler = () => {
     dispatch(actions.auth(username, email, password, signUp));
-    dispatch({type:actionTypes.RESET_AUTH_LOADING, authLoading:true});
+    // dispatch({type:actionTypes.RESET_AUTH_LOADING, authLoading:true});
     setTimeout(() => {
       resetInput();
     },1500);

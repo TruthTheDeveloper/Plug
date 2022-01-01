@@ -24,11 +24,11 @@ const initialState = {
     updateSuccesFull:'',
     chatContactData:[],
     searchLoading:false,
-    postProfileLoading:true,
-    allProfileLoading:true,
-    updateProfileLoading:true,
-    retreiveProfileLoading:true,
-    resetSearchloading:true,
+    postProfileLoading:false,
+    allProfileLoading:false,
+    updateProfileLoading:false,
+    retreiveProfileLoading:false,
+    resetSearchloading:false,
 };
 
 

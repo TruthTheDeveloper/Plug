@@ -52,7 +52,7 @@ export const rootReducer = combineReducers({
   authReducer: persistReducer(persistConfig, authReducer),
   navReducer: navReducer,
   chatReducer: chatReducer,
-  profileReducer:persistReducer(persistConfig, profileReducer),
+  profileReducer:profileReducer,
   generalReducer: generalReducer,
 });
 

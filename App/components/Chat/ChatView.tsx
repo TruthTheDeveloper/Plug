@@ -43,7 +43,8 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
     (state: any) => state.profileReducer.chatContactData,
   );
 
-  const allConversation = useSelector((state:any) => state.conversation);
+  const allConversation = useSelector((state:any) => state.messageReducer.conversation);
+  console.log(allConversation, 'conversation')
   // console.log(updatedContactData, 'contact sata');
 
   const socketId = profileIdData.socketId;
@@ -88,7 +89,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
       newSocket.close();
     };
 
-  }, [dispatch, socketId, user.receiverId]);
+  }, [dispatch, socketId, user.receiverId, allConversation]);
 
 
 
