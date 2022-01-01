@@ -37,10 +37,10 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
     // const [socketId, setSocketId] = useState()
 
     const profileData = useSelector((state:any) => state.profileReducer.profileData);
-    const indx = useSelector((state: any) => state.generalReducer.index);
-    const showCard = useSelector((state: any) => state.generalReducer.showCard);
 
-
+    const [user, setUser] = useState([
+      {username: 'kira', profilePic: girl1}
+    ])
 
     // console.log(profileData, 'this data');
 
@@ -75,7 +75,7 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
   return (
     <View>
       <Header label="All Student" />
-      {profileData ?
+      {user ?
         <FlatList
           key={'_'}
           numColumns={2}

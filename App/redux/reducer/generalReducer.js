@@ -6,6 +6,7 @@ const initialState = {
     searchIndex: null,
     showCard: false,
     searchShowCard: false,
+    largeCardData: null
 };
 
 const reducer = (state = initialState, action) => {
