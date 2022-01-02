@@ -90,6 +90,10 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
           (e: {receiverId: string}) => e.receiverId !== chatViewData.receiverId,
         );
         updatechatContact.unshift(chatViewData);
+        dispatch({
+          type: actionTypes.CHAT_CONTACT,
+          chatContactData: updatechatContact,
+        });
       });
 
       // console.log(newSocket)
@@ -108,15 +112,15 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
     };
 
 
-  }, [dispatch, socketId, user.receiverId]);
+  }, [dispatch, online, socketId, updatedContactData, user.image, user.receiverId, user.username]);
 
   useEffect(() => {
-    console.log('did comon mount')
-    setChats([])
+    console.log('did comon mount');
+    setChats([]);
     console.log(user.receiverId, socketId);
     dispatch(getMessage(user.receiverId, socketId));
     setChats((prev:any) => [...previousConverstion, ...prev]);
-  },[dispatch, socketId, user.receiverId]);
+  },[dispatch, previousConverstion, socketId, user.receiverId]);
 
   // console.log(chats, 'chats')
 
