@@ -14,6 +14,7 @@ interface ChatProps {
 }
 
 const ChatItem: FC<ChatProps> = ({id, message, socket, rec}): JSX.Element => {
+  // console.log(id, 'amd ', socket, message);
   let chatDisplay = null;
   let msg;
   if (id === rec){

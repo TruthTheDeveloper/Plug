@@ -76,6 +76,7 @@ export const CHAT_CONTACT = 'CHAT_CONTACT';
 export const REFRESH_HOME_PAGE = 'REFRESH_HOME_PAGE';
 
 export const GET_CONVERSATION = 'GET_CONVERSATION';
+export const GET_ALL_CONVERSATION = 'GET_ALL_CONVERSATION'
 
 
 //reset loading

@@ -1,7 +1,8 @@
 /* eslint-disable prettier/prettier */
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, Dimensions} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
+import { getAllMessage } from '../../redux/actions/message';
 
 //components
 import {Header} from '../../components/index';
@@ -34,6 +35,8 @@ const ChatScreenView = () => {
     },
   ]);
 
+  
+
   const updatedContactData = useSelector((state:any) => state.profileReducer.chatContactData);
   console.log(updatedContactData, 'updated');
 
@@ -42,6 +45,10 @@ const ChatScreenView = () => {
     dispatch({type: actionTypes.SET_DEFAULT_ROUTE, value: 'CHATS'});
     // console.log(e)
   };
+
+  useEffect(() => {
+    dispatch(getAllMessage());
+  },[dispatch]);
 
   return (
     <View style={styles.container}>

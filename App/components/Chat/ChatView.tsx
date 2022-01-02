@@ -44,10 +44,13 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
   );
 
   const previousConverstion = useSelector((state:any) => state.messageReducer.conversation);
-  console.log(previousConverstion, 'conversation')
+  // console.log(previousConverstion, 'conversation')
   // console.log(updatedContactData, 'contact sata');
 
   const socketId = profileIdData.socketId;
+
+  // console.log(previousConverstion, 'prev')
+  
 
   useEffect(() => {
     // dispatch(getMessage(user.receiverId, socketId));
@@ -65,12 +68,28 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
       newSocket.on('receive', (msg: any, Rid:any, Sid:any) => {
         console.log('incoming message', msg, Rid, Sid);
         let data = {
-          senderId: Sid,
-          receiverId: Rid,
+          senderMessage: Sid,
+          receiverMessage: Rid,
           message: msg,
         };
         console.log(data);
         setChats((prev: any) => [...prev, data]);
+
+        const chatViewData = {
+          receiverId: Rid,
+          receiverUsername: user.username,
+          lastmessage: msg,
+          receiverImage: user.image,
+          online:online,
+          time: new Date().toLocaleTimeString().slice(0,5),
+        };
+
+        console.log(chatViewData)
+
+        const updatechatContact = updatedContactData.filter(
+          (e: {receiverId: string}) => e.receiverId !== chatViewData.receiverId,
+        );
+        updatechatContact.unshift(chatViewData);
       });
 
       // console.log(newSocket)
@@ -88,14 +107,18 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
       newSocket.close();
     };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [dispatch, socketId, user.receiverId]);
 
   useEffect(() => {
+    console.log('did comon mount')
+    setChats([])
     console.log(user.receiverId, socketId);
     dispatch(getMessage(user.receiverId, socketId));
     setChats((prev:any) => [...previousConverstion, ...prev]);
-  },[dispatch, previousConverstion, socketId, user.receiverId]);
+  },[dispatch, socketId, user.receiverId]);
+
+  // console.log(chats, 'chats')
 
 
 
@@ -105,8 +128,8 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
     newSocket.emit('send', msg, Rid, Sid);
     dispatch(getMessage(user.receiverId, socketId));
     let data = {
-      senderId: Sid,
-      receiverId: Rid,
+      senderMessage: Sid,
+      receiverMessage: Rid,
       message: msg,
     };
     setChats((prev: any) => [...prev, data]);
@@ -195,10 +218,10 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
         {chats.length !== 0 ? (
           <FlatList
             data={chats}
-            keyExtractor={item => item._id}
+            // keyExtractor={item => item._id}
             renderItem={({item}) => (
               <ChatItem
-                id={item.senderId}
+                id={item.senderMessage}
                 rec={user.receiverId}
                 message={item.message}
                 socket={socketId}
