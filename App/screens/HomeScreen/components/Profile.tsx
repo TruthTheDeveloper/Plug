@@ -22,9 +22,6 @@ import { useDispatch } from 'react-redux';
 const verifiedIcon = require('../../../assets/images/verified.png');
 const {height, width} = Dimensions.get('window');
 
-const min = 1;
-const max = 10;
-const random = Math.floor(Math.random() * (max - min + 1)) + min;
 
 interface ProfileProps {
     receiverId:any,

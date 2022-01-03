@@ -1,4 +1,6 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable prettier/prettier */
 import React, {FC} from 'react';
 import { View } from 'react-native';
 import HomeScreenView from './HomeScreenView';

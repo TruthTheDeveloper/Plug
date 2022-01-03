@@ -16,6 +16,7 @@ interface ChatProps {
   username: string;
   time:any;
   // active: boolean;
+  online:boolean;
   lastText: string;
   image: any;
   openChat: (e: string) => void;
@@ -26,6 +27,7 @@ const ChatItem: FC<ChatProps> = ({
   time,
   // active,
   lastText,
+  online,
   image,
   openChat,
 }): JSX.Element => {
@@ -42,12 +44,10 @@ const ChatItem: FC<ChatProps> = ({
           <ImageBackground source={{uri:image}} style={styles.image} />
         </View>
         <View style={styles.container2}>
-          {/* <Username username={username} active={active} fontSize={17} /> */}
           <View style={styles.gridChatItemHeader}>
-            <Username username={username}  fontSize={17} active={false} />
-            <Text style={styles.onlineText}>Online</Text>
+            <Username username={username}  fontSize={17} active={true} />
+            {online && <Text style={styles.onlineText}>~Online~</Text>}
           </View>
-          
           <Text style={styles.text}>{newText}</Text>
         </View>
         <View style={styles.dateContainer}>
@@ -80,12 +80,12 @@ const styles = StyleSheet.create({
   gridChatItemHeader: {
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'flex-end'
+    alignItems: 'flex-end',
   },
   onlineText: {
     fontSize: 16,
     color: 'green',
-    paddingLeft: 5
+    paddingLeft: 5,
   },
   container2: {
     height: 60,

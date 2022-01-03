@@ -25,6 +25,13 @@ export const authFail = error => {
   };
 };
 
+export const setAuthLoading = data => {
+    return {
+        type:actionTypes.SET_AUTH_LOADING,
+        authLoading:data,
+    };
+};
+
 export const logout = () => {
     AsyncStorage.removeItem('token');
     AsyncStorage.removeItem('expirationDate');
@@ -119,11 +126,13 @@ export const auth = (username, email, password, isSignup) => {
                 // AsyncStorage.setItem('refreshTokenLimit', refreshLimit)
                 dispatch(getUserId(response.data.id));
                 dispatch(authSuccess(response.data.token, response.data.username));
+                dispatch(setAuthLoading(false));
                 // dispatch(checkAuthTimeout(300));
             })
             .catch(err => {
                 console.log(err, 'the eror');
                 dispatch(authFail(err.response.data.errors));
+                dispatch(setAuthLoading(false));
             });
     };
 };

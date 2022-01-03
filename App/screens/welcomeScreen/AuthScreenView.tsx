@@ -1,4 +1,6 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import {
   View,
@@ -7,6 +9,8 @@ import {
   Dimensions,
   StyleSheet,
 } from 'react-native';
+import { Loader } from '../../components';
+import { useSelector } from 'react-redux';
 
 import * as colors from '../../config/colors';
 import Form from './components/Form';
@@ -14,20 +18,22 @@ import Form from './components/Form';
 const {height} = Dimensions.get('window');
 const bgImage = require('../../assets/images/background.png');
 
+
 const AuthScreenView = () => {
+  const isLoading = useSelector((state:any) => state.authReducer.authLoading);
   return (
-    // eslint-disable-next-line react-native/no-inline-styles
-    <ImageBackground source={bgImage} style={{height: height, width: '100%'}}>
-      <View style={styles.header}>
+    <>
+    {isLoading ? <Loader/> : <ImageBackground source={bgImage} style={{height: height, width: '100%'}}>
+    <View style={styles.header}>
         <Text style={styles.logo}>Plug</Text>
-      </View>
-      <View style={styles.description}>
-        <Text style={styles.descriptionText}>
-          Find roomates easily with roomate sure Plug
-        </Text>
-      </View>
-      <Form />
-    </ImageBackground>
+      </View><View style={styles.description}>
+          <Text style={styles.descriptionText}>
+            Find roomates easily with roomate sure Plug
+          </Text>
+        </View><Form />
+  </ImageBackground>}
+    </>
+
   );
 };
 

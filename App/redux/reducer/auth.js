@@ -8,6 +8,13 @@ const initialState = {
   error: null,
   loading: false,
   userId:null,
+  authLoading:false,
+};
+
+const resetAuthLoading = (state, action) => {
+  return updateObject(state, {
+    authloading:action.authLoading,
+  });
 };
 
 const authStart = (state, action) => {
@@ -20,6 +27,12 @@ const authSuccess = (state, action) => {
     username: action.username,
     error: null,
     loading: false,
+  });
+};
+
+const setAuthLoading = (state, action) => {
+  return updateObject(state,{
+    authLoading:action.authLoading,
   });
 };
 
@@ -50,6 +63,10 @@ const reducer = (state = initialState, action) => {
       return authLogout(state, action);
     case actionTypes.GET_USER_ID:
       return setUserId(state, action);
+    case actionTypes.SET_AUTH_LOADING:
+      return setAuthLoading(state, action);
+    case actionTypes.RESET_AUTH_LOADING:
+      return resetAuthLoading(state,action);
     default:
       return state;
   }

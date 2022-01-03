@@ -19,9 +19,10 @@ interface ChatHeaderProps {
   username: string;
   active: any;
   back: () => void;
+  online:boolean;
 }
 
-const ChatHeader: FC<ChatHeaderProps> = ({username, active, back}) => {
+const ChatHeader: FC<ChatHeaderProps> = ({username, active, online, back}) => {
   return (
     <View style={styles.container}>
       <TouchableWithoutFeedback onPress={back}>
@@ -39,7 +40,7 @@ const ChatHeader: FC<ChatHeaderProps> = ({username, active, back}) => {
           <Text style={styles.title}>{username}</Text>
           {active && <Image source={icon} />}
         </View>
-        <Text style={styles.onlineText}>Online</Text>
+        {online && <Text style={styles.onlineText}>~Online~</Text>}
       </View>
     </View>
   );
@@ -53,7 +54,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '#fff',
     paddingBottom: 60,
-    paddingTop: 10
+    paddingTop: 10,
   },
   flex1: {
     height: 30,
@@ -65,12 +66,12 @@ const styles = StyleSheet.create({
   flex2: {
     height: 30,
     width: width - 130,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   onlineText: {
     fontSize: 16,
     color: 'green',
-    paddingLeft: 5
+    paddingLeft: 5,
   },
   flex3: {
     height: 30,

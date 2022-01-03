@@ -15,6 +15,7 @@ import navReducer from './App/redux/reducer/navigation';
 import chatReducer from './App/redux/reducer/chats';
 import profileReducer from './App/redux/reducer/profile';
 import generalReducer from './App/redux/reducer/generalReducer';
+import messageReducer from './App/redux/reducer/message';
 
 import { persistStore, persistReducer } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -47,10 +48,11 @@ const persistConfig = {
 
 
 export const rootReducer = combineReducers({
+  messageReducer:persistReducer(persistConfig, messageReducer),
   authReducer: persistReducer(persistConfig, authReducer),
   navReducer: navReducer,
   chatReducer: chatReducer,
-  profileReducer:persistReducer(persistConfig, profileReducer),
+  profileReducer:profileReducer,
   generalReducer: generalReducer,
 });
 
