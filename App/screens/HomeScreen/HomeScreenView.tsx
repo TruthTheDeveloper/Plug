@@ -9,7 +9,7 @@ import * as actionTypes from '../../redux/actions/actionTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //Components
-import {Header, Loader} from '../../components/index';
+import {Header, Loader, ScrollLoader} from '../../components/index';
 
 import ProfileItem from './components/ProfileItem';
 
@@ -100,6 +100,14 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
     dispatch({type: actionTypes.LARGE_CARD_DATA, value: profileData});
   };
 
+  console.log(profileData.length);
+
+  const scrollLoaderComponent = (
+    <>
+      {profileData.length !== 0 && <ScrollLoader />}
+    </>
+  )
+
   return (
     <View>
       <Header label="All Students" />
@@ -120,6 +128,7 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
             }
             style={{ marginBottom: 37 }}
             onEndReached={getNewList}
+            ListFooterComponent={() => scrollLoaderComponent }
             /> }
     </View>
   );

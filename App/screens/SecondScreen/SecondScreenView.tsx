@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { View, Text, Dimensions, StyleSheet, FlatList, BackHandler } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -17,6 +17,10 @@ interface secondscreenProps {
 
 const SecondScreenView:FC<secondscreenProps> = ({navigate}):JSX.Element => {
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        console.log('ahhhhh')
+    }, [])
     
     const showDetails = useSelector((state: any) => state.chatReducer.details);
     const profileData = useSelector((state:any) => state.profileReducer.profileData);
@@ -25,8 +29,8 @@ const SecondScreenView:FC<secondscreenProps> = ({navigate}):JSX.Element => {
     const indx = useSelector((state: any) => state.generalReducer.index);
 
     const goBack = () => {
-        navigate();
         dispatch({type: actionTypes.LARGE_CARD_DATA, value: null});
+        navigate();
         return true
     }
 
