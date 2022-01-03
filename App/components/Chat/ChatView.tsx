@@ -50,7 +50,6 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
   const socketId = profileIdData.socketId;
 
   // console.log(previousConverstion, 'prev')
-  
 
   useEffect(() => {
     // dispatch(getMessage(user.receiverId, socketId));
@@ -84,7 +83,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
           time: new Date().toLocaleTimeString().slice(0,5),
         };
 
-        console.log(chatViewData)
+        console.log(chatViewData);
 
         const updatechatContact = updatedContactData.filter(
           (e: {receiverId: string}) => e.receiverId !== chatViewData.receiverId,
