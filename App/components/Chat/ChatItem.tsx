@@ -11,9 +11,10 @@ interface ChatProps {
   message: any;
   socket:any
   rec:any;
+  receiverId:any
 }
 
-const ChatItem: FC<ChatProps> = ({id, message, socket, rec}): JSX.Element => {
+const ChatItem: FC<ChatProps> = ({id, message, socket, rec, receiverId}): JSX.Element => {
   // console.log(id, 'amd ', socket, message);
   let chatDisplay = null;
   let msg;
@@ -21,31 +22,33 @@ const ChatItem: FC<ChatProps> = ({id, message, socket, rec}): JSX.Element => {
     msg = message;
   }
 
-  if (message.includes('http') && id === socket){
-    chatDisplay = <View style={styles.box2}>
-      <View style={{borderRadius: 15, overflow: 'hidden'}} >
-        <Image source={{uri:message}} style={{maxWidth: '50%'}} />
-      </View>
-    {/* <Text style={styles.text}>{message}</Text> */}
-    </View>;
+  if (rec === receiverId){
+    if (message.includes('http') && id === socket){
+      chatDisplay = <View style={styles.box2}>
+        <View style={{borderRadius: 15, overflow: 'hidden'}} >
+          <Image source={{uri:message}} style={{maxWidth: '50%'}} />
+        </View>
+      {/* <Text style={styles.text}>{message}</Text> */}
+      </View>;
 
-  } else if (!message.includes('http') && id === socket){
-    chatDisplay = <View style={styles.box2}>
-    <Text style={styles.text}>{message}</Text>
-    </View>;
-  } else if (message.includes('http') && id !== socket){
-    chatDisplay = <View style={styles.box}>
-      <View style={{borderRadius: 15, overflow: 'hidden'}} >
-        <Image source={{uri:msg}} style={{maxWidth: '50%'}} />
-      </View>
-    {/* <Text style={styles.text}>{msg}</Text> */}
-    </View>;
-  } else if (!message.includes('http') && id !== socket && id === rec){
-    chatDisplay = <View style={styles.box}>
-    <Text style={styles.text}>{msg}</Text>
-    </View>;
-  } else if (!message.includes('http') && id !== socket && id !== rec){
-    chatDisplay = null;
+    } else if (!message.includes('http') && id === socket){
+      chatDisplay = <View style={styles.box2}>
+      <Text style={styles.text}>{message}</Text>
+      </View>;
+    } else if (message.includes('http') && id !== socket){
+      chatDisplay = <View style={styles.box}>
+        <View style={{borderRadius: 15, overflow: 'hidden'}} >
+          <Image source={{uri:msg}} style={{maxWidth: '50%'}} />
+        </View>
+      {/* <Text style={styles.text}>{msg}</Text> */}
+      </View>;
+    } else if (!message.includes('http') && id !== socket && id === rec){
+      chatDisplay = <View style={styles.box}>
+      <Text style={styles.text}>{msg}</Text>
+      </View>;
+    } else if (!message.includes('http') && id !== socket && id !== rec){
+      chatDisplay = null;
+    }
   }
 
 

@@ -27,7 +27,7 @@ export const getMessage = (receiverId, senderId) => {
     return dispatch => {
         axios.get(`https://findplug.herokuapp.com/getMessage?receiverId=${receiverId}&senderId=${senderId}`)
         .then(response => {
-            console.log(response.data.message);
+            console.log(response.data.message, 'all message');
             dispatch(getConversation(response.data.message));
             dispatch(setMessageLoading(false));
         })

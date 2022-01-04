@@ -112,7 +112,7 @@ const ChatScreenView = () => {
             online={item.online}
             // active={item.active}
             image={item.receiverImage}
-            lastText={item.lastmessage}
+            lastText={item.message}
             openChat={() => openChat(item.receiverUsername, item.receiverId, item.receiverImage)}
           />
         )}
