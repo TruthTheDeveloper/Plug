@@ -12,7 +12,8 @@ const ErrorScreen = () => {
 const styles = StyleSheet.create({
     container: {
         height: height,
-        width: width
+        width: width,
+        backgroundColor: 'red'
     }
 })
 

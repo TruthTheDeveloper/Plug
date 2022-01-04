@@ -9,14 +9,12 @@ import * as actionTypes from '../../redux/actions/actionTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //Components
-import {Header, Loader, ScrollLoader} from '../../components/index';
+import {Header, Loader, ScrollLoader, ErrorScreen} from '../../components/index';
 
 import ProfileItem from './components/ProfileItem';
 
 // import Profile from './components/Profile';
 // import DetailsDiv from './components/DetailsDiv';
-
-
 
 //Imported Images
 const girl1 = require('../../assets/images/girl.jpg');
