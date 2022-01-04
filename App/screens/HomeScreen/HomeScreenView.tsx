@@ -27,6 +27,7 @@ const girl6 = require('../../assets/images/girl5.jpg');
 interface homeProps {
   navigate: any
 }
+
 const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
     const [pageNum, setPageNum] = useState(1);
     const dispatch = useDispatch();
