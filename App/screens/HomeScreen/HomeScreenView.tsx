@@ -24,8 +24,6 @@ const girl4 = require('../../assets/images/girl3.jpg');
 const girl5 = require('../../assets/images/girl4.jpg');
 const girl6 = require('../../assets/images/girl5.jpg');
 
-
-
 interface homeProps {
   navigate: any
 }
