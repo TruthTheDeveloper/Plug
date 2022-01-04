@@ -17,6 +17,7 @@ import ProfileItem from './components/ProfileItem';
 // import DetailsDiv from './components/DetailsDiv';
 
 
+
 //Imported Images
 const girl1 = require('../../assets/images/girl.jpg');
 const girl2 = require('../../assets/images/girl1.jpg');
