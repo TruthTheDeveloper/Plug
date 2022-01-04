@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, {useState, FC, useEffect} from 'react';
+import React, {useState, FC, useEffect, useRef} from 'react';
 import {
   View,
   StyleSheet,
@@ -215,6 +215,8 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
     setText('');
   };
 
+  let FlatListRef: FlatList<any> | null = null;
+
   return (
     <View style={styles.container}>
       <ChatHeader username={user.username} online={online} active back={goBack} />
@@ -223,6 +225,8 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
           <FlatList
             data={chats}
             // keyExtractor={item => item._id}
+            ref={ref => (FlatListRef = ref)}
+            onContentSizeChange={() => FlatListRef?.scrollToEnd()}
             renderItem={({item}) => (
               <ChatItem
                 id={item.senderMessage}
