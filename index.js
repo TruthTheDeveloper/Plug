@@ -68,12 +68,14 @@ export const persistor = persistStore(store);
 
 
 
-const appUseRedux = () => (
-  <Provider store={store}>
+const appUseRedux = () => {
+  return (
+    <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
     <App />
     </PersistGate>
   </Provider>
-);
+  );
+};
 
 AppRegistry.registerComponent(appName, () => appUseRedux);

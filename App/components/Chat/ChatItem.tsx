@@ -2,8 +2,10 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import React, {FC} from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet, Image, ImageBackground} from 'react-native';
+import { red } from '../../config/colors';
 // import { useSelector } from 'react-redux';
+const imge = require('../../assets/images/girl.jpg');
 
 
 interface ChatProps {
@@ -23,10 +25,12 @@ const ChatItem: FC<ChatProps> = ({id, message, socket, rec, receiverId}): JSX.El
   }
 
   if (rec === receiverId){
-    if (message.includes('http') && id === socket){
+    console.log(message);
+    if (message.includes('//') && id === socket){
+      console.log('has')
       chatDisplay = <View style={styles.box2}>
         <View style={{borderRadius: 15, overflow: 'hidden'}} >
-          <Image source={{uri:message}} style={{maxWidth: '50%'}} />
+          <ImageBackground source={{uri:message}} />
         </View>
       {/* <Text style={styles.text}>{message}</Text> */}
       </View>;
@@ -35,10 +39,10 @@ const ChatItem: FC<ChatProps> = ({id, message, socket, rec, receiverId}): JSX.El
       chatDisplay = <View style={styles.box2}>
       <Text style={styles.text}>{message}</Text>
       </View>;
-    } else if (message.includes('http') && id !== socket){
+    } else if (message.includes('//') && id !== socket){
       chatDisplay = <View style={styles.box}>
         <View style={{borderRadius: 15, overflow: 'hidden'}} >
-          <Image source={{uri:msg}} style={{maxWidth: '50%'}} />
+          <Image source={{uri:msg}}  />
         </View>
       {/* <Text style={styles.text}>{msg}</Text> */}
       </View>;
@@ -56,6 +60,9 @@ const ChatItem: FC<ChatProps> = ({id, message, socket, rec, receiverId}): JSX.El
   // const profileIdData = useSelector((state:any) => state.profileReducer.profileIdData.socketId);
     return (
         <View style={styles.container}>
+          <View style={{borderRadius: 15, overflow: 'hidden'}} >
+          {/* <ImageBackground source={imge} style={{backgroundColor: 'red'}}/> */}
+          </View>
           {chatDisplay}
         </View>
     );

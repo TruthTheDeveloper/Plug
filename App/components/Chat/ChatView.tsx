@@ -52,8 +52,13 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
   // console.log(previousConverstion, 'prev')
 
   useEffect(() => {
-      dispatch(getMessage(user.receiverId, socketId));
+    setChats([]);
+    dispatch(getMessage(user.receiverId, socketId));
     setChats((prev:any) => [...previousConverstion, ...prev]);
+  },[]);
+
+  useEffect(() => {
+
     // dispatch(getMessage(user.receiverId, socketId));
     newSocket = io('https://findplug.herokuapp.com',{query:{id:socketId}});
     console.log('useEffect called');
@@ -63,33 +68,46 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
       console.log('you are now connected');
       newSocket.emit('chat', 'can we chat');
 
-      newSocket.on('receive', (msg: any, Rid:any, Sid:any) => {
-        console.log('incoming message', msg, Rid, Sid);
-        let data = {
-          senderId: Sid,
-          receiverId: Rid,
-          message: msg,
-          receiverUsername:user.username,
-          receiverImage:user.image,
-          online:online,
-          time: new Date().toLocaleTimeString().slice(0,5),
-        };
-        console.log(data);
-        setChats((prev: any) => [...prev, data]);
-
-        console.log(data);
-
-        const updatechatContact = updatedContactData.filter(
-          (e: {receiverId: string}) => e.receiverId !== data.receiverId,
-        );
-        updatechatContact.unshift(data);
+      if (updatedContactData.length === 0){
+        const convResult = [];
+        const lastIndex = previousConverstion.length - 1;
+        const prevConv = previousConverstion[lastIndex];
+        convResult.push(prevConv);
+        console.log(convResult);
         dispatch({
           type: actionTypes.CHAT_CONTACT,
-          chatContactData: updatechatContact,
+          chatContactData: convResult,
         });
-      });
+      }
 
       // console.log(newSocket)
+    });
+
+    newSocket.on('receive', (msg: any, Rid:any, Sid:any) => {
+      console.log('incoming message', msg, Rid, Sid);
+      let data = {
+        senderId: Sid,
+        receiverId: Rid,
+        message: msg,
+        receiverUsername:user.username,
+        receiverImage:user.image,
+        online:online,
+        time: new Date().toLocaleTimeString().slice(0,5),
+        isRead:true,
+      };
+      console.log(data);
+      setChats((prev: any) => [...prev, data]);
+
+      console.log(data);
+
+      const updatechatContact = updatedContactData.filter(
+        (e: {receiverId: string}) => e.receiverId !== data.receiverId,
+      );
+      updatechatContact.unshift(data);
+      dispatch({
+        type: actionTypes.CHAT_CONTACT,
+        chatContactData: updatechatContact,
+      });
     });
 
     // setOnline(false);
@@ -102,11 +120,12 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
         // setOnline(false);
       // }
       // newSocket.close();
-      setChats([])
+      // setChats([])
     };
 
 
-  }, [dispatch, online, socketId, updatedContactData, user.image, user.receiverId, user.username]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [online, socketId, updatedContactData, user.image, user.receiverId, user.username]);
 
   // useEffect(() => {
   //   console.log('did comon mount');
@@ -133,6 +152,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
       receiverImage:user.image,
       online:online,
       time: new Date().toLocaleTimeString().slice(0,5),
+      isRead:true,
 
     };
     setChats((prev: any) => [...prev, data]);
@@ -192,7 +212,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
     launchImageLibrary({mediaType: 'photo'}, response => {
       if (response.assets) {
         const data = response.assets[0].uri;
-        console.log(data);
+        console.log();
         sendMessage(data, user.receiverId, socketId);
         // dispatch({type: actionTypes.SET_PROFILE_PIC, profilePic: data});
       }
