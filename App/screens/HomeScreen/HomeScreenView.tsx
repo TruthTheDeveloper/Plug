@@ -40,11 +40,11 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
 
     // console.log(profileData)
 
-  const [user, setUser] = useState([
-    {username: 'kira', profilePic: girl1}
-  ])
+    const [user, setUser] = useState([
+      {username: 'kira', profilePic: girl1}
+    ])
 
-  // console.log(profileData, 'this data');
+    // console.log(profileData, 'this data');
 
     // console.log(profileData, 'this data');
 
@@ -106,28 +106,29 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
   )
 
   return (
-    <View>
-      <Header label="All Students" />
-      {isLoading ? <Loader/> : <FlatList
-      // horizontal={true}
-            key={'_'}
-            numColumns={2}
-            data={profileData}
-            renderItem={({ item, index }) => <ProfileItem
-              username={item.username}
-              verified={item.availability}
-              level={item.level}
-              department={item.department}
-              image={item.profilePic}
-              index={index}
-              setIndex={openGrid}
-              />
-            }
-            style={{ marginBottom: 37 }}
-            onEndReached={getNewList}
-            ListFooterComponent={() => scrollLoaderComponent }
-            /> }
-    </View>
+    // <View>
+    //   <Header label="All Students" />
+    //   {isLoading ? <Loader/> : <FlatList
+    //   // horizontal={true}
+    //         key={'_'}
+    //         numColumns={2}
+    //         data={profileData}
+    //         renderItem={({ item, index }) => <ProfileItem
+    //           username={item.username}
+    //           verified={item.availability}
+    //           level={item.level}
+    //           department={item.department}
+    //           image={item.profilePic}
+    //           index={index}
+    //           setIndex={openGrid}
+    //           />
+    //         }
+    //         style={{ marginBottom: 37 }}
+    //         onEndReached={getNewList}
+    //         ListFooterComponent={() => scrollLoaderComponent }
+    //         /> }
+    // </View>
+    <ErrorScreen />
   );
 });
 
