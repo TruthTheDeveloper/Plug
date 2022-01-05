@@ -171,16 +171,16 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
 
   useEffect(() => {
     let keyboardDidShowListener: EmitterSubscription;
-    // let keyboardDidHideListener: EmitterSubscription;
+    let keyboardDidHideListener: EmitterSubscription;
 
     keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       keyboardDidShow,
     );
-    // keyboardDidHideListener = Keyboard.addListener(
-    //   'keyboardDidHide',
-    //   keyboardDidHide,
-    // );
+    keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      keyboardDidHide,
+    );
 
     return () => {
       if (keyboardDidShowListener) {
@@ -193,9 +193,9 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
     setHeight(e.endCoordinates.height - 45);
   };
 
-  // const keyboardDidHide = () => {
-  //   setHeight(height - 165);
-  // };
+  const keyboardDidHide = () => {
+    setHeight(height - 165);
+  };
 
   const openGallery = () => {
     launchImageLibrary({mediaType: 'photo'}, response => {

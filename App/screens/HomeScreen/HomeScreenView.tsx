@@ -106,29 +106,28 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
   )
 
   return (
-    // <View>
-    //   <Header label="All Students" />
-    //   {isLoading ? <Loader/> : <FlatList
-    //   // horizontal={true}
-    //         key={'_'}
-    //         numColumns={2}
-    //         data={profileData}
-    //         renderItem={({ item, index }) => <ProfileItem
-    //           username={item.username}
-    //           verified={item.availability}
-    //           level={item.level}
-    //           department={item.department}
-    //           image={item.profilePic}
-    //           index={index}
-    //           setIndex={openGrid}
-    //           />
-    //         }
-    //         style={{ marginBottom: 37 }}
-    //         onEndReached={getNewList}
-    //         ListFooterComponent={() => scrollLoaderComponent }
-    //         /> }
-    // </View>
-    <ErrorScreen />
+    <View>
+      <Header label="All Students" />
+      {isLoading ? <Loader/> : <FlatList
+      // horizontal={true}
+            key={'_'}
+            numColumns={2}
+            data={profileData}
+            renderItem={({ item, index }) => <ProfileItem
+              username={item.username}
+              verified={item.availability}
+              level={item.level}
+              department={item.department}
+              image={item.profilePic}
+              index={index}
+              setIndex={openGrid}
+              />
+            }
+            style={{ marginBottom: 37 }}
+            onEndReached={getNewList}
+            ListFooterComponent={() => scrollLoaderComponent }
+            /> }
+    </View>
   );
 });
 
