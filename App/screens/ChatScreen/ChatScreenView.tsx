@@ -68,42 +68,43 @@ const ChatScreenView = () => {
     console.log('useEffect called');
     newSocket.on('connect', () => {
 
-      console.log('you are now connected');
-      newSocket.emit('chat', 'can we chat');
+    console.log('you are now connected');
+    newSocket.emit('chat', 'can we chat');
 
+    newSocket.on('receive', (msg: any, Rid:any, Sid:any, username:any, online:any, image:any) => {
+      messageCount.current = messageCount.current + 1;
+      console.log('incoming message', msg, Rid, Sid, username);
+      const chatViewData = {
+        receiverId: Rid,
+        receiverUsername: username,
+        lastmessage: msg,
+        receiverImage: image,
+        online:online,
+        time: new Date().toLocaleTimeString().slice(0,5),
+        isRead:false
+      };
+
+      const updatechatContact = updatedContactData.filter(
+        (e: {receiverId: string}) => e.receiverId !== chatViewData.receiverId,
+      );
+
+      updatechatContact.unshift(chatViewData);
+
+
+      dispatch({
+        type: actionTypes.CHAT_CONTACT,
+        chatContactData:updatechatContact,
       });
 
-      newSocket.on('receive', (msg: any, Rid:any, Sid:any, username:any, online:any, image:any) => {
-        messageCount.current = messageCount.current + 1;
-        console.log('incoming message', msg, Rid, Sid, username);
-        const chatViewData = {
-          receiverId: Rid,
-          receiverUsername: username,
-          lastmessage: msg,
-          receiverImage: image,
-          online:online,
-          time: new Date().toLocaleTimeString().slice(0,5),
-          isRead:false
-        };
+    });
 
-        const updatechatContact = updatedContactData.filter(
-          (e: {receiverId: string}) => e.receiverId !== chatViewData.receiverId,
-        );
+    });
 
-        updatechatContact.unshift(chatViewData);
-
-
-        dispatch({
-          type: actionTypes.CHAT_CONTACT,
-          chatContactData:updatechatContact,
-        });
-
-        });
 
     return () => {
-      // newSocket.off('receive');
-      // newSocket.close();
-    };
+      newSocket.off('receive');
+      newSocket.disconnect();
+    }
 
 
   },[dispatch, socketId, updatedContactData]);

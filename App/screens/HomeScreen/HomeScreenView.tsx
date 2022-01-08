@@ -56,7 +56,7 @@ const HomeScreenView:FC<homeProps> = ({navigate}):JSX.Element => {
     // console.log(profileData, 'this data');
 
     useEffect(() => {
-      dispatch({type:actionTypes.RESET_ALL_PROFILE, profileData:[]});
+      // dispatch({type:actionTypes.RESET_ALL_PROFILE, profileData:[]});
         // dispatch({type:actionTypes.REFRESH_HOME_PAGE, profileData:[]});
           if (profileData.length === 0){
             console.log('he yer');
@@ -69,6 +69,7 @@ const HomeScreenView:FC<homeProps> = ({navigate}):JSX.Element => {
               dispatch(actions.retrieveProfileDetail(result));
             }
           });
+
       //     const getToken = async() => {
       //       userId = await AsyncStorage.getItem('profileId');
       //      if (userId){
@@ -81,9 +82,7 @@ const HomeScreenView:FC<homeProps> = ({navigate}):JSX.Element => {
       //  };
       //  getToken();
 
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[]);
+    },[dispatch, initialPageNum, profileData.length]);
 
 
     const getNewList = useCallback(() => {
@@ -104,32 +103,40 @@ const HomeScreenView:FC<homeProps> = ({navigate}):JSX.Element => {
     if (socketId !== null){
       newSocket = io('https://findplug.herokuapp.com',{query:{id:socketId}});
       newSocket.on('connect', () => {
-        console.log('connected from index.js');
+        console.log('connected from homeScreen');
         newSocket.emit('chat', 'can we chat');
-      });
 
-      newSocket.on('receive', (msg:any, Rid:any, Sid:any, username:any, img:any, online:any, time:any) => {
-        messageCount.current = messageCount.current + 1;
-        let data = {
-          senderId: Sid,
-          receiverId: Rid,
-          message: msg,
-          receiverUsername:username,
-          receiverImage:img,
-          online:online,
-          time: time,
-          isRead:false,
-        };
-
-        const updatechatContact = updatedContactData.filter(
-          (e: {receiverId: string}) => e.receiverId !== data.receiverId,
-        );
-        updatechatContact.unshift(data);
-        dispatch({
-          type: actionTypes.CHAT_CONTACT,
-          chatContactData: updatechatContact,
+        newSocket.on('receive', (msg:any, Rid:any, Sid:any, username:any, img:any, online:any, time:any) => {
+          messageCount.current = messageCount.current + 1;
+          let data = {
+            senderId: Sid,
+            receiverId: Rid,
+            message: msg,
+            receiverUsername:username,
+            receiverImage:img,
+            online:online,
+            time: time,
+            isRead:false,
+          };
+  
+          const updatechatContact = updatedContactData.filter(
+            (e: {receiverId: string}) => e.receiverId !== data.receiverId,
+          );
+          updatechatContact.unshift(data);
+          dispatch({
+            type: actionTypes.CHAT_CONTACT,
+            chatContactData: updatechatContact,
+          });
         });
       });
+
+    }
+
+    return () => {
+      if (newSocket){
+        newSocket.off('receive');
+        newSocket.disconnect();
+      }
     }
   },[dispatch, socketId, updatedContactData]);
 

@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, {useState, FC, useEffect} from 'react';
+import React, {useState, FC, useEffect, useRef} from 'react';
 import {
   View,
   StyleSheet,
@@ -49,13 +49,14 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
 
   const socketId = profileIdData.socketId;
 
+
   // console.log(previousConverstion, 'prev')
 
   useEffect(() => {
     setChats([]);
     dispatch(getMessage(user.receiverId, socketId));
     setChats((prev:any) => [...previousConverstion, ...prev]);
-  },[]);
+  },[dispatch, previousConverstion, socketId, user.receiverId]);
 
   useEffect(() => {
 
@@ -80,52 +81,47 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
         });
       }
 
+      newSocket.on('receive', (msg: any, Rid:any, Sid:any) => {
+        console.log('incoming message', msg, Rid, Sid);
+        let data = {
+          senderId: Sid,
+          receiverId: Rid,
+          message: msg,
+          receiverUsername:user.username,
+          receiverImage:user.image,
+          online:online,
+          time: new Date().toLocaleTimeString().slice(0,5),
+          isRead:true,
+        };
+        console.log(data);
+        setChats((prev: any) => [...prev, data]);
+
+        console.log(data);
+
+        const updatechatContact = updatedContactData.filter(
+          (e: {receiverId: string}) => e.receiverId !== data.receiverId,
+        );
+        updatechatContact.unshift(data);
+        dispatch({
+          type: actionTypes.CHAT_CONTACT,
+          chatContactData: updatechatContact,
+        });
+      });
+
       // console.log(newSocket)
     });
 
-    newSocket.on('receive', (msg: any, Rid:any, Sid:any) => {
-      console.log('incoming message', msg, Rid, Sid);
-      let data = {
-        senderId: Sid,
-        receiverId: Rid,
-        message: msg,
-        receiverUsername:user.username,
-        receiverImage:user.image,
-        online:online,
-        time: new Date().toLocaleTimeString().slice(0,5),
-        isRead:true,
-      };
-      console.log(data);
-      setChats((prev: any) => [...prev, data]);
-
-      console.log(data);
-
-      const updatechatContact = updatedContactData.filter(
-        (e: {receiverId: string}) => e.receiverId !== data.receiverId,
-      );
-      updatechatContact.unshift(data);
-      dispatch({
-        type: actionTypes.CHAT_CONTACT,
-        chatContactData: updatechatContact,
-      });
-    });
 
     // setOnline(false);
     // return () => newSocket.close();
 
     return () => {
-      // newSocket.off('receive');
-      // if (timer !== null){
-      //   clearTimeout(timer);
-        // setOnline(false);
-      // }
-      // newSocket.close();
-      // setChats([])
+      newSocket.off('receive');
+      newSocket.disconnect();
     };
 
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [online, socketId, updatedContactData, user.image, user.receiverId, user.username]);
+  }, [dispatch, online, previousConverstion, socketId, updatedContactData, user.image, user.receiverId, user.username]);
 
   // useEffect(() => {
   //   console.log('did comon mount');
