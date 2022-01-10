@@ -19,23 +19,20 @@ interface ChatProps {
 const ChatItem: FC<ChatProps> = ({id, message, socket, rec, receiverId}): JSX.Element => {
   // console.log(id, 'amd ', socket, message);
   let chatDisplay = null;
-  let msg;
-  if (id === rec){
-    msg = message;
-  }
+  
 
   if (rec === receiverId || id === rec){
     // console.log(message);
 
     // console.log(id, 'sender id')
     // console.log(socket, 'socket id' )
-    console.log(rec, 'user receiver id')
-    console.log(receiverId, 'receiver id')
+    // console.log(rec, 'user receiver id')
+    // console.log(receiverId, 'receiver id')
 
 
     // if the sender id  == to the loged in user socket id and their is an image
     if (message.includes('//') && id === socket){
-      console.log('has')
+      // console.log('has')
       chatDisplay = <View style={styles.box2}>
         <View style={{borderRadius: 15, overflow: 'hidden'}} >
           <ImageBackground source={{uri:message}} />
@@ -45,7 +42,7 @@ const ChatItem: FC<ChatProps> = ({id, message, socket, rec, receiverId}): JSX.El
 
     // if sender id === to logged in user socket id and their is no image
     } else if (!message.includes('//') && id === socket){
-      console.log('sword', message)
+      // console.log('sword', message)
       chatDisplay = <View style={styles.box2}>
       <Text style={styles.text}>{message}</Text>
       </View>;
@@ -56,7 +53,7 @@ const ChatItem: FC<ChatProps> = ({id, message, socket, rec, receiverId}): JSX.El
 
         // if receiver sends the messge the sender id == receive
     } else if (!message.includes('//') && id !== socket && id === rec){
-      console.log('dull')
+      // console.log('dull')
       chatDisplay = <View style={styles.box}>
       <Text style={styles.text}>{message}</Text>
       </View>;

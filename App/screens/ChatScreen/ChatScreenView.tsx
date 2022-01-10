@@ -68,7 +68,7 @@ const ChatScreenView = () => {
     console.log('useEffect called');
     newSocket.on('connect', () => {
 
-    console.log('you are now connected');
+    console.log('connected from chatscreenview');
     newSocket.emit('chat', 'can we chat');
 
     newSocket.on('receive', (msg: any, Rid:any, Sid:any, username:any, online:any, image:any) => {

@@ -53,10 +53,11 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
   // console.log(previousConverstion, 'prev')
 
   useEffect(() => {
-    setChats([]);
+    console.log('first useEffect');
+    // setChats([]);
     dispatch(getMessage(user.receiverId, socketId));
     setChats((prev:any) => [...previousConverstion, ...prev]);
-  },[dispatch, previousConverstion, socketId, user.receiverId]);
+  },[dispatch,  socketId, user.receiverId]);
 
   useEffect(() => {
 
@@ -66,7 +67,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
     newSocket.on('connect', () => {
 
         setOnline(true);
-      console.log('you are now connected');
+      console.log('you are connected from chat view');
       newSocket.emit('chat', 'can we chat');
 
       if (updatedContactData.length === 0){
@@ -121,7 +122,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
     };
 
 
-  }, [dispatch, online, previousConverstion, socketId, updatedContactData, user.image, user.receiverId, user.username]);
+  }, [dispatch, online, socketId, updatedContactData, user.image, user.receiverId, user.username]);
 
   // useEffect(() => {
   //   console.log('did comon mount');
