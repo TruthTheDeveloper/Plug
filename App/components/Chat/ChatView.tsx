@@ -48,6 +48,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
   // console.log(updatedContactData, 'contact sata');
 
   const socketId = profileIdData.socketId;
+  // const updatechatContact : any = useRef()
 
 
   // console.log(previousConverstion, 'prev')
@@ -56,7 +57,10 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
     console.log('first useEffect');
     // setChats([]);
     dispatch(getMessage(user.receiverId, socketId));
-    setChats((prev:any) => [...previousConverstion, ...prev]);
+    if (previousConverstion.length !== 0){
+      setChats((prev:any) => [...previousConverstion, ...prev]);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[dispatch,  socketId, user.receiverId]);
 
   useEffect(() => {
@@ -122,6 +126,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
     };
 
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, online, socketId, updatedContactData, user.image, user.receiverId, user.username]);
 
   // useEffect(() => {
@@ -157,6 +162,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
     const updatechatContact = updatedContactData.filter(
       (e: {receiverId: string}) => e.receiverId !== data.receiverId,
     );
+    console.log(updatechatContact, '[chat contact]');
     updatechatContact.unshift(data);
 
     dispatch({
