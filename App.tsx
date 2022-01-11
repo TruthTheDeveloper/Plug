@@ -5,8 +5,6 @@ import Navigator from './App/navigation/navigation/Navigators';
 
 import {useSelector} from 'react-redux';
 
-
-
 // import Navigator from './App/navigation/navigation/Navigators';
 import MainScreen from './App/screens/MainScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
