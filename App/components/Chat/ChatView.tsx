@@ -29,10 +29,12 @@ interface ChatViewProps {
 
 
 let newSocket : any;
+// let updatechatContact :any;
 const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
   const [newHeight, setHeight] = useState(height - 165);
   const [online, setOnline] = useState(false);
   const dispatch = useDispatch();
+  
   // const [socketId, setSocketId] : any = useState()
   // const profileIdDa= useSelector((state:any) => state.profileReducer.profileIdData);
   const [chats, setChats]: any = useState([]);
@@ -45,7 +47,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
 
   const previousConverstion = useSelector((state:any) => state.messageReducer.conversation);
   // console.log(previousConverstion, 'conversation')
-  // console.log(updatedContactData, 'contact sata');
+  console.log(updatedContactData, 'contact sata');
 
   const socketId = profileIdData.socketId;
   // const updatechatContact : any = useRef()
@@ -86,12 +88,14 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
         });
       }
 
-      newSocket.on('receive', (msg: any, Rid:any, Sid:any) => {
+      newSocket.on('receive', (msg: any, Rid:any, Sid:any, senderUsername:any, senderImage:any) => {
         console.log('incoming message', msg, Rid, Sid);
         let data = {
           senderId: Sid,
           receiverId: Rid,
           message: msg,
+          senderUsername:senderUsername,
+          senderImage:senderImage,
           receiverUsername:user.username,
           receiverImage:user.image,
           online:online,
@@ -151,6 +155,8 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
       receiverId: Rid,
       message: msg,
       receiverUsername:user.username,
+      senderUsername:profileIdData.username,
+      senderImage:profileIdData.profilePic,
       receiverImage:user.image,
       online:online,
       time: new Date().toLocaleTimeString().slice(0,5),

@@ -106,12 +106,14 @@ const HomeScreenView:FC<homeProps> = ({navigate}):JSX.Element => {
         console.log('connected from homeScreen');
         newSocket.emit('chat', 'can we chat');
 
-        newSocket.on('receive', (msg:any, Rid:any, Sid:any, username:any, img:any, online:any, time:any) => {
+        newSocket.on('receive', (msg:any, Rid:any, Sid:any, username:any, img:any, online:any, time:any, senderUsername:any, senderImage:any) => {
           messageCount.current = messageCount.current + 1;
           let data = {
             senderId: Sid,
             receiverId: Rid,
             message: msg,
+            senderUsername:senderUsername,
+            senderImage:senderImage,
             receiverUsername:username,
             receiverImage:img,
             online:online,

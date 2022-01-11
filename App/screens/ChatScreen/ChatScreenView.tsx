@@ -71,12 +71,14 @@ const ChatScreenView = () => {
     console.log('connected from chatscreenview');
     newSocket.emit('chat', 'can we chat');
 
-    newSocket.on('receive', (msg: any, Rid:any, Sid:any, username:any, online:any, image:any) => {
+    newSocket.on('receive', (msg: any, Rid:any, Sid:any, username:any, online:any, image:any, senderUsername:any, senderImage:any) => {
       messageCount.current = messageCount.current + 1;
       console.log('incoming message', msg, Rid, Sid, username);
       const chatViewData = {
         receiverId: Rid,
         receiverUsername: username,
+        senderUsername:senderUsername,
+        senderImage:senderImage,
         lastmessage: msg,
         receiverImage: image,
         online:online,
@@ -132,21 +134,37 @@ const ChatScreenView = () => {
   return (
     <View style={styles.container}>
       <Header label="Chats" />
+      {profileIdData.username !== updatedContactData[0].receiverUsername ? 
       <FlatList
-        data={updatedContactData}
-        keyExtractor={user => user.receiverId}
-        renderItem={({item}) => (
-          <ChatItem
-            username={item.receiverUsername}
-            time={item.time}
-            online={item.online}
-            // active={item.active}
-            image={item.receiverImage}
-            lastText={item.message}
-            openChat={() => openChat(item.receiverUsername, item.receiverId, item.receiverImage)}
-          />
-        )}
+      data={updatedContactData}
+      keyExtractor={user => user.receiverId}
+      renderItem={({item}) => (
+        <ChatItem
+          username={item.receiverUsername}
+          time={item.time}
+          online={item.online}
+          // active={item.active}
+          image={item.receiverImage}
+          lastText={item.message}
+          openChat={() => openChat(item.receiverUsername, item.receiverId, item.receiverImage)}
+        />
+      )}
+    /> : <FlatList
+    data={updatedContactData}
+    keyExtractor={user => user.receiverId}
+    renderItem={({item}) => (
+      <ChatItem
+        username={item.senderUsername}
+        time={item.time}
+        online={item.online}
+        // active={item.active}
+        image={item.senderImage}
+        lastText={item.message}
+        openChat={() => openChat(item.receiverUsername, item.receiverId, item.receiverImage)}
       />
+    )}
+  />
+      }
     </View>
   );
 };
