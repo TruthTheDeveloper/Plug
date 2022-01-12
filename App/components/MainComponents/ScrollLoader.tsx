@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import LottieView from 'lottie-react-native'
 
-import loader from '../../assets/others/spinner.json';
+import loader from '../../assets/others/scroll_spinner.json';
 
 const ScrollLoader = () => {
     return(
