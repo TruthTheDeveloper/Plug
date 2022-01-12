@@ -172,6 +172,7 @@ const HomeScreenView:FC<homeProps> = ({navigate}):JSX.Element => {
             key={'_'}
             numColumns={2}
             data={profileData}
+            // keyExtractor={item => item._id}
             renderItem={({ item, index }) => <ProfileItem
               username={item.username}
               verified={item.availability}

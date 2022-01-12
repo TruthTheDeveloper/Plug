@@ -132,7 +132,7 @@ const Container = () => {
 
 const Navigator = () => {
   const openChat = useSelector((state: any) => state.chatReducer.user);
-  return <>{openChat ? <ChatView user={openChat} /> : <Container />}</>;
+  return <>{openChat ? <ChatView key={openChat.receiverId} user={openChat} /> : <Container />}</>;
 };
 
 export default Navigator;

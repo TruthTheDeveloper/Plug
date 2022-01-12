@@ -47,7 +47,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
 
   const previousConverstion = useSelector((state:any) => state.messageReducer.conversation);
   // console.log(previousConverstion, 'conversation')
-  console.log(updatedContactData, 'contact sata');
+  // console.log(updatedContactData, 'contact sata');
 
   const socketId = profileIdData.socketId;
   // const updatechatContact : any = useRef()
@@ -57,16 +57,17 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
 
   useEffect(() => {
     console.log('first useEffect');
+      console.log(chats, 'chats');
+      console.log(previousConverstion, 'previous');
+      dispatch(getMessage(user.receiverId, socketId));
+      console.log('now previous conversation');
+      setChats((prev:any) => [...prev, ...previousConverstion]);
+      console.log(chats, 'after');
     // setChats([]);
-    dispatch(getMessage(user.receiverId, socketId));
-    if (previousConverstion.length !== 0){
-      setChats((prev:any) => [...previousConverstion, ...prev]);
-    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[dispatch,  socketId, user.receiverId]);
 
   useEffect(() => {
-
     // dispatch(getMessage(user.receiverId, socketId));
     newSocket = io('https://findplug.herokuapp.com',{query:{id:socketId}});
     console.log('useEffect called');
@@ -76,7 +77,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
       console.log('you are connected from chat view');
       newSocket.emit('chat', 'can we chat');
 
-      if (updatedContactData.length === 0){
+      if (updatedContactData.length === 0 && previousConverstion.length >= 1){
         const convResult = [];
         const lastIndex = previousConverstion.length - 1;
         const prevConv = previousConverstion[lastIndex];

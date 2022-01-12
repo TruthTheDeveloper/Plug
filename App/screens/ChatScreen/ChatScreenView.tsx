@@ -111,60 +111,45 @@ const ChatScreenView = () => {
 
   },[dispatch, socketId, updatedContactData]);
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    if (updatedContactData.length === 0){
-      console.log('sksksk');
-      AsyncStorage.getItem('updatedContactData').then((result) => {
-        console.log(result, 'jjdd');
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        updatedContactData = result !== null ? JSON.parse(result) : null;
-        console.log(updatedContactData, 'help')
+  //   if (updatedContactData.length === 0){
+  //     console.log('sksksk');
+  //     AsyncStorage.getItem('updatedContactData').then((result) => {
+  //       console.log(result, 'jjdd');
+  //       // eslint-disable-next-line react-hooks/exhaustive-deps
+  //       updatedContactData = result !== null ? JSON.parse(result) : null;
+  //       console.log(updatedContactData, 'help')
 
-        dispatch({
-          type: actionTypes.CHAT_CONTACT,
-          chatContactData:updatedContactData,
-        });
-      });
-    } else if (updatedContactData.length >= 1){
-      AsyncStorage.setItem('updatedContactData',JSON.stringify(updatedContactData));
-    }
-  },[]);
+  //       dispatch({
+  //         type: actionTypes.CHAT_CONTACT,
+  //         chatContactData:updatedContactData,
+  //       });
+  //     });
+  //   } else if (updatedContactData.length >= 1){
+  //     AsyncStorage.setItem('updatedContactData',JSON.stringify(updatedContactData));
+  //   }
+  // },[]);
 
   return (
     <View style={styles.container}>
       <Header label="Chats" />
-      {profileIdData.username !== updatedContactData[0].receiverUsername ? 
+      {updatedContactData.length >= 1 ?
       <FlatList
       data={updatedContactData}
       keyExtractor={user => user.receiverId}
       renderItem={({item}) => (
         <ChatItem
-          username={item.receiverUsername}
+          username={item.receiverUsername === profileIdData.username ? item.senderUsername : item.receiverUsername}
           time={item.time}
           online={item.online}
           // active={item.active}
-          image={item.receiverImage}
+          image={item.receiverUsername === profileIdData.username ? item.senderImage : item.receiverImage}
           lastText={item.message}
           openChat={() => openChat(item.receiverUsername, item.receiverId, item.receiverImage)}
         />
       )}
-    /> : <FlatList
-    data={updatedContactData}
-    keyExtractor={user => user.receiverId}
-    renderItem={({item}) => (
-      <ChatItem
-        username={item.senderUsername}
-        time={item.time}
-        online={item.online}
-        // active={item.active}
-        image={item.senderImage}
-        lastText={item.message}
-        openChat={() => openChat(item.receiverUsername, item.receiverId, item.receiverImage)}
-      />
-    )}
-  />
-      }
+    /> : null}
     </View>
   );
 };
