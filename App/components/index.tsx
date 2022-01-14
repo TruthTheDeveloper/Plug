@@ -16,6 +16,8 @@ import Header from './MainComponents/Header';
 import Username from './MainComponents/Username';
 import Loader from './MainComponents/Loader';
 import Loader2 from './MainComponents/Loader2';
+import ScrollLoader from './MainComponents/ScrollLoader';
+import ErrorScreen from './MainComponents/ErrorScreen';
 
 import ChatView from './Chat/ChatView';
 
@@ -38,4 +40,6 @@ export {
     Loader,
     Loader2,
     ChatView,
+    ScrollLoader,
+    ErrorScreen
 };
