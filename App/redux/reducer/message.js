@@ -14,6 +14,7 @@ const setConversation = (state, action) => {
      });
 };
 
+
 const setAllConversation = (state, action) => {
   return updateObject(state,{
     allConversation:action.allConversation,
@@ -23,6 +24,12 @@ const setAllConversation = (state, action) => {
 const setMessageLoading = (state, action) => {
   return updateObject(state,{
     messageLoading:action.messageLoading,
+  });
+};
+
+const addNewMessage = (state,action) => {
+  return updateObject(state,{
+    conversation:[...state.conversation, action.conversation],
   });
 };
 
@@ -36,6 +43,8 @@ const reducer = (state = initialState, action) => {
         return setMessageLoading(state,action);
       case actionTypes.GET_ALL_CONVERSATION:
         return setAllConversation(state, action);
+      case actionTypes.ADD_NEW_MESSAGE:
+        return addNewMessage(state, action);
       default:
         return state;
     }

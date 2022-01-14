@@ -34,7 +34,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
   const [newHeight, setHeight] = useState(height - 165);
   const [online, setOnline] = useState(false);
   const dispatch = useDispatch();
-  
+
   // const [socketId, setSocketId] : any = useState()
   // const profileIdDa= useSelector((state:any) => state.profileReducer.profileIdData);
   const [chats, setChats]: any = useState([]);
@@ -46,28 +46,22 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
   );
 
   const previousConverstion = useSelector((state:any) => state.messageReducer.conversation);
-  // console.log(previousConverstion, 'conversation')
+  console.log(updatedContactData)
+  console.log(previousConverstion)
   // console.log(updatedContactData, 'contact sata');
 
   const socketId = profileIdData.socketId;
   // const updatechatContact : any = useRef()
 
-
   // console.log(previousConverstion, 'prev')
 
   useEffect(() => {
-    console.log('first useEffect');
-      console.log(chats, 'chats');
-      console.log(previousConverstion, 'previous');
       dispatch(getMessage(user.receiverId, socketId));
-      console.log('now previous conversation');
-      setChats((prev:any) => [...prev, ...previousConverstion]);
-      console.log(chats, 'after');
-    // setChats([]);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+
   },[dispatch,  socketId, user.receiverId]);
 
   useEffect(() => {
+
     // dispatch(getMessage(user.receiverId, socketId));
     newSocket = io('https://findplug.herokuapp.com',{query:{id:socketId}});
     console.log('useEffect called');
@@ -78,6 +72,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
       newSocket.emit('chat', 'can we chat');
 
       if (updatedContactData.length === 0 && previousConverstion.length >= 1){
+        console.log('was here')
         const convResult = [];
         const lastIndex = previousConverstion.length - 1;
         const prevConv = previousConverstion[lastIndex];
@@ -89,22 +84,29 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
         });
       }
 
-      newSocket.on('receive', (msg: any, Rid:any, Sid:any, senderUsername:any, senderImage:any) => {
-        console.log('incoming message', msg, Rid, Sid);
+      newSocket.on('receive', (Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, onlin:boolean, time:any, isRead:boolean) => {
+        console.log('incoming message', message, Rid, Sid);
+        dispatch(getMessage(user.receiverId, socketId));
+        console.log('view get get');
         let data = {
           senderId: Sid,
-          receiverId: Rid,
-          message: msg,
           senderUsername:senderUsername,
           senderImage:senderImage,
-          receiverUsername:user.username,
-          receiverImage:user.image,
-          online:online,
-          time: new Date().toLocaleTimeString().slice(0,5),
-          isRead:true,
+          receiverId:Rid,
+          receiverUsername:receiverUsername,
+          receiverImage:receiverImage,
+          message:message,
+          online:onlin,
+          time:time,
+          isRead:isRead,
+
         };
         console.log(data);
-        setChats((prev: any) => [...prev, data]);
+        dispatch({
+          type: actionTypes.ADD_NEW_MESSAGE,
+          conversation: data,
+        });
+        // setChats((prev: any) => [...prev, data]);
 
         console.log(data);
 
@@ -123,7 +125,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
 
 
     // setOnline(false);
-    // return () => newSocket.close();
+    // return () => newSocket.close();[klP]
 
     return () => {
       newSocket.off('receive');
@@ -149,25 +151,30 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
 
   const sendMessage = (msg: any, Rid: string, Sid: string) => {
     console.log('emitted');
-    newSocket.emit('send', msg, Rid, Sid, user.username, user.image, online, new Date().toLocaleTimeString().slice(0,5));
-    dispatch(getMessage(user.receiverId, socketId));
+    console.log('view get');
+    newSocket.on('connect', newSocket.emit('send', Sid, profileIdData.username, profileIdData.profilePic, Rid, user.username, user.image, msg, online, new Date().toLocaleTimeString().slice(0,5), true));
     let data = {
       senderId: Sid,
-      receiverId: Rid,
-      message: msg,
-      receiverUsername:user.username,
       senderUsername:profileIdData.username,
       senderImage:profileIdData.profilePic,
+      receiverId: Rid,
+      receiverUsername:user.username,
       receiverImage:user.image,
+      message: msg,
       online:online,
       time: new Date().toLocaleTimeString().slice(0,5),
       isRead:true,
 
     };
-    setChats((prev: any) => [...prev, data]);
+
+    dispatch({
+      type: actionTypes.ADD_NEW_MESSAGE,
+      conversation: data,
+    });
+    // setChats((prev: any) => [...prev, data]);
 
     const updatechatContact = updatedContactData.filter(
-      (e: {receiverId: string}) => e.receiverId !== data.receiverId,
+      (e: {senderId: string}) => e.senderId !== data.senderId,
     );
     console.log(updatechatContact, '[chat contact]');
     updatechatContact.unshift(data);
@@ -240,9 +247,9 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
     <View style={styles.container}>
       <ChatHeader username={user.username} online={online} active back={goBack} />
       <View style={[styles.chatSection, {height: newHeight}]}>
-        {chats.length !== 0 ? (
+        {previousConverstion.length !== 0 ? (
           <FlatList
-            data={chats}
+            data={previousConverstion}
             // keyExtractor={item => item._id}
             renderItem={({item}) => (
               <ChatItem

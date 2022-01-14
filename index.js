@@ -48,7 +48,7 @@ const persistConfig = {
 
 
 export const rootReducer = combineReducers({
-  messageReducer:persistReducer(persistConfig, messageReducer),
+  messageReducer: messageReducer,
   authReducer: persistReducer(persistConfig, authReducer),
   navReducer: navReducer,
   chatReducer: chatReducer,

@@ -106,19 +106,20 @@ const HomeScreenView:FC<homeProps> = ({navigate}):JSX.Element => {
         console.log('connected from homeScreen');
         newSocket.emit('chat', 'can we chat');
 
-        newSocket.on('receive', (msg:any, Rid:any, Sid:any, username:any, img:any, online:any, time:any, senderUsername:any, senderImage:any) => {
+        newSocket.on('receive', (Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, onlin:boolean, time:any, isRead:boolean) => {
           messageCount.current = messageCount.current + 1;
+          console.log('home get')
           let data = {
             senderId: Sid,
-            receiverId: Rid,
-            message: msg,
             senderUsername:senderUsername,
             senderImage:senderImage,
-            receiverUsername:username,
-            receiverImage:img,
-            online:online,
-            time: time,
-            isRead:false,
+            receiverId:Rid,
+            receiverUsername:receiverUsername,
+            receiverImage:receiverImage,
+            message:message,
+            online:onlin,
+            time:time,
+            isRead:isRead,
           };
   
           const updatechatContact = updatedContactData.filter(

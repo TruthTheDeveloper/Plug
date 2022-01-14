@@ -71,19 +71,22 @@ const ChatScreenView = () => {
     console.log('connected from chatscreenview');
     newSocket.emit('chat', 'can we chat');
 
-    newSocket.on('receive', (msg: any, Rid:any, Sid:any, username:any, online:any, image:any, senderUsername:any, senderImage:any) => {
+    newSocket.on('receive', (Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, onlin:boolean, time:any, isRead:boolean)  => {
       messageCount.current = messageCount.current + 1;
-      console.log('incoming message', msg, Rid, Sid, username);
+      console.log('viewscreen get get')
+      console.log('incoming message', message, Rid, Sid,);
       const chatViewData = {
-        receiverId: Rid,
-        receiverUsername: username,
+        senderId: Sid,
         senderUsername:senderUsername,
         senderImage:senderImage,
-        lastmessage: msg,
-        receiverImage: image,
-        online:online,
-        time: new Date().toLocaleTimeString().slice(0,5),
-        isRead:false
+        receiverId:Rid,
+        receiverUsername:receiverUsername,
+        receiverImage:receiverImage,
+        message:message,
+        online:onlin,
+        time:time,
+        isRead:isRead,
+
       };
 
       const updatechatContact = updatedContactData.filter(
