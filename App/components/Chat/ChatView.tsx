@@ -84,43 +84,43 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
         });
       }
 
-      newSocket.on('receive', (Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, onlin:boolean, time:any, isRead:boolean) => {
-        console.log('incoming message', message, Rid, Sid);
-        dispatch(getMessage(user.receiverId, socketId));
-        console.log('view get get');
-        let data = {
-          senderId: Sid,
-          senderUsername:senderUsername,
-          senderImage:senderImage,
-          receiverId:Rid,
-          receiverUsername:receiverUsername,
-          receiverImage:receiverImage,
-          message:message,
-          online:onlin,
-          time:time,
-          isRead:isRead,
-
-        };
-        console.log(data);
-        dispatch({
-          type: actionTypes.ADD_NEW_MESSAGE,
-          conversation: data,
-        });
-        // setChats((prev: any) => [...prev, data]);
-
-        console.log(data);
-
-        const updatechatContact = updatedContactData.filter(
-          (e: {receiverId: string}) => e.receiverId !== data.receiverId,
-        );
-        updatechatContact.unshift(data);
-        dispatch({
-          type: actionTypes.CHAT_CONTACT,
-          chatContactData: updatechatContact,
-        });
-      });
-
       // console.log(newSocket)
+    });
+
+    newSocket.on('receive', (Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, onlin:boolean, time:any, isRead:boolean) => {
+      console.log('incoming message', message, Rid, Sid);
+      dispatch(getMessage(user.receiverId, socketId));
+      console.log('view get get');
+      let data = {
+        senderId: Sid,
+        senderUsername:senderUsername,
+        senderImage:senderImage,
+        receiverId:Rid,
+        receiverUsername:receiverUsername,
+        receiverImage:receiverImage,
+        message:message,
+        online:onlin,
+        time:time,
+        isRead:isRead,
+
+      };
+      console.log(data);
+      dispatch({
+        type: actionTypes.ADD_NEW_MESSAGE,
+        conversation: data,
+      });
+      // setChats((prev: any) => [...prev, data]);
+
+      console.log(data);
+
+      const updatechatContact = updatedContactData.filter(
+        (e: {receiverId: string, senderId:string}) => e.receiverId !== data.receiverId && e.receiverId !== data.senderId || e.receiverId !== data.receiverId || e.senderId !== data.senderId,
+      );
+      updatechatContact.unshift(data);
+      dispatch({
+        type: actionTypes.CHAT_CONTACT,
+        chatContactData: updatechatContact,
+      });
     });
 
 
@@ -164,7 +164,6 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
       online:online,
       time: new Date().toLocaleTimeString().slice(0,5),
       isRead:true,
-
     };
 
     dispatch({
@@ -174,8 +173,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
     // setChats((prev: any) => [...prev, data]);
 
     const updatechatContact = updatedContactData.filter(
-      (e: {senderId: string}) => e.senderId !== data.senderId,
-    );
+      (e: {receiverId: string}) => e.receiverId !== data.receiverId && e.receiverId !== data.senderId);
     console.log(updatechatContact, '[chat contact]');
     updatechatContact.unshift(data);
 

@@ -90,8 +90,7 @@ const ChatScreenView = () => {
       };
 
       const updatechatContact = updatedContactData.filter(
-        (e: {receiverId: string}) => e.receiverId !== chatViewData.receiverId,
-      );
+        (e: {receiverId: string}) => e.receiverId !== chatViewData.receiverId && e.receiverId !== chatViewData.senderId);
 
       updatechatContact.unshift(chatViewData);
 
@@ -114,25 +113,25 @@ const ChatScreenView = () => {
 
   },[dispatch, socketId, updatedContactData]);
 
-  // useEffect(() => {
+  useEffect(() => {
 
-  //   if (updatedContactData.length === 0){
-  //     console.log('sksksk');
-  //     AsyncStorage.getItem('updatedContactData').then((result) => {
-  //       console.log(result, 'jjdd');
-  //       // eslint-disable-next-line react-hooks/exhaustive-deps
-  //       updatedContactData = result !== null ? JSON.parse(result) : null;
-  //       console.log(updatedContactData, 'help')
+    if (updatedContactData.length === 0){
+      console.log('sksksk');
+      AsyncStorage.getItem('updatedContactData').then((result) => {
+        console.log(result, 'jjdd');
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        updatedContactData = result !== null ? JSON.parse(result) : null;
+        console.log(updatedContactData, 'help')
 
-  //       dispatch({
-  //         type: actionTypes.CHAT_CONTACT,
-  //         chatContactData:updatedContactData,
-  //       });
-  //     });
-  //   } else if (updatedContactData.length >= 1){
-  //     AsyncStorage.setItem('updatedContactData',JSON.stringify(updatedContactData));
-  //   }
-  // },[]);
+        dispatch({
+          type: actionTypes.CHAT_CONTACT,
+          chatContactData:updatedContactData,
+        });
+      });
+    } else if (updatedContactData.length >= 1){
+      AsyncStorage.setItem('updatedContactData',JSON.stringify(updatedContactData));
+    }
+  },[]);
 
   return (
     <View style={styles.container}>
@@ -149,7 +148,7 @@ const ChatScreenView = () => {
           // active={item.active}
           image={item.receiverUsername === profileIdData.username ? item.senderImage : item.receiverImage}
           lastText={item.message}
-          openChat={() => openChat(item.receiverUsername, item.receiverId, item.receiverImage)}
+          openChat={() => openChat(item.receiverUsername === profileIdData.username ? item.senderUsername : item.receiverUsername, item.receiverId === profileIdData.socketId ? item.senderId : item.receiverId , item.receiverUsername === profileIdData.username ? item.senderImage : item.receiverImage)}
         />
       )}
     /> : null}

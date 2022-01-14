@@ -2,14 +2,14 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import React, {useState, useEffect, useCallback, FC, useRef} from 'react';
-import {View, FlatList, BackHandler} from 'react-native';
+import {View, FlatList} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../redux/actions/index';
 import * as actionTypes from '../../redux/actions/actionTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //Components
-import {Header, Loader, ScrollLoader, ErrorScreen} from '../../components/index';
+import {Header, Loader, ScrollLoader} from '../../components/index';
 
 import ProfileItem from './components/ProfileItem';
 import io from 'socket.io-client';
@@ -51,9 +51,6 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
 
     // console.log(profileData)
 
-    const [user, setUser] = useState([
-      {username: 'kira', profilePic: girl1}
-    ])
 
     // console.log(profileData, 'this data');
 
@@ -127,8 +124,7 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
           };
 
           const updatechatContact = updatedContactData.filter(
-            (e: {receiverId: string}) => e.receiverId !== data.receiverId,
-          );
+            (e: {receiverId: string}) => e.receiverId !== data.receiverId && e.receiverId !== data.senderId);
           updatechatContact.unshift(data);
           dispatch({
             type: actionTypes.CHAT_CONTACT,
@@ -156,10 +152,10 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
     {username: 'queenjanedoe', level: 300, department: 'Statistics', image: girl6, availability: true, details: 'Looking for a roomate who can clean and cook, and also one who is NOT A JEW PERSON'},
   ]);
 
-  const goBack = () => {
-    dispatch({type: actionTypes.SHOW_CARDS, value: false});
-    return true;
-  };
+  // const goBack = () => {
+  //   dispatch({type: actionTypes.SHOW_CARDS, value: false});
+  //   return true;
+  // };
 
   const openGrid = (e: number) => {
     navigate();
