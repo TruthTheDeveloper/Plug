@@ -30,13 +30,13 @@ interface homeProps {
 }
 
 
-const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
+
 
 
 
 
 let newSocket : any;
-const HomeScreenView:FC<homeProps> = ({navigate}):JSX.Element => {
+const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
 
     const [pageNum, setPageNum] = useState(1);
     const dispatch = useDispatch();
@@ -201,7 +201,7 @@ const HomeScreenView:FC<homeProps> = ({navigate}):JSX.Element => {
             /> }
     </View>
   );
-};
+});
 
 
 export default HomeScreenView;
