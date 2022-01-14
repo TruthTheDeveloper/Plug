@@ -108,7 +108,7 @@ const HomeScreenView:FC<homeProps> = ({navigate}):JSX.Element => {
 
         newSocket.on('receive', (Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, onlin:boolean, time:any, isRead:boolean) => {
           messageCount.current = messageCount.current + 1;
-          console.log('home get')
+          console.log('home get');
           let data = {
             senderId: Sid,
             senderUsername:senderUsername,
@@ -121,7 +121,7 @@ const HomeScreenView:FC<homeProps> = ({navigate}):JSX.Element => {
             time:time,
             isRead:isRead,
           };
-  
+
           const updatechatContact = updatedContactData.filter(
             (e: {receiverId: string}) => e.receiverId !== data.receiverId,
           );
@@ -140,7 +140,7 @@ const HomeScreenView:FC<homeProps> = ({navigate}):JSX.Element => {
         newSocket.off('receive');
         newSocket.disconnect();
       }
-    }
+    };
   },[dispatch, socketId, updatedContactData]);
 
   const [] = useState([

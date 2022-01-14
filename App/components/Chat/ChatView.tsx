@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, {useState, FC, useEffect, useRef} from 'react';
+import React, {useState, FC, useEffect} from 'react';
 import {
   View,
   StyleSheet,

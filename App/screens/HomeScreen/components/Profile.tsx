@@ -16,7 +16,7 @@ import * as actionTypes from '../../../redux/actions/actionTypes';
 
 import Icons from 'react-native-vector-icons/Feather';
 import Icons2 from 'react-native-vector-icons/Ionicons';
-import { red } from '../../../config/colors';
+// import { red } from '../../../config/colors';
 import { useDispatch } from 'react-redux';
 
 const verifiedIcon = require('../../../assets/images/verified.png');
@@ -72,7 +72,7 @@ const Profile: FC<ProfileProps> = ({
               </TouchableWithoutFeedback>
               <TouchableWithoutFeedback onPress={showDetails}>
                 <View style={[styles.chatCircle, styles.bubble2]}>
-                  <Icons name="info" size={15} color={red} />
+                  <Icons name="info" size={15} color={'#000'} />
                 </View>
               </TouchableWithoutFeedback>
             </View>
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
   chatCircle: {
     height: 60,
     width: 60,
-    backgroundColor: red,
+    backgroundColor: 'black',
     borderRadius: 30,
     marginLeft: 'auto',
     marginRight: 'auto',
