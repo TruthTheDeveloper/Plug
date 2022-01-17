@@ -26,9 +26,9 @@ const ProfilePhoto: FC<ImageProps> = ({setImage}): JSX.Element => {
   const [photo, postPhoto] = useState();
   const dispatch = useDispatch();
   const selectPhoto = () => {
-    launchImageLibrary({mediaType: 'photo'}, (response: { assets: { uri: any; }[]; }) => {
+    launchImageLibrary({mediaType: 'photo'}, response => {
       if (response.assets) {
-        const data = response.assets[0].uri;
+        const data : any = response.assets[0].uri;
         postPhoto(data);
         setImage(data);
         dispatch({type: actionTypes.SET_PROFILE_PIC, profilePic:data});
@@ -37,7 +37,6 @@ const ProfilePhoto: FC<ImageProps> = ({setImage}): JSX.Element => {
     });
   };
 
-  const imageLink = {};
 
   const emptyImg = (
     <View style={styles.container}>

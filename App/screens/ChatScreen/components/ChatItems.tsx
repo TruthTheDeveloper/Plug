@@ -35,6 +35,7 @@ const ChatItem: FC<ChatProps> = ({
   if (lastText.length > 20) {
     newText = lastText.substring(0, 20) + '...';
   }
+  console.log(image, 'img')
   return (
     <TouchableHighlight
       underlayColor={'#e4e4e4'}

@@ -282,6 +282,12 @@ const refreshHomePage = (state, action) => {
     });
 };
 
+const resetAllProfile = (state, action) => {
+    return updateObject(state, {
+        profileData:action.profileData
+    })
+}
+
 
 
 
@@ -352,6 +358,8 @@ const reducer = (state = initialState, action) => {
         return getAllProfileLoading(state, action);
     case actionTypes.RESET_SEARCH_LOADING:
         return getResetSearchLoading(state,action);
+    case actionTypes.RESET_ALL_PROFILE:
+        return resetAllProfile(state, action);
 
     default:
         return state;
