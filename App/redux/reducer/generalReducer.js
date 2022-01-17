@@ -6,6 +6,7 @@ const initialState = {
     searchIndex: null,
     showCard: false,
     searchShowCard: false,
+    largeCardData: null
 };
 
 const reducer = (state = initialState, action) => {
@@ -20,6 +21,8 @@ const reducer = (state = initialState, action) => {
             return {...state, searchIndex: action.value};
         case actionTypes.SHOW_SEARCHCARDS:
             return {...state, searchShowCard: action.value};
+        case actionTypes.LARGE_CARD_DATA:
+            return {...state, largeCardData: action.value};
         default: return state
     }
 }; 

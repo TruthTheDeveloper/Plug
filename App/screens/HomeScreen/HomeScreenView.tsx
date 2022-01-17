@@ -9,15 +9,13 @@ import * as actionTypes from '../../redux/actions/actionTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //Components
-import {Header, Loader} from '../../components/index';
+import {Header, Loader, ScrollLoader, ErrorScreen} from '../../components/index';
 
 import ProfileItem from './components/ProfileItem';
 import io from 'socket.io-client';
 
 // import Profile from './components/Profile';
 // import DetailsDiv from './components/DetailsDiv';
-
-
 
 //Imported Images
 const girl1 = require('../../assets/images/girl.jpg');
@@ -27,17 +25,19 @@ const girl4 = require('../../assets/images/girl3.jpg');
 const girl5 = require('../../assets/images/girl4.jpg');
 const girl6 = require('../../assets/images/girl5.jpg');
 
-
-
 interface homeProps {
   navigate: any
 }
+
+
+const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
 
 
 
 
 let newSocket : any;
 const HomeScreenView:FC<homeProps> = ({navigate}):JSX.Element => {
+
     const [pageNum, setPageNum] = useState(1);
     const dispatch = useDispatch();
     const [initialPageNum] = useState(1);
@@ -51,7 +51,11 @@ const HomeScreenView:FC<homeProps> = ({navigate}):JSX.Element => {
 
     // console.log(profileData)
 
+    const [user, setUser] = useState([
+      {username: 'kira', profilePic: girl1}
+    ])
 
+    // console.log(profileData, 'this data');
 
     // console.log(profileData, 'this data');
 
@@ -158,9 +162,16 @@ const HomeScreenView:FC<homeProps> = ({navigate}):JSX.Element => {
     navigate();
     dispatch({type: actionTypes.SHOW_CARDS, value: true});
     dispatch({type: actionTypes.INDEX, value: e });
+    dispatch({type: actionTypes.LARGE_CARD_DATA, value: profileData});
   };
 
-  BackHandler.addEventListener('hardwareBackPress', goBack );
+  console.log(profileData.length);
+
+  const scrollLoaderComponent = (
+    <>
+      {profileData.length !== 0 && <ScrollLoader />}
+    </>
+  )
 
   return (
     <View>
@@ -182,6 +193,7 @@ const HomeScreenView:FC<homeProps> = ({navigate}):JSX.Element => {
             }
             style={{ marginBottom: 37 }}
             onEndReached={getNewList}
+            ListFooterComponent={() => scrollLoaderComponent }
             /> }
     </View>
   );

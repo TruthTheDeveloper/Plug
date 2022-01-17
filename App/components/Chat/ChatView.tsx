@@ -178,16 +178,16 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
 
   useEffect(() => {
     let keyboardDidShowListener: EmitterSubscription;
-    // let keyboardDidHideListener: EmitterSubscription;
+    let keyboardDidHideListener: EmitterSubscription;
 
     keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       keyboardDidShow,
     );
-    // keyboardDidHideListener = Keyboard.addListener(
-    //   'keyboardDidHide',
-    //   keyboardDidHide,
-    // );
+    keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      keyboardDidHide,
+    );
 
     return () => {
       if (keyboardDidShowListener) {
@@ -200,9 +200,9 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
     setHeight(e.endCoordinates.height - 45);
   };
 
-  // const keyboardDidHide = () => {
-  //   setHeight(height - 165);
-  // };
+  const keyboardDidHide = () => {
+    setHeight(height - 165);
+  };
 
   const openGallery = () => {
     launchImageLibrary({mediaType: 'photo'}, response => {
@@ -222,6 +222,8 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
     setText('');
   };
 
+  let FlatListRef: FlatList<any> | null = null;
+
   return (
     <View style={styles.container}>
       <ChatHeader username={user.username} online={online} active back={goBack} />
@@ -230,6 +232,8 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
           <FlatList
             data={chats}
             // keyExtractor={item => item._id}
+            ref={ref => (FlatListRef = ref)}
+            onContentSizeChange={() => FlatListRef?.scrollToEnd()}
             renderItem={({item}) => (
               <ChatItem
                 id={item.senderId}
