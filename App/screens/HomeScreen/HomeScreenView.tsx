@@ -29,12 +29,6 @@ interface homeProps {
   navigate: any
 }
 
-
-
-
-
-
-
 let newSocket : any;
 const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
 
@@ -45,6 +39,10 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
     const profileData = useSelector((state:any) => state.profileReducer.profileData);
     const isLoading = useSelector((state:any) => state.profileReducer.allProfileLoading);
     const messageCount = useRef(0);
+    const isRead = useSelector((state:any) => state.chatReducer.isRead);
+
+    const receiverIdentity = useSelector((state:any) => state.chatReducer.receiverId);
+    const online = useSelector((state:any) => state.chatReducer.isOnline);
 
     // const indx = useSelector((state: any) => state.generalReducer.index);
     // const showCard = useSelector((state: any) => state.generalReducer.showCard);
@@ -106,8 +104,25 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
       newSocket.on('connect', () => {
         console.log('connected from homeScreen');
         newSocket.emit('chat', 'can we chat');
+        newSocket.on('online', (users:any) => {
+          for (const i in users){
+            if (users[i] === receiverIdentity){
+              console.log('online');
+              dispatch({
+                type: actionTypes.ISONLINE,
+                isOnline:true,
+              });
+            }
+          }
+        });
 
-        newSocket.on('receive', (Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, onlin:boolean, time:any, isRead:boolean) => {
+
+        dispatch({
+          type:actionTypes.ISREAD,
+          isRead:false,
+        });
+
+        newSocket.on('receive', (Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, onlin:boolean, time:any) => {
           messageCount.current = messageCount.current + 1;
           console.log('home get');
           let data = {
@@ -118,8 +133,8 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
             receiverUsername:receiverUsername,
             receiverImage:receiverImage,
             message:message,
-            online:onlin,
             time:time,
+            online:online,
             isRead:isRead,
           };
 
@@ -139,8 +154,11 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
       if (newSocket){
         newSocket.off('receive');
         newSocket.disconnect();
+        newSocket.emit('offline', receiverIdentity, socketId);
       }
+
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[dispatch, socketId, updatedContactData]);
 
   const [] = useState([
@@ -170,7 +188,7 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
     <>
       {profileData.length !== 0 && <ScrollLoader />}
     </>
-  )
+  );
 
   return (
     <View>

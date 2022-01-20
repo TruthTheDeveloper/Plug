@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {View, StyleSheet, Dimensions} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 
@@ -19,34 +19,20 @@ import io from 'socket.io-client';
 const {height} = Dimensions.get('window');
 
 
-const girl = require('../../assets/images/girl1.jpg');
-const gir2 = require('../../assets/images/girl2.jpg');
-
 
 let newSocket : any;
 const ChatScreenView = () => {
   const dispatch = useDispatch();
-  const messageCount = useRef(0)
-  const [] = useState([
-    {
-      username: 'Mina_Okabe',
-      active: true,
-      lastText: 'Hello there, wanna hangout today?',
-      image: girl,
-    },
-    {
-      username: 'krisetin',
-      active: true,
-      lastText: "I'm currently working on an app ",
-      image: gir2,
-    },
-  ]);
+  const messageCount = useRef(0);
 
 
 
 
   let updatedContactData = useSelector((state:any) => state.profileReducer.chatContactData);
   console.log(updatedContactData, 'updated');
+  const isRead = useSelector((state:any) => state.chatReducer.isRead);
+  const receiverIdentity = useSelector((state:any) => state.chatReducer.receiverId);
+  const online = useSelector((state:any) => state.chatReducer.isOnline);
 
 
 
@@ -71,9 +57,28 @@ const ChatScreenView = () => {
     console.log('connected from chatscreenview');
     newSocket.emit('chat', 'can we chat');
 
-    newSocket.on('receive', (Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, onlin:boolean, time:any, isRead:boolean)  => {
+    newSocket.on('online', (users:any) => {
+        for (const i in users){
+          if (users[i] === receiverIdentity){
+            console.log('online');
+            dispatch({
+              type: actionTypes.ISONLINE,
+              isOnline:true,
+            });
+          }
+        }
+    });
+
+
+    newSocket.on('receive', (Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any)  => {
       messageCount.current = messageCount.current + 1;
-      console.log('viewscreen get get')
+      console.log('viewscreen get get');
+      dispatch({
+        type:actionTypes.ISREAD,
+        isRead:false,
+      });
+
+
       console.log('incoming message', message, Rid, Sid,);
       const chatViewData = {
         senderId: Sid,
@@ -83,7 +88,7 @@ const ChatScreenView = () => {
         receiverUsername:receiverUsername,
         receiverImage:receiverImage,
         message:message,
-        online:onlin,
+        online:online,
         time:time,
         isRead:isRead,
 
@@ -108,9 +113,11 @@ const ChatScreenView = () => {
     return () => {
       newSocket.off('receive');
       newSocket.disconnect();
-    }
+      newSocket.emit('offline', receiverIdentity, socketId);
+    };
 
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[dispatch, socketId, updatedContactData]);
 
   useEffect(() => {
@@ -121,7 +128,7 @@ const ChatScreenView = () => {
         console.log(result, 'jjdd');
         // eslint-disable-next-line react-hooks/exhaustive-deps
         updatedContactData = result !== null ? JSON.parse(result) : null;
-        console.log(updatedContactData, 'help')
+        console.log(updatedContactData, 'help');
 
         dispatch({
           type: actionTypes.CHAT_CONTACT,
@@ -145,6 +152,7 @@ const ChatScreenView = () => {
           username={item.receiverUsername === profileIdData.username ? item.senderUsername : item.receiverUsername}
           time={item.time}
           online={item.online}
+          isRead={item.isRead}
           // active={item.active}
           image={item.receiverUsername === profileIdData.username ? item.senderImage : item.receiverImage}
           lastText={item.message}

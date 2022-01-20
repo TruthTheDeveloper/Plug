@@ -2,6 +2,9 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
+  isRead:false,
+  isOnline:false,
+  receiverId:null,
   user: null,
   DefaultRoute: 'HOME',
   index: null,
@@ -16,6 +19,12 @@ const reducer = (state = initialState, action) => {
       return {...state, DefaultRoute: action.value};
     case actionTypes.SHOW_DETAILS:
       return {...state, details: action.value};
+    case actionTypes.ISREAD:
+      return {...state, isRead:action.isRead};
+    case actionTypes.RECEIVERID:
+      return {...state, receiverId:action.receiverId};
+    case actionTypes.ISONLINE:
+      return {...state, isOnline:action.isOnline};
     default:
       return state;
   }

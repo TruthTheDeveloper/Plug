@@ -32,12 +32,11 @@ let newSocket : any;
 // let updatechatContact :any;
 const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
   const [newHeight, setHeight] = useState(height - 165);
-  const [online, setOnline] = useState(false);
+  const online = useSelector((state:any) => state.chatReducer.isOnline);
   const dispatch = useDispatch();
 
   // const [socketId, setSocketId] : any = useState()
   // const profileIdDa= useSelector((state:any) => state.profileReducer.profileIdData);
-  const [chats, setChats]: any = useState([]);
   const profileIdData = useSelector(
     (state: any) => state.profileReducer.profileIdData,
   );
@@ -46,11 +45,12 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
   );
 
   const previousConverstion = useSelector((state:any) => state.messageReducer.conversation);
-  console.log(updatedContactData)
-  console.log(previousConverstion)
+  // console.log(updatedContactData);
+  // console.log(previousConverstion);
   // console.log(updatedContactData, 'contact sata');
 
   const socketId = profileIdData.socketId;
+  const isRead = useSelector((state:any) => state.chatReducer.isRead);
   // const updatechatContact : any = useRef()
 
   // console.log(previousConverstion, 'prev')
@@ -67,12 +67,34 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
     console.log('useEffect called');
     newSocket.on('connect', () => {
 
-        setOnline(true);
+      dispatch({
+        type:actionTypes.ISREAD,
+        isRead:true,
+      });
+
       console.log('you are connected from chat view');
       newSocket.emit('chat', 'can we chat');
+      newSocket.emit('isOnline', user.receiverId,socketId);
+      newSocket.on('online', (users:any) => {
+        console.log(users.receiverId, ' ', user.receiverId);
+        for (const i in users){
+          if (users[i] === user.receiverId){
+            console.log('online');
+            dispatch({
+              type: actionTypes.ISONLINE,
+              isOnline:true,
+            });
+          }
+        }
+      });
+
+      dispatch({
+        type: actionTypes.RECEIVERID,
+        receiverId: user.receiverId,
+      });
 
       if (updatedContactData.length === 0 && previousConverstion.length >= 1){
-        console.log('was here')
+        console.log('was here');
         const convResult = [];
         const lastIndex = previousConverstion.length - 1;
         const prevConv = previousConverstion[lastIndex];
@@ -87,7 +109,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
       // console.log(newSocket)
     });
 
-    newSocket.on('receive', (Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, onlin:boolean, time:any, isRead:boolean) => {
+    newSocket.on('receive', (Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any) => {
       console.log('incoming message', message, Rid, Sid);
       dispatch(getMessage(user.receiverId, socketId));
       console.log('view get get');
@@ -99,7 +121,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
         receiverUsername:receiverUsername,
         receiverImage:receiverImage,
         message:message,
-        online:onlin,
+        online:online,
         time:time,
         isRead:isRead,
 
@@ -114,7 +136,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
       console.log(data);
 
       const updatechatContact = updatedContactData.filter(
-        (e: {receiverId: string, senderId:string}) => e.receiverId !== data.receiverId && e.receiverId !== data.senderId || e.receiverId !== data.receiverId || e.senderId !== data.senderId,
+        (e: {receiverId: string, senderId:string}) => e.receiverId !== data.receiverId && e.receiverId !== data.senderId,
       );
       updatechatContact.unshift(data);
       dispatch({
@@ -130,11 +152,20 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
     return () => {
       newSocket.off('receive');
       newSocket.disconnect();
+      newSocket.emit('offline', user.receiverId, socketId);
+
+
+
+      dispatch({
+        type: actionTypes.RECEIVERID,
+        receiverId: user.receiverId,
+      });
+
     };
 
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, online, socketId, updatedContactData, user.image, user.receiverId, user.username]);
+  }, [dispatch, socketId, updatedContactData, user.image, user.receiverId, user.username]);
 
   // useEffect(() => {
   //   console.log('did comon mount');
@@ -152,7 +183,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
   const sendMessage = (msg: any, Rid: string, Sid: string) => {
     console.log('emitted');
     console.log('view get');
-    newSocket.on('connect', newSocket.emit('send', Sid, profileIdData.username, profileIdData.profilePic, Rid, user.username, user.image, msg, online, new Date().toLocaleTimeString().slice(0,5), true));
+    newSocket.on('connect', newSocket.emit('send', Sid, profileIdData.username, profileIdData.profilePic, Rid, user.username, user.image, msg, new Date().toLocaleTimeString().slice(0,5), true));
     let data = {
       senderId: Sid,
       senderUsername:profileIdData.username,
@@ -163,7 +194,6 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
       message: msg,
       online:online,
       time: new Date().toLocaleTimeString().slice(0,5),
-      isRead:true,
     };
 
     dispatch({

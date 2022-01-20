@@ -15,6 +15,7 @@ const {width} = Dimensions.get('window');
 interface ChatProps {
   username: string;
   time:any;
+  isRead:boolean;
   // active: boolean;
   online:boolean;
   lastText: string;
@@ -25,6 +26,7 @@ interface ChatProps {
 const ChatItem: FC<ChatProps> = ({
   username,
   time,
+  isRead,
   // active,
   lastText,
   online,
@@ -32,14 +34,24 @@ const ChatItem: FC<ChatProps> = ({
   openChat,
 }): JSX.Element => {
   let newText = lastText;
+  let seen = isRead;
   if (lastText.length > 20) {
     newText = lastText.substring(0, 20) + '...';
   }
-  console.log(image, 'img')
+  console.log(image, 'img');
+
+  const openChatHandler = (e:string) => {
+    if (isRead !== true){
+      seen = false;
+    } else {
+      seen = true;
+    }
+    openChat(e);
+  };
   return (
     <TouchableHighlight
       underlayColor={'#e4e4e4'}
-      onPress={() => openChat(username)}>
+      onPress={() => openChatHandler(username)}>
       <View style={styles.container}>
         <View style={styles.UserImage}>
           <ImageBackground source={{uri:image}} style={styles.image} />
@@ -53,6 +65,7 @@ const ChatItem: FC<ChatProps> = ({
         </View>
         <View style={styles.dateContainer}>
           <Text style={styles.date}>{time}</Text>
+          {!seen && <Text>unseen</Text>}
         </View>
       </View>
     </TouchableHighlight>
