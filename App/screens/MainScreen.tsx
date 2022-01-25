@@ -10,7 +10,7 @@ import Navigator from '../navigation/navigation/Navigators';
 
 
 const MainScreen = () => {
-  const [auth, setAuth]:any = useState(null);
+  const [auth, setAuth]:any = useState();
 
 
   const authToken = useSelector((state:any)=> state.authReducer.token);

@@ -1,12 +1,15 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import React, {useState, useEffect, useCallback, FC, useRef} from 'react';
+import React, {useState, useEffect, FC, useRef} from 'react';
 import {View, FlatList} from 'react-native';
+import NetInfo from '@react-native-community/netinfo';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../redux/actions/index';
 import * as actionTypes from '../../redux/actions/actionTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ErrorScreen } from '../../components/index';
+import PushNotification, {Importance} from 'react-native-push-notification';
 
 //Components
 import {Header, Loader, ScrollLoader} from '../../components/index';
@@ -18,21 +21,18 @@ import io from 'socket.io-client';
 // import DetailsDiv from './components/DetailsDiv';
 
 //Imported Images
-const girl1 = require('../../assets/images/girl.jpg');
-const girl2 = require('../../assets/images/girl1.jpg');
-const girl3 = require('../../assets/images/girl2.jpg');
-const girl4 = require('../../assets/images/girl3.jpg');
-const girl5 = require('../../assets/images/girl4.jpg');
-const girl6 = require('../../assets/images/girl5.jpg');
 
 interface homeProps {
   navigate: any
 }
 
+
+
 let newSocket : any;
 const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
 
-    const [pageNum, setPageNum] = useState(1);
+    const [pageNum, setPageNum] = useState(2);
+    const [reload, setReload] = useState(false);
     const dispatch = useDispatch();
     const [initialPageNum] = useState(1);
     // const [socketId, setSocketId] = useState()
@@ -43,11 +43,31 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
 
     const receiverIdentity = useSelector((state:any) => state.chatReducer.receiverId);
     const online = useSelector((state:any) => state.chatReducer.isOnline);
+    // const networkError = useSelector((state:any) => state.profileReducer.network);
+    const [connected, setConnected] : any = useState(true);
+    const profileIdData = useSelector(
+      (state:any) => state.profileReducer.profileIdData,
+    );
+
+    const getAllConversation = useSelector((state:any) => state.messageReducer.AllConversation);
+    let homeScreenRender = null;
+
+
+
+
+
+
+    const reloadHandler = () => {
+      console.log('press');
+      setReload(prev => !prev);
+    };
+
+
 
     // const indx = useSelector((state: any) => state.generalReducer.index);
     // const showCard = useSelector((state: any) => state.generalReducer.showCard);
 
-    // console.log(profileData)
+    console.log(profileIdData);
 
 
     // console.log(profileData, 'this data');
@@ -55,19 +75,33 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
     // console.log(profileData, 'this data');
 
     useEffect(() => {
+      dispatch(getAllConversation())
+      const unsubscribe = NetInfo.addEventListener(state => {
+        console.log('Connection type', state.type);
+        console.log('Is connected?', state.isConnected);
+        setConnected(state.isConnected);
+      });
+      unsubscribe();
+
+      NetInfo.fetch().then(state => {
+        console.log('Connection type', state.type);
+        console.log('Is connected?', state.isConnected);
+        setConnected(state.isConnected);
+      });
       // dispatch({type:actionTypes.RESET_ALL_PROFILE, profileData:[]});
         // dispatch({type:actionTypes.REFRESH_HOME_PAGE, profileData:[]});
-          if (profileData.length === 0){
-            console.log('he yer');
-            dispatch(actions.getAllProfile(initialPageNum));
-          }
-          setPageNum(2);
-          // let userId : any = null;
-          AsyncStorage.getItem('profileId').then(result => {
-            if (result !== null){
-              dispatch(actions.retrieveProfileDetail(result));
+        AsyncStorage.getItem('profileId').then(result => {
+          if (result !== null){
+            // console.log(result, 'result')
+            if (profileData.length < 1){
+              console.log('he yer', result);
+                dispatch(actions.getAllProfile(initialPageNum, result));
             }
-          });
+            dispatch(actions.retrieveProfileDetail(result));
+          }
+        });
+
+          // let userId : any = null;
 
       //     const getToken = async() => {
       //       userId = await AsyncStorage.getItem('profileId');
@@ -81,19 +115,30 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
       //  };
       //  getToken();
 
-    },[dispatch, initialPageNum, profileData.length]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[dispatch, initialPageNum, profileData.length, reload]);
 
 
-    const getNewList = useCallback(() => {
-      if (pageNum > 1){
-        dispatch(actions.getAllProfile(pageNum));
-      }
-      setPageNum(prev => prev + 1);
-    },[dispatch, pageNum]);
+    const getNewList = () => {
+      const unsubscribe = NetInfo.addEventListener(state => {
+        console.log('Connection type', state.type);
+        console.log('Is connected?', state.isConnected);
+        setConnected(state.isConnected);
+      });
+      unsubscribe();
+      NetInfo.fetch().then(state => {
+        console.log('Connection type', state.type);
+        console.log('Is connected?', state.isConnected);
+        setConnected(state.isConnected);
+      });
+        if (connected){
+          dispatch(actions.getAllProfile(pageNum, profileIdData._id));
+          setPageNum(prev => prev + 1);
+        } else {
+          homeScreenRender = <ErrorScreen reload={reloadHandler}/>;
+        }
+    };
 
-  const profileIdData = useSelector(
-    (state:any) => state.profileReducer.profileIdData,
-  );
   const socketId = profileIdData !== null ? profileIdData.socketId : null;
   const updatedContactData = useSelector(
     (state:any) => state.profileReducer.chatContactData,
@@ -102,7 +147,29 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
     if (socketId !== null){
       newSocket = io('https://findplug.herokuapp.com',{query:{id:socketId}});
       newSocket.on('connect', () => {
-        console.log('connected from homeScreen');
+        newSocket.on('offlineMessage', (Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any) => {
+          let data = {
+            senderId: Sid,
+            senderUsername:senderUsername,
+            senderImage:senderImage,
+            receiverId:Rid,
+            receiverUsername:receiverUsername,
+            receiverImage:receiverImage,
+            message:message,
+            time:time,
+            online:online,
+            isRead:isRead,
+          };
+
+          const updatechatContact = updatedContactData.filter(
+            (e: {receiverId: string}) => e.receiverId !== data.receiverId && e.receiverId !== data.senderId);
+          updatechatContact.unshift(data);
+          dispatch({
+            type: actionTypes.CHAT_CONTACT,
+            chatContactData: updatechatContact,
+          });
+        });
+        console.log('connected from homeScreen')
         newSocket.emit('chat', 'can we chat');
         newSocket.on('online', (users:any) => {
           for (const i in users){
@@ -122,7 +189,7 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
           isRead:false,
         });
 
-        newSocket.on('receive', (Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, onlin:boolean, time:any) => {
+        newSocket.on('receive', (Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any) => {
           messageCount.current = messageCount.current + 1;
           console.log('home get');
           let data = {
@@ -137,6 +204,26 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
             online:online,
             isRead:isRead,
           };
+
+          PushNotification.createChannel(
+            {
+              channelId: 'channel-id', // (required)
+              channelName: 'My channel', // (required)
+              channelDescription: 'A channel to categorise your notifications', // (optional) default: undefined.
+              playSound: false, // (optional) default: true
+              soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
+              importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
+              vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
+            },
+            (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
+          );
+
+        PushNotification.localNotification({
+          channelId:'channel-id',
+          title: `New Message from ${data.receiverUsername === profileIdData.username ? data.senderUsername : data.receiverUsername}`, // (optional)
+          message: data.message,
+          picture: data.receiverUsername === profileIdData.username ? data.senderImage : data.receiverImage,
+        });
 
           const updatechatContact = updatedContactData.filter(
             (e: {receiverId: string}) => e.receiverId !== data.receiverId && e.receiverId !== data.senderId);
@@ -161,14 +248,6 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[dispatch, socketId, updatedContactData]);
 
-  const [] = useState([
-    {username: 'kendall_jenner', level: 400, department: 'English', image: girl1, availability: true, details: 'Looking for a sharp looking roomate, one who is NOT A JEW PERSON jkdkd dkmdldd mlsmlss ,m,mdd  kmlms ,dmdld mlmsllsd fdflkdfl flflkf lklf fmllf mflmlf f,mlfm fmlflf flmfmdfl flmdflmdf dfmlmdf fdmdglmdg glmdgldgmm' },
-    {username: 'marysmith', level: 100, department: 'Law', image: girl2, availability: true, details: 'Looking for a roomate who can clean and cook, and also one who is NOT A JEW PERSON'},
-    {username: 'clarris', level: 100, department: 'Chemistry', image: girl3, availability: true, details: 'Looking for a sharp looking roomate, one who is NOT A JEW PERSON'},
-    {username: 'officialSasha', level: 200, department: 'Computer Science', image: girl4, availability: true, details: 'Looking for a roomate who can clean and cook, and also one who is NOT A JEW PERSON'},
-    {username: 'poppins', level: 100, department: 'Geography', image: girl5, availability: true, details: 'Looking for a sharp looking roomate, one who is NOT A JEW PERSON'},
-    {username: 'queenjanedoe', level: 300, department: 'Statistics', image: girl6, availability: true, details: 'Looking for a roomate who can clean and cook, and also one who is NOT A JEW PERSON'},
-  ]);
 
   // const goBack = () => {
   //   dispatch({type: actionTypes.SHOW_CARDS, value: false});
@@ -190,29 +269,40 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
     </>
   );
 
+
+
+  if (!connected){
+    homeScreenRender = <ErrorScreen reload={reloadHandler}/>;
+  } else if (isLoading){
+    homeScreenRender = <Loader/>;
+  } else {
+    homeScreenRender = <FlatList
+    // horizontal={true}
+          key={'_'}
+          numColumns={2}
+          data={profileData}
+          // keyExtractor={item => item._id}
+          renderItem={({ item, index }) => <ProfileItem
+            username={item.username}
+            verified={item.availability}
+            level={item.level}
+            department={item.department}
+            image={item.profilePic}
+            index={index}
+            setIndex={openGrid}
+            />
+          }
+          style={{ marginBottom: 37 }}
+          onEndReached={getNewList}
+          initialNumToRender={11}
+          ListFooterComponent={() => scrollLoaderComponent }
+          />;
+  }
+
   return (
     <View>
       <Header label="All Students" />
-      {isLoading ? <Loader/> : <FlatList
-      // horizontal={true}
-            key={'_'}
-            numColumns={2}
-            data={profileData}
-            // keyExtractor={item => item._id}
-            renderItem={({ item, index }) => <ProfileItem
-              username={item.username}
-              verified={item.availability}
-              level={item.level}
-              department={item.department}
-              image={item.profilePic}
-              index={index}
-              setIndex={openGrid}
-              />
-            }
-            style={{ marginBottom: 37 }}
-            onEndReached={getNewList}
-            ListFooterComponent={() => scrollLoaderComponent }
-            /> }
+      {homeScreenRender}
     </View>
   );
 });

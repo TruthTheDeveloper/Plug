@@ -53,6 +53,13 @@ export const setAllProfileLoading = (data) => {
 
 };
 
+export const netWorkError = (data) => {
+  return {
+    type:actionTypes.NETWORK_ERROR,
+    netError:data,
+  };
+};
+
 
 
 export const searchAllProfile = (query, pageNum) => {
@@ -219,21 +226,27 @@ export const profileData = (data) => {
   };
 };
 
-export const getAllProfile = (pageNum) => {
+export const getAllProfile = (pageNum, id) => {
   console.log('it got here', pageNum);
+  console.log('hey', id);
   return dispatch => {
     axios.get(`https://findplug.herokuapp.com/profile?query=male&page=${pageNum}`)
     .then(response => {
       console.log(response.data, 'data');
       dispatch(setAllProfileLoading(false));
+      const result = response.data.profile.filter(e => e._id !== id);
       // console.log(response.data, 'retriev data');
+      console.log(result, 'whay');
       if (response.data.total !== 0){
-        dispatch(profileData(response.data));
+        dispatch(profileData(result));
       }
 
     })
     .catch((err) => {
       console.log(err, 'ur err');
+      // if (err[0].Error === 'Network Error'){
+      //   dispatch(netWorkError(true));
+      // }
       dispatch(setAllProfileLoading(false));
     });
   };

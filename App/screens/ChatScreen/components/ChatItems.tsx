@@ -33,6 +33,7 @@ const ChatItem: FC<ChatProps> = ({
   image,
   openChat,
 }): JSX.Element => {
+  console.log(isRead, 'chatitem')
   let newText = lastText;
   let seen = isRead;
   if (lastText.length > 20) {
@@ -41,7 +42,7 @@ const ChatItem: FC<ChatProps> = ({
   console.log(image, 'img');
 
   const openChatHandler = (e:string) => {
-    if (isRead !== true){
+    if (isRead === false){
       seen = false;
     } else {
       seen = true;
@@ -65,7 +66,7 @@ const ChatItem: FC<ChatProps> = ({
         </View>
         <View style={styles.dateContainer}>
           <Text style={styles.date}>{time}</Text>
-          {!seen && <Text>unseen</Text>}
+          {isRead === false && <Text>new Message</Text>}
         </View>
       </View>
     </TouchableHighlight>

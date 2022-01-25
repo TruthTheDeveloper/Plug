@@ -15,6 +15,7 @@ import {useSelector} from 'react-redux';
 
 import {useDispatch} from 'react-redux';
 import io from 'socket.io-client';
+import PushNotification, {Importance} from 'react-native-push-notification';
 
 const {height} = Dimensions.get('window');
 
@@ -47,12 +48,37 @@ const ChatScreenView = () => {
 
   const socketId = profileIdData.socketId;
 
-
+  console.log(isRead, 'from chatScreenView');
   useEffect(() => {
+      // dispatch(getMessage(el.receiverId, el.senderId))
+    // console.log(isRead, 'from chatScreenView')
     // dispatch(getMessage(user.receiverId, socketId));
     newSocket = io('https://findplug.herokuapp.com',{query:{id:socketId}});
     console.log('useEffect called');
     newSocket.on('connect', () => {
+
+      newSocket.on('offlineMessage', (Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any) => {
+        let data = {
+          senderId: Sid,
+          senderUsername:senderUsername,
+          senderImage:senderImage,
+          receiverId:Rid,
+          receiverUsername:receiverUsername,
+          receiverImage:receiverImage,
+          message:message,
+          time:time,
+          online:online,
+          isRead:isRead,
+        };
+
+        const updatechatContact = updatedContactData.filter(
+          (e: {receiverId: string}) => e.receiverId !== data.receiverId && e.receiverId !== data.senderId);
+        updatechatContact.unshift(data);
+        dispatch({
+          type: actionTypes.CHAT_CONTACT,
+          chatContactData: updatechatContact,
+        });
+      });
 
     console.log('connected from chatscreenview');
     newSocket.emit('chat', 'can we chat');
@@ -93,6 +119,28 @@ const ChatScreenView = () => {
         isRead:isRead,
 
       };
+
+        PushNotification.createChannel(
+          {
+            channelId: 'channel-id', // (required)
+            channelName: 'My channel', // (required)
+            channelDescription: 'A channel to categorise your notifications', // (optional) default: undefined.
+            playSound: false, // (optional) default: true
+            soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
+            importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
+            vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
+          },
+          (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
+        );
+
+      PushNotification.localNotification({
+        channelId:'channel-id',
+        title: `New Message from ${chatViewData.receiverUsername === profileIdData.username ? chatViewData.senderUsername : chatViewData.receiverUsername}`, // (optional)
+        message: chatViewData.message,
+        picture: chatViewData.receiverUsername === profileIdData.username ? chatViewData.senderImage : chatViewData.receiverImage,
+      });
+
+
 
       const updatechatContact = updatedContactData.filter(
         (e: {receiverId: string}) => e.receiverId !== chatViewData.receiverId && e.receiverId !== chatViewData.senderId);

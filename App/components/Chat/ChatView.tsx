@@ -52,16 +52,26 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
   const socketId = profileIdData.socketId;
   const isRead = useSelector((state:any) => state.chatReducer.isRead);
   // const updatechatContact : any = useRef()
+  console.log(isRead, 'from chatView')
 
   // console.log(previousConverstion, 'prev')
 
   useEffect(() => {
       dispatch(getMessage(user.receiverId, socketId));
 
+      const allConverastion = []
+      allConverastion.unshift({receiverId:user.receiverId, senderId:socketId})
+
+      dispatch({type:actionTypes.GET_ALL_CONVERSATION, allConversation:allConverastion})
+
   },[dispatch,  socketId, user.receiverId]);
 
   useEffect(() => {
-
+    dispatch({
+      type:actionTypes.ISREAD,
+      isRead:true,
+    });
+   
     // dispatch(getMessage(user.receiverId, socketId));
     newSocket = io('https://findplug.herokuapp.com',{query:{id:socketId}});
     console.log('useEffect called');
@@ -98,6 +108,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
         const convResult = [];
         const lastIndex = previousConverstion.length - 1;
         const prevConv = previousConverstion[lastIndex];
+        prevConv.isRead = isRead;
         convResult.push(prevConv);
         console.log(convResult);
         dispatch({
@@ -207,6 +218,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
     console.log(updatechatContact, '[chat contact]');
     updatechatContact.unshift(data);
 
+
     dispatch({
       type: actionTypes.CHAT_CONTACT,
       chatContactData: updatechatContact,
@@ -283,6 +295,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
             // keyExtractor={item => item._id}
             ref={ref => (FlatListRef = ref)}
             onContentSizeChange={() => FlatListRef?.scrollToEnd()}
+            initialNumToRender={100}
             renderItem={({item}) => (
               <ChatItem
                 id={item.senderId}

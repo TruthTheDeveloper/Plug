@@ -29,6 +29,7 @@ const initialState = {
     updateProfileLoading:false,
     retreiveProfileLoading:false,
     resetSearchloading:false,
+    netWork:false,
 };
 
 
@@ -119,7 +120,7 @@ const setProfileIdData = (state,action) => {
 const setProfileData = (state, action) => {
     // state.profileData.push(...action.profileData.profile)
     return updateObject(state,{
-        profileData:[...state.profileData,...action.profileData.profile],
+        profileData:[...state.profileData,...action.profileData],
     });
 };
 
@@ -284,9 +285,15 @@ const refreshHomePage = (state, action) => {
 
 const resetAllProfile = (state, action) => {
     return updateObject(state, {
-        profileData:action.profileData
-    })
-}
+        profileData:action.profileData,
+    });
+};
+
+const setNetworkError = (state, action) => {
+    return updateObject(state, {
+        netWork:action.netError,
+    });
+};
 
 
 
@@ -360,6 +367,8 @@ const reducer = (state = initialState, action) => {
         return getResetSearchLoading(state,action);
     case actionTypes.RESET_ALL_PROFILE:
         return resetAllProfile(state, action);
+    case actionTypes.NETWORK_ERROR:
+        return setNetworkError(state, action);
 
     default:
         return state;

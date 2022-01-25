@@ -101,4 +101,6 @@ export const ADD_NEW_MESSAGE = 'ADD_NEW_MESSAGE';
 
 export const RESET_ALL_PROFILE = 'RESET_ALL_PROFILE';
 
+export const NETWORK_ERROR = 'NETWORK_ERROR';
+
 

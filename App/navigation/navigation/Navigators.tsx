@@ -17,7 +17,7 @@ import {
   ChatSceenContainer,
   ProfileScreenContainer,
   SearchScreenContainer,
-  SecondScreenContainer
+  SecondScreenContainer,
 } from '../../index';
 import {ChatView} from '../../components';
 
@@ -42,15 +42,15 @@ const Search = () => {
   return <SearchScreenContainer />;
 };
 
-const SecondScreen= ({navigation}: {navigation: any}) => {
-  return <SecondScreenContainer navigate={() => navigation.navigate({ name: HOME, merge: true })} />
-}
+const SecondScreen = ({navigation}: {navigation: any}) => {
+  return <SecondScreenContainer navigate={() => navigation.navigate({ name: HOME, merge: true })} />;
+};
 
 const Tab = createBottomTabNavigator();
 
 const Container = () => {
   const RouteName = useSelector((state: any) => state.chatReducer.DefaultRoute);
-  
+
   return (
     <View style={{height: height}}>
       <NavigationContainer>
@@ -79,7 +79,7 @@ const Container = () => {
             name={SECOND_SCREEN}
             component={SecondScreen}
             options={{
-              tabBarButton: () => null
+              tabBarButton: () => null,
             }}
           />
 
