@@ -168,7 +168,7 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
             chatContactData: updatechatContact,
           });
         });
-        console.log('connected from homeScreen')
+        console.log('connected from homeScreen');
         newSocket.emit('chat', 'can we chat');
         newSocket.on('online', (users:any) => {
           for (const i in users){

@@ -111,8 +111,11 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
         const prevConv = previousConverstion[lastIndex];
         console.log(prevConv, 'last index');
         prevConv.isRead = true;
-        if (on === true){
+        if (online === true){
+          console.log(online, 'on')
           prevConv.online = true;
+        } else {
+          prevConv.online = false;
         }
         const updatechatContact = updatedContactData.filter(
           (e: {receiverId: string, senderId:string}) => e.receiverId !== prevConv.receiverId && e.receiverId !== prevConv.senderId,
