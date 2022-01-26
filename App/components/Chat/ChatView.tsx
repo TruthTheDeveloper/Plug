@@ -44,7 +44,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
     (state: any) => state.profileReducer.chatContactData,
   );
 
-  let previousConverstion = useSelector((state:any) => state.messageReducer.conversation);
+  const previousConverstion = useSelector((state:any) => state.messageReducer.conversation);
 
   const socketId = profileIdData.socketId;
   const isRead = useSelector((state:any) => state.chatReducer.isRead);
@@ -112,13 +112,17 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
         console.log(prevConv, 'last index');
         prevConv.isRead = true;
         if (online === true){
-          console.log(online, 'on')
+          console.log(online, 'on');
           prevConv.online = true;
         } else {
           prevConv.online = false;
         }
+        console.log(updatedContactData)
         const updatechatContact = updatedContactData.filter(
-          (e: {receiverId: string, senderId:string}) => e.receiverId !== prevConv.receiverId && e.receiverId !== prevConv.senderId,
+          (e: {receiverId: string, senderId:string}) => {
+            console.log('receiver ', e.receiverId, 'receiver data', prevConv.receiverId, 'sender data', prevConv.senderId);
+            e.receiverId !== prevConv.receiverId;
+          },
         );
         updatechatContact.unshift(prevConv);
         console.log(updatechatContact, 'ison---');
@@ -159,7 +163,11 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
       console.log(data);
 
       const updatechatContact = updatedContactData.filter(
-        (e: {receiverId: string, senderId:string}) => e.receiverId !== data.receiverId && e.receiverId !== data.senderId,
+        (e: {receiverId: string, senderId:string}) => {
+          console.log('bad')
+          console.log('receiver ', e.receiverId, 'receiver data', data.receiverId, 'sender data', data.senderId);
+          e.receiverId !== data.receiverId && e.receiverId !== data.senderId;
+        },
       );
       updatechatContact.unshift(data);
       dispatch({
@@ -188,7 +196,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
 
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, socketId,  user.image, user.receiverId, user.username]);
+  }, [dispatch, socketId, previousConverstion, user.image, user.receiverId, user.username]);
 
   // useEffect(() => {
   //   console.log('did comon mount');

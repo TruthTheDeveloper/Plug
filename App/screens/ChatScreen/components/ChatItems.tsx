@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import React, {FC} from 'react';
 import {
@@ -35,18 +36,12 @@ const ChatItem: FC<ChatProps> = ({
 }): JSX.Element => {
   console.log(isRead, 'chatitem')
   let newText = lastText;
-  let seen = isRead;
   if (lastText.length > 20) {
     newText = lastText.substring(0, 20) + '...';
   }
   console.log(image, 'img');
 
   const openChatHandler = (e:string) => {
-    if (isRead === false){
-      seen = false;
-    } else {
-      seen = true;
-    }
     openChat(e);
   };
   return (
@@ -66,7 +61,7 @@ const ChatItem: FC<ChatProps> = ({
         </View>
         <View style={styles.dateContainer}>
           <Text style={styles.date}>{time}</Text>
-          {isRead === false && <Text>new Message</Text>}
+          {isRead === false && <Text style={{color:'red'}}>New</Text>}
         </View>
       </View>
     </TouchableHighlight>
