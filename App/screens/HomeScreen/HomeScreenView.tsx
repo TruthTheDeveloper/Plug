@@ -75,7 +75,6 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
     // console.log(profileData, 'this data');
 
     useEffect(() => {
-      dispatch(getAllConversation())
       const unsubscribe = NetInfo.addEventListener(state => {
         console.log('Connection type', state.type);
         console.log('Is connected?', state.isConnected);

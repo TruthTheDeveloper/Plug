@@ -116,9 +116,10 @@ const ChatScreenView = () => {
         message:message,
         online:online,
         time:time,
-        isRead:isRead,
+        isRead:false,
 
       };
+
 
         PushNotification.createChannel(
           {

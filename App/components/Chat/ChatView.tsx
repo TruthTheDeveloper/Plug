@@ -44,15 +44,13 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
     (state: any) => state.profileReducer.chatContactData,
   );
 
-  const previousConverstion = useSelector((state:any) => state.messageReducer.conversation);
-  // console.log(updatedContactData);
-  // console.log(previousConverstion);
-  // console.log(updatedContactData, 'contact sata');
+  let previousConverstion = useSelector((state:any) => state.messageReducer.conversation);
 
   const socketId = profileIdData.socketId;
   const isRead = useSelector((state:any) => state.chatReducer.isRead);
+  const [on, setOn] = useState(false);
   // const updatechatContact : any = useRef()
-  console.log(isRead, 'from chatView')
+  console.log(isRead, 'from chatView');
 
   // console.log(previousConverstion, 'prev')
 
@@ -71,7 +69,6 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
       type:actionTypes.ISREAD,
       isRead:true,
     });
-   
     // dispatch(getMessage(user.receiverId, socketId));
     newSocket = io('https://findplug.herokuapp.com',{query:{id:socketId}});
     console.log('useEffect called');
@@ -94,6 +91,8 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
               type: actionTypes.ISONLINE,
               isOnline:true,
             });
+
+            setOn(true);
           }
         }
       });
@@ -103,17 +102,26 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
         receiverId: user.receiverId,
       });
 
-      if (updatedContactData.length === 0 && previousConverstion.length >= 1){
+      console.log(updatedContactData.length);
+
+
+      if (previousConverstion.length >= 1){
         console.log('was here');
-        const convResult = [];
         const lastIndex = previousConverstion.length - 1;
         const prevConv = previousConverstion[lastIndex];
-        prevConv.isRead = isRead;
-        convResult.push(prevConv);
-        console.log(convResult);
+        console.log(prevConv, 'last index');
+        prevConv.isRead = true;
+        if (on === true){
+          prevConv.online = true;
+        }
+        const updatechatContact = updatedContactData.filter(
+          (e: {receiverId: string, senderId:string}) => e.receiverId !== prevConv.receiverId && e.receiverId !== prevConv.senderId,
+        );
+        updatechatContact.unshift(prevConv);
+        console.log(updatechatContact, 'ison---');
         dispatch({
           type: actionTypes.CHAT_CONTACT,
-          chatContactData: convResult,
+          chatContactData: updatechatContact,
         });
       }
 
@@ -132,7 +140,8 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
         receiverUsername:receiverUsername,
         receiverImage:receiverImage,
         message:message,
-        online:online,
+        // when i receive a message i assume the sender is online for me to receive the message
+        online:true,
         time:time,
         isRead:isRead,
 
@@ -176,7 +185,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
 
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, socketId, updatedContactData, user.image, user.receiverId, user.username]);
+  }, [dispatch, socketId,  user.image, user.receiverId, user.username]);
 
   // useEffect(() => {
   //   console.log('did comon mount');
@@ -194,7 +203,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
   const sendMessage = (msg: any, Rid: string, Sid: string) => {
     console.log('emitted');
     console.log('view get');
-    newSocket.on('connect', newSocket.emit('send', Sid, profileIdData.username, profileIdData.profilePic, Rid, user.username, user.image, msg, new Date().toLocaleTimeString().slice(0,5), true));
+    newSocket.emit('send', Sid, profileIdData.username, profileIdData.profilePic, Rid, user.username, user.image, msg, new Date().toLocaleTimeString().slice(0,5), true);
     let data = {
       senderId: Sid,
       senderUsername:profileIdData.username,
