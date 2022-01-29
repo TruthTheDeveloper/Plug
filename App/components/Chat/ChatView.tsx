@@ -51,6 +51,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
   const [on, setOn] = useState(false);
   // const updatechatContact : any = useRef()
   console.log(isRead, 'from chatView');
+  console.log(updatedContactData, 'update contact data')
 
   // console.log(previousConverstion, 'prev')
 
@@ -85,6 +86,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
       newSocket.on('online', (users:any) => {
         console.log(users.receiverId, ' ', user.receiverId);
         for (const i in users){
+          console.log(users[i] === user.receiverId);
           if (users[i] === user.receiverId){
             console.log('online');
             dispatch({
@@ -93,6 +95,11 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
             });
 
             setOn(true);
+          }else{
+            dispatch({
+              type: actionTypes.ISONLINE,
+              isOnline:false,
+            });
           }
         }
       });
@@ -117,15 +124,13 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
         } else {
           prevConv.online = false;
         }
-        console.log(updatedContactData)
         const updatechatContact = updatedContactData.filter(
-          (e: {receiverId: string, senderId:string}) => {
-            console.log('receiver ', e.receiverId, 'receiver data', prevConv.receiverId, 'sender data', prevConv.senderId);
-            e.receiverId !== prevConv.receiverId;
-          },
+          (e: {receiverId: string, senderId:string}) =>
+            e.receiverId !== prevConv.receiverId && e.receiverId !== prevConv.senderId,
         );
         updatechatContact.unshift(prevConv);
-        console.log(updatechatContact, 'ison---');
+        console.log(updatechatContact, 'up');
+        // console.log(updatedContactData, 'ison---');
         dispatch({
           type: actionTypes.CHAT_CONTACT,
           chatContactData: updatechatContact,
@@ -163,11 +168,8 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
       console.log(data);
 
       const updatechatContact = updatedContactData.filter(
-        (e: {receiverId: string, senderId:string}) => {
-          console.log('bad')
-          console.log('receiver ', e.receiverId, 'receiver data', data.receiverId, 'sender data', data.senderId);
-          e.receiverId !== data.receiverId && e.receiverId !== data.senderId;
-        },
+        (e: {receiverId: string, senderId:string}) =>
+          e.receiverId !== data.receiverId && e.receiverId !== data.senderId,
       );
       updatechatContact.unshift(data);
       dispatch({
