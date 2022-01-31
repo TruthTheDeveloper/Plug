@@ -30,7 +30,7 @@ const ChatScreenView = () => {
 
 
   let updatedContactData = useSelector((state:any) => state.profileReducer.chatContactData);
-  console.log(updatedContactData, 'updated');
+  // console.log(updatedContactData, 'updated');
   const isRead = useSelector((state:any) => state.chatReducer.isRead);
   const receiverIdentity = useSelector((state:any) => state.chatReducer.receiverId);
   const online = useSelector((state:any) => state.chatReducer.isOnline);
@@ -48,16 +48,21 @@ const ChatScreenView = () => {
 
   const socketId = profileIdData.socketId;
 
-  console.log(isRead, 'from chatScreenView');
+  // console.log(isRead, 'from chatScreenView');
   useEffect(() => {
+    // dispatch({
+    //   type: actionTypes.ISONLINE,
+    //   isOnline:false,
+    // });
       // dispatch(getMessage(el.receiverId, el.senderId))
     // console.log(isRead, 'from chatScreenView')
     // dispatch(getMessage(user.receiverId, socketId));
     newSocket = io('https://findplug.herokuapp.com',{query:{id:socketId}});
     console.log('useEffect called');
     newSocket.on('connect', () => {
-
+      console.log('bbb');
       newSocket.on('offlineMessage', (Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any) => {
+        console.log('messssgeoffline');
         let data = {
           senderId: Sid,
           senderUsername:senderUsername,
@@ -84,15 +89,26 @@ const ChatScreenView = () => {
     newSocket.emit('chat', 'can we chat');
 
     newSocket.on('online', (users:any) => {
-        for (const i in users){
-          if (users[i] === receiverIdentity){
-            console.log('online');
-            dispatch({
-              type: actionTypes.ISONLINE,
-              isOnline:true,
-            });
-          }
+      for (const i in users){
+        // console.log(users[i], 'users---')
+        // console.log(receiverIdentity, 'receiverid');
+        if (users[i] === receiverIdentity){
+          console.log('online');
+          dispatch({
+            type: actionTypes.ISONLINE,
+            isOnline:true,
+          });
+
+          break;
+
+        } else {
+          console.log('not online')
+          dispatch({
+            type: actionTypes.ISONLINE,
+            isOnline:false,
+          });
         }
+      }
     });
 
 
@@ -162,22 +178,22 @@ const ChatScreenView = () => {
     return () => {
       newSocket.off('receive');
       newSocket.disconnect();
-      newSocket.emit('offline', receiverIdentity, socketId);
+      // newSocket.emit('offline', receiverIdentity, socketId);
     };
 
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[dispatch, socketId, updatedContactData]);
+  },[dispatch, socketId]);
 
   useEffect(() => {
 
     if (updatedContactData.length === 0){
       console.log('sksksk');
       AsyncStorage.getItem('updatedContactData').then((result) => {
-        console.log(result, 'jjdd');
+        // console.log(result, 'jjdd');
         // eslint-disable-next-line react-hooks/exhaustive-deps
         updatedContactData = result !== null ? JSON.parse(result) : null;
-        console.log(updatedContactData, 'help');
+        // console.log(updatedContactData, 'help');
 
         dispatch({
           type: actionTypes.CHAT_CONTACT,

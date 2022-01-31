@@ -19,7 +19,7 @@ interface ChatHeaderProps {
   username: string;
   active: any;
   back: () => void;
-  online:boolean;
+  online:any;
 }
 
 const ChatHeader: FC<ChatHeaderProps> = ({username, active, online, back}) => {

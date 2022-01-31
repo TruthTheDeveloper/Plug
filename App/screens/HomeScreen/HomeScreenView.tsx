@@ -49,7 +49,6 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
       (state:any) => state.profileReducer.profileIdData,
     );
 
-    const getAllConversation = useSelector((state:any) => state.messageReducer.AllConversation);
     let homeScreenRender = null;
 
 
@@ -114,7 +113,6 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
       //  };
       //  getToken();
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[dispatch, initialPageNum, profileData.length, reload]);
 
 
@@ -240,12 +238,12 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
       if (newSocket){
         newSocket.off('receive');
         newSocket.disconnect();
-        newSocket.emit('offline', receiverIdentity, socketId);
+        // newSocket.emit('offline', receiverIdentity, socketId);
       }
 
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[dispatch, socketId, updatedContactData]);
+  },[dispatch, socketId]);
 
 
   // const goBack = () => {

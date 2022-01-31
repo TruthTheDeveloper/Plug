@@ -34,6 +34,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
   const [newHeight, setHeight] = useState(height - 165);
   const online = useSelector((state:any) => state.chatReducer.isOnline);
   const dispatch = useDispatch();
+  const [on, setOn] :any = useState();
 
   // const [socketId, setSocketId] : any = useState()
   // const profileIdDa= useSelector((state:any) => state.profileReducer.profileIdData);
@@ -48,54 +49,62 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
 
   const socketId = profileIdData.socketId;
   const isRead = useSelector((state:any) => state.chatReducer.isRead);
-  const [on, setOn] = useState(false);
   // const updatechatContact : any = useRef()
-  console.log(isRead, 'from chatView');
-  console.log(updatedContactData, 'update contact data')
+  // console.log(isRead, 'from chatView');
+  // console.log(updatedContactData, 'update contact data');
 
   // console.log(previousConverstion, 'prev')
 
   useEffect(() => {
       dispatch(getMessage(user.receiverId, socketId));
 
-      const allConverastion = []
-      allConverastion.unshift({receiverId:user.receiverId, senderId:socketId})
 
-      dispatch({type:actionTypes.GET_ALL_CONVERSATION, allConversation:allConverastion})
+
+      const allConverastion = [];
+      allConverastion.unshift({receiverId:user.receiverId, senderId:socketId});
+
+      dispatch({type:actionTypes.GET_ALL_CONVERSATION, allConversation:allConverastion});
 
   },[dispatch,  socketId, user.receiverId]);
 
   useEffect(() => {
-    dispatch({
-      type:actionTypes.ISREAD,
-      isRead:true,
-    });
     // dispatch(getMessage(user.receiverId, socketId));
     newSocket = io('https://findplug.herokuapp.com',{query:{id:socketId}});
     console.log('useEffect called');
     newSocket.on('connect', () => {
 
-      dispatch({
-        type:actionTypes.ISREAD,
-        isRead:true,
-      });
+      // dispatch({
+      //   type:actionTypes.ISREAD,
+      //   isRead:true,
+      // });
+
+      console.log(user.receiverId, 'kkkksshss');
 
       console.log('you are connected from chat view');
       newSocket.emit('chat', 'can we chat');
-      newSocket.emit('isOnline', user.receiverId,socketId);
+      newSocket.on('offlineMessage', (Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any) => {
+        console.log('messssgeoffline');
+      })
       newSocket.on('online', (users:any) => {
-        console.log(users.receiverId, ' ', user.receiverId);
+        console.log(users, 'emmitted');
+        console.log(socketId, ' my id');
+        console.log(users.receiverId, ' ', user);
         for (const i in users){
-          console.log(users[i] === user.receiverId);
+          console.log(users[i], 'users---');
+          console.log(user.receiverId, 'receiverid');
           if (users[i] === user.receiverId){
             console.log('online');
+            setOn(true);
             dispatch({
               type: actionTypes.ISONLINE,
               isOnline:true,
             });
 
-            setOn(true);
-          }else{
+            break;
+
+          } else {
+            console.log('not online');
+            setOn(false);
             dispatch({
               type: actionTypes.ISONLINE,
               isOnline:false,
@@ -116,20 +125,21 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
         console.log('was here');
         const lastIndex = previousConverstion.length - 1;
         const prevConv = previousConverstion[lastIndex];
-        console.log(prevConv, 'last index');
+        // console.log(prevConv, 'last index');
         prevConv.isRead = true;
         if (online === true){
-          console.log(online, 'on');
+          // console.log(online, 'on');
           prevConv.online = true;
         } else {
           prevConv.online = false;
         }
+        console.log(prevConv, 'conv');
         const updatechatContact = updatedContactData.filter(
           (e: {receiverId: string, senderId:string}) =>
-            e.receiverId !== prevConv.receiverId && e.receiverId !== prevConv.senderId,
+            e.receiverId !== prevConv.receiverId
         );
         updatechatContact.unshift(prevConv);
-        console.log(updatechatContact, 'up');
+        // console.log(updatechatContact, 'up');
         // console.log(updatedContactData, 'ison---');
         dispatch({
           type: actionTypes.CHAT_CONTACT,
@@ -185,7 +195,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
     return () => {
       newSocket.off('receive');
       newSocket.disconnect();
-      newSocket.emit('offline', user.receiverId, socketId);
+
 
 
 
@@ -225,7 +235,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
       receiverUsername:user.username,
       receiverImage:user.image,
       message: msg,
-      online:online,
+      online:on,
       time: new Date().toLocaleTimeString().slice(0,5),
     };
 
@@ -267,6 +277,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
       'keyboardDidShow',
       keyboardDidShow,
     );
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     keyboardDidHideListener = Keyboard.addListener(
       'keyboardDidHide',
       keyboardDidHide,
@@ -309,7 +320,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
 
   return (
     <View style={styles.container}>
-      <ChatHeader username={user.username} online={online} active back={goBack} />
+      <ChatHeader username={user.username} online={on} active back={goBack} />
       <View style={[styles.chatSection, {height: newHeight}]}>
         {previousConverstion.length !== 0 ? (
           <FlatList
