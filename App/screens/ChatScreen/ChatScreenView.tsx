@@ -61,9 +61,10 @@ const ChatScreenView = () => {
     console.log('useEffect called');
     newSocket.on('connect', () => {
       console.log('bbb');
-      newSocket.on('offlineMessage', (Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any) => {
+      newSocket.on('offlineMessage', (messageId:string, Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any) => {
         console.log('messssgeoffline');
         let data = {
+          messageId:messageId,
           senderId: Sid,
           senderUsername:senderUsername,
           senderImage:senderImage,
@@ -112,7 +113,7 @@ const ChatScreenView = () => {
     });
 
 
-    newSocket.on('receive', (Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any)  => {
+    newSocket.on('receive', (messageId:string, Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any)  => {
       messageCount.current = messageCount.current + 1;
       console.log('viewscreen get get');
       dispatch({
@@ -123,6 +124,7 @@ const ChatScreenView = () => {
 
       console.log('incoming message', message, Rid, Sid,);
       const chatViewData = {
+        messageId:messageId,
         senderId: Sid,
         senderUsername:senderUsername,
         senderImage:senderImage,

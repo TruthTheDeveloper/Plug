@@ -144,8 +144,9 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
     if (socketId !== null){
       newSocket = io('https://findplug.herokuapp.com',{query:{id:socketId}});
       newSocket.on('connect', () => {
-        newSocket.on('offlineMessage', (Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any) => {
+        newSocket.on('offlineMessage', (messageId:string, Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any) => {
           let data = {
+            messageId:messageId,
             senderId: Sid,
             senderUsername:senderUsername,
             senderImage:senderImage,
@@ -186,10 +187,11 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
           isRead:false,
         });
 
-        newSocket.on('receive', (Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any) => {
+        newSocket.on('receive', (messageId:string, Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any) => {
           messageCount.current = messageCount.current + 1;
           console.log('home get');
           let data = {
+            messageId:messageId,
             senderId: Sid,
             senderUsername:senderUsername,
             senderImage:senderImage,

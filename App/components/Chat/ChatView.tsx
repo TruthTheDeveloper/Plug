@@ -20,6 +20,7 @@ import ChatInputBar from './ChatInputBar';
 import ChatItem from './ChatItem';
 import {useSelector} from 'react-redux';
 import io from 'socket.io-client';
+import uuid from 'react-native-uuid';
 
 const {height} = Dimensions.get('window');
 
@@ -82,7 +83,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
 
       console.log('you are connected from chat view');
       newSocket.emit('chat', 'can we chat');
-      newSocket.on('offlineMessage', (Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any) => {
+      newSocket.on('offlineMessage', (messageId:string, Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any) => {
         console.log('messssgeoffline');
       })
       newSocket.on('online', (users:any) => {
@@ -125,7 +126,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
         console.log('was here');
         const lastIndex = previousConverstion.length - 1;
         const prevConv = previousConverstion[lastIndex];
-        // console.log(prevConv, 'last index');
+        console.log(prevConv, 'last index');
         prevConv.isRead = true;
         if (online === true){
           // console.log(online, 'on');
@@ -134,13 +135,13 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
           prevConv.online = false;
         }
         console.log(prevConv, 'conv');
+        console.log(updatedContactData, 'ison---');
         const updatechatContact = updatedContactData.filter(
-          (e: {receiverId: string, senderId:string}) =>
-            e.receiverId !== prevConv.receiverId
+          (e: { messageId: any; }) =>
+            e.messageId !== prevConv.messageId
         );
         updatechatContact.unshift(prevConv);
         // console.log(updatechatContact, 'up');
-        // console.log(updatedContactData, 'ison---');
         dispatch({
           type: actionTypes.CHAT_CONTACT,
           chatContactData: updatechatContact,
@@ -150,11 +151,12 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
       // console.log(newSocket)
     });
 
-    newSocket.on('receive', (Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any) => {
+    newSocket.on('receive', (messageId:string, Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any) => {
       console.log('incoming message', message, Rid, Sid);
       dispatch(getMessage(user.receiverId, socketId));
       console.log('view get get');
       let data = {
+        messageId:messageId,
         senderId: Sid,
         senderUsername:senderUsername,
         senderImage:senderImage,
@@ -224,10 +226,18 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
 
 
   const sendMessage = (msg: any, Rid: string, Sid: string) => {
+    console.log(Sid, 'Sid');
+    const messageId = uuid.v4();
+    console.log(messageId, 'messageId');
     console.log('emitted');
     console.log('view get');
-    newSocket.emit('send', Sid, profileIdData.username, profileIdData.profilePic, Rid, user.username, user.image, msg, new Date().toLocaleTimeString().slice(0,5), true);
+    newSocket.on('connect', () => {
+      newSocket.emit('send', messageId, Sid, profileIdData.username, profileIdData.profilePic, Rid, user.username, user.image, msg, new Date().toLocaleTimeString().slice(0,5), true);
+    })
+
+    newSocket.emit('send', messageId, Sid, profileIdData.username, profileIdData.profilePic, Rid, user.username, user.image, msg, new Date().toLocaleTimeString().slice(0,5), true);
     let data = {
+      messageId:messageId,
       senderId: Sid,
       senderUsername:profileIdData.username,
       senderImage:profileIdData.profilePic,
