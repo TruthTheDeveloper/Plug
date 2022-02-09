@@ -83,36 +83,6 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
 
       console.log('you are connected from chat view');
       newSocket.emit('chat', 'can we chat');
-      newSocket.on('offlineMessage', (messageId:string, Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any) => {
-        console.log('messssgeoffline');
-      })
-      newSocket.on('online', (users:any) => {
-        console.log(users, 'emmitted');
-        console.log(socketId, ' my id');
-        console.log(users.receiverId, ' ', user);
-        for (const i in users){
-          console.log(users[i], 'users---');
-          console.log(user.receiverId, 'receiverid');
-          if (users[i] === user.receiverId){
-            console.log('online');
-            setOn(true);
-            dispatch({
-              type: actionTypes.ISONLINE,
-              isOnline:true,
-            });
-
-            break;
-
-          } else {
-            console.log('not online');
-            setOn(false);
-            dispatch({
-              type: actionTypes.ISONLINE,
-              isOnline:false,
-            });
-          }
-        }
-      });
 
       dispatch({
         type: actionTypes.RECEIVERID,
@@ -150,6 +120,38 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
 
       // console.log(newSocket)
     });
+
+    newSocket.on('online', (users:any) => {
+      console.log(users, 'emmitted');
+      console.log(socketId, ' my id');
+      console.log(users.receiverId, ' ', user);
+      for (const i in users){
+        console.log(users[i], 'users---');
+        console.log(user.receiverId, 'receiverid');
+        if (users[i] === user.receiverId){
+          console.log('online');
+          setOn(true);
+          dispatch({
+            type: actionTypes.ISONLINE,
+            isOnline:true,
+          });
+
+          break;
+
+        } else {
+          console.log('not online');
+          setOn(false);
+          dispatch({
+            type: actionTypes.ISONLINE,
+            isOnline:false,
+          });
+        }
+      }
+    });
+
+    newSocket.on('offlineMessage', (messageId:string, Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any) => {
+      console.log('messssgeoffline');
+    })
 
     newSocket.on('receive', (messageId:string, Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any) => {
       console.log('incoming message', message, Rid, Sid);
@@ -200,7 +202,6 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
 
 
 
-
       dispatch({
         type: actionTypes.RECEIVERID,
         receiverId: user.receiverId,
@@ -231,11 +232,9 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
     console.log(messageId, 'messageId');
     console.log('emitted');
     console.log('view get');
-    newSocket.on('connect', () => {
-      newSocket.emit('send', messageId, Sid, profileIdData.username, profileIdData.profilePic, Rid, user.username, user.image, msg, new Date().toLocaleTimeString().slice(0,5), true);
-    })
-
     newSocket.emit('send', messageId, Sid, profileIdData.username, profileIdData.profilePic, Rid, user.username, user.image, msg, new Date().toLocaleTimeString().slice(0,5), true);
+
+    // newSocket.emit('send', messageId, Sid, profileIdData.username, profileIdData.profilePic, Rid, user.username, user.image, msg, new Date().toLocaleTimeString().slice(0,5), true);
     let data = {
       messageId:messageId,
       senderId: Sid,
@@ -338,7 +337,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
             // keyExtractor={item => item._id}
             ref={ref => (FlatListRef = ref)}
             onContentSizeChange={() => FlatListRef?.scrollToEnd()}
-            initialNumToRender={100}
+            initialNumToRender={1000}
             renderItem={({item}) => (
               <ChatItem
                 id={item.senderId}

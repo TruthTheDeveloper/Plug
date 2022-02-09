@@ -144,29 +144,6 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
     if (socketId !== null){
       newSocket = io('https://findplug.herokuapp.com',{query:{id:socketId}});
       newSocket.on('connect', () => {
-        newSocket.on('offlineMessage', (messageId:string, Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any) => {
-          let data = {
-            messageId:messageId,
-            senderId: Sid,
-            senderUsername:senderUsername,
-            senderImage:senderImage,
-            receiverId:Rid,
-            receiverUsername:receiverUsername,
-            receiverImage:receiverImage,
-            message:message,
-            time:time,
-            online:online,
-            isRead:isRead,
-          };
-
-          const updatechatContact = updatedContactData.filter(
-            (e: {receiverId: string}) => e.receiverId !== data.receiverId && e.receiverId !== data.senderId);
-          updatechatContact.unshift(data);
-          dispatch({
-            type: actionTypes.CHAT_CONTACT,
-            chatContactData: updatechatContact,
-          });
-        });
         console.log('connected from homeScreen');
         newSocket.emit('chat', 'can we chat');
         newSocket.on('online', (users:any) => {
@@ -186,51 +163,75 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
           type:actionTypes.ISREAD,
           isRead:false,
         });
+      });
 
-        newSocket.on('receive', (messageId:string, Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any) => {
-          messageCount.current = messageCount.current + 1;
-          console.log('home get');
-          let data = {
-            messageId:messageId,
-            senderId: Sid,
-            senderUsername:senderUsername,
-            senderImage:senderImage,
-            receiverId:Rid,
-            receiverUsername:receiverUsername,
-            receiverImage:receiverImage,
-            message:message,
-            time:time,
-            online:online,
-            isRead:isRead,
-          };
+      newSocket.on('receive', (messageId:string, Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any) => {
+        messageCount.current = messageCount.current + 1;
+        console.log('home get');
+        let data = {
+          messageId:messageId,
+          senderId: Sid,
+          senderUsername:senderUsername,
+          senderImage:senderImage,
+          receiverId:Rid,
+          receiverUsername:receiverUsername,
+          receiverImage:receiverImage,
+          message:message,
+          time:time,
+          online:online,
+          isRead:isRead,
+        };
 
-          PushNotification.createChannel(
-            {
-              channelId: 'channel-id', // (required)
-              channelName: 'My channel', // (required)
-              channelDescription: 'A channel to categorise your notifications', // (optional) default: undefined.
-              playSound: false, // (optional) default: true
-              soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
-              importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
-              vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
-            },
-            (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
-          );
+        PushNotification.createChannel(
+          {
+            channelId: 'channel-id', // (required)
+            channelName: 'My channel', // (required)
+            channelDescription: 'A channel to categorise your notifications', // (optional) default: undefined.
+            playSound: false, // (optional) default: true
+            soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
+            importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
+            vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
+          },
+          (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
+        );
 
-        PushNotification.localNotification({
-          channelId:'channel-id',
-          title: `New Message from ${data.receiverUsername === profileIdData.username ? data.senderUsername : data.receiverUsername}`, // (optional)
-          message: data.message,
-          picture: data.receiverUsername === profileIdData.username ? data.senderImage : data.receiverImage,
+      PushNotification.localNotification({
+        channelId:'channel-id',
+        title: `New Message from ${data.receiverUsername === profileIdData.username ? data.senderUsername : data.receiverUsername}`, // (optional)
+        message: data.message,
+        picture: data.receiverUsername === profileIdData.username ? data.senderImage : data.receiverImage,
+      });
+
+        const updatechatContact = updatedContactData.filter(
+          (e: {receiverId: string}) => e.receiverId !== data.receiverId && e.receiverId !== data.senderId);
+        updatechatContact.unshift(data);
+        dispatch({
+          type: actionTypes.CHAT_CONTACT,
+          chatContactData: updatechatContact,
         });
+      });
 
-          const updatechatContact = updatedContactData.filter(
-            (e: {receiverId: string}) => e.receiverId !== data.receiverId && e.receiverId !== data.senderId);
-          updatechatContact.unshift(data);
-          dispatch({
-            type: actionTypes.CHAT_CONTACT,
-            chatContactData: updatechatContact,
-          });
+      newSocket.on('offlineMessage', (messageId:string, Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any) => {
+        let data = {
+          messageId:messageId,
+          senderId: Sid,
+          senderUsername:senderUsername,
+          senderImage:senderImage,
+          receiverId:Rid,
+          receiverUsername:receiverUsername,
+          receiverImage:receiverImage,
+          message:message,
+          time:time,
+          online:online,
+          isRead:isRead,
+        };
+
+        const updatechatContact = updatedContactData.filter(
+          (e: {receiverId: string}) => e.receiverId !== data.receiverId && e.receiverId !== data.senderId);
+        updatechatContact.unshift(data);
+        dispatch({
+          type: actionTypes.CHAT_CONTACT,
+          chatContactData: updatechatContact,
         });
       });
 
