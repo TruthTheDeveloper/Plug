@@ -30,7 +30,7 @@ const ChatScreenView = () => {
 
 
   let updatedContactData = useSelector((state:any) => state.profileReducer.chatContactData);
-  // console.log(updatedContactData, 'updated');
+  console.log(updatedContactData, 'updated');
   const isRead = useSelector((state:any) => state.chatReducer.isRead);
   const receiverIdentity = useSelector((state:any) => state.chatReducer.receiverId);
   const online = useSelector((state:any) => state.chatReducer.isOnline);
@@ -60,39 +60,12 @@ const ChatScreenView = () => {
     newSocket = io('https://findplug.herokuapp.com',{query:{id:socketId}});
     console.log('useEffect called');
     newSocket.on('connect', () => {
-      console.log('bbb');
-      newSocket.on('offlineMessage', (messageId:string, Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any) => {
-        console.log('messssgeoffline');
-        let data = {
-          messageId:messageId,
-          senderId: Sid,
-          senderUsername:senderUsername,
-          senderImage:senderImage,
-          receiverId:Rid,
-          receiverUsername:receiverUsername,
-          receiverImage:receiverImage,
-          message:message,
-          time:time,
-          online:online,
-          isRead:isRead,
-        };
-
-        const updatechatContact = updatedContactData.filter(
-          (e: {receiverId: string}) => e.receiverId !== data.receiverId && e.receiverId !== data.senderId);
-        updatechatContact.unshift(data);
-        dispatch({
-          type: actionTypes.CHAT_CONTACT,
-          chatContactData: updatechatContact,
-        });
-      });
 
     console.log('connected from chatscreenview');
     newSocket.emit('chat', 'can we chat');
 
     newSocket.on('online', (users:any) => {
       for (const i in users){
-        // console.log(users[i], 'users---')
-        // console.log(receiverIdentity, 'receiverid');
         if (users[i] === receiverIdentity){
           console.log('online');
           dispatch({
@@ -113,7 +86,7 @@ const ChatScreenView = () => {
     });
 
 
-    newSocket.on('receive', (messageId:string, Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any)  => {
+    newSocket.on('receiveMessage', (messageId:string, Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any)  => {
       messageCount.current = messageCount.current + 1;
       console.log('viewscreen get get');
       dispatch({
@@ -189,28 +162,30 @@ const ChatScreenView = () => {
 
   useEffect(() => {
 
-    if (updatedContactData.length === 0){
+    if (Array.isArray(updatedContactData)){
       console.log('sksksk');
-      AsyncStorage.getItem('updatedContactData').then((result) => {
-        // console.log(result, 'jjdd');
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        updatedContactData = result !== null ? JSON.parse(result) : null;
-        // console.log(updatedContactData, 'help');
-
-        dispatch({
-          type: actionTypes.CHAT_CONTACT,
-          chatContactData:updatedContactData,
+      if (updatedContactData.length === 0){
+        AsyncStorage.getItem('updatedContactData').then((result) => {
+          // console.log(result, 'jjdd');
+          // eslint-disable-next-line react-hooks/exhaustive-deps
+          updatedContactData = result !== null ? JSON.parse(result) : null;
+          // console.log(updatedContactData, 'help');
+          dispatch({
+            type: actionTypes.CHAT_CONTACT,
+            chatContactData:updatedContactData,
+          });
         });
-      });
-    } else if (updatedContactData.length >= 1){
-      AsyncStorage.setItem('updatedContactData',JSON.stringify(updatedContactData));
+      }
+    } else if (updatedContactData !== null){
+      if (updatedContactData >= 1){
+        AsyncStorage.setItem('updatedContactData',JSON.stringify(updatedContactData));
+      }
     }
   },[]);
 
   return (
     <View style={styles.container}>
       <Header label="Chats" />
-      {updatedContactData.length >= 1 ?
       <FlatList
       data={updatedContactData}
       keyExtractor={user => user.receiverId}
@@ -226,7 +201,7 @@ const ChatScreenView = () => {
           openChat={() => openChat(item.receiverUsername === profileIdData.username ? item.senderUsername : item.receiverUsername, item.receiverId === profileIdData.socketId ? item.senderId : item.receiverId , item.receiverUsername === profileIdData.username ? item.senderImage : item.receiverImage)}
         />
       )}
-    /> : null}
+    />
     </View>
   );
 };

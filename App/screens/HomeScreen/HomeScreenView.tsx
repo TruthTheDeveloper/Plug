@@ -52,10 +52,6 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
     let homeScreenRender = null;
 
 
-
-
-
-
     const reloadHandler = () => {
       console.log('press');
       setReload(prev => !prev);
@@ -141,33 +137,34 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
     (state:any) => state.profileReducer.chatContactData,
   );
   useEffect(() => {
+    // if socketid is not empty create a new connection to the socket id
+    console.log('socket is not null')
     if (socketId !== null){
       newSocket = io('https://findplug.herokuapp.com',{query:{id:socketId}});
       newSocket.on('connect', () => {
         console.log('connected from homeScreen');
-        newSocket.emit('chat', 'can we chat');
-        newSocket.on('online', (users:any) => {
-          for (const i in users){
-            if (users[i] === receiverIdentity){
-              console.log('online');
-              dispatch({
-                type: actionTypes.ISONLINE,
-                isOnline:true,
-              });
-            }
-          }
-        });
+        // newSocket.on('online', (users:any) => {
+        //   for (const i in users){
+        //     if (users[i] === receiverIdentity){
+        //       console.log('online');
+        //       dispatch({
+        //         type: actionTypes.ISONLINE,
+        //         isOnline:true,
+        //       });
+        //     }
+        //   }
+        // });
 
 
-        dispatch({
-          type:actionTypes.ISREAD,
-          isRead:false,
-        });
+        // dispatch({
+        //   type:actionTypes.ISREAD,
+        //   isRead:false,
+        // });
       });
 
-      newSocket.on('receive', (messageId:string, Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any) => {
+      newSocket.on('receiveMessage', (messageId:string, Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any) => {
         messageCount.current = messageCount.current + 1;
-        console.log('home get');
+        console.log('am receivin the message')
         let data = {
           messageId:messageId,
           senderId: Sid,

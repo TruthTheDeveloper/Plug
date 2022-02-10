@@ -8,6 +8,7 @@ import {
   BackHandler,
   Keyboard,
   EmitterSubscription,
+  Text,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
 import {launchImageLibrary} from 'react-native-image-picker';
@@ -21,6 +22,7 @@ import ChatItem from './ChatItem';
 import {useSelector} from 'react-redux';
 import io from 'socket.io-client';
 import uuid from 'react-native-uuid';
+import PushNotification, {Importance} from 'react-native-push-notification';
 
 const {height} = Dimensions.get('window');
 
@@ -59,25 +61,12 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
   useEffect(() => {
       dispatch(getMessage(user.receiverId, socketId));
 
-
-
-      const allConverastion = [];
-      allConverastion.unshift({receiverId:user.receiverId, senderId:socketId});
-
-      dispatch({type:actionTypes.GET_ALL_CONVERSATION, allConversation:allConverastion});
-
   },[dispatch,  socketId, user.receiverId]);
 
   useEffect(() => {
-    // dispatch(getMessage(user.receiverId, socketId));
     newSocket = io('https://findplug.herokuapp.com',{query:{id:socketId}});
     console.log('useEffect called');
     newSocket.on('connect', () => {
-
-      // dispatch({
-      //   type:actionTypes.ISREAD,
-      //   isRead:true,
-      // });
 
       console.log(user.receiverId, 'kkkksshss');
 
@@ -149,11 +138,11 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
       }
     });
 
-    newSocket.on('offlineMessage', (messageId:string, Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any) => {
-      console.log('messssgeoffline');
-    })
+    // newSocket.on('offlineMessage', (messageId:string, Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any) => {
+    //   console.log('messssgeoffline');
+    // })
 
-    newSocket.on('receive', (messageId:string, Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any) => {
+    newSocket.on('receiveMessage', (messageId:string, Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any) => {
       console.log('incoming message', message, Rid, Sid);
       dispatch(getMessage(user.receiverId, socketId));
       console.log('view get get');
@@ -180,6 +169,28 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
       // setChats((prev: any) => [...prev, data]);
 
       console.log(data);
+
+      if (Rid !== user.receiverId){
+        PushNotification.createChannel(
+          {
+            channelId: 'channel-id', // (required)
+            channelName: 'My channel', // (required)
+            channelDescription: 'A channel to categorise your notifications', // (optional) default: undefined.
+            playSound: false, // (optional) default: true
+            soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
+            importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
+            vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
+          },
+          (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
+        );
+
+      PushNotification.localNotification({
+        channelId:'channel-id',
+        title: `New Message from ${data.receiverUsername === profileIdData.username ? data.senderUsername : data.receiverUsername}`, // (optional)
+        message: data.message,
+        picture: data.receiverUsername === profileIdData.username ? data.senderImage : data.receiverImage,
+      });
+      }
 
       const updatechatContact = updatedContactData.filter(
         (e: {receiverId: string, senderId:string}) =>
@@ -231,8 +242,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
     const messageId = uuid.v4();
     console.log(messageId, 'messageId');
     console.log('emitted');
-    console.log('view get');
-    newSocket.emit('send', messageId, Sid, profileIdData.username, profileIdData.profilePic, Rid, user.username, user.image, msg, new Date().toLocaleTimeString().slice(0,5), true);
+    newSocket.emit('sendMessage', messageId, Sid, profileIdData.username, profileIdData.profilePic, Rid, user.username, user.image, msg, new Date().toLocaleTimeString().slice(0,5), true);
 
     // newSocket.emit('send', messageId, Sid, profileIdData.username, profileIdData.profilePic, Rid, user.username, user.image, msg, new Date().toLocaleTimeString().slice(0,5), true);
     let data = {
@@ -348,7 +358,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
               />
             )}
           />
-        ) : null}
+        ) : <Text>Loading....</Text>}
       </View>
       <ChatInputBar
         text={text}

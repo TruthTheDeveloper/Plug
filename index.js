@@ -22,6 +22,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Provider} from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import PushNotification from 'react-native-push-notification';
+
+import { NetworkProvider } from 'react-native-offline';
+
 // import PushNotificationIOS from '@react-native-community/push-notification-ios';
 // import {store} from './index';
 // import { persistor } from './index';
@@ -79,7 +82,7 @@ PushNotification.configure({
     // notification.finish(PushNotificationIOS.FetchResult.NoData);
   },
 
-  requestPermissions: Platform.OS === 'ios'
+  requestPermissions: Platform.OS === 'ios',
 });
 
 
@@ -90,7 +93,9 @@ const appUseRedux = () => {
   return (
     <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-    <App />
+    <NetworkProvider>
+      <App />
+    </NetworkProvider>
     </PersistGate>
   </Provider>
   );
