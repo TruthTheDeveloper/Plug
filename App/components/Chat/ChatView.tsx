@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, {useState, FC, useEffect} from 'react';
+import React, {useState, FC, useEffect, useCallback} from 'react';
 import {
   View,
   StyleSheet,
@@ -24,6 +24,7 @@ import io from 'socket.io-client';
 import uuid from 'react-native-uuid';
 import PushNotification, {Importance} from 'react-native-push-notification';
 import { useIsConnected } from 'react-native-offline';
+import { string } from 'prop-types';
 
 const {height} = Dimensions.get('window');
 
@@ -50,12 +51,14 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
     (state: any) => state.profileReducer.chatContactData,
   );
 
-  console.log(updatedContactData, 'updated')
+  // console.log(updatedContactData, 'updated')
 
   const previousConverstion = useSelector((state:any) => state.messageReducer.conversation);
 
   const socketId = profileIdData.socketId;
   const isRead = useSelector((state:any) => state.chatReducer.isRead);
+
+  const offlineMessage = []
   // const updatechatContact : any = useRef()
   // console.log(isRead, 'from chatView');
   // console.log(updatedContactData, 'update contact data');
@@ -82,14 +85,14 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
         receiverId: user.receiverId,
       });
 
-      console.log(updatedContactData.length);
+      // console.log(updatedContactData.length);
 
 
       if (previousConverstion.length >= 1){
-        console.log('was here');
+        // console.log('was here');
         const lastIndex = previousConverstion.length - 1;
         const prevConv = previousConverstion[lastIndex];
-        console.log(prevConv, 'last index');
+        // console.log(prevConv, 'last index');
         prevConv.isRead = true;
         if (online === true){
           // console.log(online, 'on');
@@ -97,12 +100,14 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
         } else {
           prevConv.online = false;
         }
-        console.log(prevConv, 'conv');
-        console.log(updatedContactData, 'ison---');
+        // console.log(prevConv, 'conv');
+        // console.log(updatedContactData, 'ison---');
         const updatechatContact = updatedContactData.filter(
-          (e: { messageId: any; }) =>
-            e.messageId !== prevConv.messageId
-        );
+          (e: { messageId: any; }) =>{
+            e.messageId !== prevConv.messageId;
+
+            console.log();
+          });
         updatechatContact.unshift(prevConv);
         // console.log(updatechatContact, 'up');
         dispatch({
@@ -115,14 +120,14 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
     });
 
     newSocket.on('online', (users:any) => {
-      console.log(users, 'emmitted');
-      console.log(socketId, ' my id');
-      console.log(users.receiverId, ' ', user);
+      // console.log(users, 'emmitted');
+      // console.log(socketId, ' my id');
+      // console.log(users.receiverId, ' ', user);
       for (const i in users){
-        console.log(users[i], 'users---');
-        console.log(user.receiverId, 'receiverid');
+        // console.log(users[i], 'users---');
+        // console.log(user.receiverId, 'receiverid');
         if (users[i] === user.receiverId){
-          console.log('online');
+          // console.log('online');
           setOn(true);
           dispatch({
             type: actionTypes.ISONLINE,
@@ -132,7 +137,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
           break;
 
         } else {
-          console.log('not online');
+          // console.log('not online');
           setOn(false);
           dispatch({
             type: actionTypes.ISONLINE,
@@ -147,7 +152,8 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
     // })
 
     newSocket.on('receiveMessage', (messageId:string, Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any) => {
-      console.log('incoming message', message, Rid, Sid);
+      // console.log('incoming message', message, Rid, Sid);
+      updatedContactData.shift()
       dispatch(getMessage(user.receiverId, socketId));
       console.log('view get get');
       let data = {
@@ -174,7 +180,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
 
       console.log(data);
 
-      if (Rid !== user.receiverId){
+      if (Rid === user.receiverId){
         PushNotification.createChannel(
           {
             channelId: 'channel-id', // (required)
@@ -241,17 +247,23 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
 
 
 
+
+
+
   const sendMessage = (msg: any, Rid: string, Sid: string) => {
     console.log(isConnected, 'isConnected')
     // console.log(Sid, 'Sid');
     const messageId = uuid.v4();
+    updatedContactData.shift()
     // console.log(messageId, 'messageId');
     console.log('emitted');
-    if (isConnected){
-      newSocket.emit('sendMessage', messageId, Sid, profileIdData.username, profileIdData.profilePic, Rid, user.username, user.image, msg, new Date().toLocaleTimeString().slice(0,5), true);
-    } else {
-      console.log('you are not connected');
-    }
+    // if (isConnected){
+      console.log('your now connected')
+      newSocket.emit('sendMessage', messageId, Sid, profileIdData.username, profileIdData.profilePic, Rid, user.username, user.image, msg, new Date().toLocaleTimeString().slice(0,5));
+    // } else {
+      // console.log('not connected')
+      // offlineMessage.push({messageId, Sid, username:profileIdData.username, userPic:profileIdData.profilePic, Rid:Rid, ReciverUsername:user.username, userImage:user.image, msg:msg, date:new Date().toLocaleTimeString().slice(0,5)});
+    
 
     // newSocket.emit('send', messageId, Sid, profileIdData.username, profileIdData.profilePic, Rid, user.username, user.image, msg, new Date().toLocaleTimeString().slice(0,5), true);
     let data = {
@@ -337,12 +349,13 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
     });
   };
 
-  const submitMessageHandler = (msg: any) => {
+  const submitMessageHandler = useCallback((msg: any) => {
     // console.log(msg, user.receiverId, 'reci');
-    console.log(socketId, msg, user.receiverId);
+    // console.log(socketId, msg, user.receiverId);
+    console.log('we ur')
     sendMessage(msg, user.receiverId, socketId);
     setText('');
-  };
+  },[isConnected]);
 
   let FlatListRef: FlatList<any> | null = null;
 

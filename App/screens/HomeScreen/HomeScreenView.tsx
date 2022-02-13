@@ -223,13 +223,13 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
           isRead:isRead,
         };
 
-        const updatechatContact = updatedContactData.filter(
-          (e: {receiverId: string}) => e.receiverId !== data.receiverId && e.receiverId !== data.senderId);
-        updatechatContact.unshift(data);
-        dispatch({
-          type: actionTypes.CHAT_CONTACT,
-          chatContactData: updatechatContact,
-        });
+        // const updatechatContact = updatedContactData.filter(
+        //   (e: {receiverId: string}) => e.receiverId !== data.receiverId && e.receiverId !== data.senderId);
+        // updatechatContact.unshift(data);
+        // dispatch({
+        //   type: actionTypes.CHAT_CONTACT,
+        //   chatContactData: updatechatContact,
+        // });
       });
 
     }
