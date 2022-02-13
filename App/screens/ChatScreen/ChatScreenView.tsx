@@ -170,10 +170,12 @@ const ChatScreenView = () => {
           // eslint-disable-next-line react-hooks/exhaustive-deps
           updatedContactData = result !== null ? JSON.parse(result) : null;
           // console.log(updatedContactData, 'help');
-          dispatch({
-            type: actionTypes.CHAT_CONTACT,
-            chatContactData:updatedContactData,
-          });
+          if (updatedContactData !== null){
+            dispatch({
+              type: actionTypes.CHAT_CONTACT,
+              chatContactData:updatedContactData,
+            });
+          }
         });
       }
     } else if (updatedContactData !== null){

@@ -23,6 +23,7 @@ import {useSelector} from 'react-redux';
 import io from 'socket.io-client';
 import uuid from 'react-native-uuid';
 import PushNotification, {Importance} from 'react-native-push-notification';
+import { useIsConnected } from 'react-native-offline';
 
 const {height} = Dimensions.get('window');
 
@@ -34,6 +35,7 @@ interface ChatViewProps {
 let newSocket : any;
 // let updatechatContact :any;
 const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
+  const isConnected = useIsConnected();
   const [newHeight, setHeight] = useState(height - 165);
   const online = useSelector((state:any) => state.chatReducer.isOnline);
   const dispatch = useDispatch();
@@ -47,6 +49,8 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
   const updatedContactData = useSelector(
     (state: any) => state.profileReducer.chatContactData,
   );
+
+  console.log(updatedContactData, 'updated')
 
   const previousConverstion = useSelector((state:any) => state.messageReducer.conversation);
 
@@ -194,7 +198,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
 
       const updatechatContact = updatedContactData.filter(
         (e: {receiverId: string, senderId:string}) =>
-          e.receiverId !== data.receiverId && e.receiverId !== data.senderId,
+          e.senderId !== data.senderId
       );
       updatechatContact.unshift(data);
       dispatch({
@@ -238,11 +242,16 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
 
 
   const sendMessage = (msg: any, Rid: string, Sid: string) => {
-    console.log(Sid, 'Sid');
+    console.log(isConnected, 'isConnected')
+    // console.log(Sid, 'Sid');
     const messageId = uuid.v4();
-    console.log(messageId, 'messageId');
+    // console.log(messageId, 'messageId');
     console.log('emitted');
-    newSocket.emit('sendMessage', messageId, Sid, profileIdData.username, profileIdData.profilePic, Rid, user.username, user.image, msg, new Date().toLocaleTimeString().slice(0,5), true);
+    if (isConnected){
+      newSocket.emit('sendMessage', messageId, Sid, profileIdData.username, profileIdData.profilePic, Rid, user.username, user.image, msg, new Date().toLocaleTimeString().slice(0,5), true);
+    } else {
+      console.log('you are not connected');
+    }
 
     // newSocket.emit('send', messageId, Sid, profileIdData.username, profileIdData.profilePic, Rid, user.username, user.image, msg, new Date().toLocaleTimeString().slice(0,5), true);
     let data = {
@@ -265,7 +274,7 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
     // setChats((prev: any) => [...prev, data]);
 
     const updatechatContact = updatedContactData.filter(
-      (e: {receiverId: string}) => e.receiverId !== data.receiverId && e.receiverId !== data.senderId);
+      (e: {receiverId: string}) => e.receiverId !== data.receiverId);
     console.log(updatechatContact, '[chat contact]');
     updatechatContact.unshift(data);
 
