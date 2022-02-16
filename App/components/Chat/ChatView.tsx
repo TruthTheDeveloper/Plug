@@ -153,6 +153,9 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
 
     newSocket.on('receiveMessage', (messageId:string, Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any) => {
       // console.log('incoming message', message, Rid, Sid);
+      if (Sid !== updatedContactData[0].senderId){
+        updatedContactData.shift();
+      }
       updatedContactData.shift()
       dispatch(getMessage(user.receiverId, socketId));
       console.log('view get get');
@@ -251,10 +254,14 @@ const ChatView: FC<ChatViewProps> = ({user}): JSX.Element => {
 
 
   const sendMessage = (msg: any, Rid: string, Sid: string) => {
-    console.log(isConnected, 'isConnected')
+    console.log(isConnected, 'isConnected');
     // console.log(Sid, 'Sid');
+
     const messageId = uuid.v4();
-    updatedContactData.shift()
+
+    if (Rid !== updatedContactData[0].receiverId){
+      updatedContactData.shift();
+    }
     // console.log(messageId, 'messageId');
     console.log('emitted');
     // if (isConnected){
