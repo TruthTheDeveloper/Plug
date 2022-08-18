@@ -1,8 +1,12 @@
 /* eslint-disable prettier/prettier */
 import React, {useEffect, useState} from 'react';
 import {View} from 'react-native';
+
+//component
 import AuthScreenContainer from './welcomeScreen/index';
 import SignUpScreensContainer from './SignupScreens/index';
+
+//Third party libaries
 import {useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Navigator from '../navigation/navigation/Navigators';
@@ -10,10 +14,10 @@ import Navigator from '../navigation/navigation/Navigators';
 
 
 const MainScreen = () => {
-  const [auth, setAuth]:any = useState();
+  // local state
+  const [auth, setAuth] = useState<string | null>();
 
-
-  const authToken = useSelector((state:any)=> state.authReducer.token);
+  //redux state
   const success = useSelector((state:any)=> state.profileReducer.profileId);
 
   let RenderScreen = null;
@@ -22,17 +26,21 @@ const MainScreen = () => {
     AsyncStorage.getItem('token').then((result) => {
       setAuth(result);
     });
-  },[auth, authToken]);
+  },[auth]);
 
-  console.log(authToken);
+  console.log(auth, ' token');
 
 
-
-  if (authToken !== null && success === null){
+  // if user token  exist and user has not added profile
+  if (auth !== null && success === null){
     RenderScreen = <SignUpScreensContainer/>;
-  } else if (authToken === null && success === null ) {
+
+    // if user token does not exist and user has not added a profile
+  } else if (auth === null && success === null ) {
     RenderScreen = <AuthScreenContainer/>;
-  } else if (authToken !== null && success !== null){
+
+    // if user token exist and user has a added a profile
+  } else if (auth !== null && success !== null){
     RenderScreen = <Navigator/>;
   }
 

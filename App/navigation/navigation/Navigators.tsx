@@ -1,6 +1,8 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
 import {View, Dimensions} from 'react-native';
+
+//Navigator libaries
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
@@ -19,6 +21,7 @@ import {
   SearchScreenContainer,
   SecondScreenContainer,
 } from '../../index';
+
 import {ChatView} from '../../components';
 
 //ROUTES

@@ -3,73 +3,56 @@
 /* eslint-disable prettier/prettier */
 import React, {useState, useEffect, FC, useRef} from 'react';
 import {View, FlatList} from 'react-native';
+
+//third party libary
 import NetInfo from '@react-native-community/netinfo';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import PushNotification, {Importance} from 'react-native-push-notification';
+
+// Utitlity Components
+import {Header, Loader, ScrollLoader, ErrorScreen} from '../../components/index';
+
+// redux
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../redux/actions/index';
 import * as actionTypes from '../../redux/actions/actionTypes';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ErrorScreen } from '../../components/index';
-import PushNotification, {Importance} from 'react-native-push-notification';
 
-//Components
-import {Header, Loader, ScrollLoader} from '../../components/index';
-
+// component
 import ProfileItem from './components/ProfileItem';
 import io from 'socket.io-client';
 
-// import Profile from './components/Profile';
-// import DetailsDiv from './components/DetailsDiv';
 
-//Imported Images
+// helpers
+import { backendAdress } from '../../utils/socket/backendAdress';
 
 interface homeProps {
   navigate: any
 }
 
-
-
 let newSocket : any;
 const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
 
+    // set dispatch
+    const dispatch = useDispatch();
+
+    // Local state
     const [pageNum, setPageNum] = useState(2);
     const [reload, setReload] = useState(false);
-    const dispatch = useDispatch();
     const [initialPageNum] = useState(1);
-    // const [socketId, setSocketId] = useState()
+    const [connected, setConnected] = useState<boolean | null>(true);
+
+    // Global state
     const profileData = useSelector((state:any) => state.profileReducer.profileData);
     const isLoading = useSelector((state:any) => state.profileReducer.allProfileLoading);
     const messageCount = useRef(0);
     const isRead = useSelector((state:any) => state.chatReducer.isRead);
-
-    const receiverIdentity = useSelector((state:any) => state.chatReducer.receiverId);
     const online = useSelector((state:any) => state.chatReducer.isOnline);
-    // const networkError = useSelector((state:any) => state.profileReducer.network);
-    const [connected, setConnected] : any = useState(true);
     const profileIdData = useSelector(
       (state:any) => state.profileReducer.profileIdData,
     );
 
-    let homeScreenRender = null;
-
-
-    const reloadHandler = () => {
-      console.log('press');
-      setReload(prev => !prev);
-    };
-
-
-
-    // const indx = useSelector((state: any) => state.generalReducer.index);
-    // const showCard = useSelector((state: any) => state.generalReducer.showCard);
-
-    console.log(profileIdData);
-
-
-    // console.log(profileData, 'this data');
-
-    // console.log(profileData, 'this data');
-
     useEffect(() => {
+      // check for network connection and set the connected stated
       const unsubscribe = NetInfo.addEventListener(state => {
         console.log('Connection type', state.type);
         console.log('Is connected?', state.isConnected);
@@ -82,36 +65,32 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
         console.log('Is connected?', state.isConnected);
         setConnected(state.isConnected);
       });
-      // dispatch({type:actionTypes.RESET_ALL_PROFILE, profileData:[]});
-        // dispatch({type:actionTypes.REFRESH_HOME_PAGE, profileData:[]});
-        AsyncStorage.getItem('profileId').then(result => {
-          if (result !== null){
-            // console.log(result, 'result')
-            if (profileData.length < 1){
-              console.log('he yer', result);
-                dispatch(actions.getAllProfile(initialPageNum, result));
-            }
-            dispatch(actions.retrieveProfileDetail(result));
+
+
+      // if user profile data exist and all profile data exist get the next set of data else get the the user profile data
+      AsyncStorage.getItem('profileId').then(result => {
+        if (result !== null){
+          if (profileData.length < 1){
+              dispatch(actions.getAllProfile(initialPageNum, result));
           }
-        });
+          dispatch(actions.retrieveProfileDetail(result));
+        }
+      });
 
-          // let userId : any = null;
-
-      //     const getToken = async() => {
-      //       userId = await AsyncStorage.getItem('profileId');
-      //      if (userId){
-      //          console.log('meet');
-      //          dispatch(actions.retrieveProfileDetail(userId));
-      //      } else {
-      //          console.log('no user id');
-      //     }
-
-      //  };
-      //  getToken();
-
-    },[dispatch, initialPageNum, profileData.length, reload]);
+    },[dispatch, initialPageNum, profileData, reload]);
 
 
+    //functions
+    const reloadHandler = () => {
+      console.log('press');
+      setReload(prev => !prev);
+    };
+
+    console.log(profileIdData);
+
+    let homeScreenRender = null;
+
+    // check if network connection available
     const getNewList = () => {
       const unsubscribe = NetInfo.addEventListener(state => {
         console.log('Connection type', state.type);
@@ -137,48 +116,33 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
     (state:any) => state.profileReducer.chatContactData,
   );
   useEffect(() => {
-    // if socketid is not empty create a new connection to the socket id
-    console.log('socket is not null')
+    // if user socket id exist connect to the socket
+    console.log('socket is not null');
     if (socketId !== null){
-      newSocket = io('https://findplug.herokuapp.com',{query:{id:socketId}});
+      newSocket = io(backendAdress,{query:{id:socketId}});
       newSocket.on('connect', () => {
         console.log('connected from homeScreen');
-        // newSocket.on('online', (users:any) => {
-        //   for (const i in users){
-        //     if (users[i] === receiverIdentity){
-        //       console.log('online');
-        //       dispatch({
-        //         type: actionTypes.ISONLINE,
-        //         isOnline:true,
-        //       });
-        //     }
-        //   }
-        // });
-
-
-        // dispatch({
-        //   type:actionTypes.ISREAD,
-        //   isRead:false,
-        // });
       });
 
-      newSocket.on('receiveMessage', (messageId:string, Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any) => {
+      // listen for socket incoming message event
+      newSocket.on('receiveMessage', (messageData:any) => {
         messageCount.current = messageCount.current + 1;
-        console.log('am receivin the message')
+        console.log('am receivin the message');
         let data = {
-          messageId:messageId,
-          senderId: Sid,
-          senderUsername:senderUsername,
-          senderImage:senderImage,
-          receiverId:Rid,
-          receiverUsername:receiverUsername,
-          receiverImage:receiverImage,
-          message:message,
-          time:time,
+          // messageId:messageId,
+          senderId: messageData.sender.senderSocketId,
+          senderUsername:messageData.sender.username,
+          senderImage:messageData.sender.image,
+          receiverId:messageData.receiver.receiverSocketId,
+          receiverUsername:messageData.receiver.username,
+          receiverImage:messageData.receiver.image,
+          message:messageData.message.msg,
+          time:messageData.time,
           online:online,
           isRead:isRead,
         };
 
+        // send a push notification once message in received
         PushNotification.createChannel(
           {
             channelId: 'channel-id', // (required)
@@ -194,43 +158,27 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
 
       PushNotification.localNotification({
         channelId:'channel-id',
-        title: `New Message from ${data.receiverUsername === profileIdData.username ? data.senderUsername : data.receiverUsername}`, // (optional)
-        message: data.message,
-        picture: data.receiverUsername === profileIdData.username ? data.senderImage : data.receiverImage,
+        title: `New Message from ${messageData.receiver.username === profileIdData.username ? messageData.sender.username : messageData.receiver.username}`, // (optional)
+        message: messageData.message.msg,
+        picture: messageData.receiver.username === profileIdData.username ? messageData.sender.image : messageData.receiver.image,
       });
 
-        const updatechatContact = updatedContactData.filter(
-          (e: {receiverId: string}) => e.receiverId !== data.receiverId && e.receiverId !== data.senderId);
-        updatechatContact.unshift(data);
-        dispatch({
-          type: actionTypes.CHAT_CONTACT,
-          chatContactData: updatechatContact,
-        });
+      /*
+        if a new message enters update the chat contact by checking the contact list if the message data(probabaly sender or receiver) alreday exist if it exist filter it and update it,
+        mainly checks if sender is not you add the sender to the contact and if the reciver is not you add the receiver
+       */
+      // filter all data except data which snder  is not equal to the incoming data senderId and data which reciverId is not equal to incoming senderId
+      const updatechatContact = updatedContactData.filter(
+        (e:{receiverId:string, senderId:string}) => e.senderId !== data.senderId && e.receiverId !== data.senderId
+      );
+      // const updatechatContact = updatedContactData.filter(
+      //   (e: {receiverId: string}) => e.receiverId !== data.receiverId && e.receiverId !== data.senderId);
+      updatechatContact.unshift(data);
+      dispatch({
+        type: actionTypes.CHAT_CONTACT,
+        chatContactData: updatechatContact,
       });
-
-      newSocket.on('offlineMessage', (messageId:string, Sid: string, senderUsername:string, senderImage:string,  Rid:string, receiverUsername:string, receiverImage:string, message:string, time:any) => {
-        let data = {
-          messageId:messageId,
-          senderId: Sid,
-          senderUsername:senderUsername,
-          senderImage:senderImage,
-          receiverId:Rid,
-          receiverUsername:receiverUsername,
-          receiverImage:receiverImage,
-          message:message,
-          time:time,
-          online:online,
-          isRead:isRead,
-        };
-
-        // const updatechatContact = updatedContactData.filter(
-        //   (e: {receiverId: string}) => e.receiverId !== data.receiverId && e.receiverId !== data.senderId);
-        // updatechatContact.unshift(data);
-        // dispatch({
-        //   type: actionTypes.CHAT_CONTACT,
-        //   chatContactData: updatechatContact,
-        // });
-      });
+    });
 
     }
 
@@ -238,18 +186,12 @@ const HomeScreenView:FC<homeProps> = React.memo(({navigate}):JSX.Element => {
       if (newSocket){
         newSocket.off('receive');
         newSocket.disconnect();
-        // newSocket.emit('offline', receiverIdentity, socketId);
       }
 
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[dispatch, socketId]);
 
-
-  // const goBack = () => {
-  //   dispatch({type: actionTypes.SHOW_CARDS, value: false});
-  //   return true;
-  // };
 
   const openGrid = (e: number) => {
     navigate();
